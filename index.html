@@ -557,10 +557,7 @@
     gap: 24px;
   }
   @media (min-width: 600px) {
-    .category-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (min-width: 1000px) {
-    .category-grid { grid-template-columns: repeat(4, 1fr); }
+    .category-grid { grid-template-columns: repeat(3, 1fr); }
   }
   .category-card {
     position: relative;
@@ -1669,7 +1666,6 @@
         <a href="#shop">Shop</a>
         <a href="#community">Our People</a>
         <a href="#heritage">Heritage</a>
-        <a href="#artisans">Artisans</a>
       </nav>
       <div class="nav-actions">
         <button class="action-icon-btn" id="searchHeaderBtn" aria-label="Search Shop">
@@ -1695,7 +1691,6 @@
       <a href="#shop" onclick="closeMobileMenu()">Shop</a>
       <a href="#community" onclick="closeMobileMenu()">Our People</a>
       <a href="#heritage" onclick="closeMobileMenu()">Heritage</a>
-      <a href="#artisans" onclick="closeMobileMenu()">Featured Artisans</a>
     </div>
   </div>
 
@@ -1754,7 +1749,7 @@
         <p>Every piece represents generational artistry. Browse our handloomed selections.</p>
       </div>
 
-      <div class="category-grid reveal" style="grid-template-columns: repeat(2, 1fr); max-width: 800px; margin: 0 auto;">
+      <div class="category-grid reveal" style="max-width: 1000px; margin: 0 auto;">
         <!-- Bags Category -->
         <div class="category-card" onclick="filterCategory('bag')">
           <img src="assets/product_1.jpg" alt="NiNa handwoven Kuki heritage bag" class="category-card-bg">
@@ -1769,6 +1764,14 @@
           <div class="category-overlay">
             <p>02</p>
             <h3>Lapel Pins</h3>
+          </div>
+        </div>
+        <!-- Bandanas Category -->
+        <div class="category-card" onclick="filterCategory('bandana')">
+          <img src="assets/bandana_1.jpg" alt="NiNa handwoven Kuki heritage bandana" class="category-card-bg">
+          <div class="category-overlay">
+            <p>03</p>
+            <h3>Bandanas</h3>
           </div>
         </div>
       </div>
@@ -1790,6 +1793,7 @@
           <button class="filter-btn active" data-filter="all">All Items</button>
           <button class="filter-btn" data-filter="bag">Bags</button>
           <button class="filter-btn" data-filter="pin">Lapel Pins</button>
+          <button class="filter-btn" data-filter="bandana">Bandanas</button>
         </div>
         <div class="search-wrapper">
           <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -2111,18 +2115,80 @@
         </article>
 
         <!-- PRODUCT 21 -->
-        <article class="product-card" data-category="bag" data-search="id:21 bag mongvom showcase satchel signature green model show handwoven">
+        <article class="product-card" data-category="bandana" data-search="id:21 bandana mongvom blue cotton handwoven">
           <span class="product-badge new">New</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(21, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(21)">
-            <img src="assets/product_21.jpg" id="img-prod-21" alt="NiNa Mongvom Showcase Satchel">
+            <img src="assets/bandana_1.jpg" id="img-prod-21" alt="NiNa Mongvom Blue Bandana">
           </div>
           <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(21)" style="cursor:pointer;">Mongvom Showcase Satchel</h3>
-            <span class="product-price">₹16,500</span>
+            <div class="product-category">Bandana · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(21)" style="cursor:pointer;">Mongvom Blue Bandana</h3>
+            <span class="product-price">₹2,600</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 22 -->
+        <article class="product-card" data-category="bandana" data-search="id:22 bandana heritage diamond charcoal orange handwoven">
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(22, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(22)">
+            <img src="assets/bandana_2.jpg" id="img-prod-22" alt="NiNa Heritage Diamond Bandana">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Bandana · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(22)" style="cursor:pointer;">Heritage Diamond Bandana</h3>
+            <span class="product-price">₹2,600</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 23 -->
+        <article class="product-card" data-category="bandana" data-search="id:23 bandana thangnang gold saffron cream handwoven">
+          <span class="product-badge handcrafted">Handcrafted</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(23, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(23)">
+            <img src="assets/bandana_3.jpg" id="img-prod-23" alt="NiNa Thangnang Gold Bandana">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Bandana · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(23)" style="cursor:pointer;">Thangnang Gold Bandana</h3>
+            <span class="product-price">₹2,600</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 24 -->
+        <article class="product-card" data-category="bandana" data-search="id:24 bandana tribal motif gosem hunting horn heritage">
+          <span class="product-badge bestseller">Bestseller</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(24, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(24)">
+            <img src="assets/bandana_4.jpg" id="img-prod-24" alt="NiNa Tribal Motif Bandana">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Bandana · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(24)" style="cursor:pointer;">Tribal Motif Bandana</h3>
+            <span class="product-price">₹2,800</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 25 -->
+        <article class="product-card" data-category="bandana" data-search="id:25 bandana midnight diamond black yellow handwoven">
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(25, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(25)">
+            <img src="assets/bandana_5.jpg" id="img-prod-25" alt="NiNa Midnight Diamond Bandana">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Bandana · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(25)" style="cursor:pointer;">Midnight Diamond Bandana</h3>
+            <span class="product-price">₹2,600</span>
           </div>
         </article>
 
@@ -2172,69 +2238,7 @@
     </div>
   </section>
 
-  <!-- Artisan Spotlight Section -->
-  <section class="section" id="artisans">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">Hands that Weave</span>
-        <h2>Featured <em>Artisans</em></h2>
-        <p>Meet the master craftsmen keeping our ancient designs alive in Manipur.</p>
-      </div>
 
-      <div class="artisan-grid reveal">
-        <!-- Artisan 1 -->
-        <article class="artisan-card glass-card">
-          <div class="artisan-img-wrapper">
-            <svg viewBox="0 0 100 100" fill="none">
-              <circle cx="50" cy="40" r="20" fill="var(--accent-saffron)" />
-              <path d="M20 90 C 20 65, 80 65, 80 90 Z" fill="var(--accent-emerald)" />
-              <rect x="0" y="94" width="100" height="6" fill="var(--accent-crimson)" />
-            </svg>
-          </div>
-          <div class="artisan-info">
-            <span class="artisan-role">Master Weaver</span>
-            <h3 class="artisan-name">Nengzamoi Haokip</h3>
-            <div class="artisan-location">Churachandpur, Manipur</div>
-            <p class="artisan-bio">With over 35 years of backstrap loom experience, Nengzamoi is our repository of the sacred Saipikhup pattern, teaching young village girls the mathematical precision of counting threads.</p>
-          </div>
-        </article>
-
-        <!-- Artisan 2 -->
-        <article class="artisan-card glass-card">
-          <div class="artisan-img-wrapper">
-            <svg viewBox="0 0 100 100" fill="none">
-              <circle cx="50" cy="40" r="20" fill="var(--accent-jade)" />
-              <path d="M20 90 C 20 65, 80 65, 80 90 Z" fill="var(--accent-saffron)" />
-              <rect x="0" y="94" width="100" height="6" fill="var(--accent-emerald)" />
-            </svg>
-          </div>
-          <div class="artisan-info">
-            <span class="artisan-role">Loom Innovator</span>
-            <h3 class="artisan-name">Kimkhosei Touthang</h3>
-            <div class="artisan-location">Lamka, Manipur</div>
-            <p class="artisan-bio">Kimkhosei designs our contemporary home textile ranges, modifying traditional loin loom structures to weave wider fabrics without losing the tight density characteristic of hill textiles.</p>
-          </div>
-        </article>
-
-        <!-- Artisan 3 -->
-        <article class="artisan-card glass-card">
-          <div class="artisan-img-wrapper">
-            <svg viewBox="0 0 100 100" fill="none">
-              <circle cx="50" cy="40" r="20" fill="var(--accent-crimson)" />
-              <path d="M20 90 C 20 65, 80 65, 80 90 Z" fill="var(--accent-jade)" />
-              <rect x="0" y="94" width="100" height="6" fill="var(--accent-saffron)" />
-            </svg>
-          </div>
-          <div class="artisan-info">
-            <span class="artisan-role">Beadwork Artisan</span>
-            <h3 class="artisan-name">Ginzalian Mate</h3>
-            <div class="artisan-location">Moreh, Manipur</div>
-            <p class="artisan-bio">Ginzalian gathers carnelian, river-stones, and locally cast brass to assemble our jewelry collection. His work blends traditional symbols with clean, modern styling.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
 
   <!-- Stats & Quote Section -->
   <section class="section impact-section">
@@ -2345,13 +2349,13 @@
         <ul class="footer-links">
           <li><a href="#shop" onclick="filterCategory('bag')">Bags</a></li>
           <li><a href="#shop" onclick="filterCategory('pin')">Lapel Pins</a></li>
+          <li><a href="#shop" onclick="filterCategory('bandana')">Bandanas</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Heritage</h4>
         <ul class="footer-links">
           <li><a href="#heritage">The Loom Legacy</a></li>
-          <li><a href="#artisans">Meet Weavers</a></li>
           <li><a href="#community">Our Community</a></li>
           <li><a href="#journal">Weaving Motifs</a></li>
         </ul>
@@ -2657,14 +2661,58 @@
       },
       21: {
         id: 21,
-        title: "Mongvom Showcase Satchel",
-        category: "bag",
-        categoryDisplay: "Bag · Handwoven",
-        price: 16500,
-        priceDisplay: "₹16,500",
-        desc: "Our signature runway show satchel showcasing a stunning forest green geometric repeat. Handcrafted in very limited quantities.",
+        title: "Mongvom Blue Bandana",
+        category: "bandana",
+        categoryDisplay: "Bandana · Handwoven",
+        price: 2600,
+        priceDisplay: "₹2,600",
+        desc: "A striking sky-blue bandana handloomed using premium cotton, showcasing the classic Mongvom diamond repeat margins.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
-        imageHtml: `<img src="assets/product_21.jpg" alt="Mongvom Showcase Satchel">`
+        imageHtml: `<img src="assets/bandana_1.jpg" alt="Mongvom Blue Bandana">`
+      },
+      22: {
+        id: 22,
+        title: "Heritage Diamond Bandana",
+        category: "bandana",
+        categoryDisplay: "Bandana · Handwoven",
+        price: 2600,
+        priceDisplay: "₹2,600",
+        desc: "Deep charcoal cotton base adorned with vibrant orange and white geometric diamond repeats, weaving together warrior status symbols.",
+        weaver: "Kimkhosei Touthang (Lamka)",
+        imageHtml: `<img src="assets/bandana_2.jpg" alt="Heritage Diamond Bandana">`
+      },
+      23: {
+        id: 23,
+        title: "Thangnang Gold Bandana",
+        category: "bandana",
+        categoryDisplay: "Bandana · Handwoven",
+        price: 2600,
+        priceDisplay: "₹2,600",
+        desc: "A classic cream and saffron backstrap-loomed bandana displaying the traditional Kuki Thangnang checkerboard motifs.",
+        weaver: "Kimkhosei Touthang (Lamka)",
+        imageHtml: `<img src="assets/bandana_3.jpg" alt="Thangnang Gold Bandana">`
+      },
+      24: {
+        id: 24,
+        title: "Tribal Motif Bandana",
+        category: "bandana",
+        categoryDisplay: "Bandana · Handwoven",
+        price: 2800,
+        priceDisplay: "₹2,800",
+        desc: "A bold heritage print bandana displaying the sacred wind pipe (Gosem), hunting horns, and Kuki tribal symbols over a clean mesh background.",
+        weaver: "Ginzalian Mate (Moreh)",
+        imageHtml: `<img src="assets/bandana_4.jpg" alt="Tribal Motif Bandana">`
+      },
+      25: {
+        id: 25,
+        title: "Midnight Diamond Bandana",
+        category: "bandana",
+        categoryDisplay: "Bandana · Handwoven",
+        price: 2600,
+        priceDisplay: "₹2,600",
+        desc: "Midnight black handloomed cotton bandana featuring intricate border motifs and subtle yellow highlight diamonds.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/bandana_5.jpg" alt="Midnight Diamond Bandana">`
       }
     };
 
