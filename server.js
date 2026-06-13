@@ -21,8 +21,8 @@ const server = http.createServer((req, res) => {
   let reqPath = decodeURIComponent(req.url);
   
   // Default routing
-  if (reqPath === '/' || reqPath === '/index.html') {
-    reqPath = '/kuki/index.html';
+  if (reqPath === '/') {
+    reqPath = '/index.html';
   }
   
   const filePath = path.join(__dirname, reqPath);

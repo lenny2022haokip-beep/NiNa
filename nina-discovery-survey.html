@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NiNa — Brand Discovery Survey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #6750A4;
+    --primary-light: #EAD6FD;
+    --surface: #FFFFFF;
+    --bg: #F0EBF8;
+    --card: #FFFFFF;
+    --border: #E0E0E0;
+    --text: #1C1B1F;
+    --muted: #49454F;
+    --gold: #D4A24E;
+    --crimson: #9F2E3F;
+    --required: #B3261E;
+    --input-bg: #F7F2FA;
+    --input-border: #79747E;
+    --focus: #6750A4;
+    --success: #197B4A;
+    --header-bg: #5B2D8C;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+
+  /* ── HEADER BANNER ── */
+  .form-header {
+    background: var(--header-bg);
+    border-radius: 12px 12px 0 0;
+    padding: 32px 28px 24px;
+    border-top: 10px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .form-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      110deg,
+      rgba(212,162,78,0.15) 0, rgba(212,162,78,0.15) 4px,
+      transparent 4px, transparent 20px
+    );
+    pointer-events: none;
+  }
+  .brand-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+  }
+  .form-header h1 {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .form-header h1 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .form-header p {
+    color: rgba(255,255,255,0.80);
+    font-size: 0.93rem;
+    line-height: 1.6;
+    max-width: 560px;
+  }
+  .header-meta {
+    margin-top: 18px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .meta-chip {
+    background: rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.9);
+    font-size: 0.75rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── LAYOUT ── */
+  .form-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .required-note {
+    background: #fff;
+    border-radius: 0 0 4px 4px;
+    padding: 14px 20px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-top: none;
+    margin-bottom: 14px;
+  }
+  .required-note span { color: var(--required); font-weight: 600; }
+
+  /* ── SECTION HEADER ── */
+  .section-card {
+    background: var(--card);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .section-title {
+    background: linear-gradient(135deg, var(--primary) 0%, #7B5EA7 100%);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-icon {
+    font-size: 1.3rem;
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title h2 {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.3;
+  }
+  .section-title p {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.75);
+    margin-top: 2px;
+  }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--card);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 22px 24px 20px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+  }
+  .q-card:focus-within {
+    border-color: var(--focus);
+    box-shadow: 0 0 0 2px rgba(103,80,164,0.10);
+  }
+
+  .q-label {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 0.97rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .q-label .req { color: var(--required); margin-left: 3px; }
+  .q-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  /* ── RADIO / CHECKBOX ── */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .opt:hover { background: var(--input-bg); }
+  .opt input[type="radio"],
+  .opt input[type="checkbox"] {
+    accent-color: var(--primary);
+    width: 18px; height: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    cursor: pointer;
+  }
+  .opt:has(input:checked) {
+    background: var(--primary-light);
+    border-color: var(--primary);
+  }
+  .opt-label {
+    font-size: 0.90rem;
+    color: var(--text);
+    line-height: 1.45;
+    cursor: pointer;
+  }
+
+  /* ── SHORT ANSWER / TEXTAREA ── */
+  .text-input, .select-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid var(--input-border);
+    background: transparent;
+    padding: 10px 4px 8px;
+    font-size: 0.93rem;
+    color: var(--text);
+    font-family: 'Roboto', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .text-input:focus, .select-input:focus {
+    border-bottom-color: var(--focus);
+    border-bottom-width: 2px;
+  }
+  textarea.text-input {
+    resize: vertical;
+    min-height: 72px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 12px;
+    margin-top: 4px;
+  }
+  textarea.text-input:focus {
+    border-color: var(--focus);
+    border-width: 2px;
+  }
+  .input-hint {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ── DROPDOWN ── */
+  .select-wrap {
+    position: relative;
+    margin-top: 4px;
+  }
+  .select-input {
+    appearance: none;
+    background: var(--input-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 40px 10px 14px;
+    cursor: pointer;
+  }
+  .select-wrap::after {
+    content: '▾';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+    font-size: 1rem;
+  }
+
+  /* ── SCALE / RATING ── */
+  .scale-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .scale-opt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .scale-opt input[type="radio"] {
+    accent-color: var(--primary);
+    width: 20px; height: 20px;
+    cursor: pointer;
+  }
+  .scale-opt label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.76rem;
+    color: var(--muted);
+    margin-top: 8px;
+    padding: 0 4px;
+  }
+
+  /* ── GRID / TABLE QUESTIONS ── */
+  .grid-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.87rem;
+  }
+  .grid-table th {
+    background: var(--input-bg);
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    font-size: 0.82rem;
+  }
+  .grid-table th:first-child { text-align: left; }
+  .grid-table td {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .grid-table td:first-child {
+    text-align: left;
+    color: var(--text);
+    font-size: 0.88rem;
+  }
+  .grid-table tr:nth-child(even) { background: #FAFAFA; }
+  .grid-table input[type="radio"] { accent-color: var(--primary); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    background: var(--card);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 16px 24px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .progress-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--gold));
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+  .progress-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    white-space: nowrap;
+    font-weight: 500;
+    min-width: 50px;
+    text-align: right;
+  }
+
+  /* ── SUBMIT ── */
+  .submit-wrap {
+    background: var(--card);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .btn-submit {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 14px 48px;
+    font-family: 'Google Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 2px 8px rgba(103,80,164,0.28);
+  }
+  .btn-submit:hover { background: #5B4397; transform: translateY(-1px); }
+  .btn-submit:active { transform: translateY(0); }
+  .submit-note {
+    margin-top: 16px;
+    font-size: 0.80rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── SUCCESS ── */
+  .success-screen {
+    display: none;
+    background: var(--card);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    padding: 56px 24px;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .success-screen.show { display: block; }
+  .success-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+  }
+  .success-screen h2 {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 1.4rem;
+    color: var(--success);
+    margin-bottom: 10px;
+  }
+  .success-screen p { color: var(--muted); font-size: 0.93rem; line-height: 1.6; }
+
+  /* ── DIVIDER ── */
+  .or-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 10px 0; color: var(--muted); font-size: 0.82rem;
+  }
+  .or-divider::before, .or-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── "OTHER" INPUT ── */
+  .other-input-wrap { margin-top: 8px; display: none; padding-left: 30px; }
+  .other-input-wrap.show { display: block; }
+  .other-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid var(--input-border);
+    background: transparent;
+    padding: 6px 4px;
+    font-size: 0.88rem;
+    outline: none;
+    color: var(--text);
+  }
+  .other-input:focus { border-bottom-color: var(--focus); border-bottom-width: 2px; }
+
+  @media (max-width: 600px) {
+    .form-header h1 { font-size: 1.4rem; }
+    .q-card { padding: 18px 16px; }
+    .section-title { padding: 14px 16px; }
+    .grid-table { font-size: 0.78rem; }
+    .grid-table th, .grid-table td { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="form-wrap">
+
+  <!-- HEADER -->
+  <div class="section-card" style="border-radius:12px 12px 0 0; border-bottom:none;">
+    <div class="form-header">
+      <div class="brand-tag">🧵 NiNa — Wear Your Roots</div>
+      <h1>Brand Discovery<br><em>Questionnaire</em></h1>
+      <p>Help us understand your brand, goals, and customers better. This survey takes approximately <strong style="color:#fff;">10–15 minutes</strong> to complete. Your answers will shape our marketing strategy for NiNa.</p>
+      <div class="header-meta">
+        <span class="meta-chip">📋 44 Questions</span>
+        <span class="meta-chip">⏱ 10–15 mins</span>
+        <span class="meta-chip">🔒 Confidential</span>
+        <span class="meta-chip">✉ Senior Marketing Team</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="required-note">
+    <span>*</span> Indicates required question
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel">0%</div>
+  </div>
+
+  <form id="discoveryForm">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 1: BRAND FOUNDATION -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">🧭</div>
+        <div>
+          <h2>Section 1: Brand Foundation &amp; Vision</h2>
+          <p>Tell us about the heart of NiNa</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q1.1 -->
+    <div class="q-card">
+      <div class="q-label">1. Who founded NiNa, and what inspired you to start it? <span class="req">*</span></div>
+      <textarea class="text-input" placeholder="Share the personal story behind NiNa — the more detail, the better..." rows="4" required></textarea>
+    </div>
+
+    <!-- Q1.2 -->
+    <div class="q-card">
+      <div class="q-label">2. What does "NiNa" mean or represent? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q12" value="person"> <span class="opt-label">It's named after a person (founder, family member, artisan)</span></label>
+        <label class="opt"><input type="radio" name="q12" value="manipuri_word"> <span class="opt-label">It's a Manipuri word or phrase with a specific meaning</span></label>
+        <label class="opt"><input type="radio" name="q12" value="concept"> <span class="opt-label">It represents a concept or value (heritage, identity, roots)</span></label>
+        <label class="opt"><input type="radio" name="q12" value="acronym"> <span class="opt-label">It's an acronym</span></label>
+        <label class="opt other-trigger"><input type="radio" name="q12" value="other"> <span class="opt-label">Other — I'll explain below</span></label>
+      </div>
+      <div class="other-input-wrap"><input class="other-input" type="text" placeholder="Please explain..."></div>
+    </div>
+
+    <!-- Q1.3 -->
+    <div class="q-card">
+      <div class="q-label">3. Where do you see NiNa in 3 years? <span class="req">*</span>
+        <div class="q-sub">Select all that apply</div>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q13"> <span class="opt-label">🏘 A beloved local Manipuri brand with strong community roots</span></label>
+        <label class="opt"><input type="checkbox" name="q13"> <span class="opt-label">🇮🇳 A national brand sold across India in boutiques and online</span></label>
+        <label class="opt"><input type="checkbox" name="q13"> <span class="opt-label">🌍 An international export brand (India's cultural fashion to the world)</span></label>
+        <label class="opt"><input type="checkbox" name="q13"> <span class="opt-label">🛍 A multi-product lifestyle brand (clothing, home, stationery)</span></label>
+        <label class="opt"><input type="checkbox" name="q13"> <span class="opt-label">🤝 A social enterprise focused on artisan welfare and fair trade</span></label>
+        <label class="opt"><input type="checkbox" name="q13"> <span class="opt-label">🏛 A heritage institution (museum collaborations, cultural education)</span></label>
+      </div>
+    </div>
+
+    <!-- Q1.4 -->
+    <div class="q-card">
+      <div class="q-label">4. How would you describe NiNa's primary purpose? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q14" value="mission"> <span class="opt-label">🎯 Mission-driven — cultural preservation and artisan welfare come first</span></label>
+        <label class="opt"><input type="radio" name="q14" value="commercial"> <span class="opt-label">💼 Commercially focused — building a profitable fashion brand</span></label>
+        <label class="opt"><input type="radio" name="q14" value="balance"> <span class="opt-label">⚖️ Equal balance of mission and commercial success</span></label>
+        <label class="opt"><input type="radio" name="q14" value="unsure"> <span class="opt-label">🤔 Not sure yet — still finding our identity</span></label>
+      </div>
+    </div>
+
+    <!-- Q1.5 -->
+    <div class="q-card">
+      <div class="q-label">5. Choose 3 words that best describe how you want customers to feel when they receive a NiNa product. <span class="req">*</span>
+        <div class="q-sub">Select exactly 3</div>
+      </div>
+      <div class="options" style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+        <label class="opt"><input type="checkbox" name="q15"> <span class="opt-label">🫂 Connected to heritage</span></label>
+        <label class="opt"><input type="checkbox" name="q15"> <span class="opt-label">✨ Proud</span></label>
+        <label class="opt"><input type="checkbox" name="q15"> <span class="opt-label">🎨 Inspired</span></label>
+        <label class="opt"><input type="checkbox" name="q15"> <span class="opt-label">💎 Exclusive / Special</span></label>
+        <label class="opt"><input type="checkbox" name="q15"> <span class="opt-label">❤️ Emotionally moved</span></label>
+        <label class="opt"><input type="checkbox" name="q15"> <span class="opt-label">🌿 Conscious</span></label>
+        <label class="opt"><input type="checkbox" name="q15"> <span class="opt-label">🔥 Bold &amp; Confident</span></label>
+        <label class="opt"><input type="checkbox" name="q15"> <span class="opt-label">🌏 Part of something bigger</span></label>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 2: TARGET AUDIENCE -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">👥</div>
+        <div>
+          <h2>Section 2: Target Audience &amp; Customers</h2>
+          <p>Who is buying NiNa today, and who should be tomorrow?</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2.1 -->
+    <div class="q-card">
+      <div class="q-label">6. Who is your current typical customer? (Age range) <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q21"> <span class="opt-label">Under 18</span></label>
+        <label class="opt"><input type="radio" name="q21"> <span class="opt-label">18 – 24 years</span></label>
+        <label class="opt"><input type="radio" name="q21"> <span class="opt-label">25 – 34 years ← (Most common for artisan fashion)</span></label>
+        <label class="opt"><input type="radio" name="q21"> <span class="opt-label">35 – 44 years</span></label>
+        <label class="opt"><input type="radio" name="q21"> <span class="opt-label">45 – 60 years</span></label>
+        <label class="opt"><input type="radio" name="q21"> <span class="opt-label">All ages equally / Don't know yet</span></label>
+      </div>
+    </div>
+
+    <!-- Q2.2 -->
+    <div class="q-card">
+      <div class="q-label">7. Who are you primarily targeting with NiNa? <span class="req">*</span>
+        <div class="q-sub">Select all that apply</div>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q22"> <span class="opt-label">🏔 Manipuri / Northeast Indian community (local pride market)</span></label>
+        <label class="opt"><input type="checkbox" name="q22"> <span class="opt-label">🇮🇳 NE Indian diaspora across India (Delhi, Bangalore, Mumbai)</span></label>
+        <label class="opt"><input type="checkbox" name="q22"> <span class="opt-label">🌍 NE Indian diaspora internationally (US, UK, Australia)</span></label>
+        <label class="opt"><input type="checkbox" name="q22"> <span class="opt-label">🌿 Conscious fashion buyers who value ethical &amp; artisan products</span></label>
+        <label class="opt"><input type="checkbox" name="q22"> <span class="opt-label">🎁 Gift buyers (festivals, corporate gifting, weddings)</span></label>
+        <label class="opt"><input type="checkbox" name="q22"> <span class="opt-label">✈️ Tourists visiting Manipur / Northeast India</span></label>
+        <label class="opt"><input type="checkbox" name="q22"> <span class="opt-label">👗 Fashion-forward young adults who love unique accessories</span></label>
+      </div>
+    </div>
+
+    <!-- Q2.3 -->
+    <div class="q-card">
+      <div class="q-label">8. Where are most of your current sales coming from? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q23"> <span class="opt-label">📍 Mostly Manipur / local in-person</span></label>
+        <label class="opt"><input type="radio" name="q23"> <span class="opt-label">🇮🇳 Across India (online or other cities)</span></label>
+        <label class="opt"><input type="radio" name="q23"> <span class="opt-label">🌍 International orders</span></label>
+        <label class="opt"><input type="radio" name="q23"> <span class="opt-label">📦 Mix of all of the above</span></label>
+        <label class="opt"><input type="radio" name="q23"> <span class="opt-label">🚀 Just starting — no significant sales data yet</span></label>
+      </div>
+    </div>
+
+    <!-- Q2.4 -->
+    <div class="q-card">
+      <div class="q-label">9. Why do your customers buy NiNa? <span class="req">*</span>
+        <div class="q-sub">Rank your top 3 reasons (select 3)</div>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q24"> <span class="opt-label">❤️ Cultural pride — connecting with their Manipuri heritage</span></label>
+        <label class="opt"><input type="checkbox" name="q24"> <span class="opt-label">🎁 Gifting — looking for unique, meaningful gifts</span></label>
+        <label class="opt"><input type="checkbox" name="q24"> <span class="opt-label">👗 Fashion — loving the aesthetic and wearing it as a style statement</span></label>
+        <label class="opt"><input type="checkbox" name="q24"> <span class="opt-label">🤲 Supporting artisans — conscious purchasing decision</span></label>
+        <label class="opt"><input type="checkbox" name="q24"> <span class="opt-label">🌿 Sustainability — preferring handmade over mass-produced</span></label>
+        <label class="opt"><input type="checkbox" name="q24"> <span class="opt-label">🔖 Collectible — drawn to limited editions and unique pieces</span></label>
+      </div>
+    </div>
+
+    <!-- Q2.5 -->
+    <div class="q-card">
+      <div class="q-label">10. Have you noticed any unexpected customer segments buying from you?</div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q25"> <span class="opt-label">🏨 Hotels or resorts using NiNa products as amenities/gifts</span></label>
+        <label class="opt"><input type="checkbox" name="q25"> <span class="opt-label">🏢 Corporates buying in bulk for gifting</span></label>
+        <label class="opt"><input type="checkbox" name="q25"> <span class="opt-label">📸 Photographers / stylists using products for shoots</span></label>
+        <label class="opt"><input type="checkbox" name="q25"> <span class="opt-label">🎭 Performers, artists, or cultural event participants</span></label>
+        <label class="opt"><input type="checkbox" name="q25"> <span class="opt-label">❌ No unexpected segments observed yet</span></label>
+      </div>
+      <div class="other-input-wrap show" style="padding-left:0; margin-top:12px;">
+        <input class="other-input" type="text" placeholder="Any other segments you've noticed?">
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 3: SALES & REVENUE -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">🛒</div>
+        <div>
+          <h2>Section 3: Sales, Revenue &amp; Channels</h2>
+          <p>Understanding your business performance today</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3.1 -->
+    <div class="q-card">
+      <div class="q-label">11. What is NiNa's approximate monthly revenue? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q31"> <span class="opt-label">Pre-revenue — not yet generating sales</span></label>
+        <label class="opt"><input type="radio" name="q31"> <span class="opt-label">Under ₹25,000 / month</span></label>
+        <label class="opt"><input type="radio" name="q31"> <span class="opt-label">₹25,000 – ₹1 Lakh / month</span></label>
+        <label class="opt"><input type="radio" name="q31"> <span class="opt-label">₹1 Lakh – ₹5 Lakhs / month</span></label>
+        <label class="opt"><input type="radio" name="q31"> <span class="opt-label">₹5 Lakhs – ₹20 Lakhs / month</span></label>
+        <label class="opt"><input type="radio" name="q31"> <span class="opt-label">Above ₹20 Lakhs / month</span></label>
+        <label class="opt"><input type="radio" name="q31"> <span class="opt-label">Prefer not to say</span></label>
+      </div>
+    </div>
+
+    <!-- Q3.2 -->
+    <div class="q-card">
+      <div class="q-label">12. What % of your revenue comes from online vs. offline? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q32"> <span class="opt-label">100% Offline (in-person, markets, events)</span></label>
+        <label class="opt"><input type="radio" name="q32"> <span class="opt-label">Mostly offline (70–90% offline)</span></label>
+        <label class="opt"><input type="radio" name="q32"> <span class="opt-label">Roughly equal (40–60% each)</span></label>
+        <label class="opt"><input type="radio" name="q32"> <span class="opt-label">Mostly online (70–90% online)</span></label>
+        <label class="opt"><input type="radio" name="q32"> <span class="opt-label">100% Online</span></label>
+      </div>
+    </div>
+
+    <!-- Q3.3 -->
+    <div class="q-card">
+      <div class="q-label">13. Which product is your actual best seller by revenue? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q33"> <span class="opt-label">🧣 Bandanas ($28 each)</span></label>
+        <label class="opt"><input type="radio" name="q33"> <span class="opt-label">🧤 Scarves ($65–$75 each)</span></label>
+        <label class="opt"><input type="radio" name="q33"> <span class="opt-label">📌 Lapel Pins ($18 each)</span></label>
+        <label class="opt"><input type="radio" name="q33"> <span class="opt-label">👜 Handwoven Bags ($120 each)</span></label>
+        <label class="opt"><input type="radio" name="q33"> <span class="opt-label">About equal across all categories</span></label>
+        <label class="opt"><input type="radio" name="q33"> <span class="opt-label">Don't have this data yet</span></label>
+      </div>
+    </div>
+
+    <!-- Q3.4 -->
+    <div class="q-card">
+      <div class="q-label">14. Are you selling on any online marketplaces? <span class="req">*</span>
+        <div class="q-sub">Select all that apply</div>
+      </div>
+      <div class="options" style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+        <label class="opt"><input type="checkbox" name="q34"> <span class="opt-label">🛍 Amazon India</span></label>
+        <label class="opt"><input type="checkbox" name="q34"> <span class="opt-label">🛒 Flipkart</span></label>
+        <label class="opt"><input type="checkbox" name="q34"> <span class="opt-label">🌿 Etsy</span></label>
+        <label class="opt"><input type="checkbox" name="q34"> <span class="opt-label">💄 Nykaa Fashion</span></label>
+        <label class="opt"><input type="checkbox" name="q34"> <span class="opt-label">📦 Meesho</span></label>
+        <label class="opt"><input type="checkbox" name="q34"> <span class="opt-label">🎨 Jaypore / Craftsvilla</span></label>
+        <label class="opt"><input type="checkbox" name="q34"> <span class="opt-label">📱 Instagram / Facebook Shop</span></label>
+        <label class="opt"><input type="checkbox" name="q34"> <span class="opt-label">❌ None yet</span></label>
+      </div>
+    </div>
+
+    <!-- Q3.5 -->
+    <div class="q-card">
+      <div class="q-label">15. Do you have any B2B or wholesale relationships? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q35"> <span class="opt-label">🏨 Hotels / Resorts using products as gifts or amenities</span></label>
+        <label class="opt"><input type="checkbox" name="q35"> <span class="opt-label">🏪 Boutiques or multi-brand retail stores</span></label>
+        <label class="opt"><input type="checkbox" name="q35"> <span class="opt-label">🏢 Corporate gifting orders</span></label>
+        <label class="opt"><input type="checkbox" name="q35"> <span class="opt-label">🎪 Pop-up shops or markets</span></label>
+        <label class="opt"><input type="checkbox" name="q35"> <span class="opt-label">❌ No B2B relationships yet</span></label>
+      </div>
+    </div>
+
+    <!-- Q3.6 -->
+    <div class="q-card">
+      <div class="q-label">16. What is your current average order value (AOV)?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q36"> <span class="opt-label">Under $20 (single pin or bandana)</span></label>
+        <label class="opt"><input type="radio" name="q36"> <span class="opt-label">$20 – $50 (1–2 bandanas or a scarf)</span></label>
+        <label class="opt"><input type="radio" name="q36"> <span class="opt-label">$50 – $100 (scarf + accessories)</span></label>
+        <label class="opt"><input type="radio" name="q36"> <span class="opt-label">$100 – $200 (bag or multiple items)</span></label>
+        <label class="opt"><input type="radio" name="q36"> <span class="opt-label">Above $200 (bundle or gift set)</span></label>
+        <label class="opt"><input type="radio" name="q36"> <span class="opt-label">Don't know / not tracked</span></label>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 4: MARKETING & DIGITAL -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">📣</div>
+        <div>
+          <h2>Section 4: Marketing &amp; Digital Presence</h2>
+          <p>Your current channels, content, and tracking</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4.1 -->
+    <div class="q-card">
+      <div class="q-label">17. Which social media platforms are you active on? <span class="req">*</span>
+        <div class="q-sub">Select all that apply and share approximate followers</div>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q41"> <span class="opt-label">📸 Instagram</span></label>
+        <label class="opt"><input type="checkbox" name="q41"> <span class="opt-label">📘 Facebook</span></label>
+        <label class="opt"><input type="checkbox" name="q41"> <span class="opt-label">📌 Pinterest</span></label>
+        <label class="opt"><input type="checkbox" name="q41"> <span class="opt-label">🎵 YouTube</span></label>
+        <label class="opt"><input type="checkbox" name="q41"> <span class="opt-label">▶️ YouTube Shorts / Reels</span></label>
+        <label class="opt"><input type="checkbox" name="q41"> <span class="opt-label">🎭 TikTok (if applicable)</span></label>
+        <label class="opt"><input type="checkbox" name="q41"> <span class="opt-label">❌ Not active on any social media yet</span></label>
+      </div>
+      <div style="margin-top:12px;">
+        <input class="text-input" type="text" placeholder="Instagram followers: ___  |  Facebook followers: ___  |  Others: ___">
+      </div>
+    </div>
+
+    <!-- Q4.2 — Rating question -->
+    <div class="q-card">
+      <div class="q-label">18. Rate your current social media content quality (be honest!) <span class="req">*</span></div>
+      <table class="grid-table">
+        <thead>
+          <tr>
+            <th>Content Type</th>
+            <th>Not doing</th>
+            <th>Needs work</th>
+            <th>Okay</th>
+            <th>Good</th>
+            <th>Excellent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Product photography</td>
+            <td><input type="radio" name="g_photo"></td>
+            <td><input type="radio" name="g_photo"></td>
+            <td><input type="radio" name="g_photo"></td>
+            <td><input type="radio" name="g_photo"></td>
+            <td><input type="radio" name="g_photo"></td>
+          </tr>
+          <tr>
+            <td>Behind-the-scenes / artisan content</td>
+            <td><input type="radio" name="g_bts"></td>
+            <td><input type="radio" name="g_bts"></td>
+            <td><input type="radio" name="g_bts"></td>
+            <td><input type="radio" name="g_bts"></td>
+            <td><input type="radio" name="g_bts"></td>
+          </tr>
+          <tr>
+            <td>Cultural storytelling / heritage content</td>
+            <td><input type="radio" name="g_culture"></td>
+            <td><input type="radio" name="g_culture"></td>
+            <td><input type="radio" name="g_culture"></td>
+            <td><input type="radio" name="g_culture"></td>
+            <td><input type="radio" name="g_culture"></td>
+          </tr>
+          <tr>
+            <td>Reels / short videos</td>
+            <td><input type="radio" name="g_reels"></td>
+            <td><input type="radio" name="g_reels"></td>
+            <td><input type="radio" name="g_reels"></td>
+            <td><input type="radio" name="g_reels"></td>
+            <td><input type="radio" name="g_reels"></td>
+          </tr>
+          <tr>
+            <td>Customer testimonials / UGC</td>
+            <td><input type="radio" name="g_ugc"></td>
+            <td><input type="radio" name="g_ugc"></td>
+            <td><input type="radio" name="g_ugc"></td>
+            <td><input type="radio" name="g_ugc"></td>
+            <td><input type="radio" name="g_ugc"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Q4.3 -->
+    <div class="q-card">
+      <div class="q-label">19. Have you run paid advertisements? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q43"> <span class="opt-label">✅ Yes — and they were profitable</span></label>
+        <label class="opt"><input type="radio" name="q43"> <span class="opt-label">⚠️ Yes — but results were disappointing</span></label>
+        <label class="opt"><input type="radio" name="q43"> <span class="opt-label">🧪 Yes — still experimenting / testing</span></label>
+        <label class="opt"><input type="radio" name="q43"> <span class="opt-label">❌ No — have never run paid ads</span></label>
+        <label class="opt"><input type="radio" name="q43"> <span class="opt-label">🔮 Planning to but haven't started</span></label>
+      </div>
+      <div style="margin-top: 12px;">
+        <input class="text-input" type="text" placeholder="If yes, which platforms? (Meta, Google, Pinterest...) And approx. monthly budget?">
+      </div>
+    </div>
+
+    <!-- Q4.4 -->
+    <div class="q-card">
+      <div class="q-label">20. Do you have an email list / newsletter? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q44"> <span class="opt-label">✅ Yes — and I email them regularly (at least monthly)</span></label>
+        <label class="opt"><input type="radio" name="q44"> <span class="opt-label">📋 Yes — I have a list but rarely send emails</span></label>
+        <label class="opt"><input type="radio" name="q44"> <span class="opt-label">🌱 Just starting — have the form but almost no subscribers</span></label>
+        <label class="opt"><input type="radio" name="q44"> <span class="opt-label">❌ No email list at all</span></label>
+      </div>
+      <div style="margin-top: 12px;">
+        <input class="text-input" type="text" placeholder="Approximate number of subscribers (if any)?">
+      </div>
+    </div>
+
+    <!-- Q4.5 -->
+    <div class="q-card">
+      <div class="q-label">21. Has NiNa been featured in any media or press? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q45"> <span class="opt-label">📰 National or regional news / newspapers</span></label>
+        <label class="opt"><input type="checkbox" name="q45"> <span class="opt-label">🎨 Design / fashion publications or blogs</span></label>
+        <label class="opt"><input type="checkbox" name="q45"> <span class="opt-label">🏆 Awards or recognition (e.g., North East India Design Week)</span></label>
+        <label class="opt"><input type="checkbox" name="q45"> <span class="opt-label">📱 Influencer features (paid or organic)</span></label>
+        <label class="opt"><input type="checkbox" name="q45"> <span class="opt-label">🎙 Podcasts or interviews</span></label>
+        <label class="opt"><input type="checkbox" name="q45"> <span class="opt-label">❌ No media coverage yet</span></label>
+      </div>
+    </div>
+
+    <!-- Q4.6 -->
+    <div class="q-card">
+      <div class="q-label">22. Is website tracking set up? <span class="req">*</span>
+        <div class="q-sub">Select all that apply</div>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q46"> <span class="opt-label">📊 Google Analytics</span></label>
+        <label class="opt"><input type="checkbox" name="q46"> <span class="opt-label">🎯 Meta Pixel (Facebook/Instagram tracking)</span></label>
+        <label class="opt"><input type="checkbox" name="q46"> <span class="opt-label">📌 Pinterest Tag</span></label>
+        <label class="opt"><input type="checkbox" name="q46"> <span class="opt-label">🔍 Google Search Console</span></label>
+        <label class="opt"><input type="checkbox" name="q46"> <span class="opt-label">❌ None of the above — not set up yet</span></label>
+        <label class="opt"><input type="checkbox" name="q46"> <span class="opt-label">🤷 Not sure what these are</span></label>
+      </div>
+    </div>
+
+    <!-- Q4.7 -->
+    <div class="q-card">
+      <div class="q-label">23. Approximately how many visitors does your website get per month?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q47"> <span class="opt-label">Under 100 visitors</span></label>
+        <label class="opt"><input type="radio" name="q47"> <span class="opt-label">100 – 500 visitors</span></label>
+        <label class="opt"><input type="radio" name="q47"> <span class="opt-label">500 – 2,000 visitors</span></label>
+        <label class="opt"><input type="radio" name="q47"> <span class="opt-label">2,000 – 10,000 visitors</span></label>
+        <label class="opt"><input type="radio" name="q47"> <span class="opt-label">Above 10,000 visitors</span></label>
+        <label class="opt"><input type="radio" name="q47"> <span class="opt-label">Don't know / no tracking</span></label>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 5: PRODUCT & PRICING -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">🎁</div>
+        <div>
+          <h2>Section 5: Product &amp; Pricing Strategy</h2>
+          <p>Your product range, pricing logic, and roadmap</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5.1 -->
+    <div class="q-card">
+      <div class="q-label">24. How are NiNa's prices currently set? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q51"> <span class="opt-label">💰 Cost-plus (material cost + labor + markup)</span></label>
+        <label class="opt"><input type="radio" name="q51"> <span class="opt-label">📊 Market comparison (matching competitor prices)</span></label>
+        <label class="opt"><input type="radio" name="q51"> <span class="opt-label">✨ Perceived value (priced for the story and premium feel)</span></label>
+        <label class="opt"><input type="radio" name="q51"> <span class="opt-label">🎯 Combination of cost and market research</span></label>
+        <label class="opt"><input type="radio" name="q51"> <span class="opt-label">🤔 Not sure — prices were set intuitively</span></label>
+      </div>
+    </div>
+
+    <!-- Q5.2 -->
+    <div class="q-card">
+      <div class="q-label">25. Are your "Limited Edition" items a real scarcity strategy? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q52"> <span class="opt-label">✅ Yes — we genuinely produce limited quantities and they sell out</span></label>
+        <label class="opt"><input type="radio" name="q52"> <span class="opt-label">⚠️ Somewhat — we make limited batches but often have remaining stock</span></label>
+        <label class="opt"><input type="radio" name="q52"> <span class="opt-label">🔄 No — "limited" is more of a label than a real strategy right now</span></label>
+        <label class="opt"><input type="radio" name="q52"> <span class="opt-label">🚀 We want to build a proper drop/scarcity model — help us!</span></label>
+      </div>
+    </div>
+
+    <!-- Q5.3 -->
+    <div class="q-card">
+      <div class="q-label">26. What is the production lead time for each item? <span class="req">*</span></div>
+      <table class="grid-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>1–3 days</th>
+            <th>1 week</th>
+            <th>2–4 weeks</th>
+            <th>1–3 months</th>
+            <th>On-demand</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bandanas</td>
+            <td><input type="radio" name="lt_band"></td>
+            <td><input type="radio" name="lt_band"></td>
+            <td><input type="radio" name="lt_band"></td>
+            <td><input type="radio" name="lt_band"></td>
+            <td><input type="radio" name="lt_band"></td>
+          </tr>
+          <tr>
+            <td>Scarves</td>
+            <td><input type="radio" name="lt_scarf"></td>
+            <td><input type="radio" name="lt_scarf"></td>
+            <td><input type="radio" name="lt_scarf"></td>
+            <td><input type="radio" name="lt_scarf"></td>
+            <td><input type="radio" name="lt_scarf"></td>
+          </tr>
+          <tr>
+            <td>Lapel Pins</td>
+            <td><input type="radio" name="lt_pin"></td>
+            <td><input type="radio" name="lt_pin"></td>
+            <td><input type="radio" name="lt_pin"></td>
+            <td><input type="radio" name="lt_pin"></td>
+            <td><input type="radio" name="lt_pin"></td>
+          </tr>
+          <tr>
+            <td>Handwoven Bags</td>
+            <td><input type="radio" name="lt_bag"></td>
+            <td><input type="radio" name="lt_bag"></td>
+            <td><input type="radio" name="lt_bag"></td>
+            <td><input type="radio" name="lt_bag"></td>
+            <td><input type="radio" name="lt_bag"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Q5.4 -->
+    <div class="q-card">
+      <div class="q-label">27. Do you offer gift packaging or custom messaging? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q54"> <span class="opt-label">✅ Yes — we have branded gift boxes / wrapping</span></label>
+        <label class="opt"><input type="radio" name="q54"> <span class="opt-label">🎀 Yes — but it's basic (simple box or bag)</span></label>
+        <label class="opt"><input type="radio" name="q54"> <span class="opt-label">📝 We offer custom notes but no special packaging</span></label>
+        <label class="opt"><input type="radio" name="q54"> <span class="opt-label">❌ No gift packaging at all</span></label>
+        <label class="opt"><input type="radio" name="q54"> <span class="opt-label">🚀 We want to build this — it's on our roadmap</span></label>
+      </div>
+    </div>
+
+    <!-- Q5.5 -->
+    <div class="q-card">
+      <div class="q-label">28. Are there plans to expand into new product categories?
+        <div class="q-sub">Select all you're considering</div>
+      </div>
+      <div class="options" style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+        <label class="opt"><input type="checkbox" name="q55"> <span class="opt-label">👘 Apparel (shirts, jackets, dresses)</span></label>
+        <label class="opt"><input type="checkbox" name="q55"> <span class="opt-label">🏠 Home textiles (cushions, table runners)</span></label>
+        <label class="opt"><input type="checkbox" name="q55"> <span class="opt-label">📒 Stationery / notebooks</span></label>
+        <label class="opt"><input type="checkbox" name="q55"> <span class="opt-label">💍 Jewelry / metal accessories</span></label>
+        <label class="opt"><input type="checkbox" name="q55"> <span class="opt-label">👟 Footwear</span></label>
+        <label class="opt"><input type="checkbox" name="q55"> <span class="opt-label">🎨 Art prints / posters</span></label>
+        <label class="opt"><input type="checkbox" name="q55"> <span class="opt-label">🧴 Lifestyle / wellness products</span></label>
+        <label class="opt"><input type="checkbox" name="q55"> <span class="opt-label">❌ No plans to expand yet</span></label>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 6: COMPETITION & POSITIONING -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">🤝</div>
+        <div>
+          <h2>Section 6: Competition &amp; Positioning</h2>
+          <p>How NiNa stands apart in the market</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q6.1 -->
+    <div class="q-card">
+      <div class="q-label">29. Who do you consider NiNa's direct competitors? <span class="req">*</span>
+        <div class="q-sub">Select all that apply</div>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q61"> <span class="opt-label">🏔 Other NE India textile / handloom brands</span></label>
+        <label class="opt"><input type="checkbox" name="q61"> <span class="opt-label">🧵 Indian artisan fashion brands (e.g., Fabindia, Good Earth)</span></label>
+        <label class="opt"><input type="checkbox" name="q61"> <span class="opt-label">🌿 Global ethical / sustainable fashion brands</span></label>
+        <label class="opt"><input type="checkbox" name="q61"> <span class="opt-label">👗 Mainstream fashion accessories brands</span></label>
+        <label class="opt"><input type="checkbox" name="q61"> <span class="opt-label">🤷 We don't have direct competitors — we're truly unique</span></label>
+        <label class="opt"><input type="checkbox" name="q61"> <span class="opt-label">🚫 Not sure / haven't researched competitors</span></label>
+      </div>
+      <div style="margin-top:12px;">
+        <input class="text-input" type="text" placeholder="Name specific brands if you know them...">
+      </div>
+    </div>
+
+    <!-- Q6.2 -->
+    <div class="q-card">
+      <div class="q-label">30. What do customers say is NiNa's biggest differentiator?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q62"> <span class="opt-label">🎨 The unique patterns / designs (can't find these anywhere else)</span></label>
+        <label class="opt"><input type="radio" name="q62"> <span class="opt-label">📖 The cultural story and heritage behind each product</span></label>
+        <label class="opt"><input type="radio" name="q62"> <span class="opt-label">🤲 Knowing it's genuinely handcrafted by real artisans</span></label>
+        <label class="opt"><input type="radio" name="q62"> <span class="opt-label">💎 The quality and feel of the materials</span></label>
+        <label class="opt"><input type="radio" name="q62"> <span class="opt-label">💰 Good value for a handmade product</span></label>
+        <label class="opt"><input type="radio" name="q62"> <span class="opt-label">🤷 Haven't gathered this feedback yet</span></label>
+      </div>
+    </div>
+
+    <!-- Q6.3 -->
+    <div class="q-card">
+      <div class="q-label">31. Do NiNa's textile patterns have any official certifications or protections? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q63"> <span class="opt-label">🏛 Yes — GI (Geographical Indication) tag registered</span></label>
+        <label class="opt"><input type="radio" name="q63"> <span class="opt-label">🏅 Yes — affiliated with a recognized craft council or government body</span></label>
+        <label class="opt"><input type="radio" name="q63"> <span class="opt-label">🔄 In process — we're applying for GI or certification</span></label>
+        <label class="opt"><input type="radio" name="q63"> <span class="opt-label">❌ No certifications yet</span></label>
+        <label class="opt"><input type="radio" name="q63"> <span class="opt-label">🤷 Not sure what certifications we could qualify for</span></label>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 7: ARTISANS & OPERATIONS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">🏭</div>
+        <div>
+          <h2>Section 7: Artisans &amp; Operations</h2>
+          <p>The people and process behind every NiNa product</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q7.1 -->
+    <div class="q-card">
+      <div class="q-label">32. How many artisans does NiNa currently work with? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q71"> <span class="opt-label">Just 1–2 (founder + 1 artisan)</span></label>
+        <label class="opt"><input type="radio" name="q71"> <span class="opt-label">3–5 artisans</span></label>
+        <label class="opt"><input type="radio" name="q71"> <span class="opt-label">6–15 artisans</span></label>
+        <label class="opt"><input type="radio" name="q71"> <span class="opt-label">16–30 artisans</span></label>
+        <label class="opt"><input type="radio" name="q71"> <span class="opt-label">30+ artisans</span></label>
+      </div>
+    </div>
+
+    <!-- Q7.2 -->
+    <div class="q-card">
+      <div class="q-label">33. Which of the following describes your artisan community? <span class="req">*</span>
+        <div class="q-sub">Select all that apply</div>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q72"> <span class="opt-label">👩 Predominantly women weavers</span></label>
+        <label class="opt"><input type="checkbox" name="q72"> <span class="opt-label">👨 Predominantly men</span></label>
+        <label class="opt"><input type="checkbox" name="q72"> <span class="opt-label">👨‍👩‍👧 Family-based (multi-generation artisan families)</span></label>
+        <label class="opt"><input type="checkbox" name="q72"> <span class="opt-label">🏘 Village-based cooperative model</span></label>
+        <label class="opt"><input type="checkbox" name="q72"> <span class="opt-label">🎓 Young artisans / skill training program</span></label>
+        <label class="opt"><input type="checkbox" name="q72"> <span class="opt-label">🌟 Master weavers with decades of experience</span></label>
+      </div>
+    </div>
+
+    <!-- Q7.3 -->
+    <div class="q-card">
+      <div class="q-label">34. Do you have photo/video documentation of the weaving process? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q73"> <span class="opt-label">📸 Yes — lots of great behind-the-scenes content ready to use</span></label>
+        <label class="opt"><input type="radio" name="q73"> <span class="opt-label">📷 Some — a few photos but no video</span></label>
+        <label class="opt"><input type="radio" name="q73"> <span class="opt-label">🎥 Some videos but low quality / not edited</span></label>
+        <label class="opt"><input type="radio" name="q73"> <span class="opt-label">❌ Almost nothing — this is a gap we know about</span></label>
+        <label class="opt"><input type="radio" name="q73"> <span class="opt-label">🚫 Artisans prefer not to be photographed</span></label>
+      </div>
+    </div>
+
+    <!-- Q7.4 -->
+    <div class="q-card">
+      <div class="q-label">35. Is there a production bottleneck or waiting time for orders? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q74"> <span class="opt-label">✅ No — we can fulfill orders quickly without delays</span></label>
+        <label class="opt"><input type="radio" name="q74"> <span class="opt-label">⚠️ Slight delays during peak seasons</span></label>
+        <label class="opt"><input type="radio" name="q74"> <span class="opt-label">🔴 Yes — production can't keep up with demand right now</span></label>
+        <label class="opt"><input type="radio" name="q74"> <span class="opt-label">📦 We keep pre-made inventory so no delay in shipping</span></label>
+        <label class="opt"><input type="radio" name="q74"> <span class="opt-label">🤷 We haven't faced high demand yet — don't know</span></label>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 8: BUDGET & GOALS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section-card">
+      <div class="section-title">
+        <div class="section-icon">💰</div>
+        <div>
+          <h2>Section 8: Marketing Budget &amp; Goals</h2>
+          <p>Where you want to go and what you're willing to invest</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8.1 -->
+    <div class="q-card">
+      <div class="q-label">36. What is NiNa's monthly marketing budget? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q81"> <span class="opt-label">Under ₹5,000 / month (bootstrapped)</span></label>
+        <label class="opt"><input type="radio" name="q81"> <span class="opt-label">₹5,000 – ₹20,000 / month</span></label>
+        <label class="opt"><input type="radio" name="q81"> <span class="opt-label">₹20,000 – ₹75,000 / month</span></label>
+        <label class="opt"><input type="radio" name="q81"> <span class="opt-label">₹75,000 – ₹2 Lakhs / month</span></label>
+        <label class="opt"><input type="radio" name="q81"> <span class="opt-label">Above ₹2 Lakhs / month</span></label>
+        <label class="opt"><input type="radio" name="q81"> <span class="opt-label">No budget set yet — open to recommendations</span></label>
+      </div>
+    </div>
+
+    <!-- Q8.2 -->
+    <div class="q-card">
+      <div class="q-label">37. What are your TOP 3 marketing goals for the next 6 months? <span class="req">*</span>
+        <div class="q-sub">Select up to 3</div>
+      </div>
+      <div class="options">
+        <label class="opt"><input type="checkbox" name="q82"> <span class="opt-label">📈 Grow Instagram following (target: 10K+)</span></label>
+        <label class="opt"><input type="checkbox" name="q82"> <span class="opt-label">💰 Increase monthly revenue (reach a specific target)</span></label>
+        <label class="opt"><input type="checkbox" name="q82"> <span class="opt-label">🌍 Launch internationally (first sales outside India)</span></label>
+        <label class="opt"><input type="checkbox" name="q82"> <span class="opt-label">🛍 Get listed on Etsy / Amazon / major marketplace</span></label>
+        <label class="opt"><input type="checkbox" name="q82"> <span class="opt-label">📰 Get featured in a national media outlet</span></label>
+        <label class="opt"><input type="checkbox" name="q82"> <span class="opt-label">🤝 Build a strong B2B / wholesale channel</span></label>
+        <label class="opt"><input type="checkbox" name="q82"> <span class="opt-label">🎨 Launch a new product line or collection</span></label>
+        <label class="opt"><input type="checkbox" name="q82"> <span class="opt-label">📧 Build an email list of 1,000+ subscribers</span></label>
+      </div>
+    </div>
+
+    <!-- Q8.3 -->
+    <div class="q-card">
+      <div class="q-label">38. Are you open to influencer / content creator partnerships? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q83"> <span class="opt-label">✅ Yes — both gifting and paid partnerships</span></label>
+        <label class="opt"><input type="radio" name="q83"> <span class="opt-label">🎁 Yes — gifting only (no budget for paid)</span></label>
+        <label class="opt"><input type="radio" name="q83"> <span class="opt-label">🤔 Open to it, but have concerns about brand alignment</span></label>
+        <label class="opt"><input type="radio" name="q83"> <span class="opt-label">❌ No — prefer organic growth</span></label>
+      </div>
+      <div style="margin-top:12px;">
+        <input class="text-input" type="text" placeholder="What type of creator/influencer would feel right for NiNa's brand?">
+      </div>
+    </div>
+
+    <!-- Q8.4 -->
+    <div class="q-card">
+      <div class="q-label">39. Are there upcoming events or cultural moments to plan marketing around?
+        <div class="q-sub">Select all that apply</div>
+      </div>
+      <div class="options" style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+        <label class="opt"><input type="checkbox" name="q84"> <span class="opt-label">🌸 Shirui Lily Festival</span></label>
+        <label class="opt"><input type="checkbox" name="q84"> <span class="opt-label">🦌 Sangai Festival</span></label>
+        <label class="opt"><input type="checkbox" name="q84"> <span class="opt-label">🎆 Diwali / Festive Season</span></label>
+        <label class="opt"><input type="checkbox" name="q84"> <span class="opt-label">🎄 Christmas / New Year</span></label>
+        <label class="opt"><input type="checkbox" name="q84"> <span class="opt-label">💝 Valentine's Day</span></label>
+        <label class="opt"><input type="checkbox" name="q84"> <span class="opt-label">🎪 Craft fairs / design expos</span></label>
+        <label class="opt"><input type="checkbox" name="q84"> <span class="opt-label">🏆 Award submissions / competitions</span></label>
+        <label class="opt"><input type="checkbox" name="q84"> <span class="opt-label">🆕 New product launch</span></label>
+      </div>
+    </div>
+
+    <!-- Q8.5 — The big final question -->
+    <div class="q-card" style="border-color: var(--primary);">
+      <div class="q-label" style="font-size:1.05rem;">40. In your own words — what does success look like for NiNa in 12 months? <span class="req">*</span>
+        <div class="q-sub">This is the most important question. Be as specific as possible — revenue, followers, markets, impact on artisans, anything that matters to you.</div>
+      </div>
+      <textarea class="text-input" placeholder="Describe your dream outcome for NiNa 12 months from now..." rows="5" required></textarea>
+    </div>
+
+    <!-- BONUS QUESTIONS -->
+    <div class="section-card">
+      <div class="section-title" style="background: linear-gradient(135deg, var(--crimson) 0%, #C0394E 100%);">
+        <div class="section-icon">⭐</div>
+        <div>
+          <h2>Bonus: Quick-Fire Round</h2>
+          <p>Fast answers to help us understand your preferences</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q Bonus 1 -->
+    <div class="q-card">
+      <div class="q-label">41. Do you have a brand logo, brand guidelines, or style guide?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="qb1"> <span class="opt-label">✅ Yes — full brand guidelines with fonts, colors, and logo rules</span></label>
+        <label class="opt"><input type="radio" name="qb1"> <span class="opt-label">📄 Just a logo file (PNG/SVG) — no formal guidelines</span></label>
+        <label class="opt"><input type="radio" name="qb1"> <span class="opt-label">🎨 Working on it — brand identity in progress</span></label>
+        <label class="opt"><input type="radio" name="qb1"> <span class="opt-label">❌ Nothing formal — all in our heads</span></label>
+      </div>
+    </div>
+
+    <!-- Q Bonus 2 -->
+    <div class="q-card">
+      <div class="q-label">42. Which brand do you most admire (inside or outside India) and why?</div>
+      <textarea class="text-input" placeholder="Share a brand that inspires you and what you love about their marketing..." rows="3"></textarea>
+    </div>
+
+    <!-- Q Bonus 3 -->
+    <div class="q-card">
+      <div class="q-label">43. What is the single biggest marketing challenge you face right now? <span class="req">*</span></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="qb3"> <span class="opt-label">🔍 Not enough people know about NiNa (awareness problem)</span></label>
+        <label class="opt"><input type="radio" name="qb3"> <span class="opt-label">🛒 People visit but don't buy (conversion problem)</span></label>
+        <label class="opt"><input type="radio" name="qb3"> <span class="opt-label">📢 We can't communicate our story effectively</span></label>
+        <label class="opt"><input type="radio" name="qb3"> <span class="opt-label">💸 Not enough budget to scale marketing</span></label>
+        <label class="opt"><input type="radio" name="qb3"> <span class="opt-label">⏰ No time — running the business takes everything</span></label>
+        <label class="opt"><input type="radio" name="qb3"> <span class="opt-label">🤷 Don't know where to start with marketing</span></label>
+      </div>
+    </div>
+
+    <!-- Q Bonus 4 -->
+    <div class="q-card">
+      <div class="q-label">44. Is there anything else you'd like us to know about NiNa before we build your marketing strategy?</div>
+      <textarea class="text-input" placeholder="Any context, concerns, ideas, or things we should know..." rows="4"></textarea>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap" id="submitWrap">
+      <button type="submit" class="btn-submit">✉ Submit Discovery Survey</button>
+      <div class="submit-note">
+        Your responses are confidential and will only be used to develop NiNa's marketing strategy.<br>
+        A member of our team will follow up within 48 hours.
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon">🎉</div>
+      <h2>Thank you for completing the survey!</h2>
+      <p>We've received your answers and will start building NiNa's marketing strategy.<br>
+      Expect a follow-up from our team within <strong>48 hours</strong>.<br><br>
+      <em style="color: var(--primary);">"Every piece carries a story older than any of us. NiNa makes that story wearable."</em></p>
+    </div>
+
+  </form>
+
+</div>
+
+<script>
+  // ── "Other" radio show/hide ──
+  document.querySelectorAll('.other-trigger input').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const wrap = radio.closest('.q-card').querySelector('.other-input-wrap');
+      if (wrap) wrap.classList.add('show');
+    });
+  });
+  // Hide other input if non-other selected
+  document.querySelectorAll('.options input[type="radio"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const card = r.closest('.q-card');
+      if (!card) return;
+      const wrap = card.querySelector('.other-input-wrap');
+      if (!wrap) return;
+      const isOther = r.closest('.opt')?.classList.contains('other-trigger');
+      if (!isOther) wrap.classList.remove('show');
+    });
+  });
+
+  // ── Progress bar ──
+  const form = document.getElementById('discoveryForm');
+  const progressFill = document.getElementById('progressFill');
+  const progressLabel = document.getElementById('progressLabel');
+
+  function updateProgress() {
+    const total = form.querySelectorAll('input[required], textarea[required]').length;
+    const answered = Array.from(form.querySelectorAll('input[required]:checked, textarea[required]'))
+      .filter(el => el.tagName === 'TEXTAREA' ? el.value.trim().length > 0 : true).length;
+    const pct = total > 0 ? Math.min(100, Math.round((answered / total) * 100)) : 0;
+    progressFill.style.width = pct + '%';
+    progressLabel.textContent = pct + '%';
+  }
+
+  form.addEventListener('change', updateProgress);
+  form.addEventListener('input', updateProgress);
+  updateProgress();
+
+  // ── Submit ──
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    document.getElementById('submitWrap').style.display = 'none';
+    document.getElementById('successScreen').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // In a real deployment: collect form data and send to backend / Google Sheets
+  });
+</script>
+
+</body>
+</html>
