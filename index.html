@@ -687,63 +687,70 @@
   .product-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 20px;
   }
   @media (min-width: 768px) {
-    .product-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .product-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; }
   }
   @media (min-width: 1100px) {
-    .product-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .product-grid { grid-template-columns: repeat(4, 1fr); gap: 32px; }
   }
 
   .product-card {
-    background: var(--surface-dark);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     transition: var(--transition-smooth);
     position: relative;
+    padding-bottom: 8px;
   }
   .product-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--border-strong);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+    transform: none;
+    box-shadow: none;
   }
   .product-media {
     position: relative;
     aspect-ratio: 1/1;
     overflow: hidden;
     cursor: pointer;
-    background: var(--surface-light);
+    background: #0d1712;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: var(--transition-smooth);
+  }
+  .product-card:hover .product-media {
+    border-color: var(--border-strong);
   }
   .product-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition-smooth);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
   }
   .product-card:hover .product-media img {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
   .product-media::after {
     content: 'Quick View';
     position: absolute;
     inset: 0;
-    background: rgba(11, 22, 16, 0.65);
+    background: rgba(11, 22, 16, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: 0.72rem;
+    font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--color-cream);
     opacity: 0;
-    transition: var(--transition-smooth);
+    transition: opacity 0.3s ease;
     z-index: 2;
   }
   .product-card:hover .product-media::after {
@@ -776,24 +783,27 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: rgba(11, 22, 16, 0.6);
+    background: rgba(11, 22, 16, 0.75);
     border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-cream);
     cursor: pointer;
-    transition: var(--transition-smooth);
+    opacity: 0;
+    transform: translateY(-5px);
+    transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s, border-color 0.3s;
   }
-  .wish-btn:hover {
+  .product-card:hover .wish-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .wish-btn:hover, .wish-btn.active {
     background: var(--accent-crimson);
     color: var(--color-white);
     border-color: var(--accent-crimson);
-  }
-  .wish-btn.active {
-    background: var(--accent-crimson);
-    color: var(--color-white);
-    border-color: var(--accent-crimson);
+    opacity: 1 !important;
+    transform: translateY(0) !important;
   }
   .wish-btn svg {
     width: 14px;
@@ -808,89 +818,46 @@
   }
 
   .product-info {
-    padding: 16px;
+    padding: 14px 4px 4px 4px;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    align-items: center;
+    text-align: center;
   }
   .product-category {
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.6rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--accent-saffron-soft);
     margin-bottom: 6px;
+    opacity: 0.88;
   }
   .product-title {
-    font-family: var(--font-heading);
-    font-size: 1.15rem;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
     font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     margin-bottom: 6px;
     color: var(--color-cream);
+    line-height: 1.3;
+    transition: color 0.3s;
   }
-  .product-desc {
-    font-size: 0.8rem;
-    color: var(--color-muted);
-    margin-bottom: 14px;
-    line-height: 1.4;
-  }
-
-  /* Color Swatches inside card */
-  .swatches-row {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 12px;
-    align-items: center;
-  }
-  .swatch-dot {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 1px solid var(--border-strong);
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    position: relative;
-  }
-  .swatch-dot:hover, .swatch-dot.active {
-    transform: scale(1.25);
-    border-color: var(--color-cream);
-  }
-
-  .product-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: auto;
+  .product-card:hover .product-title {
+    color: var(--accent-saffron-soft);
   }
   .product-price {
     font-family: var(--font-mono);
-    font-size: 1.05rem;
-    font-weight: 700;
+    font-size: 0.88rem;
+    font-weight: 500;
     color: var(--color-cream);
+    opacity: 0.9;
   }
-  .add-to-cart-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--surface-light);
-    border: 1px solid var(--border-strong);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-cream);
-    cursor: pointer;
-    transition: var(--transition-smooth);
-  }
-  .add-to-cart-btn:hover {
-    background: var(--accent-saffron);
-    color: var(--bg-darker);
-    border-color: var(--accent-saffron);
-    transform: scale(1.05);
-  }
-  .add-to-cart-btn.added {
-    background: var(--accent-emerald);
-    color: var(--color-cream);
-    border-color: var(--accent-emerald);
+
+  /* Hidden classes on card view */
+  .product-desc, .swatches-row, .product-footer, .add-to-cart-btn {
+    display: none !important;
   }
 
   /* Heritage Story Section */
@@ -1787,37 +1754,21 @@
         <p>Every piece represents generational artistry. Browse our handloomed selections.</p>
       </div>
 
-      <div class="category-grid reveal">
-        <!-- Bandanas Category -->
-        <div class="category-card" onclick="filterCategory('bandana')">
-          <img src="assets/bandana_saipikhup.jpg" alt="Saipikhup handloomed cotton bandana" class="category-card-bg">
+      <div class="category-grid reveal" style="grid-template-columns: repeat(2, 1fr); max-width: 800px; margin: 0 auto;">
+        <!-- Bags Category -->
+        <div class="category-card" onclick="filterCategory('bag')">
+          <img src="assets/product_1.jpg" alt="NiNa handwoven Kuki heritage bag" class="category-card-bg">
           <div class="category-overlay">
             <p>01</p>
-            <h3>Bandana</h3>
-          </div>
-        </div>
-        <!-- Scarves Category -->
-        <div class="category-card" onclick="filterCategory('scarf')">
-          <img src="assets/scarf_heritage.jpg" alt="Saipikhup handloomed cotton scarf" class="category-card-bg">
-          <div class="category-overlay">
-            <p>02</p>
-            <h3>Scarf</h3>
+            <h3>Bags</h3>
           </div>
         </div>
         <!-- Lapel Pins Category -->
         <div class="category-card" onclick="filterCategory('pin')">
-          <img src="assets/pin_gosem.jpg" alt="Gosem enamel lapel pin" class="category-card-bg">
+          <img src="assets/product_11.jpg" alt="NiNa handcrafted enamel lapel pin" class="category-card-bg">
           <div class="category-overlay">
-            <p>03</p>
-            <h3>Lapel Pin</h3>
-          </div>
-        </div>
-        <!-- Bags Category -->
-        <div class="category-card" onclick="filterCategory('bag')">
-          <img src="assets/bag_saipikhup.jpg" alt="Saipikhup handloomed bag" class="category-card-bg">
-          <div class="category-overlay">
-            <p>04</p>
-            <h3>Bags</h3>
+            <p>02</p>
+            <h3>Lapel Pins</h3>
           </div>
         </div>
       </div>
@@ -1837,10 +1788,8 @@
       <div class="shop-controls reveal">
         <div class="filter-tabs">
           <button class="filter-btn active" data-filter="all">All Items</button>
-          <button class="filter-btn" data-filter="bandana">Bandanas</button>
-          <button class="filter-btn" data-filter="scarf">Scarves</button>
-          <button class="filter-btn" data-filter="pin">Lapel Pins</button>
           <button class="filter-btn" data-filter="bag">Bags</button>
+          <button class="filter-btn" data-filter="pin">Lapel Pins</button>
         </div>
         <div class="search-wrapper">
           <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -1851,298 +1800,329 @@
       <!-- Product Grid (14 Items) -->
       <div class="product-grid reveal" id="productGrid">
 
-        <!-- BANDANA 1 -->
-        <article class="product-card" data-category="bandana" data-search="saipikhup bandana white maroon pink black yellow">
+        <!-- PRODUCT 1 -->
+        <article class="product-card" data-category="bag" data-search="id:1 bag saipikhup tote bag crimson charcoal handwoven">
           <span class="product-badge bestseller">Bestseller</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(1, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(1)">
-            <img src="assets/bandana_saipikhup.jpg" id="img-prod-1" alt="Saipikhup white bandana, geometric pattern">
+            <img src="assets/product_1.jpg" id="img-prod-1" alt="NiNa Saipikhup Tote Bag">
           </div>
           <div class="product-info">
-            <div class="product-category">Bandana · 22×22"</div>
-            <h3 class="product-title" onclick="openQuickView(1)" style="cursor:pointer;">Saipikhup Bandana</h3>
-            <p class="product-desc">Authentic handloomed bandana showing the legendary Saipikhup motif. Select color:</p>
-            
-            <div class="swatches-row">
-              <span class="swatch-dot active" style="background:#F5EDD6;" title="White" onclick="changeVariantColor(1, '#F5EDD6', 'White', event)"></span>
-              <span class="swatch-dot" style="background:#5C1320;" title="Maroon" onclick="changeVariantColor(1, '#5C1320', 'Maroon', event)"></span>
-              <span class="swatch-dot" style="background:#E84F8C;" title="Pink" onclick="changeVariantColor(1, '#E84F8C', 'Pink', event)"></span>
-              <span class="swatch-dot" style="background:#16110D;" title="Black" onclick="changeVariantColor(1, '#16110D', 'Black', event)"></span>
-              <span class="swatch-dot" style="background:#F0DE9A;" title="Yellow" onclick="changeVariantColor(1, '#F0DE9A', 'Yellow', event)"></span>
-            </div>
-
-            <div class="product-footer">
-              <span class="product-price">₹2,400</span>
-              <button class="add-to-cart-btn" aria-label="Add Saipikhup Bandana to cart" onclick="addToCart(1, event)">+</button>
-            </div>
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(1)" style="cursor:pointer;">Saipikhup Tote Bag</h3>
+            <span class="product-price">₹12,500</span>
           </div>
         </article>
 
-        <!-- BANDANA 2 -->
-        <article class="product-card" data-category="bandana" data-search="thangnang bandana butter yellow charcoal">
+        <!-- PRODUCT 2 -->
+        <article class="product-card" data-category="bag" data-search="id:2 bag thangnang hobo bag butter saffron handwoven">
+          <span class="product-badge new">New</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(2, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(2)">
-            <img src="assets/bandana_thangnang.jpg" id="img-prod-2" alt="Thangnang butter yellow bandana">
+            <img src="assets/product_2.jpg" id="img-prod-2" alt="NiNa Thangnang Hobo Bag">
           </div>
           <div class="product-info">
-            <div class="product-category">Bandana · 22×22"</div>
-            <h3 class="product-title" onclick="openQuickView(2)" style="cursor:pointer;">Thangnang Bandana</h3>
-            <p class="product-desc">Fine cotton lattice weave bandana reflecting the geometric Thangnang stripe border.</p>
-            
-            <div class="swatches-row">
-              <span class="swatch-dot active" style="background:#EBD79C;" title="Butter Yellow" onclick="changeVariantColor(2, '#EBD79C', 'Butter Yellow', event)"></span>
-              <span class="swatch-dot" style="background:#2C3E50;" title="Charcoal" onclick="changeVariantColor(2, '#2C3E50', 'Charcoal', event)"></span>
-            </div>
-
-            <div class="product-footer">
-              <span class="product-price">₹2,400</span>
-              <button class="add-to-cart-btn" aria-label="Add Thangnang Bandana to cart" onclick="addToCart(2, event)">+</button>
-            </div>
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(2)" style="cursor:pointer;">Thangnang Hobo Bag</h3>
+            <span class="product-price">₹11,800</span>
           </div>
         </article>
 
-        <!-- BANDANA 3 -->
-        <article class="product-card" data-category="bandana" data-search="mongvom bandana baby blue forest green">
+        <!-- PRODUCT 3 -->
+        <article class="product-card" data-category="bag" data-search="id:3 bag mongvom shoulder bag forest indigo handwoven">
+          <span class="product-badge handcrafted">Handcrafted</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(3, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(3)">
-            <img src="assets/bandana_mongvom.jpg" id="img-prod-3" alt="Mongvom baby blue bandana">
+            <img src="assets/product_3.jpg" id="img-prod-3" alt="NiNa Mongvom Shoulder Bag">
           </div>
           <div class="product-info">
-            <div class="product-category">Bandana · 22×22"</div>
-            <h3 class="product-title" onclick="openQuickView(3)" style="cursor:pointer;">Mongvom Bandana</h3>
-            <p class="product-desc">Minimalist geometric repeat wrap, extremely soft with durable handwoven margins.</p>
-            
-            <div class="swatches-row">
-              <span class="swatch-dot active" style="background:#8FC4DD;" title="Baby Blue" onclick="changeVariantColor(3, '#8FC4DD', 'Baby Blue', event)"></span>
-              <span class="swatch-dot" style="background:#1A3A2A;" title="Forest Green" onclick="changeVariantColor(3, '#1A3A2A', 'Forest Green', event)"></span>
-            </div>
-
-            <div class="product-footer">
-              <span class="product-price">₹2,400</span>
-              <button class="add-to-cart-btn" aria-label="Add Mongvom Bandana to cart" onclick="addToCart(3, event)">+</button>
-            </div>
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(3)" style="cursor:pointer;">Mongvom Shoulder Bag</h3>
+            <span class="product-price">₹13,200</span>
           </div>
         </article>
 
-        <!-- SCARF 1 -->
-        <article class="product-card" data-category="scarf" data-search="mongvom scarf signature woven border">
+        <!-- PRODUCT 4 -->
+        <article class="product-card" data-category="bag" data-search="id:4 bag saipikhup clutch gold saffron handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(4, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(4)">
-            <img src="assets/scarf_heritage.jpg" alt="Mongvom scarf, signature woven border">
+            <img src="assets/product_4.jpg" id="img-prod-4" alt="NiNa Saipikhup Clutch">
           </div>
           <div class="product-info">
-            <div class="product-category">Scarf · 42×42"</div>
-            <h3 class="product-title" onclick="openQuickView(4)" style="cursor:pointer;">Mongvom Scarf</h3>
-            <p class="product-desc">Luxury lightweight wool scarf featuring the historic Mongvom diamond pattern borders.</p>
-            <div class="product-footer">
-              <span class="product-price">₹5,200</span>
-              <button class="add-to-cart-btn" aria-label="Add Mongvom Scarf to cart" onclick="addToCart(4, event)">+</button>
-            </div>
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(4)" style="cursor:pointer;">Saipikhup Clutch</h3>
+            <span class="product-price">₹8,900</span>
           </div>
         </article>
 
-        <!-- SCARF 2 -->
-        <article class="product-card" data-category="scarf" data-search="saipikhup scarf red gold geometric">
+        <!-- PRODUCT 5 -->
+        <article class="product-card" data-category="bag" data-search="id:5 bag thangnang satchel dark emerald handwoven">
           <span class="product-badge bestseller">Bestseller</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(5, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(5)">
-            <img src="assets/scarf_heritage.jpg" alt="Saipikhup scarf with red and gold motifs">
+            <img src="assets/product_5.jpg" id="img-prod-5" alt="NiNa Thangnang Satchel">
           </div>
           <div class="product-info">
-            <div class="product-category">Scarf · 42×42"</div>
-            <h3 class="product-title" onclick="openQuickView(5)" style="cursor:pointer;">Saipikhup Scarf</h3>
-            <p class="product-desc">Celebrated design showing a rich saffron and crimson structure over a dark backdrop.</p>
-            <div class="product-footer">
-              <span class="product-price">₹5,200</span>
-              <button class="add-to-cart-btn" aria-label="Add Saipikhup Scarf to cart" onclick="addToCart(5, event)">+</button>
-            </div>
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(5)" style="cursor:pointer;">Thangnang Satchel</h3>
+            <span class="product-price">₹14,500</span>
           </div>
         </article>
 
-        <!-- SCARF 3 -->
-        <article class="product-card" data-category="scarf" data-search="thangnang scarf monochrome diamond weave">
+        <!-- PRODUCT 6 -->
+        <article class="product-card" data-category="bag" data-search="id:6 bag mongvom crossbody bag crimson dusk handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(6, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(6)">
-            <img src="assets/scarf_heritage.jpg" alt="Thangnang scarf monochrome diamond weave">
+            <img src="assets/product_6.jpg" id="img-prod-6" alt="NiNa Mongvom Crossbody Bag">
           </div>
           <div class="product-info">
-            <div class="product-category">Scarf · 42×42"</div>
-            <h3 class="product-title" onclick="openQuickView(6)" style="cursor:pointer;">Thangnang Scarf</h3>
-            <p class="product-desc">Monochrome diamond lattice weave, soft fringed edges, organic wool and cotton.</p>
-            <div class="product-footer">
-              <span class="product-price">₹5,200</span>
-              <button class="add-to-cart-btn" aria-label="Add Thangnang Scarf to cart" onclick="addToCart(6, event)">+</button>
-            </div>
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(6)" style="cursor:pointer;">Mongvom Crossbody Bag</h3>
+            <span class="product-price">₹10,500</span>
           </div>
         </article>
 
-        <!-- SCARF 4 -->
-        <article class="product-card" data-category="scarf" data-search="dahpi scarf animal motif illustration">
-          <span class="product-badge">Limited</span>
+        <!-- PRODUCT 7 -->
+        <article class="product-card" data-category="bag" data-search="id:7 bag saipikhup bucket bag classic earth handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(7, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(7)">
-            <img src="assets/scarf_dahpi.jpg" alt="Dahpi scarf with traditional motifs">
+            <img src="assets/product_7.jpg" id="img-prod-7" alt="NiNa Saipikhup Bucket Bag">
           </div>
           <div class="product-info">
-            <div class="product-category">Scarf · 42×42"</div>
-            <h3 class="product-title" onclick="openQuickView(7)" style="cursor:pointer;">Dahpi Scarf</h3>
-            <p class="product-desc">An intricate scarf featuring traditional animal depictions representing forest folklore.</p>
-            <div class="product-footer">
-              <span class="product-price">₹6,000</span>
-              <button class="add-to-cart-btn" aria-label="Add Dahpi Scarf to cart" onclick="addToCart(7, event)">+</button>
-            </div>
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(7)" style="cursor:pointer;">Saipikhup Bucket Bag</h3>
+            <span class="product-price">₹12,800</span>
           </div>
         </article>
 
-        <!-- SCARF 5 -->
-        <article class="product-card" data-category="scarf" data-search="phoulva scarf flora fauna hornbill lily">
+        <!-- PRODUCT 8 -->
+        <article class="product-card" data-category="bag" data-search="id:8 bag thangnang carryall ochre gold handwoven">
           <span class="product-badge new">New</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(8, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(8)">
-            <img src="assets/scarf_phoulva.jpg" alt="Phoulva scarf flora and fauna">
+            <img src="assets/product_8.jpg" id="img-prod-8" alt="NiNa Thangnang Carryall">
           </div>
           <div class="product-info">
-            <div class="product-category">Scarf · 42×42"</div>
-            <h3 class="product-title" onclick="openQuickView(8)" style="cursor:pointer;">Phoulva Scarf</h3>
-            <p class="product-desc">Rich forest-green tones with detailed embroidery blocks of hornbill birds and mountain lilies.</p>
-            <div class="product-footer">
-              <span class="product-price">₹6,000</span>
-              <button class="add-to-cart-btn" aria-label="Add Phoulva Scarf to cart" onclick="addToCart(8, event)">+</button>
-            </div>
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(8)" style="cursor:pointer;">Thangnang Carryall</h3>
+            <span class="product-price">₹13,900</span>
           </div>
         </article>
 
-        <!-- PIN 1 -->
-        <article class="product-card" data-category="pin" data-search="gosem enamel pin gold tone musical gourd pipe">
+        <!-- PRODUCT 9 -->
+        <article class="product-card" data-category="bag" data-search="id:9 bag mongvom travel tote navy sage handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(9, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(9)">
-            <img src="assets/pin_gosem.jpg" alt="Gosem gold-tone enamel pin">
+            <img src="assets/product_9.jpg" id="img-prod-9" alt="NiNa Mongvom Travel Tote">
           </div>
           <div class="product-info">
-            <div class="product-category">Lapel Pin · Enamel</div>
-            <h3 class="product-title" onclick="openQuickView(9)" style="cursor:pointer;">Gosem Pin</h3>
-            <p class="product-desc">Gold-plated hard enamel pin representing the traditional Kuki gourd wind instrument.</p>
-            <div class="product-footer">
-              <span class="product-price">₹1,400</span>
-              <button class="add-to-cart-btn" aria-label="Add Gosem Pin to cart" onclick="addToCart(9, event)">+</button>
-            </div>
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(9)" style="cursor:pointer;">Mongvom Travel Tote</h3>
+            <span class="product-price">₹15,000</span>
           </div>
         </article>
 
-        <!-- PIN 2 -->
-        <article class="product-card" data-category="pin" data-search="tahchapa pin red black enamel lapel card">
-          <span class="product-badge">Limited</span>
+        <!-- PRODUCT 10 -->
+        <article class="product-card" data-category="bag" data-search="id:10 bag saipikhup backpack heritage saffron handwoven">
+          <span class="product-badge handcrafted">Handcrafted</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(10, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(10)">
-            <img src="assets/pin_tahchapa.jpg" alt="Tahchapa red and black enamel pin">
+            <img src="assets/product_10.jpg" id="img-prod-10" alt="NiNa Saipikhup Backpack">
           </div>
           <div class="product-info">
-            <div class="product-category">Lapel Pin · Enamel</div>
-            <h3 class="product-title" onclick="openQuickView(10)" style="cursor:pointer;">Tahchapa Pin</h3>
-            <p class="product-desc">Crimson and charcoal hard enamel shield pin representing warrior lineage symbols.</p>
-            <div class="product-footer">
-              <span class="product-price">₹1,400</span>
-              <button class="add-to-cart-btn" aria-label="Add Tahchapa Pin to cart" onclick="addToCart(10, event)">+</button>
-            </div>
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(10)" style="cursor:pointer;">Saipikhup Backpack</h3>
+            <span class="product-price">₹14,200</span>
           </div>
         </article>
 
-        <!-- PIN 3 -->
-        <article class="product-card" data-category="pin" data-search="tahchanu pin multi color enamel lapel card">
-          <span class="product-badge handcrafted">Handcrafted</span>
+        <!-- PRODUCT 11 -->
+        <article class="product-card" data-category="pin" data-search="id:11 pin gosem enamel pin lapel card gold traditional instrument">
+          <span class="product-badge bestseller">Bestseller</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(11, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(11)">
-            <img src="assets/pin_tahchanu.jpg" alt="Tahchanu multi-color enamel pin">
+            <img src="assets/product_11.jpg" id="img-prod-11" alt="NiNa Gosem Enamel Pin">
           </div>
           <div class="product-info">
             <div class="product-category">Lapel Pin · Enamel</div>
-            <h3 class="product-title" onclick="openQuickView(11)" style="cursor:pointer;">Tahchanu Pin</h3>
-            <p class="product-desc">Vibrant multi-color enamel pin celebrating the intricate beadwork worn by hill maidens.</p>
-            <div class="product-footer">
-              <span class="product-price">₹1,400</span>
-              <button class="add-to-cart-btn" aria-label="Add Tahchanu Pin to cart" onclick="addToCart(11, event)">+</button>
-            </div>
+            <h3 class="product-title" onclick="openQuickView(11)" style="cursor:pointer;">Gosem Enamel Pin</h3>
+            <span class="product-price">₹1,400</span>
           </div>
         </article>
 
-        <!-- BAG 1 -->
-        <article class="product-card" data-category="bag" data-search="saipikhup bag handwoven crimson geometric tote">
+        <!-- PRODUCT 12 -->
+        <article class="product-card" data-category="pin" data-search="id:12 pin tahchapa enamel pin lapel card crimson warrior shield">
+          <span class="product-badge handcrafted">Handcrafted</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(12, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(12)">
-            <img src="assets/bag_saipikhup.jpg" alt="Saipikhup handwoven bag with crimson pattern">
+            <img src="assets/product_12.jpg" id="img-prod-12" alt="NiNa Tahchapa Enamel Pin">
           </div>
           <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(12)" style="cursor:pointer;">Saipikhup Bag</h3>
-            <p class="product-desc">Heavy-duty shoulder tote featuring a crimson-dyed cotton weave and thick brass zippers.</p>
-            <div class="product-footer">
-              <span class="product-price">₹9,800</span>
-              <button class="add-to-cart-btn" aria-label="Add Saipikhup Bag to cart" onclick="addToCart(12, event)">+</button>
-            </div>
+            <div class="product-category">Lapel Pin · Enamel</div>
+            <h3 class="product-title" onclick="openQuickView(12)" style="cursor:pointer;">Tahchapa Enamel Pin</h3>
+            <span class="product-price">₹1,400</span>
           </div>
         </article>
 
-        <!-- BAG 2 -->
-        <article class="product-card" data-category="bag" data-search="thangnang bag heart shaped woven tote crimson">
-          <span class="product-badge new">New</span>
+        <!-- PRODUCT 13 -->
+        <article class="product-card" data-category="pin" data-search="id:13 pin tahchapa collector pin lapel card close up edition">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(13, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(13)">
-            <img src="assets/bag_thangnang.jpg" alt="Thangnang heart-shaped handwoven bag">
+            <img src="assets/product_13.jpg" id="img-prod-13" alt="NiNa Tahchapa Collector Pin">
           </div>
           <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(13)" style="cursor:pointer;">Thangnang Bag</h3>
-            <p class="product-desc">Unique rounded heart-shaped shoulder bag displaying the classic Thangnang lattice motif.</p>
-            <div class="product-footer">
-              <span class="product-price">₹9,800</span>
-              <button class="add-to-cart-btn" aria-label="Add Thangnang Bag to cart" onclick="addToCart(13, event)">+</button>
-            </div>
+            <div class="product-category">Lapel Pin · Enamel</div>
+            <h3 class="product-title" onclick="openQuickView(13)" style="cursor:pointer;">Tahchapa Collector Pin</h3>
+            <span class="product-price">₹1,500</span>
           </div>
         </article>
 
-        <!-- BAG 3 -->
-        <article class="product-card" data-category="bag" data-search="mongvom bag bamboo handles tote">
-          <span class="product-badge handcrafted">Handcrafted</span>
+        <!-- PRODUCT 14 -->
+        <article class="product-card" data-category="bag" data-search="id:14 bag thangnang backpack crimson gold handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(14, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
           <div class="product-media" onclick="openQuickView(14)">
-            <img src="assets/bag_mongvom.jpg" alt="Mongvom handwoven tote with bamboo handles">
+            <img src="assets/product_14.jpg" id="img-prod-14" alt="NiNa Thangnang Backpack">
           </div>
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(14)" style="cursor:pointer;">Mongvom Bag</h3>
-            <p class="product-desc">Luxury structured tote bag finished with local bamboo carry handles and leather strap points.</p>
-            <div class="product-footer">
-              <span class="product-price">₹9,800</span>
-              <button class="add-to-cart-btn" aria-label="Add Mongvom Bag to cart" onclick="addToCart(14, event)">+</button>
-            </div>
+            <h3 class="product-title" onclick="openQuickView(14)" style="cursor:pointer;">Thangnang Backpack</h3>
+            <span class="product-price">₹14,200</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 15 -->
+        <article class="product-card" data-category="bag" data-search="id:15 bag mongvom structured tote pure olive handwoven">
+          <span class="product-badge new">New</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(15, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(15)">
+            <img src="assets/product_15.jpg" id="img-prod-15" alt="NiNa Mongvom Structured Tote">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(15)" style="cursor:pointer;">Mongvom Structured Tote</h3>
+            <span class="product-price">₹12,400</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 16 -->
+        <article class="product-card" data-category="bag" data-search="id:16 bag saipikhup daypack midnight sand handwoven">
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(16, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(16)">
+            <img src="assets/product_16.jpg" id="img-prod-16" alt="NiNa Saipikhup Daypack">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(16)" style="cursor:pointer;">Saipikhup Daypack</h3>
+            <span class="product-price">₹11,600</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 17 -->
+        <article class="product-card" data-category="bag" data-search="id:17 bag thangnang messenger bag ash slate handwoven">
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(17, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(17)">
+            <img src="assets/product_17.jpg" id="img-prod-17" alt="NiNa Thangnang Messenger Bag">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(17)" style="cursor:pointer;">Thangnang Messenger Bag</h3>
+            <span class="product-price">₹13,500</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 18 -->
+        <article class="product-card" data-category="bag" data-search="id:18 bag mongvom foldover clutch saffron black handwoven">
+          <span class="product-badge handcrafted">Handcrafted</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(18, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(18)">
+            <img src="assets/product_18.jpg" id="img-prod-18" alt="NiNa Mongvom Foldover Clutch">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(18)" style="cursor:pointer;">Mongvom Foldover Clutch</h3>
+            <span class="product-price">₹9,200</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 19 -->
+        <article class="product-card" data-category="bag" data-search="id:19 bag saipikhup bowler bag sunset rust handwoven">
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(19, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(19)">
+            <img src="assets/product_19.jpg" id="img-prod-19" alt="NiNa Saipikhup Bowler Bag">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(19)" style="cursor:pointer;">Saipikhup Bowler Bag</h3>
+            <span class="product-price">₹13,800</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 20 -->
+        <article class="product-card" data-category="bag" data-search="id:20 bag thangnang petite tote ochre saffron handwoven">
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(20, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(20)">
+            <img src="assets/product_20.jpg" id="img-prod-20" alt="NiNa Thangnang Petite Tote">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(20)" style="cursor:pointer;">Thangnang Petite Tote</h3>
+            <span class="product-price">₹10,800</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 21 -->
+        <article class="product-card" data-category="bag" data-search="id:21 bag mongvom showcase satchel signature green model show handwoven">
+          <span class="product-badge new">New</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(21, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(21)">
+            <img src="assets/product_21.jpg" id="img-prod-21" alt="NiNa Mongvom Showcase Satchel">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Bag · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(21)" style="cursor:pointer;">Mongvom Showcase Satchel</h3>
+            <span class="product-price">₹16,500</span>
           </div>
         </article>
 
@@ -2363,10 +2343,8 @@
       <div class="footer-col">
         <h4>Shop</h4>
         <ul class="footer-links">
-          <li><a href="#shop" onclick="filterCategory('bandana')">Bandanas</a></li>
-          <li><a href="#shop" onclick="filterCategory('scarf')">Scarves</a></li>
-          <li><a href="#shop" onclick="filterCategory('pin')">Lapel Pins</a></li>
           <li><a href="#shop" onclick="filterCategory('bag')">Bags</a></li>
+          <li><a href="#shop" onclick="filterCategory('pin')">Lapel Pins</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -2455,164 +2433,238 @@
 
   <!-- Script logic -->
   <script>
-    // --- Data Definitions (14 Products) ---
+    // --- Data Definitions (21 Products) ---
     const products = {
       1: {
         id: 1,
-        title: "Saipikhup Bandana",
-        category: "bandana",
-        categoryDisplay: "Bandana · 22×22\"",
-        price: 2400,
-        priceDisplay: "₹2,400",
-        desc: "An authentic, backstrap-woven square bandana featuring the legendary Saipikhup ('elephant footprint') pattern. Soft organic cotton, durable weave.",
+        title: "Saipikhup Tote Bag",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 12500,
+        priceDisplay: "₹12,500",
+        desc: "A spacious, heavy-duty shoulder tote featuring the historic Saipikhup ('elephant footprint') pattern, handwoven on a traditional Kuki backstrap loom.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
-        imageHtml: `<img src="assets/bandana_saipikhup.jpg" alt="Saipikhup Bandana">`,
-        selectedVariant: "White"
+        imageHtml: `<img src="assets/product_1.jpg" alt="Saipikhup Tote Bag">`
       },
       2: {
         id: 2,
-        title: "Thangnang Bandana",
-        category: "bandana",
-        categoryDisplay: "Bandana · 22×22\"",
-        price: 2400,
-        priceDisplay: "₹2,400",
-        desc: "A fine cotton lattice weave bandana reflecting the geometric Thangnang pattern border, comfortable for daily wear.",
+        title: "Thangnang Hobo Bag",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 11800,
+        priceDisplay: "₹11,800",
+        desc: "An elegant, slouchy hobo bag showcasing the classic Thangnang diamond lattice pattern. Fully lined with inner zipper pocket.",
         weaver: "Kimkhosei Touthang (Lamka)",
-        imageHtml: `<img src="assets/bandana_thangnang.jpg" alt="Thangnang Bandana">`,
-        selectedVariant: "Butter Yellow"
+        imageHtml: `<img src="assets/product_2.jpg" alt="Thangnang Hobo Bag">`
       },
       3: {
         id: 3,
-        title: "Mongvom Bandana",
-        category: "bandana",
-        categoryDisplay: "Bandana · 22×22\"",
-        price: 2400,
-        priceDisplay: "₹2,400",
-        desc: "A minimalist geometric repeat wrap bandana, extremely soft to the skin with durable handwoven margins.",
+        title: "Mongvom Shoulder Bag",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 13200,
+        priceDisplay: "₹13,200",
+        desc: "Structured shoulder bag finished with premium leather trims and organic cotton weave displaying the Kuki Mongvom stripe motif.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
-        imageHtml: `<img src="assets/bandana_mongvom.jpg" alt="Mongvom Bandana">`,
-        selectedVariant: "Baby Blue"
+        imageHtml: `<img src="assets/product_3.jpg" alt="Mongvom Shoulder Bag">`
       },
       4: {
         id: 4,
-        title: "Mongvom Scarf",
-        category: "scarf",
-        categoryDisplay: "Scarf · 42×42\"",
-        price: 5200,
-        priceDisplay: "₹5,200",
-        desc: "Luxury lightweight wool scarf featuring the historic Mongvom diamond pattern borders. Exceedingly soft and elegant.",
-        weaver: "Kimkhosei Touthang (Lamka)",
-        imageHtml: `<img src="assets/scarf_heritage.jpg" alt="Mongvom Scarf">`
+        title: "Saipikhup Clutch",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 8900,
+        priceDisplay: "₹8,900",
+        desc: "A sleek, hand-held clutch featuring a striking saffron and crimson Saipikhup pattern. Perfect for evening outings.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/product_4.jpg" alt="Saipikhup Clutch">`
       },
       5: {
         id: 5,
-        title: "Saipikhup Scarf",
-        category: "scarf",
-        categoryDisplay: "Scarf · 42×42\"",
-        price: 5200,
-        priceDisplay: "₹5,200",
-        desc: "A celebrated signature scarf design showing a rich saffron and crimson structure over a dark backdrop.",
-        weaver: "Nengzamoi Haokip (Churachandpur)",
-        imageHtml: `<img src="assets/scarf_heritage.jpg" alt="Saipikhup Scarf">`
+        title: "Thangnang Satchel",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 14500,
+        priceDisplay: "₹14,500",
+        desc: "A structured, vintage-inspired satchel showing dark emerald cross-hatch handloomed patterns with dual carry handles.",
+        weaver: "Kimkhosei Touthang (Lamka)",
+        imageHtml: `<img src="assets/product_5.jpg" alt="Thangnang Satchel">`
       },
       6: {
         id: 6,
-        title: "Thangnang Scarf",
-        category: "scarf",
-        categoryDisplay: "Scarf · 42×42\"",
-        price: 5200,
-        priceDisplay: "₹5,200",
-        desc: "A monochrome diamond lattice weave scarf with soft fringed edges, loomed using organic wool and cotton.",
-        weaver: "Kimkhosei Touthang (Lamka)",
-        imageHtml: `<img src="assets/scarf_heritage.jpg" alt="Thangnang Scarf">`
+        title: "Mongvom Crossbody Bag",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 10500,
+        priceDisplay: "₹10,500",
+        desc: "Compact crossbody bag featuring a repeat geometric warp pattern. Features adjustable cotton-webbing strap.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/product_6.jpg" alt="Mongvom Crossbody Bag">`
       },
       7: {
         id: 7,
-        title: "Dahpi Scarf",
-        category: "scarf",
-        categoryDisplay: "Scarf · 42×42\"",
-        price: 6000,
-        priceDisplay: "₹6,000",
-        desc: "An intricate collector's scarf featuring traditional animal motifs representing local forest folklore.",
-        weaver: "Kimkhosei Touthang (Lamka)",
-        imageHtml: `<img src="assets/scarf_dahpi.jpg" alt="Dahpi Scarf">`
+        title: "Saipikhup Bucket Bag",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 12800,
+        priceDisplay: "₹12,800",
+        desc: "Modern bucket bag with drawstring closure, featuring classic red-saffron base pattern and premium brass hardware.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/product_7.jpg" alt="Saipikhup Bucket Bag">`
       },
       8: {
         id: 8,
-        title: "Phoulva Scarf",
-        category: "scarf",
-        categoryDisplay: "Scarf · 42×42\"",
-        price: 6000,
-        priceDisplay: "₹6,000",
-        desc: "Rich forest-green tones with detailed embroidery blocks of hornbill birds and mountain lilies.",
-        weaver: "Nengzamoi Haokip (Churachandpur)",
-        imageHtml: `<img src="assets/scarf_phoulva.jpg" alt="Phoulva Scarf">`
+        title: "Thangnang Carryall",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 13900,
+        priceDisplay: "₹13,900",
+        desc: "A generous daily carryall highlighting ochre-gold woven textures. Features reinforced seams and sturdy double straps.",
+        weaver: "Kimkhosei Touthang (Lamka)",
+        imageHtml: `<img src="assets/product_8.jpg" alt="Thangnang Carryall">`
       },
       9: {
         id: 9,
-        title: "Gosem Pin",
-        category: "pin",
-        categoryDisplay: "Lapel Pin · Enamel",
-        price: 1400,
-        priceDisplay: "₹1,400",
-        desc: "Gold-plated hard enamel pin representing the traditional Kuki gourd wind instrument, the Gosem.",
-        weaver: "Ginzalian Mate (Moreh)",
-        imageHtml: `<img src="assets/pin_gosem.jpg" alt="Gosem Pin">`
+        title: "Mongvom Travel Tote",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 15000,
+        priceDisplay: "₹15,000",
+        desc: "An oversized travel tote made from heavy organic cotton weave, showcasing traditional Mongvom diamond repeat margins.",
+        weaver: "Kimkhosei Touthang (Lamka)",
+        imageHtml: `<img src="assets/product_9.jpg" alt="Mongvom Travel Tote">`
       },
       10: {
         id: 10,
-        title: "Tahchapa Pin",
-        category: "pin",
-        categoryDisplay: "Lapel Pin · Enamel",
-        price: 1400,
-        priceDisplay: "₹1,400",
-        desc: "Crimson and charcoal hard enamel shield pin representing warrior lineage symbols.",
-        weaver: "Ginzalian Mate (Moreh)",
-        imageHtml: `<img src="assets/pin_tahchapa.jpg" alt="Tahchapa Pin">`
+        title: "Saipikhup Backpack",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 14200,
+        priceDisplay: "₹14,200",
+        desc: "Sturdy heritage backpack combining Kuki backstrap handloom weaving with leather shoulder straps and back padding.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/product_10.jpg" alt="Saipikhup Backpack">`
       },
       11: {
         id: 11,
-        title: "Tahchanu Pin",
+        title: "Gosem Enamel Pin",
         category: "pin",
         categoryDisplay: "Lapel Pin · Enamel",
         price: 1400,
         priceDisplay: "₹1,400",
-        desc: "Vibrant multi-color enamel pin celebrating the intricate beadwork worn by hill maidens.",
+        desc: "Hard enamel lapel pin finished with gold plating, representing the traditional wind pipe instrument of the Kuki tribe.",
         weaver: "Ginzalian Mate (Moreh)",
-        imageHtml: `<img src="assets/pin_tahchanu.jpg" alt="Tahchanu Pin">`
+        imageHtml: `<img src="assets/product_11.jpg" alt="Gosem Enamel Pin">`
       },
       12: {
         id: 12,
-        title: "Saipikhup Bag",
-        category: "bag",
-        categoryDisplay: "Bag · Handwoven",
-        price: 9800,
-        priceDisplay: "₹9,800",
-        desc: "Heavy-duty shoulder tote bag featuring a crimson-dyed cotton weave, solid base, and secure brass zippers.",
-        weaver: "Nengzamoi Haokip (Churachandpur)",
-        imageHtml: `<img src="assets/bag_saipikhup.jpg" alt="Saipikhup Bag">`
+        title: "Tahchapa Enamel Pin",
+        category: "pin",
+        categoryDisplay: "Lapel Pin · Enamel",
+        price: 1400,
+        priceDisplay: "₹1,400",
+        desc: "Shield-shaped enamel pin representing Kuki warrior lineage, finished with charcoal and crimson enamel fills.",
+        weaver: "Ginzalian Mate (Moreh)",
+        imageHtml: `<img src="assets/product_12.jpg" alt="Tahchapa Enamel Pin">`
       },
       13: {
         id: 13,
-        title: "Thangnang Bag",
-        category: "bag",
-        categoryDisplay: "Bag · Handwoven",
-        price: 9800,
-        priceDisplay: "₹9,800",
-        desc: "Unique rounded heart-shaped shoulder bag displaying the classic Thangnang lattice motif.",
-        weaver: "Kimkhosei Touthang (Lamka)",
-        imageHtml: `<img src="assets/bag_thangnang.jpg" alt="Thangnang Bag">`
+        title: "Tahchapa Collector Pin",
+        category: "pin",
+        categoryDisplay: "Lapel Pin · Enamel",
+        price: 1500,
+        priceDisplay: "₹1,500",
+        desc: "A special close-up edition hard enamel lapel pin depicting warrior shield symbols in premium metallic outlines.",
+        weaver: "Ginzalian Mate (Moreh)",
+        imageHtml: `<img src="assets/product_13.jpg" alt="Tahchapa Collector Pin">`
       },
       14: {
         id: 14,
-        title: "Mongvom Bag",
+        title: "Thangnang Backpack",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 9800,
-        priceDisplay: "₹9,800",
-        desc: "Luxury structured tote bag finished with local bamboo carry handles and durable lining.",
+        price: 14200,
+        priceDisplay: "₹14,200",
+        desc: "Premium travel backpack featuring Thangnang crimson-gold geometric panels, leather closures, and laptop compartment.",
         weaver: "Kimkhosei Touthang (Lamka)",
-        imageHtml: `<img src="assets/bag_mongvom.jpg" alt="Mongvom Bag">`
+        imageHtml: `<img src="assets/product_14.jpg" alt="Thangnang Backpack">`
+      },
+      15: {
+        id: 15,
+        title: "Mongvom Structured Tote",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 12400,
+        priceDisplay: "₹12,400",
+        desc: "A sleek structured tote bag woven in pure olive green tones. Perfect for both office settings and weekend outings.",
+        weaver: "Kimkhosei Touthang (Lamka)",
+        imageHtml: `<img src="assets/product_15.jpg" alt="Mongvom Structured Tote">`
+      },
+      16: {
+        id: 16,
+        title: "Saipikhup Daypack",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 11600,
+        priceDisplay: "₹11,600",
+        desc: "A daily daypack displaying sand-crimson tones. Very lightweight, compact, and features durable cotton drawstrings.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/product_16.jpg" alt="Saipikhup Daypack">`
+      },
+      17: {
+        id: 17,
+        title: "Thangnang Messenger Bag",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 13500,
+        priceDisplay: "₹13,500",
+        desc: "Heritage messenger bag displaying ash-slate patterns. Designed with multiple inner pockets and thick canvas shoulder straps.",
+        weaver: "Kimkhosei Touthang (Lamka)",
+        imageHtml: `<img src="assets/product_17.jpg" alt="Thangnang Messenger Bag">`
+      },
+      18: {
+        id: 18,
+        title: "Mongvom Foldover Clutch",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 9200,
+        priceDisplay: "₹9,200",
+        desc: "A versatile foldover clutch showing bold saffron-black stripes. Handloomed with heavy-weight premium organic cotton.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/product_18.jpg" alt="Mongvom Foldover Clutch">`
+      },
+      19: {
+        id: 19,
+        title: "Saipikhup Bowler Bag",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 13800,
+        priceDisplay: "₹13,800",
+        desc: "A classic bowler-style handbag showing detailed sunset-rust geometric motifs and dual sturdy leather rolled handles.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/product_19.jpg" alt="Saipikhup Bowler Bag">`
+      },
+      20: {
+        id: 20,
+        title: "Thangnang Petite Tote",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 10800,
+        priceDisplay: "₹10,800",
+        desc: "A smaller, lightweight shopper tote featuring ochre-saffron lattice patterns. Ideal for casual daily runs.",
+        weaver: "Kimkhosei Touthang (Lamka)",
+        imageHtml: `<img src="assets/product_20.jpg" alt="Thangnang Petite Tote">`
+      },
+      21: {
+        id: 21,
+        title: "Mongvom Showcase Satchel",
+        category: "bag",
+        categoryDisplay: "Bag · Handwoven",
+        price: 16500,
+        priceDisplay: "₹16,500",
+        desc: "Our signature runway show satchel showcasing a stunning forest green geometric repeat. Handcrafted in very limited quantities.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/product_21.jpg" alt="Mongvom Showcase Satchel">`
       }
     };
 
