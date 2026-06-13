@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NiNa — Wear Your Roots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..700&family=Work+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #120D0A;
+    --surface: #1C140F;
+    --surface-2: #271C15;
+    --card: #2C2018;
+    --line: rgba(244,238,227,0.10);
+    --line-strong: rgba(244,238,227,0.18);
+    --gold: #D4A24E;
+    --gold-soft: #ECD3A0;
+    --crimson: #9F2E3F;
+    --sky: #8FC4DD;
+    --cream: #F4EEE3;
+    --muted: #B7A696;
+    --maxw: 1180px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img{ max-width:100%; display:block; }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight: 600;
+    line-height: 1.08;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  em{
+    font-style: italic;
+    color: var(--gold-soft);
+    font-weight: 500;
+  }
+  a{ color: inherit; text-decoration: none; }
+
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .wrap{
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ============ WEAVE DIVIDER — signature element ============ */
+  .weave{
+    height: 10px;
+    width: 100%;
+    background:
+      repeating-linear-gradient(
+        100deg,
+        var(--crimson) 0px, var(--crimson) 6px,
+        var(--gold) 6px, var(--gold) 10px,
+        var(--sky) 10px, var(--sky) 12px,
+        transparent 12px, transparent 26px
+      );
+    background-color: var(--surface);
+    opacity: 0.85;
+  }
+
+  /* ============ HEADER ============ */
+  header{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(18,13,10,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 16px 24px;
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--cream);
+  }
+  .logo em{ color: var(--gold); font-style: italic; }
+  .nav-links{
+    display:none;
+    gap: 32px;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-family:'Space Mono', monospace;
+  }
+  .nav-links a{ color: var(--muted); transition: color .2s; }
+  .nav-links a:hover{ color: var(--gold-soft); }
+  @media (min-width: 800px){ .nav-links{ display:flex; } }
+
+  .cart-btn{
+    display:flex; align-items:center; gap:8px;
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: var(--cream);
+    font-family:'Space Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .cart-btn:hover{ border-color: var(--gold); color: var(--gold-soft); }
+  .cart-count{
+    background: var(--gold);
+    color: #1a1209;
+    font-weight:700;
+    border-radius: 999px;
+    width: 20px; height: 20px;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 0.7rem;
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position: relative;
+    overflow: hidden;
+    padding: 72px 0 64px;
+    background: radial-gradient(120% 90% at 80% -10%, rgba(159,46,63,0.30), transparent 60%),
+                radial-gradient(90% 70% at 0% 110%, rgba(212,162,78,0.16), transparent 60%),
+                var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .hero::before{
+    content:'';
+    position:absolute; inset:0;
+    background-image: url('assets/bandana_saipikhup_black_alt.png');
+    background-size: 480px;
+    background-repeat: repeat;
+    opacity: 0.06;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .hero-inner{ position: relative; max-width: 640px; }
+  .hero-tag{
+    display:inline-block;
+    border: 1px solid var(--line-strong);
+    padding: 8px 18px;
+    font-family:'Space Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    margin-bottom: 28px;
+  }
+  .hero h1{
+    font-size: clamp(2.6rem, 8vw, 4.6rem);
+    margin-bottom: 8px;
+  }
+  .hero-sub{
+    font-family:'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    color: var(--gold-soft);
+    margin: 18px 0 18px;
+  }
+  .hero-copy{
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 460px;
+    margin-bottom: 36px;
+  }
+  .hero-ctas{ display:flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn{
+    font-family:'Space Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform .2s, opacity .2s, background .2s, color .2s;
+    display: inline-block;
+  }
+  .btn-gold{
+    background: var(--gold);
+    color: #1a1209;
+    font-weight: 700;
+  }
+  .btn-gold:hover{ background: var(--gold-soft); transform: translateY(-2px); }
+  .btn-outline{
+    background: transparent;
+    color: var(--cream);
+    border-color: var(--line-strong);
+  }
+  .btn-outline:hover{ border-color: var(--gold); color: var(--gold-soft); }
+
+  /* ============ MARQUEE ============ */
+  .marquee{
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    padding: 16px 0;
+  }
+  .marquee-track{
+    display: flex;
+    gap: 48px;
+    white-space: nowrap;
+    width: max-content;
+    animation: scroll 38s linear infinite;
+    font-family:'Space Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .marquee-track span{ display:flex; align-items:center; gap:48px; }
+  .marquee-track .diamond{ color: var(--gold); }
+  @keyframes scroll{
+    from{ transform: translateX(0); }
+    to{ transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{ animation: none; }
+  }
+
+  /* ============ SECTION HEADINGS ============ */
+  .section{ padding: 88px 0; }
+  .section-head{ margin-bottom: 48px; }
+  .section-head .eyebrow{ margin-bottom: 14px; display:flex; align-items:center; gap: 16px; }
+  .section-head .eyebrow::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background: var(--line-strong);
+  }
+  .section-head h2{ font-size: clamp(2rem, 5vw, 3rem); }
+
+  /* ============ CATEGORY GRID ============ */
+  .cat-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 700px){ .cat-grid{ grid-template-columns: repeat(2,1fr); } }
+  @media (min-width: 1080px){ .cat-grid{ grid-template-columns: repeat(4,1fr); } }
+
+  .cat-card{
+    position: relative;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    overflow: hidden;
+    transition: border-color .25s;
+  }
+  .cat-card:hover{ border-color: var(--gold); }
+  .cat-img{
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+  .cat-img img{
+    width:100%; height:100%; object-fit: cover;
+    transition: transform .6s ease;
+  }
+  .cat-card:hover .cat-img img{ transform: scale(1.06); }
+  .cat-body{ padding: 20px 22px 26px; }
+  .cat-body .eyebrow{ margin-bottom: 8px; }
+  .cat-body h3{ font-size: 1.4rem; margin-bottom: 4px; }
+  .cat-body p{ color: var(--muted); font-size: 0.85rem; margin:0; }
+
+  /* ============ PRODUCT FILTER ============ */
+  .filters{
+    display:flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px;
+  }
+  .filter-btn{
+    font-family:'Space Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 11px 20px;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .filter-btn:hover{ color: var(--cream); border-color: var(--gold); }
+  .filter-btn.active{
+    background: var(--gold);
+    color: #1a1209;
+    border-color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* ============ PRODUCT GRID ============ */
+  .prod-grid{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 18px;
+  }
+  @media (min-width: 760px){ .prod-grid{ grid-template-columns: repeat(3,1fr); } }
+  @media (min-width: 1080px){ .prod-grid{ grid-template-columns: repeat(4,1fr); } }
+
+  .card{
+    background: var(--card);
+    border: 1px solid var(--line);
+    display:flex; flex-direction: column;
+    transition: border-color .25s, transform .25s;
+  }
+  .card:hover{ border-color: var(--line-strong); transform: translateY(-3px); }
+
+  .card-media{
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--surface-2);
+  }
+  .card-media img{
+    width:100%; height:100%; object-fit: cover;
+    transition: transform .6s ease;
+  }
+  .card-media.tall{ aspect-ratio: 4/5; }
+  .card:hover .card-media img{ transform: scale(1.05); }
+
+  .badge{
+    position:absolute; top: 12px; left: 12px;
+    font-family:'Space Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    background: var(--crimson);
+    color: var(--cream);
+    z-index: 2;
+  }
+  .badge.limited{ background: var(--crimson); }
+  .badge.new{ background: var(--gold); color: #1a1209; }
+  .badge.bestseller{ background: var(--sky); color: #102230; }
+  .badge.handcrafted{ background: var(--gold-soft); color: #1a1209; }
+
+  .wish{
+    position:absolute; top: 12px; right: 12px;
+    width: 32px; height: 32px;
+    background: rgba(18,13,10,0.55);
+    border: 1px solid var(--line-strong);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--cream);
+    cursor: pointer;
+    z-index: 2;
+    transition: background .2s, color .2s;
+    font-size: 0.95rem;
+  }
+  .wish:hover, .wish.active{ background: var(--crimson); color: #fff; border-color: var(--crimson); }
+
+  .card-body{ padding: 16px 16px 18px; display:flex; flex-direction:column; gap:6px; flex:1; }
+  .card-cat{ font-family:'Space Mono', monospace; font-size: 0.65rem; letter-spacing:0.18em; text-transform: uppercase; color: var(--gold); }
+  .card-title{ font-family:'Fraunces', serif; font-size: 1.1rem; font-weight: 600; }
+  .card-desc{ font-size: 0.82rem; color: var(--muted); margin: 0; }
+
+  .swatches{ display:flex; gap:6px; margin-top: 2px; }
+  .swatch{
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 1px solid var(--line-strong);
+  }
+
+  .card-footer{
+    margin-top: auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top: 10px;
+  }
+  .price{ font-family:'Space Mono', monospace; font-weight: 700; color: var(--gold-soft); font-size: 1rem; }
+  .add-btn{
+    width: 34px; height: 34px;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--cream);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all .2s;
+    line-height: 1;
+  }
+  .add-btn:hover{ background: var(--gold); color: #1a1209; border-color: var(--gold); }
+  .add-btn.added{ background: var(--crimson); color:#fff; border-color: var(--crimson); }
+
+  /* ============ STORY ============ */
+  .story{
+    display:grid; grid-template-columns: 1fr; gap: 48px;
+    align-items: center;
+  }
+  @media (min-width: 900px){ .story{ grid-template-columns: 1fr 1fr; } }
+  .story-img{
+    border: 1px solid var(--line-strong);
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+  }
+  .story-img img{ width:100%; height:100%; object-fit: cover; }
+  .story-text h2{ font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 22px; }
+  .story-text p{ color: var(--muted); margin: 0 0 16px; font-size: 0.98rem; }
+  .story-text strong{ color: var(--cream); font-weight: 600; }
+  .story .eyebrow{ margin-bottom: 12px; }
+
+  /* ============ STATS ============ */
+  .stats-section{ background: var(--surface); border-top:1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .stats{
+    display:grid; grid-template-columns: repeat(2,1fr); gap: 32px;
+    padding-bottom: 56px;
+  }
+  @media (min-width: 760px){ .stats{ grid-template-columns: repeat(4,1fr); } }
+  .stat{ border-left: 2px solid var(--gold); padding-left: 18px; }
+  .stat .num{ font-family:'Fraunces', serif; font-size: 2.6rem; color: var(--gold-soft); font-weight: 600; }
+  .stat .label{ color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
+
+  .quote{
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+    padding-top: 12px;
+  }
+  .quote p{
+    font-family:'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 4vw, 1.9rem);
+    line-height: 1.4;
+    color: var(--cream);
+    margin: 0 0 18px;
+  }
+  .quote cite{
+    font-family:'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  /* ============ NEWSLETTER ============ */
+  .newsletter{
+    background: var(--crimson);
+    padding: 80px 0;
+    text-align:center;
+  }
+  .newsletter h2{ font-size: clamp(1.8rem, 5vw, 2.6rem); margin-bottom: 14px; color: var(--cream); }
+  .newsletter p{ color: rgba(244,238,227,0.8); max-width: 460px; margin: 0 auto 32px; }
+  .nl-form{
+    display:flex; max-width: 460px; margin: 0 auto;
+    border: 1px solid rgba(244,238,227,0.35);
+  }
+  .nl-form input{
+    flex:1; background: rgba(0,0,0,0.18); border:none; color: var(--cream);
+    padding: 16px 18px; font-family:'Work Sans', sans-serif; font-size: 0.95rem;
+    outline: none;
+  }
+  .nl-form input::placeholder{ color: rgba(244,238,227,0.6); }
+  .nl-form button{
+    background: var(--cream); color: var(--crimson); border:none;
+    font-family:'Space Mono', monospace; font-weight:700; letter-spacing: 0.16em;
+    font-size: 0.78rem; text-transform: uppercase; padding: 0 28px; cursor:pointer;
+    transition: background .2s;
+  }
+  .nl-form button:hover{ background: var(--gold-soft); }
+  .nl-note{ margin-top: 14px; font-family:'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; color: rgba(244,238,227,0.75); display:none; }
+  .nl-note.show{ display:block; }
+
+  /* ============ FOOTER ============ */
+  footer{ background: var(--surface); padding: 72px 0 28px; }
+  .foot-grid{
+    display:grid; grid-template-columns: 1fr; gap: 40px;
+  }
+  @media (min-width: 700px){ .foot-grid{ grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+  .foot-brand .logo{ margin-bottom: 16px; }
+  .foot-brand p{ color: var(--muted); font-size: 0.9rem; max-width: 320px; }
+  .foot-col h4{
+    font-family:'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold); margin: 0 0 18px;
+  }
+  .foot-col ul{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; }
+  .foot-col a{ color: var(--muted); font-size: 0.9rem; transition: color .2s; }
+  .foot-col a:hover{ color: var(--gold-soft); }
+
+  .foot-bottom{
+    margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line);
+    display:flex; flex-direction: column; gap: 16px;
+    font-size: 0.82rem; color: var(--muted);
+  }
+  @media (min-width: 700px){ .foot-bottom{ flex-direction: row; justify-content: space-between; align-items:center; } }
+  .socials{ display:flex; gap: 20px; }
+  .socials a{ color: var(--muted); font-family:'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.08em; }
+  .socials a:hover{ color: var(--gold-soft); }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible{
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav wrap">
+    <div class="logo">NiN<em>a</em></div>
+    <nav class="nav-links">
+      <a href="#categories">Collections</a>
+      <a href="#shop">Shop</a>
+      <a href="#story">Our Story</a>
+      <a href="#join">Journal</a>
+    </nav>
+    <button class="cart-btn" id="cartBtn">
+      <span>Cart</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-tag">Handcrafted in Manipur · Est. Heritage Collection</div>
+    <h1>Wear Your<br><em>Roots</em></h1>
+    <p class="hero-sub">Woven identity. Worn with pride.</p>
+    <p class="hero-copy">NiNa revives the geometric traditions of Manipuri textile art — transforming ancestral patterns into contemporary fashion accessories, one weave at a time.</p>
+    <div class="hero-ctas">
+      <a href="#shop" class="btn btn-gold">Explore Collection</a>
+      <a href="#story" class="btn btn-outline">Our Story</a>
+    </div>
+  </div>
+</section>
+
+<div class="weave"></div>
+
+<!-- ================= MARQUEE ================= -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span><span class="diamond">◆</span> Handwoven Patterns <span class="diamond">◆</span> Cultural Heritage <span class="diamond">◆</span> Artisan Crafted <span class="diamond">◆</span> Manipuri Textile <span class="diamond">◆</span> Limited Editions</span>
+    <span><span class="diamond">◆</span> Handwoven Patterns <span class="diamond">◆</span> Cultural Heritage <span class="diamond">◆</span> Artisan Crafted <span class="diamond">◆</span> Manipuri Textile <span class="diamond">◆</span> Limited Editions</span>
+  </div>
+</div>
+
+<!-- ================= CATEGORIES ================= -->
+<section class="section" id="categories">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Our Collections</div>
+      <h2>Explore by <em>Category</em></h2>
+    </div>
+    <div class="cat-grid">
+      <a class="cat-card" href="#shop" data-filter-link="bandana">
+        <div class="cat-img"><img src="assets/bandana_saipikhup_maroon.png" alt="Saipikhup maroon bandana, geometric Manipuri pattern"></div>
+        <div class="cat-body">
+          <div class="eyebrow">01</div>
+          <h3>Bandana</h3>
+          <p>22 × 22" · 7 Variants</p>
+        </div>
+      </a>
+      <a class="cat-card" href="#shop" data-filter-link="scarf">
+        <div class="cat-img"><img src="assets/scarf_saipikhup.png" alt="Saipikhup scarf with red and gold geometric border"></div>
+        <div class="cat-body">
+          <div class="eyebrow">02</div>
+          <h3>Scarf</h3>
+          <p>42 × 42" · 6 Designs</p>
+        </div>
+      </a>
+      <a class="cat-card" href="#shop" data-filter-link="pin">
+        <div class="cat-img"><img src="assets/pin_tahchapa.png" alt="Tahchapa enamel lapel pin on NiNa branded card"></div>
+        <div class="cat-body">
+          <div class="eyebrow">03</div>
+          <h3>Lapel Pin</h3>
+          <p>Enamel · 3 Styles</p>
+        </div>
+      </a>
+      <a class="cat-card" href="#shop" data-filter-link="bag">
+        <div class="cat-img"><img src="assets/bag_saipikhup.png" alt="Saipikhup handwoven bag held in a green field"></div>
+        <div class="cat-body">
+          <div class="eyebrow">04</div>
+          <h3>Bags</h3>
+          <p>Handcrafted · 3 Patterns</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SHOP ================= -->
+<section class="section" id="shop" style="background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Shop</div>
+      <h2>All <em>Products</em></h2>
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="bandana">Bandana</button>
+      <button class="filter-btn" data-filter="scarf">Scarf</button>
+      <button class="filter-btn" data-filter="pin">Lapel Pin</button>
+      <button class="filter-btn" data-filter="bag">Bag</button>
+    </div>
+
+    <div class="prod-grid" id="prodGrid">
+
+      <!-- BANDANAS -->
+      <article class="card" data-cat="bandana">
+        <div class="card-media">
+          <span class="badge bestseller">Bestseller</span>
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/bandana_saipikhup_white.png" alt="Saipikhup white bandana, 22 by 22 inch geometric diamond pattern">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Bandana · 22×22"</div>
+          <div class="card-title">Saipikhup</div>
+          <p class="card-desc">White · 4 colors available</p>
+          <div class="swatches">
+            <span class="swatch" style="background:#F4EEE3;"></span>
+            <span class="swatch" style="background:#E84F8C;"></span>
+            <span class="swatch" style="background:#16110D;"></span>
+            <span class="swatch" style="background:#F0DE9A;"></span>
+          </div>
+          <div class="card-footer">
+            <span class="price">$28</span>
+            <button class="add-btn" data-add aria-label="Add Saipikhup white bandana to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="bandana">
+        <div class="card-media">
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/bandana_saipikhup_maroon.png" alt="Saipikhup maroon bandana, 22 by 22 inch geometric pattern">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Bandana · 22×22"</div>
+          <div class="card-title">Saipikhup</div>
+          <p class="card-desc">Maroon</p>
+          <div class="swatches"><span class="swatch" style="background:#5C1320;"></span></div>
+          <div class="card-footer">
+            <span class="price">$28</span>
+            <button class="add-btn" data-add aria-label="Add Saipikhup maroon bandana to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="bandana">
+        <div class="card-media">
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/bandana_thangnang_butteryellow.png" alt="Thangnang butter yellow bandana with diamond lattice pattern">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Bandana · 22×22"</div>
+          <div class="card-title">Thangnang</div>
+          <p class="card-desc">Butter Yellow</p>
+          <div class="swatches"><span class="swatch" style="background:#EBD79C;"></span></div>
+          <div class="card-footer">
+            <span class="price">$28</span>
+            <button class="add-btn" data-add aria-label="Add Thangnang butter yellow bandana to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="bandana">
+        <div class="card-media">
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/bandana_mongvom_babyblue.png" alt="Mongvom baby blue bandana with fine stitched border">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Bandana · 22×22"</div>
+          <div class="card-title">Mongvom</div>
+          <p class="card-desc">Baby Blue</p>
+          <div class="swatches"><span class="swatch" style="background:#8FC4DD;"></span></div>
+          <div class="card-footer">
+            <span class="price">$28</span>
+            <button class="add-btn" data-add aria-label="Add Mongvom baby blue bandana to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- SCARVES -->
+      <article class="card" data-cat="scarf">
+        <div class="card-media">
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/scarf_mongvom.png" alt="Mongvom scarf, 42 by 42 inches, with signature woven border">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Scarf · 42×42"</div>
+          <div class="card-title">Mongvom Scarf</div>
+          <p class="card-desc">Signature woven border</p>
+          <div class="card-footer">
+            <span class="price">$65</span>
+            <button class="add-btn" data-add aria-label="Add Mongvom scarf to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="scarf">
+        <div class="card-media">
+          <span class="badge bestseller">Bestseller</span>
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/scarf_saipikhup.png" alt="Saipikhup scarf with red and gold geometric motifs">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Scarf · 42×42"</div>
+          <div class="card-title">Saipikhup Scarf</div>
+          <p class="card-desc">Red &amp; gold geometric</p>
+          <div class="card-footer">
+            <span class="price">$65</span>
+            <button class="add-btn" data-add aria-label="Add Saipikhup scarf to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="scarf">
+        <div class="card-media">
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/scarf_thangnang.png" alt="Thangnang scarf with monochrome diamond lattice pattern">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Scarf · 42×42"</div>
+          <div class="card-title">Thangnang Scarf</div>
+          <p class="card-desc">Monochrome diamond weave</p>
+          <div class="card-footer">
+            <span class="price">$65</span>
+            <button class="add-btn" data-add aria-label="Add Thangnang scarf to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="scarf">
+        <div class="card-media tall">
+          <span class="badge limited">Limited</span>
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/scarf_dahpi.png" alt="Dahpi scarf featuring monochrome animal motif illustrations">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Scarf · 42×42"</div>
+          <div class="card-title">Dahpi Scarf</div>
+          <p class="card-desc">Animal motif edition</p>
+          <div class="card-footer">
+            <span class="price">$75</span>
+            <button class="add-btn" data-add aria-label="Add Dahpi scarf to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="scarf">
+        <div class="card-media tall">
+          <span class="badge new">New</span>
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/scarf_phoulva.png" alt="Phoulva scarf featuring buffalo, hornbill, and floral motifs">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Scarf · 42×42"</div>
+          <div class="card-title">Phoulva Scarf</div>
+          <p class="card-desc">Flora &amp; fauna edition</p>
+          <div class="card-footer">
+            <span class="price">$75</span>
+            <button class="add-btn" data-add aria-label="Add Phoulva scarf to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- LAPEL PINS -->
+      <article class="card" data-cat="pin">
+        <div class="card-media">
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/pin_gosem.png" alt="Gosem gold-tone enamel lapel pins displayed on cards">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Lapel Pin · Enamel</div>
+          <div class="card-title">Gosem Pin</div>
+          <p class="card-desc">Gold-tone enamel</p>
+          <div class="card-footer">
+            <span class="price">$18</span>
+            <button class="add-btn" data-add aria-label="Add Gosem pin to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="pin">
+        <div class="card-media">
+          <span class="badge limited">Limited</span>
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/pin_tahchapa.png" alt="Tahchapa red and black enamel lapel pin on branded card">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Lapel Pin · Enamel</div>
+          <div class="card-title">Tahchapa Pin</div>
+          <p class="card-desc">Red &amp; black enamel</p>
+          <div class="card-footer">
+            <span class="price">$18</span>
+            <button class="add-btn" data-add aria-label="Add Tahchapa pin to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="pin">
+        <div class="card-media">
+          <span class="badge handcrafted">Handcrafted</span>
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/pin_tahchanu.png" alt="Tahchanu multi-color enamel lapel pins on branded cards">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Lapel Pin · Enamel</div>
+          <div class="card-title">Tahchanu Pin</div>
+          <p class="card-desc">Multi-color enamel</p>
+          <div class="card-footer">
+            <span class="price">$18</span>
+            <button class="add-btn" data-add aria-label="Add Tahchanu pin to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- BAGS -->
+      <article class="card" data-cat="bag">
+        <div class="card-media tall">
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/bag_saipikhup.png" alt="Saipikhup handwoven bag with crimson geometric pattern, held in a field">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Bag · Handwoven</div>
+          <div class="card-title">Saipikhup Bag</div>
+          <p class="card-desc">Crimson woven pattern</p>
+          <div class="card-footer">
+            <span class="price">$120</span>
+            <button class="add-btn" data-add aria-label="Add Saipikhup bag to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="bag">
+        <div class="card-media tall">
+          <span class="badge new">New</span>
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/bag_thangnang.png" alt="Thangnang heart-shaped handwoven bags in crimson">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Bag · Handwoven</div>
+          <div class="card-title">Thangnang Bag</div>
+          <p class="card-desc">Heart-shaped woven tote</p>
+          <div class="card-footer">
+            <span class="price">$120</span>
+            <button class="add-btn" data-add aria-label="Add Thangnang bag to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-cat="bag">
+        <div class="card-media tall">
+          <span class="badge handcrafted">Handcrafted</span>
+          <button class="wish" aria-label="Add to wishlist">♡</button>
+          <img src="assets/bag_mongvom.png" alt="Mongvom handwoven tote with bamboo handles">
+        </div>
+        <div class="card-body">
+          <div class="card-cat">Bag · Handwoven</div>
+          <div class="card-title">Mongvom Bag</div>
+          <p class="card-desc">Bamboo handle tote</p>
+          <div class="card-footer">
+            <span class="price">$120</span>
+            <button class="add-btn" data-add aria-label="Add Mongvom bag to cart">+</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= STORY ================= -->
+<section class="section" id="story">
+  <div class="wrap">
+    <div class="story">
+      <div class="story-img">
+        <img src="assets/scarf_dahpi.png" alt="Dahpi scarf detail showing ancestral animal motifs">
+      </div>
+      <div class="story-text">
+        <div class="eyebrow">Our Story</div>
+        <h2>Threads of <em>Identity</em></h2>
+        <p>NiNa was born from a deep reverence for <strong>Manipuri textile heritage</strong> — a tradition stretching back generations, encoded in every diamond, X-motif, and geometric repeat of the weavers of Manipur.</p>
+        <p>Our three signature patterns — <strong>Saipikhup</strong>, <strong>Thangnang</strong>, and <strong>Mongvom</strong> — are not mere decoration. Each motif carries cultural meaning, a language spoken in thread, passed down from artisan to artisan.</p>
+        <p>We bring these living patterns into modern accessories: bandanas, scarves, bags, and pins — designed to be worn daily, carrying a piece of heritage into the world.</p>
+        <a href="#shop" class="btn btn-outline" style="margin-top:8px;">Shop the Collection</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STATS + QUOTE ================= -->
+<section class="stats-section">
+  <div class="wrap section">
+    <div class="stats">
+      <div class="stat">
+        <div class="num">3</div>
+        <div class="label">Signature Patterns</div>
+      </div>
+      <div class="stat">
+        <div class="num">4</div>
+        <div class="label">Product Categories</div>
+      </div>
+      <div class="stat">
+        <div class="num">100%</div>
+        <div class="label">Handcrafted</div>
+      </div>
+      <div class="stat">
+        <div class="num">∞</div>
+        <div class="label">Generations of Craft</div>
+      </div>
+    </div>
+    <div class="quote">
+      <p>"Every piece carries a story older than any of us. NiNa makes that story wearable."</p>
+      <cite>— Featured, North East India Design Week</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NEWSLETTER ================= -->
+<section class="newsletter" id="join">
+  <div class="wrap">
+    <h2>Join the NiNa Circle</h2>
+    <p>New patterns, limited drops, and heritage stories — delivered to your inbox.</p>
+    <form class="nl-form" id="nlForm">
+      <input type="email" placeholder="Your email address" required id="nlEmail">
+      <button type="submit">Subscribe</button>
+    </form>
+    <div class="nl-note" id="nlNote">Welcome to the circle — keep an eye on your inbox.</div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="logo">NiN<em>a</em></div>
+        <p>Reviving Manipuri textile heritage through contemporary fashion accessories — handcrafted with love and ancestral memory.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#shop" data-filter-link="bandana">Bandana</a></li>
+          <li><a href="#shop" data-filter-link="scarf">Scarf</a></li>
+          <li><a href="#shop" data-filter-link="pin">Lapel Pin</a></li>
+          <li><a href="#shop" data-filter-link="bag">Bags</a></li>
+          <li><a href="#shop" data-filter-link="all">New Arrivals</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Info</h4>
+        <ul>
+          <li><a href="#story">About NiNa</a></li>
+          <li><a href="#story">Our Artisans</a></li>
+          <li><a href="#story">Textile Patterns</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Size Guide</a></li>
+          <li><a href="#">Care Instructions</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2024 NiNa. All rights reserved. Handcrafted in Manipur, India.</div>
+      <div class="socials">
+        <a href="#">Instagram</a>
+        <a href="#">Facebook</a>
+        <a href="#">Pinterest</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- Cart counter ----
+  let cartCount = 0;
+  const cartCountEl = document.getElementById('cartCount');
+  document.querySelectorAll('[data-add]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      cartCount++;
+      cartCountEl.textContent = cartCount;
+      btn.classList.add('added');
+      btn.textContent = '✓';
+      setTimeout(() => { btn.classList.remove('added'); btn.textContent = '+'; }, 900);
+    });
+  });
+
+  // ---- Wishlist toggle ----
+  document.querySelectorAll('.wish').forEach(w => {
+    w.addEventListener('click', () => {
+      w.classList.toggle('active');
+      w.textContent = w.classList.contains('active') ? '♥' : '♡';
+    });
+  });
+
+  // ---- Filters ----
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('#prodGrid .card');
+
+  function applyFilter(filter){
+    filterBtns.forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
+    cards.forEach(c => {
+      c.style.display = (filter === 'all' || c.dataset.cat === filter) ? '' : 'none';
+    });
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+  });
+
+  // category cards & footer links jump to shop + apply filter
+  document.querySelectorAll('[data-filter-link]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const f = link.dataset.filterLink;
+      applyFilter(f);
+      document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // ---- Newsletter ----
+  const nlForm = document.getElementById('nlForm');
+  const nlNote = document.getElementById('nlNote');
+  nlForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    nlNote.classList.add('show');
+    nlForm.reset();
+  });
+</script>
+
+</body>
+</html>
