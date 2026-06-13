@@ -445,6 +445,56 @@
     flex-wrap: wrap;
   }
 
+  /* Hero Grid Layout */
+  .hero-grid-container {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+    width: 100%;
+  }
+  @media (min-width: 992px) {
+    .hero-grid {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+    }
+  }
+  .hero-showcase {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .hero-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 1.5/1;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(212, 130, 10, 0.15);
+    border: 1px solid rgba(212, 130, 10, 0.25);
+    background: #fff;
+    transition: var(--transition-smooth);
+  }
+  .hero-image-wrapper:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(212, 130, 10, 0.25);
+    border-color: rgba(212, 130, 10, 0.5);
+  }
+  .hero-showcase-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    image-rendering: -webkit-optimize-contrast;
+  }
+
   /* Marquee Ticker */
   .marquee-ticker {
     background: var(--surface-dark);
@@ -1685,21 +1735,29 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-bg-container" id="heroBg">
-      <img src="assets/hero_bg.png" alt="Traditional Kuki backstrap loom weaving in Churachandpur, Manipur" class="hero-bg-image">
+      <img src="assets/hero_bg.png" alt="Traditional Kuki backstrap loom weaving in Churachandpur, Manipur" class="hero-bg-image" style="opacity: 0.12;">
       <div class="hero-vignette"></div>
     </div>
-    <div class="container" style="position: relative; z-index: 5;">
-      <div class="hero-content">
-        <div class="hero-tag">
-          <span style="display:inline-block; width:6px; height:6px; background:var(--accent-saffron); border-radius:50%;"></span>
-          NiNa x Kuki Heritage Collection
+    <div class="container hero-grid-container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-tag">
+            <span style="display:inline-block; width:6px; height:6px; background:var(--accent-saffron); border-radius:50%;"></span>
+            NiNa x Kuki Heritage Collection
+          </div>
+          <h1>Wear Your<br><em>Roots</em></h1>
+          <p class="hero-sub">Woven identity. Worn with pride.</p>
+          <p class="hero-description">NiNa revives the geometric traditions of Kuki textile art — transforming ancestral patterns into contemporary fashion accessories and textiles, one weave at a time.</p>
+          <div class="hero-buttons">
+            <a href="#shop" class="btn btn-primary">Explore Collection</a>
+            <a href="#community" class="btn btn-outline">Our People</a>
+          </div>
         </div>
-        <h1>Wear Your<br><em>Roots</em></h1>
-        <p class="hero-sub">Woven identity. Worn with pride.</p>
-        <p class="hero-description">NiNa revives the geometric traditions of Kuki textile art — transforming ancestral patterns into contemporary fashion accessories and textiles, one weave at a time.</p>
-        <div class="hero-buttons">
-          <a href="#shop" class="btn btn-primary">Explore Collection</a>
-          <a href="#community" class="btn btn-outline">Our People</a>
+        <div class="hero-showcase">
+          <div class="hero-image-wrapper">
+            <img src="assets/hero_model.jpg" alt="NiNa Fashion Show - Kuki motifs and woven bag accessories" class="hero-showcase-image">
+            <div class="hero-image-border"></div>
+          </div>
         </div>
       </div>
     </div>
