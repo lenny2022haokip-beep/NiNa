@@ -10,28 +10,28 @@
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --bg-dark: #0B1610;
-    --bg-darker: #050B07;
-    --surface-light: #162B1F;
-    --surface-dark: #101E16;
-    --surface-card: #14271C;
-    --accent-emerald: #2A7A4F;
-    --accent-emerald-glow: rgba(42, 122, 79, 0.15);
-    --accent-saffron: #D4820A;
-    --accent-saffron-soft: #F5C469;
-    --accent-crimson: #9A2828;
-    --accent-jade: #4E9E8C;
-    --color-cream: #F5EDD6;
-    --color-muted: #8FAD9C;
+    --bg-dark: #F6F5F3;
+    --bg-darker: #FFFFFF;
+    --surface-light: #FFFFFF;
+    --surface-dark: #F2F0EB;
+    --surface-card: #FFFFFF;
+    --accent-emerald: #F37021;
+    --accent-emerald-glow: rgba(243, 112, 33, 0.08);
+    --accent-saffron: #F37021;
+    --accent-saffron-soft: #F89E62;
+    --accent-crimson: #4A3525;
+    --accent-jade: #506855;
+    --color-cream: #111111;
+    --color-muted: #757575;
     --color-white: #FFFFFF;
-    --border-color: rgba(245, 237, 214, 0.1);
-    --border-strong: rgba(245, 237, 214, 0.22);
+    --border-color: rgba(0, 0, 0, 0.08);
+    --border-strong: rgba(0, 0, 0, 0.16);
     --max-width: 1200px;
-    --font-heading: 'Cormorant Garamond', serif;
+    --font-heading: 'Josefin Slab', 'Cormorant Garamond', serif;
     --font-body: 'DM Sans', sans-serif;
     --font-mono: 'Courier Prime', monospace;
     --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -49,7 +49,7 @@
     scrollbar-color: var(--accent-emerald) var(--bg-dark);
   }
   body {
-    background: radial-gradient(120% 120% at 50% 0%, #122419 0%, var(--bg-dark) 60%);
+    background: var(--bg-dark);
     color: var(--color-cream);
     font-family: var(--font-body);
     font-weight: 400;
@@ -147,15 +147,15 @@
 
   /* Glassmorphism Classes */
   .glass {
-    background: rgba(22, 43, 31, 0.75);
+    background: rgba(255, 255, 255, 0.82);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-color);
   }
   .glass-card {
-    background: linear-gradient(135deg, rgba(22, 43, 31, 0.5) 0%, rgba(16, 30, 22, 0.8) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(246, 245, 243, 0.85) 100%);
     border: 1px solid var(--border-color);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
   }
 
   /* Button Styles */
@@ -205,11 +205,11 @@
     border-bottom: 1px solid transparent;
   }
   header.scrolled {
-    background: rgba(11, 22, 16, 0.95);
+    background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   }
   .nav-bar {
     display: flex;
@@ -223,9 +223,9 @@
   }
   .logo {
     font-family: var(--font-heading);
-    font-size: 1.9rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
+    font-size: 1.95rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--color-cream);
   }
@@ -285,8 +285,8 @@
     justify-content: center;
   }
   .action-icon-btn:hover {
-    background: rgba(245, 237, 214, 0.08);
-    color: var(--accent-saffron-soft);
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--accent-saffron);
   }
   .cart-badge {
     position: absolute;
@@ -414,9 +414,9 @@
     align-items: center;
     gap: 8px;
     padding: 6px 14px;
-    border: 1px solid rgba(212, 130, 10, 0.3);
-    background: rgba(212, 130, 10, 0.05);
-    color: var(--accent-saffron-soft);
+    border: 1px solid rgba(243, 112, 33, 0.3);
+    background: rgba(243, 112, 33, 0.05);
+    color: var(--accent-saffron);
     font-family: var(--font-mono);
     font-size: 0.68rem;
     letter-spacing: 0.22em;
@@ -434,14 +434,14 @@
   .hero-content h1 em {
     font-style: italic;
     font-weight: 400;
-    color: var(--accent-saffron-soft);
+    color: var(--accent-saffron);
   }
   .hero-sub {
     font-family: var(--font-mono);
     font-size: clamp(0.72rem, 2vw, 0.85rem);
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--accent-saffron-soft);
+    color: var(--accent-saffron);
     margin-bottom: 24px;
     opacity: 0.9;
   }
@@ -487,17 +487,17 @@
     width: 100%;
     max-width: 480px;
     aspect-ratio: 1.5/1;
-    border-radius: 12px;
+    border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(212, 130, 10, 0.15);
-    border: 1px solid rgba(212, 130, 10, 0.25);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border-color);
     background: #fff;
     transition: var(--transition-smooth);
   }
   .hero-image-wrapper:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(212, 130, 10, 0.25);
-    border-color: rgba(212, 130, 10, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.10);
+    border-color: var(--accent-saffron);
   }
   .hero-showcase-image {
     width: 100%;
@@ -745,14 +745,14 @@
     aspect-ratio: 1/1;
     overflow: hidden;
     cursor: pointer;
-    background: #0d1712;
+    background: #F5F5F5;
     border: 1px solid var(--border-color);
-    border-radius: 4px;
+    border-radius: 0;
     transition: var(--transition-smooth);
   }
   .product-card:hover .product-media {
     border-color: var(--accent-saffron);
-    box-shadow: 0 8px 25px rgba(212, 130, 10, 0.15);
+    box-shadow: 0 8px 25px rgba(243, 112, 33, 0.1);
   }
   .product-media img {
     width: 100%;
@@ -792,7 +792,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: rgba(11, 22, 16, 0.75);
+    background: rgba(255, 255, 255, 0.85);
     border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
@@ -838,7 +838,7 @@
     font-size: 0.6rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--accent-saffron-soft);
+    color: var(--color-muted);
     margin-bottom: 6px;
     opacity: 0.88;
   }
@@ -854,7 +854,7 @@
     transition: color 0.3s;
   }
   .product-card:hover .product-title {
-    color: var(--accent-saffron-soft);
+    color: var(--accent-saffron);
   }
   .product-price {
     font-family: var(--font-mono);
@@ -1120,7 +1120,7 @@
     height: 44px;
     border-radius: 50%;
     border: 1px solid var(--border-strong);
-    background: rgba(11, 22, 16, 0.7);
+    background: rgba(255, 255, 255, 0.85);
     color: var(--color-cream);
     cursor: pointer;
     display: flex;
@@ -1132,7 +1132,7 @@
   .carousel-btn:hover {
     background: var(--accent-saffron);
     border-color: var(--accent-saffron);
-    color: var(--bg-darker);
+    color: #FFFFFF;
   }
   .carousel-btn.prev { left: 0; }
   .carousel-btn.next { right: 0; }
@@ -1193,21 +1193,21 @@
     border: 1px solid var(--border-strong);
     border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   }
   .newsletter-input {
     flex: 1;
-    background: rgba(5, 11, 7, 0.4);
+    background: rgba(0, 0, 0, 0.04);
     padding: 14px 18px;
     color: var(--color-cream);
     font-size: 0.9rem;
   }
   .newsletter-input::placeholder {
-    color: rgba(143, 173, 156, 0.6);
+    color: rgba(0, 0, 0, 0.4);
   }
   .newsletter-submit {
     background: var(--accent-saffron);
-    color: var(--bg-darker);
+    color: #FFFFFF;
     font-family: var(--font-mono);
     font-size: 0.72rem;
     font-weight: 700;
@@ -1416,7 +1416,7 @@
     transition: var(--transition-smooth);
   }
   .cart-item-qty-btn:hover {
-    background: rgba(245, 237, 214, 0.08);
+    background: rgba(0, 0, 0, 0.05);
   }
   .cart-item-qty-val {
     flex: 1;
@@ -1436,7 +1436,7 @@
   .cart-footer {
     padding: 24px;
     border-top: 1px solid var(--border-color);
-    background: rgba(16, 30, 22, 0.6);
+    background: var(--bg-dark);
   }
   .cart-total-row {
     display: flex;
@@ -1447,7 +1447,7 @@
   }
   .cart-total-price {
     font-family: var(--font-mono);
-    color: var(--accent-saffron-soft);
+    color: var(--accent-saffron);
     font-weight: 700;
   }
   .checkout-btn {
@@ -1459,7 +1459,7 @@
   .cart-sidebar-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(5, 11, 7, 0.7);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 140;
     opacity: 0;
     pointer-events: none;
@@ -1475,7 +1475,7 @@
   .modal-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(5, 11, 7, 0.85);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 200;
     display: flex;
     align-items: center;
@@ -1516,7 +1516,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: rgba(11, 22, 16, 0.8);
+    background: rgba(255, 255, 255, 0.85);
     color: var(--color-cream);
     display: flex;
     align-items: center;
@@ -1528,7 +1528,7 @@
   }
   .modal-close-btn:hover {
     background: var(--accent-saffron);
-    color: var(--bg-darker);
+    color: #FFFFFF;
     border-color: var(--accent-saffron);
   }
   .modal-gallery {
@@ -1622,7 +1622,7 @@
     transition: var(--transition-smooth);
   }
   .modal-qty-btn:hover {
-    background: rgba(245, 237, 214, 0.08);
+    background: rgba(0, 0, 0, 0.05);
   }
   .modal-qty-val {
     width: 32px;
@@ -1650,7 +1650,7 @@
     pointer-events: auto;
     padding: 16px 24px;
     border-radius: 4px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     display: flex;
     align-items: center;
     gap: 12px;
