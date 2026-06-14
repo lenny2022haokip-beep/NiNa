@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>document.documentElement.classList.add('js-enabled');</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>NiNa — Woven from the Hills</title>
@@ -101,13 +102,13 @@
     padding: 0 24px;
   }
 
-  /* Scroll Reveal Base */
-  .reveal {
+  /* Scroll Reveal Base - Progressive CSS Enhancement */
+  .js-enabled .reveal {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .reveal.active {
+  .js-enabled .reveal.active {
     opacity: 1;
     transform: translateY(0);
   }
@@ -2833,24 +2834,67 @@
     });
 
     // --- Scroll Reveal Animation ---
-    const revealElements = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
+    try {
+      const revealElements = document.querySelectorAll('.reveal');
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      if (revealElements) {
+        revealElements.forEach(el => revealObserver.observe(el));
+      }
+
+      // Fallback: check visible elements on scroll and load
+      function checkReveal() {
+        if (revealElements) {
+          revealElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 1.1) {
+              el.classList.add('active');
+            }
+          });
         }
-      });
-    }, { threshold: 0.1 });
+      }
 
-    revealElements.forEach(el => revealObserver.observe(el));
+      window.addEventListener('scroll', checkReveal);
+      
+      // Page Load Trigger Reveal
+      function triggerInitialReveal() {
+        setTimeout(() => {
+          const firstReveal = document.querySelector('.hero-content');
+          if (firstReveal) firstReveal.classList.add('active');
+          checkReveal();
+        }, 150);
+      }
 
-    // Page Load Trigger Reveal
-    window.addEventListener('DOMContentLoaded', () => {
+      if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', triggerInitialReveal);
+      } else {
+        triggerInitialReveal();
+      }
+
+      // Ultimate fallback: guarantee all elements are visible after 1 second
       setTimeout(() => {
-        const firstReveal = document.querySelector('.hero-content');
-        if (firstReveal) firstReveal.classList.add('active');
-      }, 150);
-    });
+        if (revealElements) {
+          revealElements.forEach(el => {
+            if (!el.classList.contains('active')) {
+              el.classList.add('active');
+            }
+          });
+        }
+      }, 1000);
+    } catch (e) {
+      console.error("Error setting up scroll reveal:", e);
+      try {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+      } catch (err) {
+        console.error("Visual recovery failed:", err);
+      }
+    }
 
     // --- Mobile Menu Toggle ---
     const menuToggle = document.getElementById('menuToggle');
