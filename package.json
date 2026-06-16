@@ -1,0 +1,22 @@
+{
+  "name": "ni-na",
+  "version": "1.0.0",
+  "description": "NiNa - Woven from the Hills - Authentic handwoven textiles and traditional Puans by Kuki artisans",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "textiles",
+    "handwoven",
+    "kuki",
+    "artisan"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
