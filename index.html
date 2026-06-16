@@ -414,11 +414,10 @@
   /* Hero Section with Full Bleed Video Background */
   .hero-section {
     position: relative;
-    min-height: 100vh;
+    height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 120px 0 80px;
     overflow: hidden;
     background-color: #000000;
   }
@@ -436,22 +435,65 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.9;
-    filter: grayscale(100%) brightness(0.42) contrast(1.1);
+    opacity: 1;
+    filter: none;
   }
   .hero-vignette {
     position: absolute;
-    inset: 0;
-    background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.75) 100%),
-                linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, transparent 100%);
     z-index: 2;
+    pointer-events: none;
   }
-  .hero-grid-container {
+  
+  /* Luxury Corner Brackets */
+  .hero-corner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    z-index: 10;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+  }
+  .hero-corner.tl {
+    top: 32px;
+    left: 32px;
+    border-right: none;
+    border-bottom: none;
+  }
+  .hero-corner.tr {
+    top: 32px;
+    right: 32px;
+    border-left: none;
+    border-bottom: none;
+  }
+  .hero-corner.bl {
+    bottom: 32px;
+    left: 32px;
+    border-right: none;
+    border-top: none;
+  }
+  .hero-corner.br {
+    bottom: 32px;
+    right: 32px;
+    border-left: none;
+    border-top: none;
+  }
+  
+  /* Dedicated Hero Slogan Area */
+  .hero-slogan-section {
+    background-color: var(--bg-darker);
+    padding: 100px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-color);
     position: relative;
     z-index: 5;
-    width: 100%;
-    display: flex;
-    justify-content: center;
   }
   .hero-content-hermes {
     position: relative;
@@ -461,10 +503,10 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    color: #FFFFFF;
+    color: var(--color-cream);
     padding: 0 20px;
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
     transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .hero-content-hermes.active {
@@ -473,32 +515,32 @@
   }
   .hermes-subtitle-top {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.45em;
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: var(--color-cream);
     margin-bottom: 24px;
     font-weight: 700;
-    opacity: 0.9;
+    opacity: 0.95;
   }
   .hermes-main-title {
     font-family: var(--font-heading);
-    font-size: clamp(2.4rem, 6.8vw, 4.8rem);
+    font-size: clamp(2rem, 5.5vw, 3.8rem);
     font-weight: 300;
     letter-spacing: 0.16em;
-    line-height: 1.15;
+    line-height: 1.25;
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: var(--color-cream);
     margin-bottom: 24px;
   }
   .hermes-subtitle-bottom {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: #FFFFFF;
-    margin-bottom: 48px;
-    opacity: 0.8;
+    color: var(--color-muted);
+    margin-bottom: 40px;
+    opacity: 0.9;
   }
   .hermes-cta-container {
     display: flex;
@@ -506,91 +548,20 @@
   }
   .hermes-btn-link {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.25em;
-    color: #FFFFFF;
+    color: var(--color-cream);
     text-decoration: none;
-    border-bottom: 1.5px solid #FFFFFF;
+    border-bottom: 1.5px solid var(--color-cream);
     padding-bottom: 8px;
     transition: var(--transition-smooth);
   }
   .hermes-btn-link:hover {
-    opacity: 0.75;
+    opacity: 0.7;
     letter-spacing: 0.28em;
   }
 
-  /* Animated Hero Background Pattern & Floating Motifs */
-  .hero-floating-patterns {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    pointer-events: none;
-    overflow: hidden;
-  }
-  
-  .floating-shape {
-    position: absolute;
-    color: #FFFFFF;
-    opacity: 0.08;
-    transition: opacity 1s ease;
-  }
-  
-  .shape-1 {
-    width: 250px;
-    height: 250px;
-    top: 8%;
-    left: 4%;
-    animation: floatSlowly1 35s ease-in-out infinite alternate;
-  }
-  .shape-2 {
-    width: 320px;
-    height: 320px;
-    bottom: 12%;
-    right: 3%;
-    animation: floatSlowly2 45s ease-in-out infinite alternate;
-  }
-  .shape-3 {
-    width: 180px;
-    height: 180px;
-    top: 35%;
-    right: 12%;
-    animation: floatSlowly3 30s ease-in-out infinite alternate;
-  }
-  
-  @keyframes floatSlowly1 {
-    0% {
-      transform: translate(0, 0) rotate(0deg) scale(1);
-      opacity: 0.02;
-    }
-    50% { opacity: 0.05; }
-    100% {
-      transform: translate(40px, 60px) rotate(15deg) scale(1.05);
-      opacity: 0.02;
-    }
-  }
-  @keyframes floatSlowly2 {
-    0% {
-      transform: translate(0, 0) rotate(0deg) scale(1);
-      opacity: 0.01;
-    }
-    50% { opacity: 0.04; }
-    100% {
-      transform: translate(-50px, -40px) rotate(-12deg) scale(0.95);
-      opacity: 0.01;
-    }
-  }
-  @keyframes floatSlowly3 {
-    0% {
-      transform: translate(0, 0) rotate(0deg) scale(0.9);
-      opacity: 0.02;
-    }
-    50% { opacity: 0.06; }
-    100% {
-      transform: translate(30px, -50px) rotate(20deg) scale(1.1);
-      opacity: 0.02;
-    }
-  }
 
   /* Marquee Ticker */
   .marquee-ticker {
@@ -2199,6 +2170,12 @@
 
   <!-- Hero Section -->
   <section class="hero-section">
+    <!-- Luxury Corner Brackets -->
+    <div class="hero-corner tl"></div>
+    <div class="hero-corner tr"></div>
+    <div class="hero-corner bl"></div>
+    <div class="hero-corner br"></div>
+
     <!-- Full-Bleed Video Background -->
     <div class="hero-bg-container" id="heroBg">
       <video class="hero-bg-video" autoplay loop muted playsinline id="heroVideo">
@@ -2207,29 +2184,11 @@
       </video>
       <div class="hero-vignette"></div>
     </div>
+  </section>
 
-    <!-- Floating Kuki Motifs on top of Video -->
-    <div class="hero-floating-patterns">
-      <!-- Mangvom Shape -->
-      <svg class="floating-shape shape-1" viewBox="0 0 100 100">
-        <path d="M0 10 H100 M0 30 H100 M0 50 H100 M0 70 H100 M0 90 H100" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3,3" fill="none" />
-        <polygon points="50,15 70,50 50,85 30,50" fill="none" stroke="currentColor" stroke-width="1.2" />
-      </svg>
-      <!-- Saipikhup Shape -->
-      <svg class="floating-shape shape-2" viewBox="0 0 100 100">
-        <path d="M50 5 L95 50 L50 95 L5 L50 Z M50 25 L75 50 L50 75 L25 50 Z" fill="none" stroke="currentColor" stroke-width="1.2" />
-        <rect x="40" y="40" width="20" height="20" fill="none" stroke="currentColor" stroke-width="0.8" />
-      </svg>
-      <!-- Thangnang Shape -->
-      <svg class="floating-shape shape-3" viewBox="0 0 100 100">
-        <path d="M10 50 L50 10 L90 50 L50 90 Z" fill="none" stroke="currentColor" stroke-width="1.2" />
-        <path d="M20 50 L50 20 L80 50 L50 80 Z" fill="none" stroke="currentColor" stroke-width="0.8" />
-        <path d="M30 50 L50 30 L70 50 L50 70 Z" fill="none" stroke="currentColor" stroke-width="0.5" />
-      </svg>
-    </div>
-
-    <!-- Centered Hero Text Content -->
-    <div class="container hero-grid-container">
+  <!-- Dedicated Hero Slogan Area -->
+  <section class="hero-slogan-section">
+    <div class="container">
       <div class="hero-content-hermes">
         <p class="hermes-subtitle-top">NINA x KUKI</p>
         <h1 class="hermes-main-title">THE ART OF WEAVING</h1>
