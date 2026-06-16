@@ -14,29 +14,29 @@
 
 <style>
   :root {
-    --bg-dark: #F6F5F3;
+    --bg-dark: #F9F9F9;
     --bg-darker: #FFFFFF;
     --surface-light: #FFFFFF;
-    --surface-dark: #F2F0EB;
+    --surface-dark: #F4F4F4;
     --surface-card: #FFFFFF;
-    --accent-emerald: #F37021;
-    --accent-emerald-glow: rgba(243, 112, 33, 0.08);
-    --accent-saffron: #F37021;
-    --accent-saffron-soft: #F89E62;
-    --accent-crimson: #4A3525;
-    --accent-jade: #506855;
-    --color-cream: #111111;
-    --color-muted: #757575;
+    --accent-emerald: #000000;
+    --accent-emerald-glow: rgba(0, 0, 0, 0.04);
+    --accent-saffron: #000000;
+    --accent-saffron-soft: #444444;
+    --accent-crimson: #111111;
+    --accent-jade: #222222;
+    --color-cream: #000000;
+    --color-muted: #666666;
     --color-white: #FFFFFF;
-    --border-color: rgba(0, 0, 0, 0.08);
-    --border-strong: rgba(0, 0, 0, 0.16);
+    --border-color: #E5E5E5;
+    --border-strong: #111111;
     --max-width: 1200px;
     --font-heading: 'Josefin Slab', 'Cormorant Garamond', serif;
     --font-body: 'DM Sans', sans-serif;
     --font-mono: 'Courier Prime', monospace;
     --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    --logo-large-fill: rgba(17, 17, 17, 0.28);
-    --logo-small-fill: #111111;
+    --logo-large-fill: rgba(0, 0, 0, 0.15);
+    --logo-small-fill: #000000;
   }
 
   /* Reset & Base Styles */
@@ -117,34 +117,25 @@
 
   /* Traditional Kuki Pattern Border */
   .kuki-border {
-    height: 14px;
+    height: 28px;
     width: 100%;
-    background: 
-      linear-gradient(90deg, rgba(5, 11, 7, 0.15) 50%, transparent 50%),
-      repeating-linear-gradient(
-        45deg,
-        var(--accent-crimson) 0px, var(--accent-crimson) 10px,
-        var(--accent-saffron) 10px, var(--accent-saffron) 20px,
-        var(--accent-emerald) 20px, var(--accent-emerald) 30px,
-        var(--accent-jade) 30px, var(--accent-jade) 40px
-      );
-    background-size: 4px 100%, 100% 100%;
+    background-image: url('assets/filler_black.png');
+    background-repeat: repeat-x;
+    background-size: auto 180px;
+    background-position: top;
     opacity: 0.95;
     position: relative;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.6);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    z-index: 10;
+  }
+  .kuki-border.red {
+    background-image: url('assets/filler_red.png');
+  }
+  .kuki-border.bottom-pattern {
+    background-position: bottom;
   }
   .kuki-border::after {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: repeating-linear-gradient(
-      90deg,
-      #000 0px, #000 4px,
-      transparent 4px, transparent 8px
-    );
+    content: none;
   }
 
   /* Glassmorphism Classes */
@@ -215,10 +206,6 @@
   }
   
   /* When header is transparent over the hero background */
-  #header:not(.scrolled) {
-    --logo-large-fill: rgba(255, 255, 255, 0.32);
-    --logo-small-fill: #FFFFFF;
-  }
   #header:not(.scrolled) .nav-links a {
     color: rgba(255, 255, 255, 0.78);
   }
@@ -235,11 +222,7 @@
     background: #FFFFFF;
   }
   
-  /* Scrolled header logo/link adjustments */
-  header.scrolled {
-    --logo-large-fill: rgba(17, 17, 17, 0.28);
-    --logo-small-fill: #111111;
-  }
+  /* Scrolled header styling defaults */
   header.scrolled .nav-links a {
     color: var(--color-muted);
   }
@@ -269,9 +252,28 @@
   .logo {
     display: flex;
     align-items: center;
-    width: 140px;
-    height: auto;
+    height: 48px;
     transition: var(--transition-smooth);
+  }
+  .logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    filter: none;
+    transition: filter 0.4s ease;
+  }
+  header.scrolled .logo-img {
+    filter: invert(1);
+    mix-blend-mode: normal;
+  }
+  .footer-brand .logo {
+    height: 60px;
+    margin-bottom: 16px;
+  }
+  .footer-brand .logo-img {
+    height: 60px;
+    filter: invert(1);
   }
   .nav-links {
     display: none;
@@ -409,15 +411,15 @@
     transform: scale(1.05);
   }
 
-  /* Hero Section with Parallax Background */
+  /* Hero Section with Full Bleed Video Background */
   .hero-section {
     position: relative;
-    min-height: 100vh;
+    height: 85vh;
     display: flex;
     align-items: center;
-    padding: 120px 0 80px;
+    justify-content: center;
     overflow: hidden;
-    background-color: var(--bg-darker);
+    background-color: #000000;
   }
   .hero-bg-container {
     position: absolute;
@@ -429,126 +431,137 @@
     pointer-events: none;
     transform: translate3d(0, 0, 0);
   }
-  .hero-bg-image {
+  .hero-bg-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 1.0;
-    filter: brightness(0.68) saturate(0.95);
+    opacity: 1;
+    filter: none;
   }
   .hero-vignette {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.65) 100%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, transparent 100%);
     z-index: 2;
+    pointer-events: none;
   }
-  .hero-content {
+  
+  /* Luxury Corner Brackets */
+  .hero-corner {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    z-index: 10;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+  }
+  .hero-corner.tl {
+    top: 32px;
+    left: 32px;
+    border-right: none;
+    border-bottom: none;
+  }
+  .hero-corner.tr {
+    top: 32px;
+    right: 32px;
+    border-left: none;
+    border-bottom: none;
+  }
+  .hero-corner.bl {
+    bottom: 32px;
+    left: 32px;
+    border-right: none;
+    border-top: none;
+  }
+  .hero-corner.br {
+    bottom: 32px;
+    right: 32px;
+    border-left: none;
+    border-top: none;
+  }
+  
+  /* Dedicated Hero Slogan Area */
+  .hero-slogan-section {
+    background-color: var(--bg-darker);
+    padding: 100px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border-color);
     position: relative;
-    z-index: 3;
-    max-width: 720px;
-    margin: 0 auto;
+    z-index: 5;
+  }
+  .hero-content-hermes {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    color: #FFFFFF;
+    color: var(--color-cream);
+    padding: 0 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .hero-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1);
-    color: #FFFFFF;
+  .hero-content-hermes.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .hermes-subtitle-top {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.22em;
+    font-size: 0.75rem;
+    letter-spacing: 0.45em;
     text-transform: uppercase;
+    color: var(--color-cream);
     margin-bottom: 24px;
-    border-radius: 4px;
-  }
-  .hero-content h1 {
-    font-size: clamp(3rem, 7.5vw, 5.2rem);
-    margin-bottom: 20px;
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    color: #FFFFFF;
-  }
-  .hero-content h1 em {
-    font-style: italic;
-    font-weight: 400;
-    color: var(--accent-saffron);
-  }
-  .hero-sub {
-    font-family: var(--font-mono);
-    font-size: clamp(0.72rem, 2vw, 0.85rem);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent-saffron);
-    margin-bottom: 24px;
+    font-weight: 700;
     opacity: 0.95;
   }
-  .hero-description {
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 1.05rem;
-    margin-bottom: 36px;
-    max-width: 580px;
+  .hermes-main-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5.5vw, 3.8rem);
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    line-height: 1.25;
+    text-transform: uppercase;
+    color: var(--color-cream);
+    margin-bottom: 24px;
   }
-  .hero-buttons {
+  .hermes-subtitle-bottom {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 40px;
+    opacity: 0.9;
+  }
+  .hermes-cta-container {
     display: flex;
-    gap: 16px;
     justify-content: center;
-    flex-wrap: wrap;
   }
-  .hero-content .btn-outline {
-    color: #FFFFFF;
-    border-color: rgba(255, 255, 255, 0.5);
-  }
-  .hero-content .btn-outline:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: #FFFFFF;
-    color: #FFFFFF;
-  }
-
-  /* Hero Grid Layout */
-  .hero-grid-container {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-  }
-  .hero-grid {
-    width: 100%;
-    display: block;
-  }
-  .hero-showcase {
-    display: none;
-  }
-  .hero-image-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    aspect-ratio: 1.5/1;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
-    border: 1px solid var(--border-color);
-    background: #fff;
+  .hermes-btn-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--color-cream);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--color-cream);
+    padding-bottom: 8px;
     transition: var(--transition-smooth);
   }
-  .hero-image-wrapper:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.10);
-    border-color: var(--accent-saffron);
+  .hermes-btn-link:hover {
+    opacity: 0.7;
+    letter-spacing: 0.28em;
   }
-  .hero-showcase-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    image-rendering: -webkit-optimize-contrast;
-  }
+
 
   /* Marquee Ticker */
   .marquee-ticker {
@@ -693,12 +706,21 @@
       align-items: center;
     }
   }
+  .filter-tabs-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 650px;
+  }
   .filter-tabs {
     display: flex;
-    gap: 8px;
+    gap: 12px;
     overflow-x: auto;
-    padding-bottom: 8px;
+    padding-bottom: 4px;
     scrollbar-width: none;
+    width: 100%;
   }
   .filter-tabs::-webkit-scrollbar {
     display: none;
@@ -706,26 +728,65 @@
   .filter-btn {
     font-family: var(--font-mono);
     font-size: 0.72rem;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    padding: 10px 20px;
-    border: 1px solid var(--border-strong);
-    border-radius: 4px;
+    padding: 12px 24px;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
     color: var(--color-muted);
     cursor: pointer;
     transition: var(--transition-smooth);
     white-space: nowrap;
+    background: transparent;
   }
   .filter-btn:hover {
-    color: var(--color-cream);
-    border-color: var(--accent-saffron);
+    color: #000000;
+    border-color: #000000;
   }
   .filter-btn.active {
-    background: var(--accent-saffron);
-    border-color: var(--accent-saffron);
-    color: var(--bg-darker);
+    background: #000000;
+    border-color: #000000;
+    color: #FFFFFF;
     font-weight: 700;
-    box-shadow: 0 4px 12px rgba(212, 130, 10, 0.3);
+  }
+  .sub-filter-tabs {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border-top: 1px solid var(--border-color);
+    padding-top: 0;
+    width: 100%;
+  }
+  .sub-filter-tabs.show {
+    opacity: 1;
+    max-height: 100px;
+    padding-top: 15px;
+    margin-bottom: 5px;
+  }
+  .sub-filter-btn {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    cursor: pointer;
+    padding: 6px 12px;
+    transition: var(--transition-smooth);
+    border-bottom: 1.5px solid transparent;
+    background: transparent;
+  }
+  .sub-filter-btn:hover {
+    color: #000000;
+  }
+  .sub-filter-btn.active {
+    color: #000000;
+    font-weight: 700;
+    border-color: #000000;
   }
   .search-wrapper {
     position: relative;
@@ -795,7 +856,7 @@
   }
   .product-card:hover .product-media {
     border-color: var(--accent-saffron);
-    box-shadow: 0 8px 25px rgba(243, 112, 33, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
   }
   .product-media img {
     width: 100%;
@@ -932,6 +993,42 @@
     background: var(--surface-dark);
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+  }
+  .story-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('assets/filler_red.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.02;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .story-section .container {
+    position: relative;
+    z-index: 2;
+  }
+  .achievements-section {
+    position: relative;
+    overflow: hidden;
+  }
+  .achievements-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('assets/filler_black.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .achievements-section .container {
+    position: relative;
+    z-index: 2;
   }
   .story-grid {
     display: grid;
@@ -1203,7 +1300,7 @@
   .newsletter-section {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, var(--accent-emerald-glow) 0%, rgba(154, 40, 40, 0.08) 100%), var(--surface-dark);
+    background: var(--surface-dark);
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
   }
@@ -1211,16 +1308,47 @@
     content: '';
     position: absolute;
     inset: 0;
-    opacity: 0.04;
-    background-image: repeating-linear-gradient(45deg, var(--accent-saffron) 0px, var(--accent-saffron) 2px, transparent 2px, transparent 15px);
+    opacity: 0.025;
+    background-image: url('assets/filler_red.png');
+    background-size: cover;
+    background-position: center;
     pointer-events: none;
   }
+  .newsletter-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .newsletter-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+  }
   .newsletter-inner {
-    text-align: center;
-    max-width: 540px;
-    margin: 0 auto;
+    text-align: left;
+    max-width: 100%;
     position: relative;
     z-index: 2;
+  }
+  .newsletter-media-inner {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+  }
+  .newsletter-model-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.5s ease, transform 0.8s ease;
+  }
+  .newsletter-media-inner:hover .newsletter-model-img {
+    filter: none;
+    transform: scale(1.03);
   }
   .newsletter-inner h2 {
     font-size: clamp(1.8rem, 4vw, 2.5rem);
@@ -1234,7 +1362,7 @@
   .newsletter-form {
     display: flex;
     border: 1px solid var(--border-strong);
-    border-radius: 4px;
+    border-radius: 0;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   }
@@ -1275,7 +1403,7 @@
   /* Footer Section */
   footer {
     background: var(--bg-darker);
-    padding: 80px 0 32px;
+    padding: 40px 0 24px;
     font-size: 0.86rem;
     color: var(--color-muted);
     border-top: 1px solid var(--border-color);
@@ -1283,20 +1411,20 @@
   .footer-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 40px;
-    margin-bottom: 60px;
+    gap: 30px;
+    margin-bottom: 30px;
   }
   @media (min-width: 768px) {
     .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; }
   }
   .footer-brand .logo {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     color: var(--color-cream);
   }
   .footer-brand p {
     font-size: 0.88rem;
     line-height: 1.5;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     max-width: 320px;
   }
   .footer-col h4 {
@@ -1305,13 +1433,13 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent-saffron);
-    margin-bottom: 20px;
+    margin-bottom: 12px;
   }
   .footer-links {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
   }
   .footer-links a {
     transition: var(--transition-smooth);
@@ -1323,8 +1451,8 @@
   .footer-bottom {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding-top: 32px;
+    gap: 16px;
+    padding-top: 20px;
     border-top: 1px solid var(--border-color);
   }
   @media (min-width: 768px) {
@@ -1345,6 +1473,84 @@
   }
   .footer-socials a:hover {
     color: var(--accent-saffron-soft);
+  }
+
+  /* Footer Instagram Feed Grid */
+  .footer-instagram-feed {
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 24px;
+  }
+  .insta-feed-header {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .insta-feed-header h3 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--accent-saffron);
+  }
+  .insta-feed-header h3 a {
+    text-decoration: underline;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    transition: var(--transition-smooth);
+  }
+  .insta-feed-header h3 a:hover {
+    color: var(--accent-saffron-soft);
+  }
+  .insta-feed-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  @media (min-width: 768px) {
+    .insta-feed-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .insta-feed-item {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    display: block;
+  }
+  .insta-feed-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .insta-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+    color: #FFF;
+  }
+  .insta-overlay svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transform: scale(0.8);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .insta-feed-item:hover img {
+    transform: scale(1.08);
+  }
+  .insta-feed-item:hover .insta-overlay {
+    opacity: 1;
+  }
+  .insta-feed-item:hover .insta-overlay svg {
+    transform: scale(1);
   }
 
   /* Cart Sidebar Slider */
@@ -1713,14 +1919,210 @@
   .toast-success-icon { color: var(--accent-jade); }
   .toast-info-icon { color: var(--accent-saffron); }
 
-  /* Focus styling */
-  a:focus-visible, button:focus-visible, input:focus-visible {
-    outline: 2px solid var(--accent-saffron);
-    outline-offset: 2px;
+  /* Achievements Section */
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .achievement-card {
+    padding: 40px 24px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    background: var(--bg-darker);
+    transition: var(--transition-smooth);
+  }
+  .achievement-card:hover {
+    border-color: #000000;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+  }
+  .achievement-number {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: #000000;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+  .achievement-card h3 {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: #000000;
+  }
+  .achievement-card p {
+    font-size: 0.84rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  /* Instagram Review Card Integration */
+  .instagram-review-card {
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+    padding: 30px 24px 24px;
+    position: relative;
+    max-width: 580px;
+    margin: 0 auto;
+    text-align: left;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.02);
+  }
+  .insta-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+  }
+  .insta-profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .insta-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #000000;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+  }
+  .insta-user-meta h4 {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #000000;
+    line-height: 1.2;
+  }
+  .insta-user-meta span {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--color-muted);
+  }
+  .insta-icon-link {
+    color: #000000;
+    transition: opacity 0.3s;
+  }
+  .insta-icon-link:hover {
+    opacity: 0.6;
+  }
+  .insta-review-body {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #222222;
+    margin-bottom: 15px;
+  }
+  .insta-review-hashtags {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: #555555;
+    margin-bottom: 15px;
+  }
+  .insta-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    border-top: 1px solid var(--border-color);
+    padding-top: 12px;
+  }
+  .insta-likes {
+    font-weight: 700;
+    color: #000000;
+  }
+  .insta-view-more-btn {
+    margin-top: 35px;
+    text-align: center;
+  }
+  .insta-btn-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 12px 30px;
+    text-transform: uppercase;
+    display: inline-block;
+    transition: var(--transition-smooth);
+  }
+  .insta-btn-link:hover {
+    background: #000000;
+    color: #FFFFFF;
+  }
+
+  /* Floating Vertical Social Bar */
+  .floating-social-bar {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 100;
+    padding: 14px 10px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: var(--transition-smooth);
+  }
+  .floating-social-bar a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-cream);
+    width: 20px;
+    height: 20px;
+    transition: var(--transition-smooth);
+  }
+  .floating-social-bar a:hover {
+    color: var(--color-muted);
+    transform: scale(1.15) rotate(5deg);
+  }
+  .floating-social-bar svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+    display: block;
+  }
+  
+  @media (max-width: 767px) {
+    .floating-social-bar {
+      display: none;
+    }
   }
 </style>
 </head>
 <body>
+
+  <!-- Floating Vertical Social Bar -->
+  <div class="floating-social-bar">
+    <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/share/1BLe7FzkUZ/" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    <a href="https://pin.it/5nLgtcf3w" target="_blank" rel="noopener" aria-label="Pinterest">
+      <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.627-5.373-12-12-12z"/></svg>
+    </a>
+  </div>
 
   <!-- Announcement Bar -->
   <div style="background: var(--bg-darker); border-bottom: 1px solid var(--border-color); padding: 8px 0; text-align: center; font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.15em; text-transform: uppercase;">
@@ -1731,51 +2133,7 @@
   <header id="header">
     <div class="nav-bar container">
       <a href="#" class="logo" aria-label="NiNa by Mangsee Logo">
-        <svg viewBox="0 0 240 80" width="100%" height="100%" style="display: block;">
-          <style>
-            .logo-large { fill: var(--logo-large-fill); transition: fill 0.4s ease; }
-            .logo-small { fill: var(--logo-small-fill); transition: fill 0.4s ease; }
-          </style>
-          <g class="logo-large">
-            <!-- N1 -->
-            <rect x="50" y="0" width="8" height="30" />
-            <rect x="70" y="0" width="8" height="30" />
-            <polygon points="58,0 66,0 72,30 64,30" />
-            
-            <!-- I -->
-            <rect x="94" y="0" width="8" height="30" />
-            
-            <!-- N2 -->
-            <rect x="118" y="0" width="8" height="30" />
-            <rect x="138" y="0" width="8" height="30" />
-            <polygon points="126,0 134,0 140,30 132,30" />
-            
-            <!-- A -->
-            <polygon points="171,0 179,0 176,30 168,30" />
-            <polygon points="179,0 187,0 190,30 182,30" />
-          </g>
-          <text x="122" y="46" font-family="'DM Sans', 'Montserrat', sans-serif" font-size="8.5" font-weight="700" letter-spacing="0.32em" text-anchor="middle" class="logo-small">BY MANGSEE</text>
-          <g class="logo-large">
-            <!-- N1 -->
-            <rect x="50" y="50" width="8" height="30" />
-            <rect x="70" y="50" width="8" height="30" />
-            <polygon points="68,50 76,50 78,80 70,80" />
-            
-            <!-- I -->
-            <rect x="94" y="50" width="8" height="30" />
-            
-            <!-- N2 -->
-            <rect x="118" y="50" width="8" height="30" />
-            <rect x="138" y="50" width="8" height="30" />
-            <polygon points="136,50 144,50 146,80 138,80" />
-            
-            <!-- A -->
-            <polygon points="165,50 173,50 170,80 162,80" />
-            <polygon points="185,50 193,50 196,80 188,80" />
-            <polygon points="172,60 186,60 187,66 171,66" />
-            <rect x="194" y="74" width="6" height="6" />
-          </g>
-        </svg>
+        <img src="assets/logo.png" alt="NiNa by Mangsee Logo" class="logo-img">
       </a>
       <nav class="nav-links">
         <a href="#collections">Collections</a>
@@ -1812,24 +2170,31 @@
 
   <!-- Hero Section -->
   <section class="hero-section">
+    <!-- Luxury Corner Brackets -->
+    <div class="hero-corner tl"></div>
+    <div class="hero-corner tr"></div>
+    <div class="hero-corner bl"></div>
+    <div class="hero-corner br"></div>
+
+    <!-- Full-Bleed Video Background -->
     <div class="hero-bg-container" id="heroBg">
-      <img src="assets/hero_model.jpg" alt="NiNa Fashion Show - Kuki motifs and woven bag accessories" class="hero-bg-image">
+      <video class="hero-bg-video" autoplay loop muted playsinline id="heroVideo">
+        <source src="assets/brand_ads.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
       <div class="hero-vignette"></div>
     </div>
-    <div class="container hero-grid-container">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <div class="hero-tag">
-            <span style="display:inline-block; width:6px; height:6px; background:#FFFFFF; border-radius:50%;"></span>
-            NiNa x Kuki Heritage Collection
-          </div>
-          <h1>Wear Your<br><em>Roots</em></h1>
-          <p class="hero-sub">Woven identity. Worn with pride.</p>
-          <p class="hero-description">NiNa revives the geometric traditions of Kuki textile art — transforming ancestral patterns into contemporary fashion accessories and textiles, one weave at a time.</p>
-          <div class="hero-buttons">
-            <a href="#shop" class="btn btn-primary">Explore Collection</a>
-            <a href="#community" class="btn btn-outline">Our People</a>
-          </div>
+  </section>
+
+  <!-- Dedicated Hero Slogan Area -->
+  <section class="hero-slogan-section">
+    <div class="container">
+      <div class="hero-content-hermes">
+        <p class="hermes-subtitle-top">NINA x KUKI</p>
+        <h1 class="hermes-main-title">THE ART OF WEAVING</h1>
+        <p class="hermes-subtitle-bottom">GEOMETRIC HERITAGE COLLECTION</p>
+        <div class="hermes-cta-container">
+          <a href="#shop" class="hermes-btn-link">EXPLORE THE COLLECTION</a>
         </div>
       </div>
     </div>
@@ -1868,28 +2233,30 @@
             <h3>Bags</h3>
           </div>
         </div>
-        <!-- Lapel Pins Category -->
-        <div class="category-card" onclick="filterCategory('pin')">
-          <img src="assets/product_11.jpg" alt="NiNa handcrafted enamel lapel pin" class="category-card-bg">
-          <div class="category-overlay">
-            <p>02</p>
-            <h3>Lapel Pins</h3>
-          </div>
-        </div>
         <!-- Bandanas Category -->
         <div class="category-card" onclick="filterCategory('bandana')">
           <img src="assets/bandana_1.jpg" alt="NiNa handwoven Kuki heritage bandana" class="category-card-bg">
           <div class="category-overlay">
-            <p>03</p>
+            <p>02</p>
             <h3>Bandanas</h3>
+          </div>
+        </div>
+        <!-- Scarves Category -->
+        <div class="category-card" onclick="filterCategory('scarf')">
+          <img src="assets/scarf_heritage.jpg" alt="NiNa handwoven Kuki heritage scarf" class="category-card-bg">
+          <div class="category-overlay">
+            <p>03</p>
+            <h3>Scarves</h3>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <div class="kuki-border red"></div>
+
   <!-- Shop Section -->
-  <section class="section" id="shop" style="background: var(--surface-dark); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+  <section class="section" id="shop" style="background: var(--surface-dark); border-bottom: 1px solid var(--border-color);">
     <div class="container">
       <div class="section-header reveal">
         <span class="eyebrow">Shop Catalog</span>
@@ -1899,11 +2266,21 @@
 
       <!-- Filters and Search -->
       <div class="shop-controls reveal">
-        <div class="filter-tabs">
-          <button class="filter-btn active" data-filter="all">All Items</button>
-          <button class="filter-btn" data-filter="bag">Bags</button>
-          <button class="filter-btn" data-filter="pin">Lapel Pins</button>
-          <button class="filter-btn" data-filter="bandana">Bandanas</button>
+        <div class="filter-tabs-wrapper">
+          <div class="filter-tabs">
+            <button class="filter-btn active" data-filter="all">All Items</button>
+            <button class="filter-btn" data-filter="bag">Bags</button>
+            <button class="filter-btn" data-filter="bandana">Bandanas</button>
+            <button class="filter-btn" data-filter="scarf">Scarves</button>
+            <button class="filter-btn" data-filter="shawl">Shawls</button>
+            <button class="filter-btn" data-filter="pin">Pins</button>
+          </div>
+          <div class="sub-filter-tabs" id="subFilterTabs">
+            <button class="sub-filter-btn active" data-subfilter="all">All Designs</button>
+            <button class="sub-filter-btn" data-subfilter="mangvom">Mangvom</button>
+            <button class="sub-filter-btn" data-subfilter="saipikhup">Saipikhup</button>
+            <button class="sub-filter-btn" data-subfilter="thangnang">Thangnang</button>
+          </div>
         </div>
         <div class="search-wrapper">
           <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -1911,11 +2288,11 @@
         </div>
       </div>
 
-      <!-- Product Grid (14 Items) -->
+      <!-- Product Grid (31 Items) -->
       <div class="product-grid reveal" id="productGrid">
 
         <!-- PRODUCT 1 -->
-        <article class="product-card" data-category="bag" data-search="id:1 bag saipikhup tote bag crimson charcoal handwoven">
+        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:1 bag saipikhup tote bag crimson charcoal handwoven">
           <span class="product-badge bestseller">Bestseller</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(1, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -1926,12 +2303,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(1)" style="cursor:pointer;">Saipikhup Tote Bag</h3>
-            <span class="product-price">Rs. 2,350</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
         <!-- PRODUCT 2 -->
-        <article class="product-card" data-category="bag" data-search="id:2 bag thangnang hobo bag butter saffron handwoven">
+        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:2 bag thangnang hobo bag butter saffron handwoven">
           <span class="product-badge new">New</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(2, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -1942,12 +2319,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(2)" style="cursor:pointer;">Thangnang Hobo Bag</h3>
-            <span class="product-price">Rs. 1,950</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
         <!-- PRODUCT 3 -->
-        <article class="product-card" data-category="bag" data-search="id:3 bag mongvom shoulder bag forest indigo handwoven">
+        <article class="product-card" data-category="bag" data-pattern="mangvom" data-search="id:3 bag mangvom shoulder bag forest indigo handwoven">
           <span class="product-badge handcrafted">Handcrafted</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(3, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -1958,12 +2335,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(3)" style="cursor:pointer;">Mongvom Shoulder Bag</h3>
-            <span class="product-price">Rs. 2,750</span>
+            <span class="product-price">Rs. 400</span>
           </div>
         </article>
 
         <!-- PRODUCT 4 -->
-        <article class="product-card" data-category="bag" data-search="id:4 bag saipikhup clutch gold saffron handwoven">
+        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:4 bag saipikhup clutch gold saffron handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(4, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -1973,12 +2350,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(4)" style="cursor:pointer;">Saipikhup Clutch</h3>
-            <span class="product-price">Rs. 750</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
         <!-- PRODUCT 5 -->
-        <article class="product-card" data-category="bag" data-search="id:5 bag thangnang satchel dark emerald handwoven">
+        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:5 bag thangnang satchel dark emerald handwoven">
           <span class="product-badge bestseller">Bestseller</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(5, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -1989,12 +2366,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(5)" style="cursor:pointer;">Thangnang Satchel</h3>
-            <span class="product-price">Rs. 3,900</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
         <!-- PRODUCT 6 -->
-        <article class="product-card" data-category="bag" data-search="id:6 bag mongvom crossbody bag crimson dusk handwoven">
+        <article class="product-card" data-category="bag" data-pattern="mangvom" data-search="id:6 bag mangvom crossbody bag crimson dusk handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(6, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2004,12 +2381,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(6)" style="cursor:pointer;">Mongvom Crossbody Bag</h3>
-            <span class="product-price">Rs. 1,200</span>
+            <span class="product-price">Rs. 400</span>
           </div>
         </article>
 
         <!-- PRODUCT 7 -->
-        <article class="product-card" data-category="bag" data-search="id:7 bag saipikhup bucket bag classic earth handwoven">
+        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:7 bag saipikhup bucket bag classic earth handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(7, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2019,12 +2396,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(7)" style="cursor:pointer;">Saipikhup Bucket Bag</h3>
-            <span class="product-price">Rs. 2,150</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
         <!-- PRODUCT 8 -->
-        <article class="product-card" data-category="bag" data-search="id:8 bag thangnang carryall ochre gold handwoven">
+        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:8 bag thangnang carryall ochre gold handwoven">
           <span class="product-badge new">New</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(8, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -2035,12 +2412,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(8)" style="cursor:pointer;">Thangnang Carryall</h3>
-            <span class="product-price">Rs. 2,550</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
         <!-- PRODUCT 9 -->
-        <article class="product-card" data-category="bag" data-search="id:9 bag mongvom travel tote navy sage handwoven">
+        <article class="product-card" data-category="bag" data-pattern="mangvom" data-search="id:9 bag mangvom travel tote navy sage handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(9, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2050,12 +2427,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(9)" style="cursor:pointer;">Mongvom Travel Tote</h3>
-            <span class="product-price">Rs. 2,950</span>
+            <span class="product-price">Rs. 400</span>
           </div>
         </article>
 
         <!-- PRODUCT 10 -->
-        <article class="product-card" data-category="bag" data-search="id:10 bag saipikhup backpack heritage saffron handwoven">
+        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:10 bag saipikhup backpack heritage saffron handwoven">
           <span class="product-badge handcrafted">Handcrafted</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(10, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -2066,12 +2443,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(10)" style="cursor:pointer;">Saipikhup Backpack</h3>
-            <span class="product-price">Rs. 3,750</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
         <!-- PRODUCT 11 -->
-        <article class="product-card" data-category="pin" data-search="id:11 pin gosem enamel pin lapel card gold traditional instrument">
+        <article class="product-card" data-category="pin" data-pattern="none" data-search="id:11 pin gosem enamel pin lapel card gold traditional instrument">
           <span class="product-badge bestseller">Bestseller</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(11, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -2082,12 +2459,12 @@
           <div class="product-info">
             <div class="product-category">Lapel Pin · Enamel</div>
             <h3 class="product-title" onclick="openQuickView(11)" style="cursor:pointer;">Gosem Enamel Pin</h3>
-            <span class="product-price">Rs. 150</span>
+            <span class="product-price">Rs. 500</span>
           </div>
         </article>
 
         <!-- PRODUCT 12 -->
-        <article class="product-card" data-category="pin" data-search="id:12 pin tahchapa enamel pin lapel card crimson warrior shield">
+        <article class="product-card" data-category="pin" data-pattern="none" data-search="id:12 pin tahchapa enamel pin lapel card crimson warrior shield">
           <span class="product-badge handcrafted">Handcrafted</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(12, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -2098,12 +2475,12 @@
           <div class="product-info">
             <div class="product-category">Lapel Pin · Enamel</div>
             <h3 class="product-title" onclick="openQuickView(12)" style="cursor:pointer;">Tahchapa Enamel Pin</h3>
-            <span class="product-price">Rs. 320</span>
+            <span class="product-price">Rs. 500</span>
           </div>
         </article>
 
         <!-- PRODUCT 13 -->
-        <article class="product-card" data-category="pin" data-search="id:13 pin tahchapa collector pin lapel card close up edition">
+        <article class="product-card" data-category="pin" data-pattern="none" data-search="id:13 pin tahchapa collector pin lapel card close up edition">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(13, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2118,7 +2495,7 @@
         </article>
 
         <!-- PRODUCT 14 -->
-        <article class="product-card" data-category="bag" data-search="id:14 bag thangnang backpack crimson gold handwoven">
+        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:14 bag thangnang backpack crimson gold handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(14, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2128,12 +2505,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(14)" style="cursor:pointer;">Thangnang Backpack</h3>
-            <span class="product-price">Rs. 3,550</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
         <!-- PRODUCT 15 -->
-        <article class="product-card" data-category="bag" data-search="id:15 bag mongvom structured tote pure olive handwoven">
+        <article class="product-card" data-category="bag" data-pattern="mangvom" data-search="id:15 bag mangvom structured tote pure olive handwoven">
           <span class="product-badge new">New</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(15, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -2144,12 +2521,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(15)" style="cursor:pointer;">Mongvom Structured Tote</h3>
-            <span class="product-price">Rs. 4,000</span>
+            <span class="product-price">Rs. 400</span>
           </div>
         </article>
 
         <!-- PRODUCT 16 -->
-        <article class="product-card" data-category="bag" data-search="id:16 bag saipikhup daypack midnight sand handwoven">
+        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:16 bag saipikhup daypack midnight sand handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(16, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2159,12 +2536,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(16)" style="cursor:pointer;">Saipikhup Daypack</h3>
-            <span class="product-price">Rs. 1,750</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
         <!-- PRODUCT 17 -->
-        <article class="product-card" data-category="bag" data-search="id:17 bag thangnang messenger bag ash slate handwoven">
+        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:17 bag thangnang messenger bag ash slate handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(17, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2174,12 +2551,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(17)" style="cursor:pointer;">Thangnang Messenger Bag</h3>
-            <span class="product-price">Rs. 3,150</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
         <!-- PRODUCT 18 -->
-        <article class="product-card" data-category="bag" data-search="id:18 bag mongvom foldover clutch saffron black handwoven">
+        <article class="product-card" data-category="bag" data-pattern="mangvom" data-search="id:18 bag mangvom foldover clutch saffron black handwoven">
           <span class="product-badge handcrafted">Handcrafted</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(18, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -2190,12 +2567,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(18)" style="cursor:pointer;">Mongvom Foldover Clutch</h3>
-            <span class="product-price">Rs. 950</span>
+            <span class="product-price">Rs. 400</span>
           </div>
         </article>
 
         <!-- PRODUCT 19 -->
-        <article class="product-card" data-category="bag" data-search="id:19 bag saipikhup bowler bag sunset rust handwoven">
+        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:19 bag saipikhup bowler bag sunset rust handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(19, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2205,12 +2582,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(19)" style="cursor:pointer;">Saipikhup Bowler Bag</h3>
-            <span class="product-price">Rs. 3,350</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
         <!-- PRODUCT 20 -->
-        <article class="product-card" data-category="bag" data-search="id:20 bag thangnang petite tote ochre saffron handwoven">
+        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:20 bag thangnang petite tote ochre saffron handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(20, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2220,12 +2597,12 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(20)" style="cursor:pointer;">Thangnang Petite Tote</h3>
-            <span class="product-price">Rs. 1,450</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
         <!-- PRODUCT 21 -->
-        <article class="product-card" data-category="bandana" data-search="id:21 bandana mongvom blue cotton handwoven">
+        <article class="product-card" data-category="bandana" data-pattern="mangvom" data-search="id:21 bandana mangvom blue cotton handwoven">
           <span class="product-badge new">New</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(21, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -2236,12 +2613,12 @@
           <div class="product-info">
             <div class="product-category">Bandana · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(21)" style="cursor:pointer;">Mongvom Blue Bandana</h3>
-            <span class="product-price">Rs. 250</span>
+            <span class="product-price">Rs. 300</span>
           </div>
         </article>
 
         <!-- PRODUCT 22 -->
-        <article class="product-card" data-category="bandana" data-search="id:22 bandana heritage diamond charcoal orange handwoven">
+        <article class="product-card" data-category="bandana" data-pattern="saipikhup" data-search="id:22 bandana heritage diamond charcoal orange handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(22, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2251,12 +2628,12 @@
           <div class="product-info">
             <div class="product-category">Bandana · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(22)" style="cursor:pointer;">Heritage Diamond Bandana</h3>
-            <span class="product-price">Rs. 550</span>
+            <span class="product-price">Rs. 300</span>
           </div>
         </article>
 
         <!-- PRODUCT 23 -->
-        <article class="product-card" data-category="bandana" data-search="id:23 bandana thangnang gold saffron cream handwoven">
+        <article class="product-card" data-category="bandana" data-pattern="thangnang" data-search="id:23 bandana thangnang gold saffron cream handwoven">
           <span class="product-badge handcrafted">Handcrafted</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(23, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -2267,12 +2644,12 @@
           <div class="product-info">
             <div class="product-category">Bandana · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(23)" style="cursor:pointer;">Thangnang Gold Bandana</h3>
-            <span class="product-price">Rs. 850</span>
+            <span class="product-price">Rs. 300</span>
           </div>
         </article>
 
         <!-- PRODUCT 24 -->
-        <article class="product-card" data-category="bandana" data-search="id:24 bandana tribal motif gosem hunting horn heritage">
+        <article class="product-card" data-category="bandana" data-pattern="mangvom" data-search="id:24 bandana tribal gosem hunting horn heritage">
           <span class="product-badge bestseller">Bestseller</span>
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(24, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
@@ -2283,12 +2660,12 @@
           <div class="product-info">
             <div class="product-category">Bandana · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(24)" style="cursor:pointer;">Tribal Motif Bandana</h3>
-            <span class="product-price">Rs. 1,200</span>
+            <span class="product-price">Rs. 300</span>
           </div>
         </article>
 
         <!-- PRODUCT 25 -->
-        <article class="product-card" data-category="bandana" data-search="id:25 bandana midnight diamond black yellow handwoven">
+        <article class="product-card" data-category="bandana" data-pattern="thangnang" data-search="id:25 bandana midnight diamond black yellow handwoven">
           <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(25, event)">
             <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
           </button>
@@ -2298,7 +2675,102 @@
           <div class="product-info">
             <div class="product-category">Bandana · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(25)" style="cursor:pointer;">Midnight Diamond Bandana</h3>
-            <span class="product-price">Rs. 1,500</span>
+            <span class="product-price">Rs. 300</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 26 (NEW SCARF) -->
+        <article class="product-card" data-category="scarf" data-pattern="mangvom" data-search="id:26 scarf mangvom dahpi scarf grey black handwoven">
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(26, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(26)">
+            <img src="assets/scarf_dahpi.jpg" id="img-prod-26" alt="NiNa Mangvom Dahpi Scarf">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Scarf · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(26)" style="cursor:pointer;">Mangvom Dahpi Scarf</h3>
+            <span class="product-price">Rs. 500</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 27 (NEW SCARF) -->
+        <article class="product-card" data-category="scarf" data-pattern="saipikhup" data-search="id:27 scarf saipikhup heritage scarf black white handwoven">
+          <span class="product-badge new">New</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(27, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(27)">
+            <img src="assets/scarf_heritage.jpg" id="img-prod-27" alt="NiNa Saipikhup Heritage Scarf">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Scarf · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(27)" style="cursor:pointer;">Saipikhup Heritage Scarf</h3>
+            <span class="product-price">Rs. 500</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 28 (NEW SCARF) -->
+        <article class="product-card" data-category="scarf" data-pattern="thangnang" data-search="id:28 scarf thangnang phoulva scarf black grey handwoven">
+          <span class="product-badge bestseller">Bestseller</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(28, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(28)">
+            <img src="assets/scarf_phoulva.jpg" id="img-prod-28" alt="NiNa Thangnang Phoulva Scarf">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Scarf · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(28)" style="cursor:pointer;">Thangnang Phoulva Scarf</h3>
+            <span class="product-price">Rs. 500</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 29 (SHAWL) -->
+        <article class="product-card" data-category="shawl" data-pattern="saipikhup" data-search="id:29 shawl saipikhup white traditional handwoven">
+          <span class="product-badge new">New</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(29, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(29)">
+            <img src="assets/puan_product.png" id="img-prod-29" alt="White Traditional Shawl">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Shawl · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(29)" style="cursor:pointer;">White Traditional Shawl</h3>
+            <span class="product-price">Rs. 600</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 30 (SHAWL) -->
+        <article class="product-card" data-category="shawl" data-pattern="saipikhup" data-search="id:30 shawl saipikhup red traditional handwoven">
+          <span class="product-badge handcrafted">Handcrafted</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(30, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(30)">
+            <img src="assets/filler_red.png" id="img-prod-30" alt="Red Traditional Shawl">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Shawl · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(30)" style="cursor:pointer;">Red Traditional Shawl</h3>
+            <span class="product-price">Rs. 600</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 31 (SHAWL) -->
+        <article class="product-card" data-category="shawl" data-pattern="saipikhup" data-search="id:31 shawl saipikhup black traditional handwoven">
+          <span class="product-badge bestseller">Bestseller</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(31, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(31)">
+            <img src="assets/filler_black.png" id="img-prod-31" alt="Black Traditional Shawl">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Shawl · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(31)" style="cursor:pointer;">Black Traditional Shawl</h3>
+            <span class="product-price">Rs. 600</span>
           </div>
         </article>
 
@@ -2377,6 +2849,39 @@
         <cite>— Northeast India craft review</cite>
       </div>
     </div>
+  <div class="kuki-border"></div>
+
+  <!-- Achievements Section -->
+  <section class="section achievements-section" id="achievements" style="border-bottom: 1px solid var(--border-color); background: var(--bg-darker);">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Our Milestones</span>
+        <h2>Our <em>Achievements</em></h2>
+        <p>Preserving ancestral Kuki weaving traditions through real community impact.</p>
+      </div>
+      <div class="achievements-grid reveal">
+        <div class="achievement-card">
+          <div class="achievement-number">100+</div>
+          <h3>Weaver Families Supported</h3>
+          <p>Providing sustainable, fair-trade livelihoods to local women weavers across the hill districts of Manipur.</p>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-number">3</div>
+          <h3>Heritage Designs Revived</h3>
+          <p>Preserving and looming the ancestral geometric patterns of Kuki tradition: Mangvom, Saipikhup, and Thangnang.</p>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-number">0%</div>
+          <h3>Carbon Footprint</h3>
+          <p>Every wrap, bag, and textile is loomed entirely on traditional backstrap looms requiring zero electricity.</p>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-number">10+</div>
+          <h3>Exhibitions Conducted</h3>
+          <p>Representing indigenous handloom craftsmanship at regional and national textile exhibitions.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Testimonials Section -->
@@ -2385,7 +2890,7 @@
       <div class="section-header reveal">
         <span class="eyebrow">Customer Diaries</span>
         <h2>Weaver's <em>Circle</em></h2>
-        <p>Read opinions from customers carrying our handwoven stories globally.</p>
+        <p>Featured customer features loomed from our Instagram community reviews.</p>
       </div>
 
       <div class="carousel-wrapper reveal">
@@ -2395,21 +2900,84 @@
         <div class="carousel-track" id="testimonialTrack">
           <!-- Slide 1 -->
           <div class="carousel-slide">
-            <div class="testimonial-rating">★★★★★</div>
-            <p class="testimonial-text">"The weight and texture of the Saipikhup scarf is unbelievable. It's thick, durable, and the forest green shade is extremely rich. You can feel the hours of manual weaving in every single thread."</p>
-            <div class="testimonial-author">Anjali R. — New Delhi</div>
+            <div class="instagram-review-card">
+              <div class="insta-card-header">
+                <div class="insta-profile-info">
+                  <div class="insta-avatar">AR</div>
+                  <div class="insta-user-meta">
+                    <h4>Anjali R.</h4>
+                    <span>@anjali_style • New Delhi</span>
+                  </div>
+                </div>
+                <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-icon-link" aria-label="View on Instagram">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+              </div>
+              <div class="insta-review-body">
+                "The weight and texture of the Saipikhup heritage scarf is unbelievable. It's thick, durable, and the black and white weave is extremely rich. You can feel the hours of manual weaving in every single thread. Highly recommend!"
+              </div>
+              <div class="insta-review-hashtags">
+                #nina #kukiweaving #handmade #heritage #backstraploom
+              </div>
+              <div class="insta-card-footer">
+                <span class="insta-likes">Liked by 142 others</span>
+                <span>OCTOBER 24</span>
+              </div>
+            </div>
           </div>
           <!-- Slide 2 -->
           <div class="carousel-slide">
-            <div class="testimonial-rating">★★★★★</div>
-            <p class="testimonial-text">"I bought the Gosem lapel pin and a Saipikhup bag. The pin has incredible fine details and sits nicely on my jacket. Truly a premium product that starts conversations."</p>
-            <div class="testimonial-author">Vikram K. — Mumbai</div>
+            <div class="instagram-review-card">
+              <div class="insta-card-header">
+                <div class="insta-profile-info">
+                  <div class="insta-avatar">VK</div>
+                  <div class="insta-user-meta">
+                    <h4>Vikram K.</h4>
+                    <span>@vikram_k • Mumbai</span>
+                  </div>
+                </div>
+                <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-icon-link" aria-label="View on Instagram">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+              </div>
+              <div class="insta-review-body">
+                "I bought the Mangvom Dahpi scarf and a Saipikhup bowler bag. The details are fine, and the bag sits nicely. Truly a premium product that starts conversations."
+              </div>
+              <div class="insta-review-hashtags">
+                #kukiartisan #wearyourroots #sustainablefashion #ethicalhandloom
+              </div>
+              <div class="insta-card-footer">
+                <span class="insta-likes">Liked by 94 others</span>
+                <span>NOVEMBER 12</span>
+              </div>
+            </div>
           </div>
           <!-- Slide 3 -->
           <div class="carousel-slide">
-            <div class="testimonial-rating">★★★★★</div>
-            <p class="testimonial-text">"The Thangnang heart-shaped bag is the centerpiece of my collection. The geometric pattern contrasting against the green is simply stunning. Exceptional build quality."</p>
-            <div class="testimonial-author">Sarah M. — Bangalore</div>
+            <div class="instagram-review-card">
+              <div class="insta-card-header">
+                <div class="insta-profile-info">
+                  <div class="insta-avatar">SM</div>
+                  <div class="insta-user-meta">
+                    <h4>Sarah M.</h4>
+                    <span>@sarah_m_design • Bangalore</span>
+                  </div>
+                </div>
+                <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-icon-link" aria-label="View on Instagram">
+                  <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </a>
+              </div>
+              <div class="insta-review-body">
+                "The Thangnang Phoulva scarf is the centerpiece of my collection. The geometric pattern is stunning, and the cotton weave feels so organic and strong. Exceptional build quality!"
+              </div>
+              <div class="insta-review-hashtags">
+                #sustainableluxury #handwovenbag #thangnang #traditionalmotif #slowfashion
+              </div>
+              <div class="insta-card-footer">
+                <span class="insta-likes">Liked by 208 others</span>
+                <span>DECEMBER 02</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -2418,13 +2986,19 @@
           <span class="carousel-dot" data-index="1"></span>
           <span class="carousel-dot" data-index="2"></span>
         </div>
+        
+        <div class="insta-view-more-btn">
+          <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-btn-link">View More on Instagram</a>
+        </div>
       </div>
     </div>
   </section>
 
+  <div class="kuki-border red"></div>
+
   <!-- Newsletter Subscription -->
   <section class="section newsletter-section">
-    <div class="container">
+    <div class="container newsletter-grid">
       <div class="newsletter-inner reveal">
         <span class="eyebrow">Stay Connected</span>
         <h2>Join the <em>Circle</em></h2>
@@ -2437,59 +3011,54 @@
           Welcome to the Circle. Keep an eye on your inbox.
         </div>
       </div>
+      <div class="newsletter-media-inner reveal">
+        <img src="assets/newsletter_model.jpg" alt="NiNa Wear Your Roots - Model with Handwoven Bag" class="newsletter-model-img">
+      </div>
     </div>
   </section>
 
+  <div class="kuki-border bottom-pattern"></div>
+
   <!-- Footer Section -->
   <footer>
+    <!-- Social Media Feed Grid -->
+    <div class="footer-instagram-feed container">
+      <div class="insta-feed-header">
+        <span class="eyebrow" style="margin-bottom: 4px;">Wear Your Roots</span>
+        <h3>Shop the Collection on Instagram • <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener">@nina_wearyourroots</a></h3>
+      </div>
+      <div class="insta-feed-grid">
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/hero_model.jpg" alt="Model wearing NiNa handwoven bag">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/user_upload_1.png" alt="Model wearing traditional handloomed accessories">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/user_upload_3.png" alt="Model styling handwoven wrap">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/newsletter_model.jpg" alt="NiNa Collection Model Editorial">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+      </div>
+    </div>
+
     <div class="footer-grid container">
       <div class="footer-brand">
         <a href="#" class="logo" aria-label="NiNa by Mangsee Logo">
-          <svg viewBox="0 0 240 80" width="100%" height="100%" style="display: block;">
-            <style>
-              .logo-large { fill: var(--logo-large-fill); transition: fill 0.4s ease; }
-              .logo-small { fill: var(--logo-small-fill); transition: fill 0.4s ease; }
-            </style>
-            <g class="logo-large">
-              <!-- N1 -->
-              <rect x="50" y="0" width="8" height="30" />
-              <rect x="70" y="0" width="8" height="30" />
-              <polygon points="58,0 66,0 72,30 64,30" />
-              
-              <!-- I -->
-              <rect x="94" y="0" width="8" height="30" />
-              
-              <!-- N2 -->
-              <rect x="118" y="0" width="8" height="30" />
-              <rect x="138" y="0" width="8" height="30" />
-              <polygon points="126,0 134,0 140,30 132,30" />
-              
-              <!-- A -->
-              <polygon points="171,0 179,0 176,30 168,30" />
-              <polygon points="179,0 187,0 190,30 182,30" />
-            </g>
-            <text x="122" y="46" font-family="'DM Sans', 'Montserrat', sans-serif" font-size="8.5" font-weight="700" letter-spacing="0.32em" text-anchor="middle" class="logo-small">BY MANGSEE</text>
-            <g class="logo-large">
-              <!-- N1 -->
-              <rect x="50" y="50" width="8" height="30" />
-              <rect x="70" y="50" width="8" height="30" />
-              <polygon points="68,50 76,50 78,80 70,80" />
-              
-              <!-- I -->
-              <rect x="94" y="50" width="8" height="30" />
-              
-              <!-- N2 -->
-              <rect x="118" y="50" width="8" height="30" />
-              <rect x="138" y="50" width="8" height="30" />
-              <polygon points="136,50 144,50 146,80 138,80" />
-              
-              <!-- A -->
-              <polygon points="165,50 173,50 170,80 162,80" />
-              <polygon points="185,50 193,50 196,80 188,80" />
-              <polygon points="172,60 186,60 187,66 171,66" />
-              <rect x="194" y="74" width="6" height="6" />
-            </g>
-          </svg>
+          <img src="assets/logo.png" alt="NiNa by Mangsee Logo" class="logo-img">
         </a>
         <p>Reviving traditional backstrap loom weaving in Northeast India through ethically handcrafted contemporary accessories, apparel wraps, and home products.</p>
         <p style="font-size: 0.76rem; color: var(--accent-saffron);">© 2026 NiNa Collective. All rights reserved.</p>
@@ -2498,8 +3067,10 @@
         <h4>Shop</h4>
         <ul class="footer-links">
           <li><a href="#shop" onclick="filterCategory('bag')">Bags</a></li>
-          <li><a href="#shop" onclick="filterCategory('pin')">Lapel Pins</a></li>
+          <li><a href="#shop" onclick="filterCategory('scarf')">Scarves</a></li>
           <li><a href="#shop" onclick="filterCategory('bandana')">Bandanas</a></li>
+          <li><a href="#shop" onclick="filterCategory('shawl')">Shawls</a></li>
+          <li><a href="#shop" onclick="filterCategory('pin')">Pins</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -2523,9 +3094,9 @@
     <div class="footer-bottom container">
       <p>Handloomed with honor in Churachandpur, Lamka, and Moreh, Manipur.</p>
       <div class="footer-socials">
-        <a href="#">Instagram</a>
-        <a href="#">Facebook</a>
-        <a href="#">Pinterest</a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/share/1BLe7FzkUZ/" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://pin.it/5nLgtcf3w" target="_blank" rel="noopener">Pinterest</a>
       </div>
     </div>
   </footer>
@@ -2594,8 +3165,8 @@
         title: "Saipikhup Tote Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 2350,
-        priceDisplay: "Rs. 2,350",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "A spacious, heavy-duty shoulder tote featuring the historic Saipikhup ('elephant footprint') pattern, handwoven on a traditional Kuki backstrap loom.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_1.jpg" alt="Saipikhup Tote Bag">`
@@ -2605,8 +3176,8 @@
         title: "Thangnang Hobo Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 1950,
-        priceDisplay: "Rs. 1,950",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "An elegant, slouchy hobo bag showcasing the classic Thangnang diamond lattice pattern. Fully lined with inner zipper pocket.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_2.jpg" alt="Thangnang Hobo Bag">`
@@ -2616,8 +3187,8 @@
         title: "Mongvom Shoulder Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 2750,
-        priceDisplay: "Rs. 2,750",
+        price: 400,
+        priceDisplay: "Rs. 400",
         desc: "Structured shoulder bag finished with premium leather trims and organic cotton weave displaying the Kuki Mongvom stripe motif.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_3.jpg" alt="Mongvom Shoulder Bag">`
@@ -2627,8 +3198,8 @@
         title: "Saipikhup Clutch",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 750,
-        priceDisplay: "Rs. 750",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "A sleek, hand-held clutch featuring a striking saffron and crimson Saipikhup pattern. Perfect for evening outings.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_4.jpg" alt="Saipikhup Clutch">`
@@ -2638,8 +3209,8 @@
         title: "Thangnang Satchel",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 3900,
-        priceDisplay: "Rs. 3,900",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "A structured, vintage-inspired satchel showing dark emerald cross-hatch handloomed patterns with dual carry handles.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_5.jpg" alt="Thangnang Satchel">`
@@ -2649,8 +3220,8 @@
         title: "Mongvom Crossbody Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 1200,
-        priceDisplay: "Rs. 1,200",
+        price: 400,
+        priceDisplay: "Rs. 400",
         desc: "Compact crossbody bag featuring a repeat geometric warp pattern. Features adjustable cotton-webbing strap.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_6.jpg" alt="Mongvom Crossbody Bag">`
@@ -2660,8 +3231,8 @@
         title: "Saipikhup Bucket Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 2150,
-        priceDisplay: "Rs. 2,150",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "Modern bucket bag with drawstring closure, featuring classic red-saffron base pattern and premium brass hardware.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_7.jpg" alt="Saipikhup Bucket Bag">`
@@ -2671,8 +3242,8 @@
         title: "Thangnang Carryall",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 2550,
-        priceDisplay: "Rs. 2,550",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "A generous daily carryall highlighting ochre-gold woven textures. Features reinforced seams and sturdy double straps.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_8.jpg" alt="Thangnang Carryall">`
@@ -2682,8 +3253,8 @@
         title: "Mongvom Travel Tote",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 2950,
-        priceDisplay: "Rs. 2,950",
+        price: 400,
+        priceDisplay: "Rs. 400",
         desc: "An oversized travel tote made from heavy organic cotton weave, showcasing traditional Mongvom diamond repeat margins.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_9.jpg" alt="Mongvom Travel Tote">`
@@ -2693,8 +3264,8 @@
         title: "Saipikhup Backpack",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 3750,
-        priceDisplay: "Rs. 3,750",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "Sturdy heritage backpack combining Kuki backstrap handloom weaving with leather shoulder straps and back padding.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_10.jpg" alt="Saipikhup Backpack">`
@@ -2704,8 +3275,8 @@
         title: "Gosem Enamel Pin",
         category: "pin",
         categoryDisplay: "Lapel Pin · Enamel",
-        price: 150,
-        priceDisplay: "Rs. 150",
+        price: 500,
+        priceDisplay: "Rs. 500",
         desc: "Hard enamel lapel pin finished with gold plating, representing the traditional wind pipe instrument of the Kuki tribe.",
         weaver: "Ginzalian Mate (Moreh)",
         imageHtml: `<img src="assets/product_11.jpg" alt="Gosem Enamel Pin">`
@@ -2715,8 +3286,8 @@
         title: "Tahchapa Enamel Pin",
         category: "pin",
         categoryDisplay: "Lapel Pin · Enamel",
-        price: 320,
-        priceDisplay: "Rs. 320",
+        price: 500,
+        priceDisplay: "Rs. 500",
         desc: "Shield-shaped enamel pin representing Kuki warrior lineage, finished with charcoal and crimson enamel fills.",
         weaver: "Ginzalian Mate (Moreh)",
         imageHtml: `<img src="assets/product_12.jpg" alt="Tahchapa Enamel Pin">`
@@ -2737,8 +3308,8 @@
         title: "Thangnang Backpack",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 3550,
-        priceDisplay: "Rs. 3,550",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "Premium travel backpack featuring Thangnang crimson-gold geometric panels, leather closures, and laptop compartment.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_14.jpg" alt="Thangnang Backpack">`
@@ -2748,8 +3319,8 @@
         title: "Mongvom Structured Tote",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 4000,
-        priceDisplay: "Rs. 4,000",
+        price: 400,
+        priceDisplay: "Rs. 400",
         desc: "A sleek structured tote bag woven in pure olive green tones. Perfect for both office settings and weekend outings.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_15.jpg" alt="Mongvom Structured Tote">`
@@ -2759,8 +3330,8 @@
         title: "Saipikhup Daypack",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 1750,
-        priceDisplay: "Rs. 1,750",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "A daily daypack displaying sand-crimson tones. Very lightweight, compact, and features durable cotton drawstrings.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_16.jpg" alt="Saipikhup Daypack">`
@@ -2770,8 +3341,8 @@
         title: "Thangnang Messenger Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 3150,
-        priceDisplay: "Rs. 3,150",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "Heritage messenger bag displaying ash-slate patterns. Designed with multiple inner pockets and thick canvas shoulder straps.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_17.jpg" alt="Thangnang Messenger Bag">`
@@ -2781,8 +3352,8 @@
         title: "Mongvom Foldover Clutch",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 950,
-        priceDisplay: "Rs. 950",
+        price: 400,
+        priceDisplay: "Rs. 400",
         desc: "A versatile foldover clutch showing bold saffron-black stripes. Handloomed with heavy-weight premium organic cotton.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_18.jpg" alt="Mongvom Foldover Clutch">`
@@ -2792,8 +3363,8 @@
         title: "Saipikhup Bowler Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 3350,
-        priceDisplay: "Rs. 3,350",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "A classic bowler-style handbag showing detailed sunset-rust geometric motifs and dual sturdy leather rolled handles.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_19.jpg" alt="Saipikhup Bowler Bag">`
@@ -2803,8 +3374,8 @@
         title: "Thangnang Petite Tote",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 1450,
-        priceDisplay: "Rs. 1,450",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "A smaller, lightweight shopper tote featuring ochre-saffron lattice patterns. Ideal for casual daily runs.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_20.jpg" alt="Thangnang Petite Tote">`
@@ -2814,8 +3385,8 @@
         title: "Mongvom Blue Bandana",
         category: "bandana",
         categoryDisplay: "Bandana · Handwoven",
-        price: 250,
-        priceDisplay: "Rs. 250",
+        price: 300,
+        priceDisplay: "Rs. 300",
         desc: "A striking sky-blue bandana handloomed using premium cotton, showcasing the classic Mongvom diamond repeat margins.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/bandana_1.jpg" alt="Mongvom Blue Bandana">`
@@ -2825,8 +3396,8 @@
         title: "Heritage Diamond Bandana",
         category: "bandana",
         categoryDisplay: "Bandana · Handwoven",
-        price: 550,
-        priceDisplay: "Rs. 550",
+        price: 300,
+        priceDisplay: "Rs. 300",
         desc: "Deep charcoal cotton base adorned with vibrant orange and white geometric diamond repeats, weaving together warrior status symbols.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/bandana_2.jpg" alt="Heritage Diamond Bandana">`
@@ -2836,8 +3407,8 @@
         title: "Thangnang Gold Bandana",
         category: "bandana",
         categoryDisplay: "Bandana · Handwoven",
-        price: 850,
-        priceDisplay: "Rs. 850",
+        price: 300,
+        priceDisplay: "Rs. 300",
         desc: "A classic cream and saffron backstrap-loomed bandana displaying the traditional Kuki Thangnang checkerboard motifs.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/bandana_3.jpg" alt="Thangnang Gold Bandana">`
@@ -2847,8 +3418,8 @@
         title: "Tribal Motif Bandana",
         category: "bandana",
         categoryDisplay: "Bandana · Handwoven",
-        price: 1200,
-        priceDisplay: "Rs. 1,200",
+        price: 300,
+        priceDisplay: "Rs. 300",
         desc: "A bold heritage print bandana displaying the sacred wind pipe (Gosem), hunting horns, and Kuki tribal symbols over a clean mesh background.",
         weaver: "Ginzalian Mate (Moreh)",
         imageHtml: `<img src="assets/bandana_4.jpg" alt="Tribal Motif Bandana">`
@@ -2858,11 +3429,77 @@
         title: "Midnight Diamond Bandana",
         category: "bandana",
         categoryDisplay: "Bandana · Handwoven",
-        price: 1500,
-        priceDisplay: "Rs. 1,500",
+        price: 300,
+        priceDisplay: "Rs. 300",
         desc: "Midnight black handloomed cotton bandana featuring intricate border motifs and subtle yellow highlight diamonds.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/bandana_5.jpg" alt="Midnight Diamond Bandana">`
+      },
+      26: {
+        id: 26,
+        title: "Mangvom Dahpi Scarf",
+        category: "scarf",
+        categoryDisplay: "Scarf · Handwoven",
+        price: 500,
+        priceDisplay: "Rs. 500",
+        desc: "A rich, charcoal and grey handwoven scarf featuring the traditional Kuki Mangvom pattern loomed from pure organic cotton.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/scarf_dahpi.jpg" alt="Mangvom Dahpi Scarf">`
+      },
+      27: {
+        id: 27,
+        title: "Saipikhup Heritage Scarf",
+        category: "scarf",
+        categoryDisplay: "Scarf · Handwoven",
+        price: 500,
+        priceDisplay: "Rs. 500",
+        desc: "An exquisite heritage scarf loomed with the sacred Saipikhup pattern representing status, prestige, and generational pride.",
+        weaver: "Kimkhosei Touthang (Lamka)",
+        imageHtml: `<img src="assets/scarf_heritage.jpg" alt="Saipikhup Heritage Scarf">`
+      },
+      28: {
+        id: 28,
+        title: "Thangnang Phoulva Scarf",
+        category: "scarf",
+        categoryDisplay: "Scarf · Handwoven",
+        price: 500,
+        priceDisplay: "Rs. 500",
+        desc: "A stunning, versatile scarf loomed in the traditional Thangnang diamond checkerboard patterns. Durable yet extremely soft.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/scarf_phoulva.jpg" alt="Thangnang Phoulva Scarf">`
+      },
+      29: {
+        id: 29,
+        title: "White Traditional Shawl",
+        category: "shawl",
+        categoryDisplay: "Shawl · Handwoven",
+        price: 600,
+        priceDisplay: "Rs. 600",
+        desc: "A stunning white traditional shawl handloomed in Churachandpur, featuring the historic Saipikhup pattern in contrast grey and black margins.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/puan_product.png" alt="White Traditional Shawl">`
+      },
+      30: {
+        id: 30,
+        title: "Red Traditional Shawl",
+        category: "shawl",
+        categoryDisplay: "Shawl · Handwoven",
+        price: 600,
+        priceDisplay: "Rs. 600",
+        desc: "An exquisite crimson red traditional shawl, handloomed on traditional backstrap looms with fine black geometric Saipikhup repeating diamond motifs.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/filler_red.png" alt="Red Traditional Shawl">`
+      },
+      31: {
+        id: 31,
+        title: "Black Traditional Shawl",
+        category: "shawl",
+        categoryDisplay: "Shawl · Handwoven",
+        price: 600,
+        priceDisplay: "Rs. 600",
+        desc: "A bold black traditional shawl accented with beautiful pink and lavender Saipikhup geometric weaves, capturing the warrior prestige of Lamka weavers.",
+        weaver: "Kimkhosei Touthang (Lamka)",
+        imageHtml: `<img src="assets/filler_black.png" alt="Black Traditional Shawl">`
       }
     };
 
@@ -2927,7 +3564,7 @@
       const scrollVal = window.scrollY;
       const heroBg = document.getElementById('heroBg');
       if (heroBg) {
-        heroBg.style.transform = `translate3d(0, ${scrollVal * 0.28}px, 0)`;
+        heroBg.style.transform = `translate3d(0, ${scrollVal * 0.22}px, 0)`;
       }
     });
 
@@ -2962,8 +3599,12 @@
       
       // Page Load Trigger Reveal
       function triggerInitialReveal() {
+        const heroVideo = document.getElementById('heroVideo');
+        if (heroVideo) {
+          heroVideo.playbackRate = 0.55;
+        }
         setTimeout(() => {
-          const firstReveal = document.querySelector('.hero-content');
+          const firstReveal = document.querySelector('.hero-content-hermes');
           if (firstReveal) firstReveal.classList.add('active');
           checkReveal();
         }, 150);
@@ -3012,22 +3653,27 @@
 
     // --- Filters & Search Logic ---
     const filterBtns = document.querySelectorAll('.filter-btn');
+    const subFilterBtns = document.querySelectorAll('.sub-filter-btn');
+    const subFilterTabs = document.getElementById('subFilterTabs');
     const searchInput = document.getElementById('searchInput');
     const productGrid = document.getElementById('productGrid');
     const productCards = document.querySelectorAll('.product-card');
 
     let activeFilter = 'all';
+    let activeSubfilter = 'all';
     let activeSearch = '';
 
     function applyFilterAndSearch() {
       productCards.forEach(card => {
         const category = card.dataset.category;
+        const pattern = card.dataset.pattern || 'none';
         const searchText = card.dataset.search.toLowerCase();
         
         const matchesCategory = (activeFilter === 'all' || category === activeFilter);
+        const matchesSubfilter = (activeSubfilter === 'all' || pattern === activeSubfilter);
         const matchesSearch = (activeSearch === '' || searchText.includes(activeSearch));
 
-        if (matchesCategory && matchesSearch) {
+        if (matchesCategory && matchesSubfilter && matchesSearch) {
           card.style.display = 'flex';
         } else {
           card.style.display = 'none';
@@ -3040,6 +3686,33 @@
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         activeFilter = btn.dataset.filter;
+        
+        // Reset sub-filter on main category change
+        activeSubfilter = 'all';
+        subFilterBtns.forEach(sb => {
+          if (sb.dataset.subfilter === 'all') {
+            sb.classList.add('active');
+          } else {
+            sb.classList.remove('active');
+          }
+        });
+        
+        // Show sub-filters only when bag, bandana, or scarf is selected
+        if (activeFilter === 'bag' || activeFilter === 'bandana' || activeFilter === 'scarf') {
+          subFilterTabs.classList.add('show');
+        } else {
+          subFilterTabs.classList.remove('show');
+        }
+        
+        applyFilterAndSearch();
+      });
+    });
+
+    subFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        subFilterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeSubfilter = btn.dataset.subfilter;
         applyFilterAndSearch();
       });
     });
