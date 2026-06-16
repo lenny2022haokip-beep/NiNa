@@ -117,34 +117,25 @@
 
   /* Traditional Kuki Pattern Border */
   .kuki-border {
-    height: 14px;
+    height: 28px;
     width: 100%;
-    background: 
-      linear-gradient(90deg, rgba(5, 11, 7, 0.15) 50%, transparent 50%),
-      repeating-linear-gradient(
-        45deg,
-        var(--accent-crimson) 0px, var(--accent-crimson) 10px,
-        var(--accent-saffron) 10px, var(--accent-saffron) 20px,
-        var(--accent-emerald) 20px, var(--accent-emerald) 30px,
-        var(--accent-jade) 30px, var(--accent-jade) 40px
-      );
-    background-size: 4px 100%, 100% 100%;
+    background-image: url('assets/filler_black.png');
+    background-repeat: repeat-x;
+    background-size: auto 180px;
+    background-position: top;
     opacity: 0.95;
     position: relative;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.6);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    z-index: 10;
+  }
+  .kuki-border.red {
+    background-image: url('assets/filler_red.png');
+  }
+  .kuki-border.bottom-pattern {
+    background-position: bottom;
   }
   .kuki-border::after {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: repeating-linear-gradient(
-      90deg,
-      #000 0px, #000 4px,
-      transparent 4px, transparent 8px
-    );
+    content: none;
   }
 
   /* Glassmorphism Classes */
@@ -1031,6 +1022,42 @@
     background: var(--surface-dark);
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+  }
+  .story-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('assets/filler_red.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.02;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .story-section .container {
+    position: relative;
+    z-index: 2;
+  }
+  .achievements-section {
+    position: relative;
+    overflow: hidden;
+  }
+  .achievements-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('assets/filler_black.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .achievements-section .container {
+    position: relative;
+    z-index: 2;
   }
   .story-grid {
     display: grid;
@@ -1302,7 +1329,7 @@
   .newsletter-section {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(135deg, var(--accent-emerald-glow) 0%, rgba(154, 40, 40, 0.08) 100%), var(--surface-dark);
+    background: var(--surface-dark);
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
   }
@@ -1310,8 +1337,10 @@
     content: '';
     position: absolute;
     inset: 0;
-    opacity: 0.04;
-    background-image: repeating-linear-gradient(45deg, var(--accent-saffron) 0px, var(--accent-saffron) 2px, transparent 2px, transparent 15px);
+    opacity: 0.025;
+    background-image: url('assets/filler_red.png');
+    background-size: cover;
+    background-position: center;
     pointer-events: none;
   }
   .newsletter-grid {
@@ -2187,8 +2216,10 @@
     </div>
   </section>
 
+  <div class="kuki-border red"></div>
+
   <!-- Shop Section -->
-  <section class="section" id="shop" style="background: var(--surface-dark); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+  <section class="section" id="shop" style="background: var(--surface-dark); border-bottom: 1px solid var(--border-color);">
     <div class="container">
       <div class="section-header reveal">
         <span class="eyebrow">Shop Catalog</span>
@@ -2204,6 +2235,8 @@
             <button class="filter-btn" data-filter="bag">Bags</button>
             <button class="filter-btn" data-filter="bandana">Bandanas</button>
             <button class="filter-btn" data-filter="scarf">Scarves</button>
+            <button class="filter-btn" data-filter="shawl">Shawls</button>
+            <button class="filter-btn" data-filter="pin">Pins</button>
           </div>
           <div class="sub-filter-tabs" id="subFilterTabs">
             <button class="sub-filter-btn active" data-subfilter="all">All Designs</button>
@@ -2218,7 +2251,7 @@
         </div>
       </div>
 
-      <!-- Product Grid (14 Items) -->
+      <!-- Product Grid (31 Items) -->
       <div class="product-grid reveal" id="productGrid">
 
         <!-- PRODUCT 1 -->
@@ -2233,7 +2266,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(1)" style="cursor:pointer;">Saipikhup Tote Bag</h3>
-            <span class="product-price">Rs. 2,350</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
@@ -2249,7 +2282,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(2)" style="cursor:pointer;">Thangnang Hobo Bag</h3>
-            <span class="product-price">Rs. 1,950</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
@@ -2265,7 +2298,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(3)" style="cursor:pointer;">Mongvom Shoulder Bag</h3>
-            <span class="product-price">Rs. 2,750</span>
+            <span class="product-price">Rs. 400</span>
           </div>
         </article>
 
@@ -2280,7 +2313,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(4)" style="cursor:pointer;">Saipikhup Clutch</h3>
-            <span class="product-price">Rs. 750</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
@@ -2296,7 +2329,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(5)" style="cursor:pointer;">Thangnang Satchel</h3>
-            <span class="product-price">Rs. 3,900</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
@@ -2311,7 +2344,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(6)" style="cursor:pointer;">Mongvom Crossbody Bag</h3>
-            <span class="product-price">Rs. 1,200</span>
+            <span class="product-price">Rs. 400</span>
           </div>
         </article>
 
@@ -2326,7 +2359,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(7)" style="cursor:pointer;">Saipikhup Bucket Bag</h3>
-            <span class="product-price">Rs. 2,150</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
@@ -2342,7 +2375,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(8)" style="cursor:pointer;">Thangnang Carryall</h3>
-            <span class="product-price">Rs. 2,550</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
@@ -2357,7 +2390,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(9)" style="cursor:pointer;">Mongvom Travel Tote</h3>
-            <span class="product-price">Rs. 2,950</span>
+            <span class="product-price">Rs. 400</span>
           </div>
         </article>
 
@@ -2373,7 +2406,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(10)" style="cursor:pointer;">Saipikhup Backpack</h3>
-            <span class="product-price">Rs. 3,750</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
@@ -2389,7 +2422,7 @@
           <div class="product-info">
             <div class="product-category">Lapel Pin · Enamel</div>
             <h3 class="product-title" onclick="openQuickView(11)" style="cursor:pointer;">Gosem Enamel Pin</h3>
-            <span class="product-price">Rs. 150</span>
+            <span class="product-price">Rs. 500</span>
           </div>
         </article>
 
@@ -2405,7 +2438,7 @@
           <div class="product-info">
             <div class="product-category">Lapel Pin · Enamel</div>
             <h3 class="product-title" onclick="openQuickView(12)" style="cursor:pointer;">Tahchapa Enamel Pin</h3>
-            <span class="product-price">Rs. 320</span>
+            <span class="product-price">Rs. 500</span>
           </div>
         </article>
 
@@ -2435,7 +2468,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(14)" style="cursor:pointer;">Thangnang Backpack</h3>
-            <span class="product-price">Rs. 3,550</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
@@ -2451,7 +2484,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(15)" style="cursor:pointer;">Mongvom Structured Tote</h3>
-            <span class="product-price">Rs. 4,000</span>
+            <span class="product-price">Rs. 400</span>
           </div>
         </article>
 
@@ -2466,7 +2499,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(16)" style="cursor:pointer;">Saipikhup Daypack</h3>
-            <span class="product-price">Rs. 1,750</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
@@ -2481,7 +2514,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(17)" style="cursor:pointer;">Thangnang Messenger Bag</h3>
-            <span class="product-price">Rs. 3,150</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
@@ -2497,7 +2530,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(18)" style="cursor:pointer;">Mongvom Foldover Clutch</h3>
-            <span class="product-price">Rs. 950</span>
+            <span class="product-price">Rs. 400</span>
           </div>
         </article>
 
@@ -2512,7 +2545,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(19)" style="cursor:pointer;">Saipikhup Bowler Bag</h3>
-            <span class="product-price">Rs. 3,350</span>
+            <span class="product-price">Rs. 1,000</span>
           </div>
         </article>
 
@@ -2527,7 +2560,7 @@
           <div class="product-info">
             <div class="product-category">Bag · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(20)" style="cursor:pointer;">Thangnang Petite Tote</h3>
-            <span class="product-price">Rs. 1,450</span>
+            <span class="product-price">Rs. 700</span>
           </div>
         </article>
 
@@ -2543,7 +2576,7 @@
           <div class="product-info">
             <div class="product-category">Bandana · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(21)" style="cursor:pointer;">Mongvom Blue Bandana</h3>
-            <span class="product-price">Rs. 250</span>
+            <span class="product-price">Rs. 300</span>
           </div>
         </article>
 
@@ -2558,7 +2591,7 @@
           <div class="product-info">
             <div class="product-category">Bandana · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(22)" style="cursor:pointer;">Heritage Diamond Bandana</h3>
-            <span class="product-price">Rs. 550</span>
+            <span class="product-price">Rs. 300</span>
           </div>
         </article>
 
@@ -2574,7 +2607,7 @@
           <div class="product-info">
             <div class="product-category">Bandana · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(23)" style="cursor:pointer;">Thangnang Gold Bandana</h3>
-            <span class="product-price">Rs. 850</span>
+            <span class="product-price">Rs. 300</span>
           </div>
         </article>
 
@@ -2590,7 +2623,7 @@
           <div class="product-info">
             <div class="product-category">Bandana · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(24)" style="cursor:pointer;">Tribal Motif Bandana</h3>
-            <span class="product-price">Rs. 1,200</span>
+            <span class="product-price">Rs. 300</span>
           </div>
         </article>
 
@@ -2605,7 +2638,7 @@
           <div class="product-info">
             <div class="product-category">Bandana · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(25)" style="cursor:pointer;">Midnight Diamond Bandana</h3>
-            <span class="product-price">Rs. 1,500</span>
+            <span class="product-price">Rs. 300</span>
           </div>
         </article>
 
@@ -2620,7 +2653,7 @@
           <div class="product-info">
             <div class="product-category">Scarf · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(26)" style="cursor:pointer;">Mangvom Dahpi Scarf</h3>
-            <span class="product-price">Rs. 1,850</span>
+            <span class="product-price">Rs. 500</span>
           </div>
         </article>
 
@@ -2636,7 +2669,7 @@
           <div class="product-info">
             <div class="product-category">Scarf · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(27)" style="cursor:pointer;">Saipikhup Heritage Scarf</h3>
-            <span class="product-price">Rs. 2,250</span>
+            <span class="product-price">Rs. 500</span>
           </div>
         </article>
 
@@ -2652,7 +2685,55 @@
           <div class="product-info">
             <div class="product-category">Scarf · Handwoven</div>
             <h3 class="product-title" onclick="openQuickView(28)" style="cursor:pointer;">Thangnang Phoulva Scarf</h3>
-            <span class="product-price">Rs. 1,950</span>
+            <span class="product-price">Rs. 500</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 29 (SHAWL) -->
+        <article class="product-card" data-category="shawl" data-pattern="saipikhup" data-search="id:29 shawl saipikhup white traditional handwoven">
+          <span class="product-badge new">New</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(29, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(29)">
+            <img src="assets/puan_product.png" id="img-prod-29" alt="White Traditional Shawl">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Shawl · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(29)" style="cursor:pointer;">White Traditional Shawl</h3>
+            <span class="product-price">Rs. 600</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 30 (SHAWL) -->
+        <article class="product-card" data-category="shawl" data-pattern="saipikhup" data-search="id:30 shawl saipikhup red traditional handwoven">
+          <span class="product-badge handcrafted">Handcrafted</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(30, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(30)">
+            <img src="assets/filler_red.png" id="img-prod-30" alt="Red Traditional Shawl">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Shawl · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(30)" style="cursor:pointer;">Red Traditional Shawl</h3>
+            <span class="product-price">Rs. 600</span>
+          </div>
+        </article>
+
+        <!-- PRODUCT 31 (SHAWL) -->
+        <article class="product-card" data-category="shawl" data-pattern="saipikhup" data-search="id:31 shawl saipikhup black traditional handwoven">
+          <span class="product-badge bestseller">Bestseller</span>
+          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(31, event)">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <div class="product-media" onclick="openQuickView(31)">
+            <img src="assets/filler_black.png" id="img-prod-31" alt="Black Traditional Shawl">
+          </div>
+          <div class="product-info">
+            <div class="product-category">Shawl · Handwoven</div>
+            <h3 class="product-title" onclick="openQuickView(31)" style="cursor:pointer;">Black Traditional Shawl</h3>
+            <span class="product-price">Rs. 600</span>
           </div>
         </article>
 
@@ -2731,8 +2812,10 @@
         <cite>— Northeast India craft review</cite>
       </div>
     </div>
+  <div class="kuki-border"></div>
+
   <!-- Achievements Section -->
-  <section class="section achievements-section" id="achievements" style="border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); background: var(--bg-darker);">
+  <section class="section achievements-section" id="achievements" style="border-bottom: 1px solid var(--border-color); background: var(--bg-darker);">
     <div class="container">
       <div class="section-header reveal">
         <span class="eyebrow">Our Milestones</span>
@@ -2874,6 +2957,8 @@
     </div>
   </section>
 
+  <div class="kuki-border red"></div>
+
   <!-- Newsletter Subscription -->
   <section class="section newsletter-section">
     <div class="container newsletter-grid">
@@ -2895,6 +2980,8 @@
     </div>
   </section>
 
+  <div class="kuki-border bottom-pattern"></div>
+
   <!-- Footer Section -->
   <footer>
     <div class="footer-grid container">
@@ -2911,6 +2998,8 @@
           <li><a href="#shop" onclick="filterCategory('bag')">Bags</a></li>
           <li><a href="#shop" onclick="filterCategory('scarf')">Scarves</a></li>
           <li><a href="#shop" onclick="filterCategory('bandana')">Bandanas</a></li>
+          <li><a href="#shop" onclick="filterCategory('shawl')">Shawls</a></li>
+          <li><a href="#shop" onclick="filterCategory('pin')">Pins</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -3005,8 +3094,8 @@
         title: "Saipikhup Tote Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 2350,
-        priceDisplay: "Rs. 2,350",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "A spacious, heavy-duty shoulder tote featuring the historic Saipikhup ('elephant footprint') pattern, handwoven on a traditional Kuki backstrap loom.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_1.jpg" alt="Saipikhup Tote Bag">`
@@ -3016,8 +3105,8 @@
         title: "Thangnang Hobo Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 1950,
-        priceDisplay: "Rs. 1,950",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "An elegant, slouchy hobo bag showcasing the classic Thangnang diamond lattice pattern. Fully lined with inner zipper pocket.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_2.jpg" alt="Thangnang Hobo Bag">`
@@ -3027,8 +3116,8 @@
         title: "Mongvom Shoulder Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 2750,
-        priceDisplay: "Rs. 2,750",
+        price: 400,
+        priceDisplay: "Rs. 400",
         desc: "Structured shoulder bag finished with premium leather trims and organic cotton weave displaying the Kuki Mongvom stripe motif.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_3.jpg" alt="Mongvom Shoulder Bag">`
@@ -3038,8 +3127,8 @@
         title: "Saipikhup Clutch",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 750,
-        priceDisplay: "Rs. 750",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "A sleek, hand-held clutch featuring a striking saffron and crimson Saipikhup pattern. Perfect for evening outings.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_4.jpg" alt="Saipikhup Clutch">`
@@ -3049,8 +3138,8 @@
         title: "Thangnang Satchel",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 3900,
-        priceDisplay: "Rs. 3,900",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "A structured, vintage-inspired satchel showing dark emerald cross-hatch handloomed patterns with dual carry handles.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_5.jpg" alt="Thangnang Satchel">`
@@ -3060,8 +3149,8 @@
         title: "Mongvom Crossbody Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 1200,
-        priceDisplay: "Rs. 1,200",
+        price: 400,
+        priceDisplay: "Rs. 400",
         desc: "Compact crossbody bag featuring a repeat geometric warp pattern. Features adjustable cotton-webbing strap.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_6.jpg" alt="Mongvom Crossbody Bag">`
@@ -3071,8 +3160,8 @@
         title: "Saipikhup Bucket Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 2150,
-        priceDisplay: "Rs. 2,150",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "Modern bucket bag with drawstring closure, featuring classic red-saffron base pattern and premium brass hardware.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_7.jpg" alt="Saipikhup Bucket Bag">`
@@ -3082,8 +3171,8 @@
         title: "Thangnang Carryall",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 2550,
-        priceDisplay: "Rs. 2,550",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "A generous daily carryall highlighting ochre-gold woven textures. Features reinforced seams and sturdy double straps.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_8.jpg" alt="Thangnang Carryall">`
@@ -3093,8 +3182,8 @@
         title: "Mongvom Travel Tote",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 2950,
-        priceDisplay: "Rs. 2,950",
+        price: 400,
+        priceDisplay: "Rs. 400",
         desc: "An oversized travel tote made from heavy organic cotton weave, showcasing traditional Mongvom diamond repeat margins.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_9.jpg" alt="Mongvom Travel Tote">`
@@ -3104,8 +3193,8 @@
         title: "Saipikhup Backpack",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 3750,
-        priceDisplay: "Rs. 3,750",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "Sturdy heritage backpack combining Kuki backstrap handloom weaving with leather shoulder straps and back padding.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_10.jpg" alt="Saipikhup Backpack">`
@@ -3115,8 +3204,8 @@
         title: "Gosem Enamel Pin",
         category: "pin",
         categoryDisplay: "Lapel Pin · Enamel",
-        price: 150,
-        priceDisplay: "Rs. 150",
+        price: 500,
+        priceDisplay: "Rs. 500",
         desc: "Hard enamel lapel pin finished with gold plating, representing the traditional wind pipe instrument of the Kuki tribe.",
         weaver: "Ginzalian Mate (Moreh)",
         imageHtml: `<img src="assets/product_11.jpg" alt="Gosem Enamel Pin">`
@@ -3126,8 +3215,8 @@
         title: "Tahchapa Enamel Pin",
         category: "pin",
         categoryDisplay: "Lapel Pin · Enamel",
-        price: 320,
-        priceDisplay: "Rs. 320",
+        price: 500,
+        priceDisplay: "Rs. 500",
         desc: "Shield-shaped enamel pin representing Kuki warrior lineage, finished with charcoal and crimson enamel fills.",
         weaver: "Ginzalian Mate (Moreh)",
         imageHtml: `<img src="assets/product_12.jpg" alt="Tahchapa Enamel Pin">`
@@ -3148,8 +3237,8 @@
         title: "Thangnang Backpack",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 3550,
-        priceDisplay: "Rs. 3,550",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "Premium travel backpack featuring Thangnang crimson-gold geometric panels, leather closures, and laptop compartment.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_14.jpg" alt="Thangnang Backpack">`
@@ -3159,8 +3248,8 @@
         title: "Mongvom Structured Tote",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 4000,
-        priceDisplay: "Rs. 4,000",
+        price: 400,
+        priceDisplay: "Rs. 400",
         desc: "A sleek structured tote bag woven in pure olive green tones. Perfect for both office settings and weekend outings.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_15.jpg" alt="Mongvom Structured Tote">`
@@ -3170,8 +3259,8 @@
         title: "Saipikhup Daypack",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 1750,
-        priceDisplay: "Rs. 1,750",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "A daily daypack displaying sand-crimson tones. Very lightweight, compact, and features durable cotton drawstrings.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_16.jpg" alt="Saipikhup Daypack">`
@@ -3181,8 +3270,8 @@
         title: "Thangnang Messenger Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 3150,
-        priceDisplay: "Rs. 3,150",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "Heritage messenger bag displaying ash-slate patterns. Designed with multiple inner pockets and thick canvas shoulder straps.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_17.jpg" alt="Thangnang Messenger Bag">`
@@ -3192,8 +3281,8 @@
         title: "Mongvom Foldover Clutch",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 950,
-        priceDisplay: "Rs. 950",
+        price: 400,
+        priceDisplay: "Rs. 400",
         desc: "A versatile foldover clutch showing bold saffron-black stripes. Handloomed with heavy-weight premium organic cotton.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_18.jpg" alt="Mongvom Foldover Clutch">`
@@ -3203,8 +3292,8 @@
         title: "Saipikhup Bowler Bag",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 3350,
-        priceDisplay: "Rs. 3,350",
+        price: 1000,
+        priceDisplay: "Rs. 1,000",
         desc: "A classic bowler-style handbag showing detailed sunset-rust geometric motifs and dual sturdy leather rolled handles.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/product_19.jpg" alt="Saipikhup Bowler Bag">`
@@ -3214,8 +3303,8 @@
         title: "Thangnang Petite Tote",
         category: "bag",
         categoryDisplay: "Bag · Handwoven",
-        price: 1450,
-        priceDisplay: "Rs. 1,450",
+        price: 700,
+        priceDisplay: "Rs. 700",
         desc: "A smaller, lightweight shopper tote featuring ochre-saffron lattice patterns. Ideal for casual daily runs.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/product_20.jpg" alt="Thangnang Petite Tote">`
@@ -3225,8 +3314,8 @@
         title: "Mongvom Blue Bandana",
         category: "bandana",
         categoryDisplay: "Bandana · Handwoven",
-        price: 250,
-        priceDisplay: "Rs. 250",
+        price: 300,
+        priceDisplay: "Rs. 300",
         desc: "A striking sky-blue bandana handloomed using premium cotton, showcasing the classic Mongvom diamond repeat margins.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/bandana_1.jpg" alt="Mongvom Blue Bandana">`
@@ -3236,8 +3325,8 @@
         title: "Heritage Diamond Bandana",
         category: "bandana",
         categoryDisplay: "Bandana · Handwoven",
-        price: 550,
-        priceDisplay: "Rs. 550",
+        price: 300,
+        priceDisplay: "Rs. 300",
         desc: "Deep charcoal cotton base adorned with vibrant orange and white geometric diamond repeats, weaving together warrior status symbols.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/bandana_2.jpg" alt="Heritage Diamond Bandana">`
@@ -3247,8 +3336,8 @@
         title: "Thangnang Gold Bandana",
         category: "bandana",
         categoryDisplay: "Bandana · Handwoven",
-        price: 850,
-        priceDisplay: "Rs. 850",
+        price: 300,
+        priceDisplay: "Rs. 300",
         desc: "A classic cream and saffron backstrap-loomed bandana displaying the traditional Kuki Thangnang checkerboard motifs.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/bandana_3.jpg" alt="Thangnang Gold Bandana">`
@@ -3258,8 +3347,8 @@
         title: "Tribal Motif Bandana",
         category: "bandana",
         categoryDisplay: "Bandana · Handwoven",
-        price: 1200,
-        priceDisplay: "Rs. 1,200",
+        price: 300,
+        priceDisplay: "Rs. 300",
         desc: "A bold heritage print bandana displaying the sacred wind pipe (Gosem), hunting horns, and Kuki tribal symbols over a clean mesh background.",
         weaver: "Ginzalian Mate (Moreh)",
         imageHtml: `<img src="assets/bandana_4.jpg" alt="Tribal Motif Bandana">`
@@ -3269,8 +3358,8 @@
         title: "Midnight Diamond Bandana",
         category: "bandana",
         categoryDisplay: "Bandana · Handwoven",
-        price: 1500,
-        priceDisplay: "Rs. 1,500",
+        price: 300,
+        priceDisplay: "Rs. 300",
         desc: "Midnight black handloomed cotton bandana featuring intricate border motifs and subtle yellow highlight diamonds.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/bandana_5.jpg" alt="Midnight Diamond Bandana">`
@@ -3280,8 +3369,8 @@
         title: "Mangvom Dahpi Scarf",
         category: "scarf",
         categoryDisplay: "Scarf · Handwoven",
-        price: 1850,
-        priceDisplay: "Rs. 1,850",
+        price: 500,
+        priceDisplay: "Rs. 500",
         desc: "A rich, charcoal and grey handwoven scarf featuring the traditional Kuki Mangvom pattern loomed from pure organic cotton.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/scarf_dahpi.jpg" alt="Mangvom Dahpi Scarf">`
@@ -3291,8 +3380,8 @@
         title: "Saipikhup Heritage Scarf",
         category: "scarf",
         categoryDisplay: "Scarf · Handwoven",
-        price: 2250,
-        priceDisplay: "Rs. 2,250",
+        price: 500,
+        priceDisplay: "Rs. 500",
         desc: "An exquisite heritage scarf loomed with the sacred Saipikhup pattern representing status, prestige, and generational pride.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/scarf_heritage.jpg" alt="Saipikhup Heritage Scarf">`
@@ -3302,11 +3391,44 @@
         title: "Thangnang Phoulva Scarf",
         category: "scarf",
         categoryDisplay: "Scarf · Handwoven",
-        price: 1950,
-        priceDisplay: "Rs. 1,950",
+        price: 500,
+        priceDisplay: "Rs. 500",
         desc: "A stunning, versatile scarf loomed in the traditional Thangnang diamond checkerboard patterns. Durable yet extremely soft.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/scarf_phoulva.jpg" alt="Thangnang Phoulva Scarf">`
+      },
+      29: {
+        id: 29,
+        title: "White Traditional Shawl",
+        category: "shawl",
+        categoryDisplay: "Shawl · Handwoven",
+        price: 600,
+        priceDisplay: "Rs. 600",
+        desc: "A stunning white traditional shawl handloomed in Churachandpur, featuring the historic Saipikhup pattern in contrast grey and black margins.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/puan_product.png" alt="White Traditional Shawl">`
+      },
+      30: {
+        id: 30,
+        title: "Red Traditional Shawl",
+        category: "shawl",
+        categoryDisplay: "Shawl · Handwoven",
+        price: 600,
+        priceDisplay: "Rs. 600",
+        desc: "An exquisite crimson red traditional shawl, handloomed on traditional backstrap looms with fine black geometric Saipikhup repeating diamond motifs.",
+        weaver: "Nengzamoi Haokip (Churachandpur)",
+        imageHtml: `<img src="assets/filler_red.png" alt="Red Traditional Shawl">`
+      },
+      31: {
+        id: 31,
+        title: "Black Traditional Shawl",
+        category: "shawl",
+        categoryDisplay: "Shawl · Handwoven",
+        price: 600,
+        priceDisplay: "Rs. 600",
+        desc: "A bold black traditional shawl accented with beautiful pink and lavender Saipikhup geometric weaves, capturing the warrior prestige of Lamka weavers.",
+        weaver: "Kimkhosei Touthang (Lamka)",
+        imageHtml: `<img src="assets/filler_black.png" alt="Black Traditional Shawl">`
       }
     };
 
