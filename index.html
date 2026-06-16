@@ -1432,7 +1432,7 @@
   /* Footer Section */
   footer {
     background: var(--bg-darker);
-    padding: 80px 0 32px;
+    padding: 40px 0 24px;
     font-size: 0.86rem;
     color: var(--color-muted);
     border-top: 1px solid var(--border-color);
@@ -1440,20 +1440,20 @@
   .footer-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 40px;
-    margin-bottom: 60px;
+    gap: 30px;
+    margin-bottom: 30px;
   }
   @media (min-width: 768px) {
     .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; }
   }
   .footer-brand .logo {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     color: var(--color-cream);
   }
   .footer-brand p {
     font-size: 0.88rem;
     line-height: 1.5;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     max-width: 320px;
   }
   .footer-col h4 {
@@ -1462,13 +1462,13 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent-saffron);
-    margin-bottom: 20px;
+    margin-bottom: 12px;
   }
   .footer-links {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
   }
   .footer-links a {
     transition: var(--transition-smooth);
@@ -1480,8 +1480,8 @@
   .footer-bottom {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding-top: 32px;
+    gap: 16px;
+    padding-top: 20px;
     border-top: 1px solid var(--border-color);
   }
   @media (min-width: 768px) {
@@ -1502,6 +1502,89 @@
   }
   .footer-socials a:hover {
     color: var(--accent-saffron-soft);
+  }
+
+  /* Footer Instagram Feed Grid */
+  .footer-instagram-feed {
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 24px;
+  }
+  .insta-feed-header {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .insta-feed-header h3 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--accent-saffron);
+  }
+  .insta-feed-header h3 a {
+    text-decoration: underline;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    transition: var(--transition-smooth);
+  }
+  .insta-feed-header h3 a:hover {
+    color: var(--accent-saffron-soft);
+  }
+  .insta-feed-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  @media (min-width: 480px) {
+    .insta-feed-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (min-width: 768px) {
+    .insta-feed-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+  .insta-feed-item {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    display: block;
+  }
+  .insta-feed-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .insta-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+    color: #FFF;
+  }
+  .insta-overlay svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transform: scale(0.8);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .insta-feed-item:hover img {
+    transform: scale(1.08);
+  }
+  .insta-feed-item:hover .insta-overlay {
+    opacity: 1;
+  }
+  .insta-feed-item:hover .insta-overlay svg {
+    transform: scale(1);
   }
 
   /* Cart Sidebar Slider */
@@ -2984,6 +3067,52 @@
 
   <!-- Footer Section -->
   <footer>
+    <!-- Social Media Feed Grid -->
+    <div class="footer-instagram-feed container">
+      <div class="insta-feed-header">
+        <span class="eyebrow" style="margin-bottom: 4px;">Wear Your Roots</span>
+        <h3>Shop the Collection on Instagram • <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener">@nina_wearyourroots</a></h3>
+      </div>
+      <div class="insta-feed-grid">
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/hero_model.jpg" alt="NiNa Collection Model Photo">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/artisan_story.png" alt="Handweaving on Backstrap Loom">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/puan_product.png" alt="Traditional Handloomed Puan Wrap">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/newsletter_model.jpg" alt="NiNa Collection Model Editorial">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/product_14.jpg" alt="Saipikhup Detailed Motif Backpack">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/scarf_heritage.jpg" alt="Heritage Loomed Weave Scarf">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+      </div>
+    </div>
+
     <div class="footer-grid container">
       <div class="footer-brand">
         <a href="#" class="logo" aria-label="NiNa by Mangsee Logo">
