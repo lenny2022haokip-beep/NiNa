@@ -631,65 +631,71 @@
   /* Category Grid */
   .category-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 550px) {
     .category-grid {
-      gap: 24px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+  }
+  @media (min-width: 900px) {
+    .category-grid {
+      gap: 32px;
     }
   }
   .category-card {
     position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-    aspect-ratio: 4/5;
     cursor: pointer;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition-smooth);
   }
-  .category-card-bg {
-    position: absolute;
-    inset: 0;
+  .category-media {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: #F5F5F5;
+    border: 1px solid var(--border-color);
+  }
+  .category-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition-smooth);
-    filter: brightness(0.75) contrast(1.05);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .category-card:hover .category-card-bg {
-    transform: scale(1.08);
-    filter: brightness(0.6) contrast(1.1);
+  .category-card:hover .category-media img {
+    transform: scale(1.05);
   }
-  .category-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(5,11,7,0.1) 40%, rgba(5,11,7,0.9) 100%);
+  .category-card:hover .category-media {
+    border-color: var(--accent-saffron);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  }
+  .category-info {
+    padding: 12px 4px 4px;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 12px;
-    z-index: 2;
+    align-items: baseline;
+    gap: 8px;
   }
-  .category-overlay h3 {
-    font-size: clamp(0.85rem, 4vw, 1.5rem);
-    font-weight: 500;
-    margin-bottom: 2px;
-    color: var(--color-white);
-  }
-  .category-overlay p {
+  .category-num {
     font-family: var(--font-mono);
-    font-size: clamp(0.55rem, 2vw, 0.7rem);
-    color: var(--accent-saffron-soft);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: 0.68rem;
+    color: var(--color-muted);
+    letter-spacing: 0.05em;
+    font-weight: 700;
   }
-  @media (min-width: 768px) {
-    .category-overlay {
-      padding: 24px;
-    }
-    .category-overlay h3 {
-      margin-bottom: 4px;
-    }
+  .category-title {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--color-cream);
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .category-card:hover .category-title {
+    color: var(--accent-saffron);
   }
 
   /* Shop Filters & Search */
@@ -2227,26 +2233,32 @@
       <div class="category-grid reveal" style="max-width: 1000px; margin: 0 auto;">
         <!-- Bags Category -->
         <div class="category-card" onclick="filterCategory('bag')">
-          <img src="assets/product_15.jpg" alt="NiNa handwoven Kuki heritage bag" class="category-card-bg">
-          <div class="category-overlay">
-            <p>01</p>
-            <h3>Bags</h3>
+          <div class="category-media">
+            <img src="assets/product_15.jpg" alt="NiNa handwoven Kuki heritage bag">
+          </div>
+          <div class="category-info">
+            <span class="category-num">01 /</span>
+            <h3 class="category-title">Bags</h3>
           </div>
         </div>
         <!-- Bandanas Category -->
         <div class="category-card" onclick="filterCategory('bandana')">
-          <img src="assets/bandana_1.jpg" alt="NiNa handwoven Kuki heritage bandana" class="category-card-bg">
-          <div class="category-overlay">
-            <p>02</p>
-            <h3>Bandanas</h3>
+          <div class="category-media">
+            <img src="assets/bandana_1.jpg" alt="NiNa handwoven Kuki heritage bandana">
+          </div>
+          <div class="category-info">
+            <span class="category-num">02 /</span>
+            <h3 class="category-title">Bandanas</h3>
           </div>
         </div>
         <!-- Scarves Category -->
         <div class="category-card" onclick="filterCategory('scarf')">
-          <img src="assets/scarf_heritage.jpg" alt="NiNa handwoven Kuki heritage scarf" class="category-card-bg">
-          <div class="category-overlay">
-            <p>03</p>
-            <h3>Scarves</h3>
+          <div class="category-media">
+            <img src="assets/scarf_heritage.jpg" alt="NiNa handwoven Kuki heritage scarf">
+          </div>
+          <div class="category-info">
+            <span class="category-num">03 /</span>
+            <h3 class="category-title">Scarves</h3>
           </div>
         </div>
       </div>
