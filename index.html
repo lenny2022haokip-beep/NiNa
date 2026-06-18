@@ -19,6 +19,8 @@
     --surface-light: #FDFBF7;
     --surface-dark: #F4F3EF;
     --surface-card: #FDFBF7;
+    --bg-cream: #FDFBF7;
+    --text-dark: #1C1C1A;
     --accent-emerald: #000000;
     --accent-emerald-glow: rgba(0, 0, 0, 0.04);
     --accent-saffron: #000000;
@@ -2281,7 +2283,7 @@
     position: relative;
     overflow: hidden;
     height: 70vh; /* Premium full-height editorial feel */
-    background: #111;
+    background: var(--bg-cream);
     border-bottom: 1px solid var(--border-color);
   }
 
@@ -2293,94 +2295,119 @@
   }
 
   .ad-slider-track {
-    display: flex;
+    position: relative;
+    width: 100%;
     height: 100%;
-    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); /* Elegant sliding curve */
-    will-change: transform;
   }
 
   .ad-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
-    position: relative;
-    flex-shrink: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    background: var(--bg-cream); /* warm off-white #FDFBF7 */
+  }
+
+  .ad-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
   }
 
   .ad-bg-blur {
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    width: calc(100% + 40px);
-    height: calc(100% + 40px);
-    object-fit: cover;
-    filter: blur(25px) brightness(0.35); /* Dark blur matches contextual colors */
-    z-index: 1;
-    pointer-events: none;
+    display: none; /* Hide background blur for a clean gallery presentation */
   }
 
   .ad-fg-wrapper {
-    position: relative;
-    z-index: 2;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%; /* Left 50% on desktop */
     height: 100%;
-    width: 100%;
+    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .ad-fg-image {
-    height: 100%;
-    width: auto;
-    max-width: 100%;
-    object-fit: contain; /* 100% of the image is always visible */
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.45);
-    transition: transform 5s ease-out;
-  }
-
-  .ad-slide.active .ad-fg-image {
-    transform: scale(1.03); /* Subtle Ken Burns effect */
-  }
-
-  .ad-slide-content {
-    position: absolute;
-    z-index: 3;
-    text-align: center;
-    color: #FFFFFF;
-    max-width: 800px;
-    padding: 0 24px;
+    background: var(--surface-dark); /* Subtle contrast behind the image */
+    border-right: 1px solid var(--border-color);
+    padding: 40px; /* Gallery mat board padding */
+    box-sizing: border-box;
     opacity: 0;
-    transform: translateY(20px);
-    transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1) 0.3s, opacity 1s ease 0.3s;
+    transform: translateY(15px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
-  .ad-slide.active .ad-slide-content {
+  .ad-slide.active .ad-fg-wrapper {
     opacity: 1;
     transform: translateY(0);
   }
 
+  .ad-fg-image {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain; /* 100% of the image is always visible */
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12); /* Softer drop shadow for art-print feel */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* Clean border like a photo frame */
+    background: #FFF;
+    transition: transform 5s ease-out;
+  }
+
+  .ad-slide.active .ad-fg-image {
+    transform: scale(1.02); /* Very subtle elegant expansion */
+  }
+
+  .ad-slide-content {
+    position: absolute;
+    right: 0; /* Right 50% on desktop */
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding: 80px;
+    box-sizing: border-box;
+    background: var(--bg-cream); /* warm off-white #FDFBF7 */
+    color: var(--text-dark);
+    opacity: 0;
+    transform: translateX(25px); /* Elegant slide-in from right */
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.15s, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.15s;
+  }
+
+  .ad-slide.active .ad-slide-content {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
   .ad-slide-content .eyebrow {
-    font-family: 'Courier Prime', monospace;
+    font-family: var(--font-mono);
     font-size: 0.85rem;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--accent-saffron);
+    color: #B25E00; /* Darker amber for readability on cream */
     margin-bottom: 16px;
     display: block;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   }
 
   .ad-slide-content h2 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-heading);
     font-weight: 300;
     font-size: 3.5rem;
     letter-spacing: -0.01em;
     margin-bottom: 20px;
     line-height: 1.1;
-    color: #FDFBF7;
-    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+    color: var(--text-dark);
   }
 
   .ad-slide-content h2 em {
@@ -2389,21 +2416,20 @@
   }
 
   .ad-slide-content p {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-body);
     font-size: 1.1rem;
     font-weight: 300;
     line-height: 1.6;
     letter-spacing: 0.02em;
-    color: rgba(253, 251, 247, 0.9);
+    color: #4A4A48; /* Muted charcoal for editorial readability */
     max-width: 600px;
-    margin: 0 auto;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    margin: 0;
   }
 
-  /* Dots navigation */
+  /* Dots navigation aligned inside the right text column */
   .ad-slider-nav {
     position: absolute;
-    bottom: 30px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -2411,29 +2437,68 @@
     gap: 12px;
   }
 
+  @media (min-width: 900px) {
+    .ad-slider-nav {
+      left: calc(50% + 80px); /* Aligns with the left padding of the text column */
+      transform: none;
+    }
+  }
+
   .ad-dot {
     width: 24px;
     height: 2px;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(28, 28, 26, 0.15); /* Darker dots on cream background */
     cursor: pointer;
     transition: background 0.3s ease, width 0.3s ease;
   }
 
   .ad-dot.active {
-    background: var(--accent-saffron);
+    background: var(--text-dark);
     width: 40px; /* Expands slightly when active for premium feel */
   }
 
-  /* Mobile responsive adjustments */
-  @media (max-width: 768px) {
+  /* Responsive adjustments */
+  @media (max-width: 900px) {
     .ad-hero-section {
-      height: 55vh;
+      height: 65vh;
+    }
+    .ad-fg-wrapper {
+      width: 100%;
+      height: 55%;
+      left: 0;
+      top: 0;
+      border-right: none;
+      border-bottom: 1px solid var(--border-color);
+      padding: 24px; /* Cozy framing on mobile */
+      transform: translateY(15px);
+    }
+    .ad-slide-content {
+      width: 100%;
+      height: 45%;
+      left: 0;
+      top: 55%;
+      padding: 32px 24px 50px 24px; /* Bottom padding safe area for navigation dots */
+      align-items: center;
+      text-align: center;
+      transform: translateY(20px); /* Slide up on mobile */
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.1s, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.1s;
+    }
+    .ad-slide.active .ad-slide-content {
+      transform: translateY(0);
     }
     .ad-slide-content h2 {
       font-size: 2.2rem;
+      margin-bottom: 10px;
     }
     .ad-slide-content p {
       font-size: 0.95rem;
+    }
+    .ad-slide-content .eyebrow {
+      font-size: 0.75rem;
+      margin-bottom: 8px;
+    }
+    .ad-slider-nav {
+      bottom: 20px;
     }
   }
 
@@ -4357,13 +4422,13 @@
     const adTrack = document.getElementById('adSliderTrack');
     let adInterval;
 
-    // Dynamically size track and slides in JavaScript for compatibility and robustness
-    if (adTrack && adSlides.length) {
-      adTrack.style.width = `${adSlides.length * 100}%`;
-      adSlides.forEach(slide => {
-        slide.style.width = `${100 / adSlides.length}%`;
-      });
+    // Initialize layout for crossfade slider
+    if (adTrack) {
+      adTrack.style.width = '100%';
     }
+    adSlides.forEach(slide => {
+      slide.style.width = '100%';
+    });
 
     function showAdSlide(n) {
       if (!adSlides.length) return;
@@ -4371,11 +4436,6 @@
       adDots.forEach(dot => dot.classList.remove('active'));
       
       currentAdSlide = (n + adSlides.length) % adSlides.length;
-      
-      // Move sliding track
-      if (adTrack) {
-        adTrack.style.transform = `translateX(-${currentAdSlide * (100 / adSlides.length)}%)`;
-      }
       
       adSlides[currentAdSlide].classList.add('active');
       if (adDots[currentAdSlide]) adDots[currentAdSlide].classList.add('active');
