@@ -1833,6 +1833,81 @@
     padding: 16px;
   }
 
+  /* Upsell Widget */
+  .cart-upsell-widget {
+    padding: 16px;
+    background: var(--surface-dark); /* #F4F3EF */
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .cart-upsell-widget .upsell-text {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--text-dark);
+    line-height: 1.4;
+  }
+  .cart-upsell-widget .upsell-add-btn {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    background: transparent;
+    border: 1px solid var(--text-dark);
+    color: var(--text-dark);
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .cart-upsell-widget .upsell-add-btn:hover {
+    background: var(--text-dark);
+    color: var(--color-white);
+  }
+
+  /* Gifting Block */
+  .cart-gift-block {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 12px;
+  }
+  .gift-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .gift-checkbox-label input[type="checkbox"] {
+    margin-top: 3px;
+    accent-color: var(--text-dark);
+  }
+  .gift-checkbox-text {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--text-dark);
+    line-height: 1.4;
+  }
+  .gift-note-textarea {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    background: var(--bg-dark);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    padding: 8px;
+    box-sizing: border-box;
+    resize: none;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color 0.3s ease;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  .gift-note-textarea:focus {
+    border-color: var(--text-dark);
+  }
+
   .cart-sidebar-backdrop {
     position: fixed;
     inset: 0;
@@ -2514,7 +2589,22 @@
         <span style="font-size: 0.82rem; font-family: var(--font-body); color: var(--accent-saffron); cursor: pointer; text-decoration: underline;" onclick="closeCart(); document.getElementById('shop').scrollIntoView();">Explore Shop</span>
       </div>
     </div>
+    <!-- Upsell Widget Container -->
+    <div class="cart-upsell-widget" id="cartUpsellWidget" style="display: none;">
+      <div class="upsell-text">Complete the look: Add a Heritage Enamel Pin to your bag (+₹150)</div>
+      <button class="upsell-add-btn" onclick="addUpsellPin()">Add</button>
+    </div>
     <div class="cart-footer">
+      <!-- Gifting Option -->
+      <div class="cart-gift-block" style="display: none;">
+        <label class="gift-checkbox-label">
+          <input type="checkbox" id="giftCheckbox" onchange="toggleGiftOption()">
+          <span class="gift-checkbox-text">Ship as a Gift? Include custom packaging and a handwritten note (+₹50)</span>
+        </label>
+        <div id="giftNoteContainer" style="display: none;">
+          <textarea id="giftNote" class="gift-note-textarea" placeholder="Enter your handwritten note message here..." rows="2"></textarea>
+        </div>
+      </div>
       <div class="cart-total-row">
         <span>Subtotal</span>
         <span class="cart-total-price" id="cartTotalPrice">Rs. 0</span>
@@ -2549,6 +2639,41 @@
           <button class="btn btn-primary modal-add-btn" id="modalAddBtn">Add to Cart</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-backdrop" id="checkoutModalBackdrop" onclick="closeCheckoutModalOuter(event)">
+    <div class="modal-container glass-card" id="checkoutModalContainer" style="max-width: 500px; display: flex; flex-direction: column; background: var(--bg-dark); padding: 32px; box-shadow: 0 25px 50px rgba(0,0,0,0.25);">
+      <button class="modal-close-btn" onclick="closeCheckoutModal()" aria-label="Close Checkout">✕</button>
+      <h2 style="font-family: var(--font-heading); font-weight: 300; font-size: 1.8rem; margin-bottom: 24px; color: var(--text-dark); text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-top: 0;">Secure Checkout</h2>
+      
+      <form id="checkoutForm" onsubmit="submitOrder(event)" style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+        <div style="width: 100%;">
+          <label style="display: block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-dark); text-align: left;">Full Name *</label>
+          <input type="text" id="checkoutName" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); outline: none; border-radius: 4px;" placeholder="e.g. John Doe">
+        </div>
+        <div style="width: 100%;">
+          <label style="display: block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-dark); text-align: left;">Email Address *</label>
+          <input type="email" id="checkoutEmail" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); outline: none; border-radius: 4px;" placeholder="e.g. john@example.com">
+        </div>
+        <div style="width: 100%;">
+          <label style="display: block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-dark); text-align: left;">Phone Number *</label>
+          <input type="tel" id="checkoutPhone" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); outline: none; border-radius: 4px;" placeholder="e.g. +91 98765 43210">
+        </div>
+        <div style="width: 100%;">
+          <label style="display: block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-dark); text-align: left;">Shipping Address *</label>
+          <textarea id="checkoutAddress" required rows="3" style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); outline: none; resize: none; border-radius: 4px;" placeholder="Full street address, city, state, postal code..."></textarea>
+        </div>
+        <div style="width: 100%;">
+          <label style="display: block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-dark); text-align: left;">Payment Method</label>
+          <select id="checkoutPayment" style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); outline: none; border-radius: 4px;">
+            <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+            <option value="Card Payment">Card Payment (Simulation)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" id="placeOrderBtn" style="width: 100%; margin-top: 10px; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem;">Place Order</button>
+      </form>
     </div>
   </div>
 
@@ -2932,6 +3057,20 @@
         });
         
         products = newProducts;
+        
+        // Inject upsell product definition
+        products["11-upsell"] = {
+          id: "11-upsell",
+          title: "Heritage Enamel Pin",
+          category: "pin",
+          categoryDisplay: "Lapel Pin · Enamel",
+          price: 150,
+          priceDisplay: "Rs. 150",
+          desc: "Special Complete the Look discount enamel pin.",
+          weaver: "Ginzalian Mate (Moreh)",
+          stock_count: 99,
+          imageHtml: `<img src="assets/product_11.jpg" alt="Heritage Enamel Pin">`
+        };
       } catch (err) {
         console.error("Failed to fetch products from Supabase:", err);
       }
@@ -3223,11 +3362,191 @@
       }
     }
 
+    function hasBagButNoPin() {
+      let hasBag = false;
+      let hasPin = false;
+      
+      Object.keys(cart).forEach(key => {
+        const [productId] = key.split('-');
+        const item = products[productId];
+        if (item) {
+          if (item.category === 'bag') {
+            hasBag = true;
+          }
+          if (item.category === 'pin' || productId === '11-upsell') {
+            hasPin = true;
+          }
+        }
+      });
+      
+      return hasBag && !hasPin;
+    }
+
+    window.addUpsellPin = function() {
+      if (!products["11-upsell"]) {
+        products["11-upsell"] = {
+          id: "11-upsell",
+          title: "Heritage Enamel Pin",
+          category: "pin",
+          categoryDisplay: "Lapel Pin · Enamel",
+          price: 150,
+          priceDisplay: "Rs. 150",
+          desc: "Special Complete the Look discount enamel pin.",
+          weaver: "Ginzalian Mate (Moreh)",
+          stock_count: 99,
+          imageHtml: `<img src="assets/product_11.jpg" alt="Heritage Enamel Pin">`
+        };
+      }
+      
+      cart["11-upsell-Default"] = 1;
+      updateCartUI();
+      showToast("Heritage Enamel Pin added to your cart!", "success");
+    };
+
+    window.toggleGiftOption = function() {
+      const giftCheckbox = document.getElementById('giftCheckbox');
+      const giftNoteContainer = document.getElementById('giftNoteContainer');
+      if (giftCheckbox && giftNoteContainer) {
+        giftNoteContainer.style.display = giftCheckbox.checked ? 'block' : 'none';
+        if (!giftCheckbox.checked) {
+          const giftNote = document.getElementById('giftNote');
+          if (giftNote) giftNote.value = '';
+        }
+      }
+      updateCartUI();
+    };
+
+    window.openCheckoutModal = function() {
+      const modal = document.getElementById('checkoutModalBackdrop');
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.offsetHeight; // force reflow
+        modal.classList.add('open');
+      }
+    };
+
+    window.closeCheckoutModal = function() {
+      const modal = document.getElementById('checkoutModalBackdrop');
+      if (modal) {
+        modal.classList.remove('open');
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 300);
+      }
+    };
+
+    window.closeCheckoutModalOuter = function(e) {
+      if (e.target === document.getElementById('checkoutModalBackdrop')) {
+        closeCheckoutModal();
+      }
+    };
+
+    window.submitOrder = async function(e) {
+      if (e) e.preventDefault();
+      
+      const name = document.getElementById('checkoutName').value.trim();
+      const email = document.getElementById('checkoutEmail').value.trim();
+      const phone = document.getElementById('checkoutPhone').value.trim();
+      const address = document.getElementById('checkoutAddress').value.trim();
+      const paymentMethod = document.getElementById('checkoutPayment').value;
+      
+      if (!name || !email || !phone || !address) {
+        showToast("Please fill in all shipping fields.", "error");
+        return;
+      }
+
+      const orderItems = [];
+      let totalPrice = 0;
+      
+      Object.keys(cart).forEach(key => {
+        const [productId, variant] = key.split('-');
+        const item = products[productId];
+        if (item) {
+          const qty = cart[key];
+          orderItems.push({
+            product_id: productId,
+            title: item.title,
+            price: item.price,
+            quantity: qty,
+            variant: variant
+          });
+          totalPrice += item.price * qty;
+        }
+      });
+      
+      const giftCheckbox = document.getElementById('giftCheckbox');
+      const isGift = giftCheckbox ? giftCheckbox.checked : false;
+      const giftNote = document.getElementById('giftNote');
+      const notes = isGift && giftNote ? giftNote.value.trim() : "";
+      
+      if (isGift) {
+        totalPrice += 50;
+      }
+
+      const orderNumber = `NINA-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+      const payload = {
+        order_number: orderNumber,
+        customer_name: name,
+        customer_email: email,
+        customer_phone: phone,
+        customer_address: address,
+        items: orderItems,
+        subtotal: totalPrice,
+        status: 'Pending',
+        is_gift: isGift,
+        notes: notes || null,
+        payment_method: paymentMethod
+      };
+
+      const placeBtn = document.getElementById('placeOrderBtn');
+      const originalText = placeBtn.textContent;
+      placeBtn.disabled = true;
+      placeBtn.textContent = 'Processing Order...';
+
+      try {
+        const response = await fetch('https://safgnxqeadujezefvahw.supabase.co/rest/v1/orders', {
+          method: 'POST',
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to submit order. Please try again.');
+        }
+
+        showToast(`Order Placed Successfully! ID: ${orderNumber}`, "success");
+        cart = {};
+        
+        // Reset checkout form
+        document.getElementById('checkoutForm').reset();
+        
+        updateCartUI();
+        closeCheckoutModal();
+        closeCart();
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || "Failed to place order. Please try again.", "error");
+      } finally {
+        placeBtn.disabled = false;
+        placeBtn.textContent = originalText;
+      }
+    };
+
     function updateCartUI() {
       const cartCount = document.getElementById('cartCount');
       const cartHeaderCount = document.getElementById('cartHeaderCount');
       const cartBody = document.getElementById('cartBody');
       const cartTotalPrice = document.getElementById('cartTotalPrice');
+      const cartUpsellWidget = document.getElementById('cartUpsellWidget');
+      const giftBlock = document.querySelector('.cart-gift-block');
+      const giftCheckbox = document.getElementById('giftCheckbox');
+      const checkoutBtn = document.querySelector('.checkout-btn');
       
       let totalQty = 0;
       let totalPrice = 0;
@@ -3239,52 +3558,78 @@
         document.getElementById('cartEmptyMessage').style.display = 'block';
         cartBody.innerHTML = '';
         cartBody.appendChild(document.getElementById('cartEmptyMessage'));
+        
+        if (cartUpsellWidget) cartUpsellWidget.style.display = 'none';
+        if (giftCheckbox) {
+          giftCheckbox.checked = false;
+          // Hide gift note input
+          const giftNoteContainer = document.getElementById('giftNoteContainer');
+          if (giftNoteContainer) giftNoteContainer.style.display = 'none';
+          const giftNote = document.getElementById('giftNote');
+          if (giftNote) giftNote.value = '';
+        }
+        if (giftBlock) giftBlock.style.display = 'none';
+        if (checkoutBtn) checkoutBtn.style.display = 'none';
       } else {
         document.getElementById('cartEmptyMessage').style.display = 'none';
+        if (giftBlock) giftBlock.style.display = 'block';
+        if (checkoutBtn) checkoutBtn.style.display = 'block';
         
         cartKeys.forEach(key => {
           const [productId, variant] = key.split('-');
           const item = products[productId];
-          const qty = cart[key];
-          totalQty += qty;
-          totalPrice += item.price * qty;
+          if (item) {
+            const qty = cart[key];
+            totalQty += qty;
+            totalPrice += item.price * qty;
 
-          // Apply visual filters to thumbnails in cart to match selected color variant
-          let filterStyle = '';
-          if (variant === 'Maroon') filterStyle = 'filter: hue-rotate(330deg) saturate(1.4);';
-          else if (variant === 'Pink') filterStyle = 'filter: hue-rotate(290deg) saturate(1.8);';
-          else if (variant === 'Black' || variant === 'Charcoal') filterStyle = 'filter: grayscale(1) brightness(0.6);';
-          else if (variant === 'Yellow') filterStyle = 'filter: hue-rotate(40deg) saturate(1.2) sepia(0.2);';
-          else if (variant === 'Forest Green') filterStyle = 'filter: hue-rotate(100deg) saturate(1.2);';
+            // Apply visual filters to thumbnails in cart to match selected color variant
+            let filterStyle = '';
+            if (variant === 'Maroon') filterStyle = 'filter: hue-rotate(330deg) saturate(1.4);';
+            else if (variant === 'Pink') filterStyle = 'filter: hue-rotate(290deg) saturate(1.8);';
+            else if (variant === 'Black' || variant === 'Charcoal') filterStyle = 'filter: grayscale(1) brightness(0.6);';
+            else if (variant === 'Yellow') filterStyle = 'filter: hue-rotate(40deg) saturate(1.2) sepia(0.2);';
+            else if (variant === 'Forest Green') filterStyle = 'filter: hue-rotate(100deg) saturate(1.2);';
 
-          let imageWithFilter = item.imageHtml;
-          if (filterStyle) {
-            imageWithFilter = item.imageHtml.replace('<img', `<img style="${filterStyle}"`);
-          }
+            let imageWithFilter = item.imageHtml;
+            if (filterStyle) {
+              imageWithFilter = item.imageHtml.replace('<img', `<img style="${filterStyle}"`);
+            }
 
-          cartHtml += `
-            <div class="cart-item">
-              <div class="cart-item-img">
-                ${imageWithFilter}
-              </div>
-              <div class="cart-item-details">
-                <div class="cart-item-title">${item.title}</div>
-                <div style="font-size:0.72rem; color:var(--accent-saffron); margin-bottom:4px;">Color: ${variant}</div>
-                <div class="cart-item-price">Rs. ${item.price.toLocaleString('en-IN')}</div>
-                <div class="cart-item-qty-control">
-                  <span class="cart-item-qty-btn" onclick="adjustCartQty('${key}', -1)">-</span>
-                  <span class="cart-item-qty-val">${qty}</span>
-                  <span class="cart-item-qty-btn" onclick="adjustCartQty('${key}', 1)">+</span>
+            cartHtml += `
+              <div class="cart-item">
+                <div class="cart-item-img">
+                  ${imageWithFilter}
+                </div>
+                <div class="cart-item-details">
+                  <div class="cart-item-title">${item.title}</div>
+                  <div style="font-size:0.72rem; color:var(--accent-saffron); margin-bottom:4px;">Color: ${variant}</div>
+                  <div class="cart-item-price">Rs. ${item.price.toLocaleString('en-IN')}</div>
+                  <div class="cart-item-qty-control">
+                    <span class="cart-item-qty-btn" onclick="adjustCartQty('${key}', -1)">-</span>
+                    <span class="cart-item-qty-val">${qty}</span>
+                    <span class="cart-item-qty-btn" onclick="adjustCartQty('${key}', 1)">+</span>
+                  </div>
+                </div>
+                <div class="cart-item-remove" onclick="removeCartItem('${key}')">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 </div>
               </div>
-              <div class="cart-item-remove" onclick="removeCartItem('${key}')">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-              </div>
-            </div>
-          `;
+            `;
+          }
         });
         
         cartBody.innerHTML = cartHtml;
+        
+        // Show/hide upsell widget based on contents
+        if (cartUpsellWidget) {
+          cartUpsellWidget.style.display = hasBagButNoPin() ? 'flex' : 'none';
+        }
+      }
+
+      // Add gift fee if checked
+      if (giftCheckbox && giftCheckbox.checked) {
+        totalPrice += 50;
       }
 
       cartCount.textContent = totalQty;
@@ -3329,10 +3674,7 @@
         showToast("Your cart is empty", "info");
         return;
       }
-      showToast("Connecting to secure payment gateway... Redirecting...", "success");
-      cart = {};
-      updateCartUI();
-      setTimeout(closeCart, 1500);
+      openCheckoutModal();
     }
 
     // --- Quick View Modal ---
@@ -3503,7 +3845,7 @@
             'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
             'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
             'Content-Type': 'application/json',
-            'Prefer': 'return=representation'
+            'Prefer': 'return=minimal'
           },
           body: JSON.stringify({ email: email })
         });
