@@ -2411,6 +2411,102 @@
       font-size: 0.95rem;
     }
   }
+
+  /* Sold Out Overlays & Masks */
+  .product-card.sold-out {
+    position: relative;
+  }
+  .product-card.sold-out .product-media img {
+    opacity: 0.45;
+    filter: grayscale(40%);
+  }
+  .product-card.sold-out .product-info {
+    opacity: 0.6;
+  }
+  .sold-out-overlay {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(253, 251, 247, 0.98); /* warm off-white */
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dark);
+    z-index: 10;
+    pointer-events: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    border-radius: 0;
+  }
+
+  /* Scarcity Badges */
+  .product-badge.scarcity {
+    background: #FFF9E6; /* warm amber/saffron tint */
+    color: #B25E00;
+    border: 1px solid #FFD980;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* Skeletons & Layout Placeholders */
+  .product-card.skeleton {
+    pointer-events: none;
+    border: 1px solid transparent;
+  }
+  .skeleton-media {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: #f4f2ee;
+    position: relative;
+    overflow: hidden;
+  }
+  .skeleton-info {
+    padding: 16px 0;
+  }
+  .skeleton-line {
+    height: 10px;
+    background: #f4f2ee;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .skeleton-line.category {
+    width: 30%;
+    height: 8px;
+  }
+  .skeleton-line.title {
+    width: 75%;
+    height: 12px;
+  }
+  .skeleton-line.price {
+    width: 20%;
+    height: 10px;
+  }
+
+  /* Shimmer Loading Animation */
+  @keyframes skeleton-shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  .skeleton-media::after,
+  .skeleton-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: skeleton-shimmer 1.6s infinite;
+  }
 </style>
 </head>
 <body>
@@ -2601,488 +2697,114 @@
       <!-- Product Grid (31 Items) -->
       <div class="product-grid reveal" id="productGrid">
 
-        <!-- PRODUCT 1 -->
-        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:1 bag saipikhup tote bag crimson charcoal handwoven">
-          <span class="product-badge bestseller">Bestseller</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(1, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(1)">
-            <img src="assets/product_1.jpg" id="img-prod-1" alt="NiNa Saipikhup Tote Bag">
+        <!-- SKELETON 1 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(1)" style="cursor:pointer;">Saipikhup Tote Bag</h3>
-            <span class="product-price">Rs. 1,000</span>
+        </div>
+        <!-- SKELETON 2 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-        </article>
-
-        <!-- PRODUCT 2 -->
-        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:2 bag thangnang hobo bag butter saffron handwoven">
-          <span class="product-badge new">New</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(2, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(2)">
-            <img src="assets/product_2.jpg" id="img-prod-2" alt="NiNa Thangnang Hobo Bag">
+        </div>
+        <!-- SKELETON 3 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(2)" style="cursor:pointer;">Thangnang Hobo Bag</h3>
-            <span class="product-price">Rs. 700</span>
+        </div>
+        <!-- SKELETON 4 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-        </article>
-
-        <!-- PRODUCT 3 -->
-        <article class="product-card" data-category="bag" data-pattern="mangvom" data-search="id:3 bag mangvom shoulder bag forest indigo handwoven">
-          <span class="product-badge handcrafted">Handcrafted</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(3, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(3)">
-            <img src="assets/product_3.jpg" id="img-prod-3" alt="NiNa Mongvom Shoulder Bag">
+        </div>
+        <!-- SKELETON 5 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(3)" style="cursor:pointer;">Mongvom Shoulder Bag</h3>
-            <span class="product-price">Rs. 400</span>
+        </div>
+        <!-- SKELETON 6 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-        </article>
-
-        <!-- PRODUCT 4 -->
-        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:4 bag saipikhup clutch gold saffron handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(4, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(4)">
-            <img src="assets/product_4.jpg" id="img-prod-4" alt="NiNa Saipikhup Clutch">
+        </div>
+        <!-- SKELETON 7 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(4)" style="cursor:pointer;">Saipikhup Clutch</h3>
-            <span class="product-price">Rs. 1,000</span>
+        </div>
+        <!-- SKELETON 8 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-        </article>
-
-        <!-- PRODUCT 5 -->
-        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:5 bag thangnang satchel dark emerald handwoven">
-          <span class="product-badge bestseller">Bestseller</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(5, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(5)">
-            <img src="assets/product_5.jpg" id="img-prod-5" alt="NiNa Thangnang Satchel">
+        </div>
+        <!-- SKELETON 9 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(5)" style="cursor:pointer;">Thangnang Satchel</h3>
-            <span class="product-price">Rs. 700</span>
+        </div>
+        <!-- SKELETON 10 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-        </article>
-
-        <!-- PRODUCT 6 -->
-        <article class="product-card" data-category="bag" data-pattern="mangvom" data-search="id:6 bag mangvom crossbody bag crimson dusk handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(6, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(6)">
-            <img src="assets/product_6.jpg" id="img-prod-6" alt="NiNa Mongvom Crossbody Bag">
+        </div>
+        <!-- SKELETON 11 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(6)" style="cursor:pointer;">Mongvom Crossbody Bag</h3>
-            <span class="product-price">Rs. 400</span>
+        </div>
+        <!-- SKELETON 12 -->
+        <div class="product-card skeleton">
+          <div class="skeleton-media"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line category"></div>
+            <div class="skeleton-line title"></div>
+            <div class="skeleton-line price"></div>
           </div>
-        </article>
-
-        <!-- PRODUCT 7 -->
-        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:7 bag saipikhup bucket bag classic earth handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(7, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(7)">
-            <img src="assets/product_7.jpg" id="img-prod-7" alt="NiNa Saipikhup Bucket Bag">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(7)" style="cursor:pointer;">Saipikhup Bucket Bag</h3>
-            <span class="product-price">Rs. 1,000</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 8 -->
-        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:8 bag thangnang carryall ochre gold handwoven">
-          <span class="product-badge new">New</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(8, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(8)">
-            <img src="assets/product_8.jpg" id="img-prod-8" alt="NiNa Thangnang Carryall">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(8)" style="cursor:pointer;">Thangnang Carryall</h3>
-            <span class="product-price">Rs. 700</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 9 -->
-        <article class="product-card" data-category="bag" data-pattern="mangvom" data-search="id:9 bag mangvom travel tote navy sage handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(9, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(9)">
-            <img src="assets/product_9.jpg" id="img-prod-9" alt="NiNa Mongvom Travel Tote">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(9)" style="cursor:pointer;">Mongvom Travel Tote</h3>
-            <span class="product-price">Rs. 400</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 10 -->
-        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:10 bag saipikhup backpack heritage saffron handwoven">
-          <span class="product-badge handcrafted">Handcrafted</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(10, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(10)">
-            <img src="assets/product_10.jpg" id="img-prod-10" alt="NiNa Saipikhup Backpack">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(10)" style="cursor:pointer;">Saipikhup Backpack</h3>
-            <span class="product-price">Rs. 1,000</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 11 -->
-        <article class="product-card" data-category="pin" data-pattern="none" data-search="id:11 pin gosem enamel pin lapel card gold traditional instrument">
-          <span class="product-badge bestseller">Bestseller</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(11, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(11)">
-            <img src="assets/product_11.jpg" id="img-prod-11" alt="NiNa Gosem Enamel Pin">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Lapel Pin · Enamel</div>
-            <h3 class="product-title" onclick="openQuickView(11)" style="cursor:pointer;">Gosem Enamel Pin</h3>
-            <span class="product-price">Rs. 500</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 12 -->
-        <article class="product-card" data-category="pin" data-pattern="none" data-search="id:12 pin tahchapa enamel pin lapel card crimson warrior shield">
-          <span class="product-badge handcrafted">Handcrafted</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(12, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(12)">
-            <img src="assets/product_12.jpg" id="img-prod-12" alt="NiNa Tahchapa Enamel Pin">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Lapel Pin · Enamel</div>
-            <h3 class="product-title" onclick="openQuickView(12)" style="cursor:pointer;">Tahchapa Enamel Pin</h3>
-            <span class="product-price">Rs. 500</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 13 -->
-        <article class="product-card" data-category="pin" data-pattern="none" data-search="id:13 pin tahchapa collector pin lapel card close up edition">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(13, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(13)">
-            <img src="assets/product_13.jpg" id="img-prod-13" alt="NiNa Tahchapa Collector Pin">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Lapel Pin · Enamel</div>
-            <h3 class="product-title" onclick="openQuickView(13)" style="cursor:pointer;">Tahchapa Collector Pin</h3>
-            <span class="product-price">Rs. 500</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 14 -->
-        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:14 bag thangnang backpack crimson gold handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(14, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(14)">
-            <img src="assets/product_14.jpg" id="img-prod-14" alt="NiNa Thangnang Backpack">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(14)" style="cursor:pointer;">Thangnang Backpack</h3>
-            <span class="product-price">Rs. 700</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 15 -->
-        <article class="product-card" data-category="bag" data-pattern="mangvom" data-search="id:15 bag mangvom structured tote pure olive handwoven">
-          <span class="product-badge new">New</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(15, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(15)">
-            <img src="assets/product_15.jpg" id="img-prod-15" alt="NiNa Mongvom Structured Tote">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(15)" style="cursor:pointer;">Mongvom Structured Tote</h3>
-            <span class="product-price">Rs. 400</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 16 -->
-        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:16 bag saipikhup daypack midnight sand handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(16, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(16)">
-            <img src="assets/product_16.jpg" id="img-prod-16" alt="NiNa Saipikhup Daypack">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(16)" style="cursor:pointer;">Saipikhup Daypack</h3>
-            <span class="product-price">Rs. 1,000</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 17 -->
-        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:17 bag thangnang messenger bag ash slate handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(17, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(17)">
-            <img src="assets/product_17.jpg" id="img-prod-17" alt="NiNa Thangnang Messenger Bag">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(17)" style="cursor:pointer;">Thangnang Messenger Bag</h3>
-            <span class="product-price">Rs. 700</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 18 -->
-        <article class="product-card" data-category="bag" data-pattern="mangvom" data-search="id:18 bag mangvom foldover clutch saffron black handwoven">
-          <span class="product-badge handcrafted">Handcrafted</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(18, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(18)">
-            <img src="assets/product_18.jpg" id="img-prod-18" alt="NiNa Mongvom Foldover Clutch">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(18)" style="cursor:pointer;">Mongvom Foldover Clutch</h3>
-            <span class="product-price">Rs. 400</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 19 -->
-        <article class="product-card" data-category="bag" data-pattern="saipikhup" data-search="id:19 bag saipikhup bowler bag sunset rust handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(19, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(19)">
-            <img src="assets/product_19.jpg" id="img-prod-19" alt="NiNa Saipikhup Bowler Bag">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(19)" style="cursor:pointer;">Saipikhup Bowler Bag</h3>
-            <span class="product-price">Rs. 1,000</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 20 -->
-        <article class="product-card" data-category="bag" data-pattern="thangnang" data-search="id:20 bag thangnang petite tote ochre saffron handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(20, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(20)">
-            <img src="assets/product_20.jpg" id="img-prod-20" alt="NiNa Thangnang Petite Tote">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bag · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(20)" style="cursor:pointer;">Thangnang Petite Tote</h3>
-            <span class="product-price">Rs. 700</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 21 -->
-        <article class="product-card" data-category="bandana" data-pattern="mangvom" data-search="id:21 bandana mangvom blue cotton handwoven">
-          <span class="product-badge new">New</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(21, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(21)">
-            <img src="assets/bandana_1.jpg" id="img-prod-21" alt="NiNa Mongvom Blue Bandana">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bandana · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(21)" style="cursor:pointer;">Mongvom Blue Bandana</h3>
-            <span class="product-price">Rs. 300</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 22 -->
-        <article class="product-card" data-category="bandana" data-pattern="saipikhup" data-search="id:22 bandana heritage diamond charcoal orange handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(22, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(22)">
-            <img src="assets/bandana_2.jpg" id="img-prod-22" alt="NiNa Heritage Diamond Bandana">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bandana · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(22)" style="cursor:pointer;">Heritage Diamond Bandana</h3>
-            <span class="product-price">Rs. 300</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 23 -->
-        <article class="product-card" data-category="bandana" data-pattern="thangnang" data-search="id:23 bandana thangnang gold saffron cream handwoven">
-          <span class="product-badge handcrafted">Handcrafted</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(23, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(23)">
-            <img src="assets/bandana_3.jpg" id="img-prod-23" alt="NiNa Thangnang Gold Bandana">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bandana · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(23)" style="cursor:pointer;">Thangnang Gold Bandana</h3>
-            <span class="product-price">Rs. 300</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 24 -->
-        <article class="product-card" data-category="bandana" data-pattern="mangvom" data-search="id:24 bandana tribal gosem hunting horn heritage">
-          <span class="product-badge bestseller">Bestseller</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(24, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(24)">
-            <img src="assets/bandana_4.jpg" id="img-prod-24" alt="NiNa Tribal Motif Bandana">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bandana · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(24)" style="cursor:pointer;">Tribal Motif Bandana</h3>
-            <span class="product-price">Rs. 300</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 25 -->
-        <article class="product-card" data-category="bandana" data-pattern="thangnang" data-search="id:25 bandana midnight diamond black yellow handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(25, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(25)">
-            <img src="assets/bandana_5.jpg" id="img-prod-25" alt="NiNa Midnight Diamond Bandana">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Bandana · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(25)" style="cursor:pointer;">Midnight Diamond Bandana</h3>
-            <span class="product-price">Rs. 300</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 26 (NEW SCARF) -->
-        <article class="product-card" data-category="scarf" data-pattern="mangvom" data-search="id:26 scarf mangvom dahpi scarf grey black handwoven">
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(26, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(26)">
-            <img src="assets/scarf_dahpi.jpg" id="img-prod-26" alt="NiNa Mangvom Dahpi Scarf">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Scarf · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(26)" style="cursor:pointer;">Mangvom Dahpi Scarf</h3>
-            <span class="product-price">Rs. 500</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 27 (NEW SCARF) -->
-        <article class="product-card" data-category="scarf" data-pattern="saipikhup" data-search="id:27 scarf saipikhup heritage scarf black white handwoven">
-          <span class="product-badge new">New</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(27, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(27)">
-            <img src="assets/scarf_heritage.jpg" id="img-prod-27" alt="NiNa Saipikhup Heritage Scarf">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Scarf · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(27)" style="cursor:pointer;">Saipikhup Heritage Scarf</h3>
-            <span class="product-price">Rs. 500</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 28 (NEW SCARF) -->
-        <article class="product-card" data-category="scarf" data-pattern="thangnang" data-search="id:28 scarf thangnang phoulva scarf black grey handwoven">
-          <span class="product-badge bestseller">Bestseller</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(28, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(28)">
-            <img src="assets/scarf_phoulva.jpg" id="img-prod-28" alt="NiNa Thangnang Phoulva Scarf">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Scarf · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(28)" style="cursor:pointer;">Thangnang Phoulva Scarf</h3>
-            <span class="product-price">Rs. 500</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 29 (SHAWL) -->
-        <article class="product-card" data-category="shawl" data-pattern="saipikhup" data-search="id:29 shawl saipikhup white traditional handwoven">
-          <span class="product-badge new">New</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(29, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(29)">
-            <img src="assets/puan_product.png" id="img-prod-29" alt="White Traditional Shawl">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Shawl · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(29)" style="cursor:pointer;">White Traditional Shawl</h3>
-            <span class="product-price">Rs. 600</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 30 (SHAWL) -->
-        <article class="product-card" data-category="shawl" data-pattern="saipikhup" data-search="id:30 shawl saipikhup red traditional handwoven">
-          <span class="product-badge handcrafted">Handcrafted</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(30, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(30)">
-            <img src="assets/filler_red.png" id="img-prod-30" alt="Red Traditional Shawl">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Shawl · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(30)" style="cursor:pointer;">Red Traditional Shawl</h3>
-            <span class="product-price">Rs. 600</span>
-          </div>
-        </article>
-
-        <!-- PRODUCT 31 (SHAWL) -->
-        <article class="product-card" data-category="shawl" data-pattern="saipikhup" data-search="id:31 shawl saipikhup black traditional handwoven">
-          <span class="product-badge bestseller">Bestseller</span>
-          <button class="wish-btn" aria-label="Add to wishlist" onclick="toggleWishlist(31, event)">
-            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          </button>
-          <div class="product-media" onclick="openQuickView(31)">
-            <img src="assets/filler_black.png" id="img-prod-31" alt="Black Traditional Shawl">
-          </div>
-          <div class="product-info">
-            <div class="product-category">Shawl · Handwoven</div>
-            <h3 class="product-title" onclick="openQuickView(31)" style="cursor:pointer;">Black Traditional Shawl</h3>
-            <span class="product-price">Rs. 600</span>
-          </div>
-        </article>
+        </div>
 
       </div>
     </div>
@@ -3489,7 +3211,7 @@
   <!-- Script logic -->
   <script>
     // --- Data Definitions (25 Products) ---
-    const products = {
+    let products = {
       1: {
         id: 1,
         title: "Saipikhup Tote Bag",
@@ -3829,9 +3551,144 @@
         priceDisplay: "Rs. 600",
         desc: "A bold black traditional shawl accented with beautiful pink and lavender Saipikhup geometric weaves, capturing the warrior prestige of Lamka weavers.",
         weaver: "Kimkhosei Touthang (Lamka)",
-        imageHtml: `<img src="assets/filler_black.png" alt="Black Traditional Shawl">`
       }
     };
+
+    // --- Dynamic Supabase Fetch and Sorting ---
+    async function fetchProducts() {
+      try {
+        const response = await fetch('https://safgnxqeadujezefvahw.supabase.co/rest/v1/products', {
+          method: 'GET',
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg'
+          }
+        });
+        if (!response.ok) throw new Error('Network response was not ok');
+        const dbProducts = await response.json();
+        
+        // Convert database array to products object keyed by id
+        const newProducts = {};
+        dbProducts.forEach(prod => {
+          newProducts[prod.id] = {
+            id: prod.id,
+            title: prod.title,
+            category: prod.category,
+            categoryDisplay: prod.category_display || (prod.category.charAt(0).toUpperCase() + prod.category.slice(1) + " · Handwoven"),
+            price: Number(prod.price),
+            priceDisplay: prod.price_display || `Rs. ${Number(prod.price).toLocaleString('en-IN')}`,
+            desc: prod.description || '',
+            weaver: prod.weaver || '',
+            stock_count: prod.stock_count !== null ? prod.stock_count : 10,
+            imageHtml: `<img src="${prod.image_url}" alt="${prod.title}" loading="lazy" id="img-prod-${prod.id}">`
+          };
+        });
+        
+        // Update global products reference
+        products = newProducts;
+        
+        // Render to UI
+        renderProducts();
+      } catch (err) {
+        console.error("Failed to fetch products from Supabase:", err);
+        // Fallback to static catalog in case of error
+        renderProducts();
+      }
+    }
+
+    function renderProducts() {
+      const productGrid = document.getElementById('productGrid');
+      if (!productGrid) return;
+      
+      // Clear skeleton loader
+      productGrid.innerHTML = '';
+      
+      const productList = Object.values(products);
+      
+      // Sort: Priority to Handwoven Bags priced between ₹850 and ₹1,000
+      productList.sort((a, b) => {
+        const isHighValBagA = (a.category === 'bag' && a.price >= 850 && a.price <= 1000);
+        const isHighValBagB = (b.category === 'bag' && b.price >= 850 && b.price <= 1000);
+        
+        if (isHighValBagA && !isHighValBagB) return -1;
+        if (!isHighValBagA && isHighValBagB) return 1;
+        return a.id - b.id; // Stable secondary sort by id
+      });
+      
+      productList.forEach(prod => {
+        let badgeHtml = '';
+        
+        // Dynamic visual triggers based on stock scarcity strategy
+        if (prod.stock_count >= 1 && prod.stock_count <= 5) {
+          badgeHtml = `<span class="product-badge scarcity">Batch 01 — Only ${prod.stock_count} pieces woven</span>`;
+        } else if (prod.stock_count > 5) {
+          // Fallback to design category badges for normal stock items
+          if (prod.id === 1 || prod.id === 31 || prod.id === 5) {
+            badgeHtml = `<span class="product-badge bestseller">Bestseller</span>`;
+          } else if (prod.id === 2 || prod.id === 8) {
+            badgeHtml = `<span class="product-badge new">New</span>`;
+          } else if (prod.id === 3 || prod.id === 10) {
+            badgeHtml = `<span class="product-badge handcrafted">Handcrafted</span>`;
+          }
+        }
+        
+        let soldOutClass = '';
+        let soldOutOverlayHtml = '';
+        if (prod.stock_count === 0) {
+          soldOutClass = ' sold-out';
+          soldOutOverlayHtml = `<div class="sold-out-overlay">Sold Out</div>`;
+        }
+        
+        // Match traditional patterns
+        let pattern = 'none';
+        const titleLower = prod.title.toLowerCase();
+        if (titleLower.includes('saipikhup')) {
+          pattern = 'saipikhup';
+        } else if (titleLower.includes('thangnang')) {
+          pattern = 'thangnang';
+        } else if (titleLower.includes('mangvom') || titleLower.includes('mongvom')) {
+          pattern = 'mangvom';
+        }
+        
+        // Search metadata
+        const searchTerms = [
+          `id:${prod.id}`,
+          prod.category,
+          pattern,
+          prod.title.toLowerCase(),
+          prod.desc.toLowerCase(),
+          prod.weaver.toLowerCase(),
+          "handwoven"
+        ].join(' ');
+        
+        const cardHtml = `
+          <article class="product-card${soldOutClass}" 
+                   data-category="${prod.category}" 
+                   data-pattern="${pattern}" 
+                   data-search="${searchTerms}"
+                   id="card-prod-${prod.id}">
+            ${badgeHtml}
+            <button class="wish-btn${wishlist.has(prod.id) ? ' active' : ''}" aria-label="Add to wishlist" onclick="toggleWishlist(${prod.id}, event)">
+              <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </button>
+            <div class="product-media" onclick="openQuickView(${prod.id})">
+              ${prod.imageHtml}
+              ${soldOutOverlayHtml}
+            </div>
+            <div class="product-info">
+              <div class="product-category">${prod.categoryDisplay}</div>
+              <h3 class="product-title" onclick="openQuickView(${prod.id})" style="cursor:pointer;">${prod.title}</h3>
+              <span class="product-price">${prod.priceDisplay}</span>
+            </div>
+          </article>
+        `;
+        
+        productGrid.insertAdjacentHTML('beforeend', cardHtml);
+      });
+      
+      // Re-apply filter states to the newly generated DOM elements
+      applyFilterAndSearch();
+    }
 
     // --- Global State ---
     let cart = {}; // key: "product_id-variant" -> quantity
@@ -3987,14 +3844,13 @@
     const subFilterTabs = document.getElementById('subFilterTabs');
     const searchInput = document.getElementById('searchInput');
     const productGrid = document.getElementById('productGrid');
-    const productCards = document.querySelectorAll('.product-card');
-
     let activeFilter = 'all';
     let activeSubfilter = 'all';
     let activeSearch = '';
 
     function applyFilterAndSearch() {
-      productCards.forEach(card => {
+      const cards = document.querySelectorAll('.product-grid .product-card:not(.skeleton)');
+      cards.forEach(card => {
         const category = card.dataset.category;
         const pattern = card.dataset.pattern || 'none';
         const searchText = card.dataset.search.toLowerCase();
@@ -4084,11 +3940,14 @@
       }
     }
 
-    // --- Cart Actions ---
     function addToCart(productId, e, qtyToAdd = 1) {
       if (e) e.stopPropagation();
       
       const prod = products[productId];
+      if (prod && prod.stock_count === 0) {
+        showToast(`Sorry, ${prod.title} is currently sold out.`, "error");
+        return;
+      }
       const variant = prod.selectedVariant || "Default";
       const cartKey = `${productId}-${variant}`;
 
@@ -4271,10 +4130,22 @@
       modalWeaver.textContent = prod.weaver;
 
       // Reset add button listener
-      modalAddBtn.onclick = (e) => {
-        addToCart(id, e, modalQty);
-        closeQuickView();
-      };
+      if (prod.stock_count === 0) {
+        modalAddBtn.disabled = true;
+        modalAddBtn.textContent = 'SOLD OUT';
+        modalAddBtn.style.opacity = '0.5';
+        modalAddBtn.style.cursor = 'not-allowed';
+        modalAddBtn.onclick = null;
+      } else {
+        modalAddBtn.disabled = false;
+        modalAddBtn.textContent = 'Add to Cart';
+        modalAddBtn.style.opacity = '';
+        modalAddBtn.style.cursor = '';
+        modalAddBtn.onclick = (e) => {
+          addToCart(id, e, modalQty);
+          closeQuickView();
+        };
+      }
 
       modalBackdrop.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -4475,6 +4346,9 @@
     if (adSlides.length > 0) {
       startAdTimer();
     }
+
+    // Initialize Supabase product fetch
+    fetchProducts();
   </script>
 </body>
 </html>
