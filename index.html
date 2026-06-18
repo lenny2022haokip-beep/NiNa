@@ -2274,6 +2274,143 @@
       grid-column: span 2;
     }
   }
+
+  /* Ad Hero Slider Section styling */
+  .ad-hero-section {
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    height: 70vh; /* Premium full-height editorial feel */
+    background: var(--bg-darker);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .ad-slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ad-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth crossfade */
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ad-slide.active {
+    opacity: 1;
+    z-index: 2;
+  }
+
+  .ad-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.65); /* Darken slightly for readability of overlay text */
+    transition: transform 6s ease-out; /* Premium Ken Burns zoom effect */
+  }
+
+  .ad-slide.active img {
+    transform: scale(1.05);
+  }
+
+  .ad-slide-content {
+    position: absolute;
+    z-index: 3;
+    text-align: center;
+    color: #FFFFFF;
+    max-width: 800px;
+    padding: 0 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1.2s ease;
+  }
+
+  .ad-slide.active .ad-slide-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .ad-slide-content .eyebrow {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-saffron);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .ad-slide-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 3.5rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+    line-height: 1.1;
+    color: #FDFBF7;
+  }
+
+  .ad-slide-content h2 em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .ad-slide-content p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    color: rgba(253, 251, 247, 0.85);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Dots navigation */
+  .ad-slider-nav {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 12px;
+  }
+
+  .ad-dot {
+    width: 24px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background 0.3s ease, width 0.3s ease;
+  }
+
+  .ad-dot.active {
+    background: var(--accent-saffron);
+    width: 40px; /* Expands slightly when active for premium feel */
+  }
+
+  /* Mobile responsive adjustments */
+  @media (max-width: 768px) {
+    .ad-hero-section {
+      height: 55vh;
+    }
+    .ad-slide-content h2 {
+      font-size: 2.2rem;
+    }
+    .ad-slide-content p {
+      font-size: 0.95rem;
+    }
+  }
 </style>
 </head>
 <body>
@@ -3123,7 +3260,71 @@
     </div>
   </section>
 
+  <!-- Kuki Traditional Ribbon Border -->
   <div class="kuki-border red"></div>
+
+  <!-- Campaign/Advertisement Slider Section -->
+  <section class="section ad-hero-section" id="campaign">
+    <div class="ad-slider-container">
+      <!-- Slide 1 -->
+      <div class="ad-slide active">
+        <img src="assets/ad_slide_1.webp" alt="NiNa Campaign Image 1 - Pure Kuki Craft">
+        <div class="ad-slide-content">
+          <span class="eyebrow">Autumn / Winter Campaign</span>
+          <h2>Generational <em>Artistry</em></h2>
+          <p>Each thread connects Kuki heritage to contemporary modern design.</p>
+        </div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="ad-slide">
+        <img src="assets/ad_slide_2.jpg" alt="NiNa Campaign Image 2 - Detail Showcase">
+        <div class="ad-slide-content">
+          <span class="eyebrow">Ethically Handcrafted</span>
+          <h2>Woven <em>Slowly</em></h2>
+          <p>Hand-spun yarns and local cooperative craftsmanship from Manipur.</p>
+        </div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="ad-slide">
+        <img src="assets/ad_slide_3.jpg" alt="NiNa Campaign Image 3 - Modern Silhouette">
+        <div class="ad-slide-content">
+          <span class="eyebrow">Bold & Confidential</span>
+          <h2>Wear Your <em>Roots</em></h2>
+          <p>Making traditional motifs part of your daily wardrobe statement.</p>
+        </div>
+      </div>
+      <!-- Slide 4 -->
+      <div class="ad-slide">
+        <img src="assets/ad_slide_4.jpg" alt="NiNa Campaign Image 4 - Textures of Manipur">
+        <div class="ad-slide-content">
+          <span class="eyebrow">Backstrap Looming</span>
+          <h2>Motifs of the <em>Hills</em></h2>
+          <p>Preserving community traditions and supporting rural cooperative weavers.</p>
+        </div>
+      </div>
+      <!-- Slide 5 -->
+      <div class="ad-slide">
+        <img src="assets/ad_slide_5.jpg" alt="NiNa Campaign Image 5 - Limited Editions">
+        <div class="ad-slide-content">
+          <span class="eyebrow">Exclusive Release</span>
+          <h2>The Inner <em>Circle</em></h2>
+          <p>Small batches, distinct stories, and timeless cultural motifs.</p>
+        </div>
+      </div>
+      
+      <!-- Slide controls -->
+      <div class="ad-slider-nav">
+        <span class="ad-dot active" onclick="setAdSlide(0)"></span>
+        <span class="ad-dot" onclick="setAdSlide(1)"></span>
+        <span class="ad-dot" onclick="setAdSlide(2)"></span>
+        <span class="ad-dot" onclick="setAdSlide(3)"></span>
+        <span class="ad-dot" onclick="setAdSlide(4)"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kuki Traditional Ribbon Border -->
+  <div class="kuki-border"></div>
 
   <!-- Newsletter Subscription -->
   <section class="section newsletter-section">
@@ -4234,6 +4435,45 @@
           toast.remove();
         }, 400);
       }, 3000);
+    }
+
+    // --- Campaign Slider Logic ---
+    let currentAdSlide = 0;
+    const adSlides = document.querySelectorAll('.ad-slide');
+    const adDots = document.querySelectorAll('.ad-dot');
+    let adInterval;
+
+    function showAdSlide(n) {
+      if (!adSlides.length) return;
+      adSlides.forEach(slide => slide.classList.remove('active'));
+      adDots.forEach(dot => dot.classList.remove('active'));
+      
+      currentAdSlide = (n + adSlides.length) % adSlides.length;
+      
+      adSlides[currentAdSlide].classList.add('active');
+      if (adDots[currentAdSlide]) adDots[currentAdSlide].classList.add('active');
+    }
+
+    function nextAdSlide() {
+      showAdSlide(currentAdSlide + 1);
+    }
+
+    window.setAdSlide = function(n) {
+      showAdSlide(n);
+      resetAdTimer();
+    }
+
+    function startAdTimer() {
+      adInterval = setInterval(nextAdSlide, 3000); // 3 seconds interval
+    }
+
+    function resetAdTimer() {
+      clearInterval(adInterval);
+      startAdTimer();
+    }
+
+    if (adSlides.length > 0) {
+      startAdTimer();
     }
   </script>
 </body>
