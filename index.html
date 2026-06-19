@@ -2357,8 +2357,8 @@
     padding: 0;
     position: relative;
     overflow: hidden;
-    height: 70vh; /* Premium full-height editorial feel */
-    background: var(--bg-cream);
+    height: 75vh; /* Premium full-height editorial feel */
+    background: var(--surface-dark); /* unified clean backdrop */
     border-bottom: 1px solid var(--border-color);
   }
 
@@ -2388,7 +2388,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--bg-cream); /* warm off-white #FDFBF7 */
+    background: var(--surface-dark);
   }
 
   .ad-slide.active {
@@ -2398,22 +2398,21 @@
   }
 
   .ad-bg-blur {
-    display: none; /* Hide background blur for a clean gallery presentation */
+    display: none;
   }
 
   .ad-fg-wrapper {
     position: absolute;
     left: 0;
     top: 0;
-    width: 50%; /* Left 50% on desktop */
+    width: 100%;
     height: 100%;
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--surface-dark); /* Subtle contrast behind the image */
-    border-right: 1px solid var(--border-color);
-    padding: 40px; /* Gallery mat board padding */
+    background: var(--surface-dark); /* Clean solid background */
+    padding: 40px; /* Gallery mat board margin */
     box-sizing: border-box;
     opacity: 0;
     transform: translateY(15px);
@@ -2439,84 +2438,15 @@
     transform: scale(1.02); /* Very subtle elegant expansion */
   }
 
-  .ad-slide-content {
-    position: absolute;
-    right: 0; /* Right 50% on desktop */
-    top: 0;
-    width: 50%;
-    height: 100%;
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: left;
-    padding: 80px;
-    box-sizing: border-box;
-    background: var(--bg-cream); /* warm off-white #FDFBF7 */
-    color: var(--text-dark);
-    opacity: 0;
-    transform: translateX(25px); /* Elegant slide-in from right */
-    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.15s, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.15s;
-  }
-
-  .ad-slide.active .ad-slide-content {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .ad-slide-content .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: #B25E00; /* Darker amber for readability on cream */
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .ad-slide-content h2 {
-    font-family: var(--font-heading);
-    font-weight: 300;
-    font-size: 3.5rem;
-    letter-spacing: -0.01em;
-    margin-bottom: 20px;
-    line-height: 1.1;
-    color: var(--text-dark);
-  }
-
-  .ad-slide-content h2 em {
-    font-style: italic;
-    font-weight: 400;
-  }
-
-  .ad-slide-content p {
-    font-family: var(--font-body);
-    font-size: 1.1rem;
-    font-weight: 300;
-    line-height: 1.6;
-    letter-spacing: 0.02em;
-    color: #4A4A48; /* Muted charcoal for editorial readability */
-    max-width: 600px;
-    margin: 0;
-  }
-
-  /* Dots navigation aligned inside the right text column */
+  /* Center dots navigation at the bottom */
   .ad-slider-nav {
     position: absolute;
-    bottom: 40px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
     display: flex;
     gap: 12px;
-  }
-
-  @media (min-width: 900px) {
-    .ad-slider-nav {
-      left: calc(50% + 80px); /* Aligns with the left padding of the text column */
-      transform: none;
-    }
   }
 
   .ad-dot {
@@ -2535,45 +2465,13 @@
   /* Responsive adjustments */
   @media (max-width: 900px) {
     .ad-hero-section {
-      height: 65vh;
+      height: 55vh; /* Optimized viewport ratio on mobile */
     }
     .ad-fg-wrapper {
-      width: 100%;
-      height: 55%;
-      left: 0;
-      top: 0;
-      border-right: none;
-      border-bottom: 1px solid var(--border-color);
-      padding: 24px; /* Cozy framing on mobile */
-      transform: translateY(15px);
-    }
-    .ad-slide-content {
-      width: 100%;
-      height: 45%;
-      left: 0;
-      top: 55%;
-      padding: 32px 24px 50px 24px; /* Bottom padding safe area for navigation dots */
-      align-items: center;
-      text-align: center;
-      transform: translateY(20px); /* Slide up on mobile */
-      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.1s, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.1s;
-    }
-    .ad-slide.active .ad-slide-content {
-      transform: translateY(0);
-    }
-    .ad-slide-content h2 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-    }
-    .ad-slide-content p {
-      font-size: 0.95rem;
-    }
-    .ad-slide-content .eyebrow {
-      font-size: 0.75rem;
-      margin-bottom: 8px;
+      padding: 20px; /* Snug gallery framing on smaller devices */
     }
     .ad-slider-nav {
-      bottom: 20px;
+      bottom: 15px;
     }
   }
 
@@ -3156,62 +3054,32 @@
       <div class="ad-slider-track" id="adSliderTrack">
         <!-- Slide 1 -->
         <div class="ad-slide active">
-          <img src="assets/ad_slide_1.webp" class="ad-bg-blur" alt="">
           <div class="ad-fg-wrapper">
             <img src="assets/ad_slide_1.webp" class="ad-fg-image" alt="NiNa Campaign Image 1 - Pure Kuki Craft">
-          </div>
-          <div class="ad-slide-content">
-            <span class="eyebrow">Autumn / Winter Campaign</span>
-            <h2>Generational <em>Artistry</em></h2>
-            <p>Each thread connects Kuki heritage to contemporary modern design.</p>
           </div>
         </div>
         <!-- Slide 2 -->
         <div class="ad-slide">
-          <img src="assets/ad_slide_2.jpg" class="ad-bg-blur" alt="">
           <div class="ad-fg-wrapper">
             <img src="assets/ad_slide_2.jpg" class="ad-fg-image" alt="NiNa Campaign Image 2 - Detail Showcase">
-          </div>
-          <div class="ad-slide-content">
-            <span class="eyebrow">Ethically Handcrafted</span>
-            <h2>Woven <em>Slowly</em></h2>
-            <p>Hand-spun yarns and local cooperative craftsmanship from Manipur.</p>
           </div>
         </div>
         <!-- Slide 3 -->
         <div class="ad-slide">
-          <img src="assets/ad_slide_3.jpg" class="ad-bg-blur" alt="">
           <div class="ad-fg-wrapper">
             <img src="assets/ad_slide_3.jpg" class="ad-fg-image" alt="NiNa Campaign Image 3 - Modern Silhouette">
-          </div>
-          <div class="ad-slide-content">
-            <span class="eyebrow">Bold & Confidential</span>
-            <h2>Wear Your <em>Roots</em></h2>
-            <p>Making traditional motifs part of your daily wardrobe statement.</p>
           </div>
         </div>
         <!-- Slide 4 -->
         <div class="ad-slide">
-          <img src="assets/ad_slide_4.jpg" class="ad-bg-blur" alt="">
           <div class="ad-fg-wrapper">
             <img src="assets/ad_slide_4.jpg" class="ad-fg-image" alt="NiNa Campaign Image 4 - Textures of Manipur">
-          </div>
-          <div class="ad-slide-content">
-            <span class="eyebrow">Backstrap Looming</span>
-            <h2>Motifs of the <em>Hills</em></h2>
-            <p>Preserving community traditions and supporting rural cooperative weavers.</p>
           </div>
         </div>
         <!-- Slide 5 -->
         <div class="ad-slide">
-          <img src="assets/ad_slide_5.jpg" class="ad-bg-blur" alt="">
           <div class="ad-fg-wrapper">
             <img src="assets/ad_slide_5.jpg" class="ad-fg-image" alt="NiNa Campaign Image 5 - Limited Editions">
-          </div>
-          <div class="ad-slide-content">
-            <span class="eyebrow">Exclusive Release</span>
-            <h2>The Inner <em>Circle</em></h2>
-            <p>Small batches, distinct stories, and timeless cultural motifs.</p>
           </div>
         </div>
       </div>
