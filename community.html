@@ -3577,59 +3577,34 @@
           placeBtn.textContent = originalText;
         }
       } else {
-        if (typeof Razorpay === 'undefined') {
-          showToast("Payment gateway failing to load. Please choose Cash on Delivery.", "error");
-          return;
+        placeBtn.disabled = true;
+        placeBtn.textContent = 'Redirecting to Payment...';
+        try {
+          // Save order to database as Pending Payment
+          await saveOrderToDatabase('Pending Payment');
+          showToast("Redirecting to Razorpay Onboarding...", "success");
+          
+          // Trigger notifications
+          await triggerNotifications();
+
+          // Reset cart & UI
+          cart = {};
+          document.getElementById('checkoutForm').reset();
+          updateCartUI();
+          closeCheckoutModal();
+          closeCart();
+
+          // Redirect to Razorpay onboarding link
+          setTimeout(() => {
+            window.location.href = 'https://easy.razorpay.com/conversational/onboarding?redirecturl=https%3A%2F%2Feasy.razorpay.com&auth_intent=signup&product=payment_solutions&x-country-code=IN';
+          }, 1500);
+        } catch (dbErr) {
+          console.error(dbErr);
+          showToast("Failed to initiate checkout. Please try again.", "error");
+        } finally {
+          placeBtn.disabled = false;
+          placeBtn.textContent = originalText;
         }
-
-        const rzpOptions = {
-          key: RAZORPAY_KEY_ID,
-          amount: totalPrice * 100, // Amount is in currency subunits (paise)
-          currency: "INR",
-          name: "NiNa Collective",
-          description: `Order ${orderNumber}`,
-          image: "assets/logo.png",
-          prefill: {
-            name: name,
-            email: email,
-            contact: phone
-          },
-          theme: {
-            color: "#1C1C1A"
-          },
-          handler: async function (response) {
-            placeBtn.disabled = true;
-            placeBtn.textContent = 'Recording Payment...';
-            try {
-              await saveOrderToDatabase('Paid', response.razorpay_payment_id);
-              showToast(`Payment Successful! Order ID: ${orderNumber}`, "success");
-              
-              await triggerNotifications(response.razorpay_payment_id);
-
-              cart = {};
-              document.getElementById('checkoutForm').reset();
-              updateCartUI();
-              closeCheckoutModal();
-              closeCart();
-            } catch (dbErr) {
-              console.error(dbErr);
-              showToast("Payment succeeded but database recording failed. Contact support.", "error");
-            } finally {
-              placeBtn.disabled = false;
-              placeBtn.textContent = originalText;
-            }
-          },
-          modal: {
-            ondismiss: function () {
-              showToast("Payment cancelled by customer.", "info");
-              placeBtn.disabled = false;
-              placeBtn.textContent = originalText;
-            }
-          }
-        };
-
-        const rzp = new Razorpay(rzpOptions);
-        rzp.open();
       }
     };
 
