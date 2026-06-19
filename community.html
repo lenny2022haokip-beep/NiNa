@@ -2636,7 +2636,7 @@
           <label style="display: block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-dark); text-align: left;">Payment Method</label>
           <select id="checkoutPayment" style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); outline: none; border-radius: 4px;">
             <option value="Cash on Delivery">Cash on Delivery (COD)</option>
-            <option value="Card Payment">Card Payment (Simulation)</option>
+            <option value="Online Payment">Online Payment (Razorpay)</option>
           </select>
         </div>
         <button type="submit" class="btn btn-primary" id="placeOrderBtn" style="width: 100%; margin-top: 10px; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem;">Place Order</button>
@@ -2646,6 +2646,9 @@
 
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Razorpay Checkout Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <!-- Script logic -->
   <script>
@@ -3024,6 +3027,26 @@
         });
         
         products = newProducts;
+
+        // Fetch dynamic site settings for WhatsApp number
+        try {
+          const settingsRes = await fetch('https://safgnxqeadujezefvahw.supabase.co/rest/v1/site_settings', {
+            method: 'GET',
+            headers: {
+              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
+              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg'
+            }
+          });
+          if (settingsRes.ok) {
+            const dbSettings = await settingsRes.json();
+            const waSetting = dbSettings.find(s => s.key === 'whatsapp_number');
+            if (waSetting && waSetting.value) {
+              whatsappNumber = waSetting.value;
+            }
+          }
+        } catch (settingsErr) {
+          console.error("Error fetching site settings:", settingsErr);
+        }
         
         // Inject upsell product definition
         products["11-upsell"] = {
@@ -3047,6 +3070,8 @@
     let cart = {}; // key: "product_id-variant" -> quantity
     let wishlist = new Set();
     let currentModalProductId = null;
+    let whatsappNumber = '9100000000'; // Default store WhatsApp number
+    const RAZORPAY_KEY_ID = 'rzp_test_5VvT9U5jQ7qK1c'; // Replace with actual Razorpay Key ID
 
     // --- Variant Color Change Logic ---
     function changeVariantColor(productId, colorHex, colorName, e) {
@@ -3451,27 +3476,24 @@
       }
 
       const orderNumber = `NINA-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-
-      const payload = {
-        order_number: orderNumber,
-        customer_name: name,
-        customer_email: email,
-        customer_phone: phone,
-        customer_address: address,
-        items: orderItems,
-        subtotal: totalPrice,
-        status: 'Pending',
-        is_gift: isGift,
-        notes: notes || null,
-        payment_method: paymentMethod
-      };
-
       const placeBtn = document.getElementById('placeOrderBtn');
       const originalText = placeBtn.textContent;
-      placeBtn.disabled = true;
-      placeBtn.textContent = 'Processing Order...';
 
-      try {
+      const saveOrderToDatabase = async (finalStatus, gatewayPaymentId = null) => {
+        const payload = {
+          order_number: orderNumber,
+          customer_name: name,
+          customer_email: email,
+          customer_phone: phone,
+          customer_address: address,
+          items: orderItems,
+          subtotal: totalPrice,
+          status: finalStatus,
+          is_gift: isGift,
+          notes: gatewayPaymentId ? (notes ? notes + " | " : "") + `Razorpay Payment ID: ${gatewayPaymentId}` : (notes || null),
+          payment_method: paymentMethod
+        };
+
         const response = await fetch('https://safgnxqeadujezefvahw.supabase.co/rest/v1/orders', {
           method: 'POST',
           headers: {
@@ -3484,24 +3506,130 @@
         });
 
         if (!response.ok) {
-          throw new Error('Failed to submit order. Please try again.');
+          throw new Error('Failed to save order details. Please contact support.');
+        }
+      };
+
+      const triggerNotifications = async (gatewayPaymentId = null) => {
+        let itemsSummary = orderItems.map(item => `- ${item.quantity}x ${item.title} (${item.variant}) @ ₹${item.price}`).join('\n');
+        let waText = `*New Order: ${orderNumber}*\n\n` +
+                     `*Customer Details:*\n` +
+                     `- Name: ${name}\n` +
+                     `- Email: ${email}\n` +
+                     `- Phone: ${phone}\n` +
+                     `- Address: ${address}\n\n` +
+                     `*Items:*\n${itemsSummary}\n\n` +
+                     `*Gift Option:* ${isGift ? 'Yes' : 'No'}\n` +
+                     (isGift ? `*Gift Note:* ${notes}\n` : '') +
+                     `*Subtotal:* Rs. ${totalPrice.toLocaleString('en-IN')}\n` +
+                     `*Payment Method:* ${paymentMethod}\n` +
+                     (gatewayPaymentId ? `*Razorpay ID:* ${gatewayPaymentId}\n` : '') +
+                     `\nPlease confirm receipt of this order.`;
+        
+        const encodedWaText = encodeURIComponent(waText);
+        window.open(`https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedWaText}`, '_blank');
+
+        try {
+          await fetch('https://safgnxqeadujezefvahw.supabase.co/functions/v1/order-confirmation', {
+            method: 'POST',
+            headers: {
+              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              orderNumber,
+              customerName: name,
+              customerEmail: email,
+              customerPhone: phone,
+              customerAddress: address,
+              items: orderItems,
+              subtotal: totalPrice,
+              isGift,
+              notes,
+              paymentMethod,
+              paymentId: gatewayPaymentId
+            })
+          });
+        } catch (edgeErr) {
+          console.log("Supabase Edge Function not deployed/configured. SMS/email fallback skipped.", edgeErr);
+        }
+      };
+
+      if (paymentMethod === 'Cash on Delivery') {
+        placeBtn.disabled = true;
+        placeBtn.textContent = 'Processing Order...';
+        try {
+          await saveOrderToDatabase('Confirmed');
+          showToast(`Order Placed Successfully! ID: ${orderNumber}`, "success");
+          
+          await triggerNotifications();
+
+          cart = {};
+          document.getElementById('checkoutForm').reset();
+          updateCartUI();
+          closeCheckoutModal();
+          closeCart();
+        } catch (err) {
+          console.error(err);
+          showToast(err.message || "Failed to place order. Please try again.", "error");
+        } finally {
+          placeBtn.disabled = false;
+          placeBtn.textContent = originalText;
+        }
+      } else {
+        if (typeof Razorpay === 'undefined') {
+          showToast("Payment gateway failing to load. Please choose Cash on Delivery.", "error");
+          return;
         }
 
-        showToast(`Order Placed Successfully! ID: ${orderNumber}`, "success");
-        cart = {};
-        
-        // Reset checkout form
-        document.getElementById('checkoutForm').reset();
-        
-        updateCartUI();
-        closeCheckoutModal();
-        closeCart();
-      } catch (err) {
-        console.error(err);
-        showToast(err.message || "Failed to place order. Please try again.", "error");
-      } finally {
-        placeBtn.disabled = false;
-        placeBtn.textContent = originalText;
+        const rzpOptions = {
+          key: RAZORPAY_KEY_ID,
+          amount: totalPrice * 100, // Amount is in currency subunits (paise)
+          currency: "INR",
+          name: "NiNa Collective",
+          description: `Order ${orderNumber}`,
+          image: "assets/logo.png",
+          prefill: {
+            name: name,
+            email: email,
+            contact: phone
+          },
+          theme: {
+            color: "#1C1C1A"
+          },
+          handler: async function (response) {
+            placeBtn.disabled = true;
+            placeBtn.textContent = 'Recording Payment...';
+            try {
+              await saveOrderToDatabase('Paid', response.razorpay_payment_id);
+              showToast(`Payment Successful! Order ID: ${orderNumber}`, "success");
+              
+              await triggerNotifications(response.razorpay_payment_id);
+
+              cart = {};
+              document.getElementById('checkoutForm').reset();
+              updateCartUI();
+              closeCheckoutModal();
+              closeCart();
+            } catch (dbErr) {
+              console.error(dbErr);
+              showToast("Payment succeeded but database recording failed. Contact support.", "error");
+            } finally {
+              placeBtn.disabled = false;
+              placeBtn.textContent = originalText;
+            }
+          },
+          modal: {
+            ondismiss: function () {
+              showToast("Payment cancelled by customer.", "info");
+              placeBtn.disabled = false;
+              placeBtn.textContent = originalText;
+            }
+          }
+        };
+
+        const rzp = new Razorpay(rzpOptions);
+        rzp.open();
       }
     };
 
