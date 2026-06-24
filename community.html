@@ -3162,7 +3162,7 @@
 
     // --- Global State ---
     let currentModalProductId = null;
-    let whatsappNumber = '9100000000'; // Default store WhatsApp number
+    let whatsappNumber = '9233918107'; // Default store WhatsApp number
 
     // Retrieve/generate client UUID
     let anonymousId = localStorage.getItem('nina_anonymous_id');
@@ -3834,29 +3834,28 @@
         const encodedWaText = encodeURIComponent(waText);
         window.open(`https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedWaText}`, '_blank');
 
-        try {
-          await fetch('https://safgnxqeadujezefvahw.supabase.co/functions/v1/order-confirmation', {
-            method: 'POST',
-            headers: {
-              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              orderNumber,
-              customerName: name,
-              customerEmail: email,
-              customerPhone: phone,
-              customerAddress: address,
-              items: orderItems,
-              subtotal: totalPrice,
-              isGift,
-              notes,
-              paymentMethod
-            })
-          });
-        } catch (edgeErr) {
+        // Call the edge function asynchronously in the background so it doesn't block the UI
+        fetch('https://safgnxqeadujezefvahw.supabase.co/functions/v1/order-confirmation', {
+          method: 'POST',
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            orderNumber,
+            customerName: name,
+            customerEmail: email,
+            customerPhone: phone,
+            customerAddress: address,
+            items: orderItems,
+            subtotal: totalPrice,
+            isGift,
+            notes,
+            paymentMethod
+          })
+        }).catch(edgeErr => {
           console.log("Supabase Edge Function not deployed/configured. SMS/email fallback skipped.", edgeErr);
-        }
+        });
       };
 
       if (paymentMethod === 'Cash on Delivery') {
