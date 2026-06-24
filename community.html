@@ -2349,6 +2349,24 @@
       grid-column: span 2;
     }
   }
+
+  /* Success Checkmark Animations */
+  @keyframes scaleIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes drawCheck {
+    0% { stroke-dashoffset: 24; }
+    100% { stroke-dashoffset: 0; }
+  }
+  .success-circle-animated {
+    animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .success-check-animated {
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    animation: drawCheck 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  }
 </style>
 </head>
 <body class="subpage-body">
@@ -2641,6 +2659,19 @@
         </div>
         <button type="submit" class="btn btn-primary" id="placeOrderBtn" style="width: 100%; margin-top: 10px; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem;">Place Order</button>
       </form>
+      
+      <!-- Success State Container (hidden by default) -->
+      <div id="checkoutSuccessState" style="display: none; flex-direction: column; align-items: center; text-align: center; gap: 20px; width: 100%;">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(178, 94, 0, 0.1); display: flex; align-items: center; justify-content: center; color: var(--accent-saffron); margin-bottom: 8px;" class="success-circle-animated">
+          <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" class="success-check-animated" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <h2 style="font-family: var(--font-heading); font-weight: 300; font-size: 2rem; margin: 0; color: var(--text-dark);">Thank You</h2>
+        <p style="font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-saffron); margin: 0;" id="successOrderNumber">Order #NINA-XXXX</p>
+        <p style="font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: #4A4A48; margin: 0;" id="successMessage">Your order has been recorded successfully. A WhatsApp receipt has been generated for your records.</p>
+        <button type="button" class="btn btn-primary" onclick="handleCheckoutCompletion()" style="width: 100%; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem; margin-top: 10px;">Continue Shopping</button>
+      </div>
     </div>
   </div>
 
@@ -3433,6 +3464,46 @@
       }
     };
 
+    window.handleCheckoutCompletion = function() {
+      // Clear cart
+      cart = {};
+      updateCartUI();
+      
+      // Reset form
+      const form = document.getElementById('checkoutForm');
+      if (form) form.reset();
+      
+      // Close checkout modal
+      closeCheckoutModal();
+      
+      // Close cart drawer/sidebar
+      closeCart();
+      
+      // Restore original modal layout after the modal closes
+      setTimeout(() => {
+        const successState = document.getElementById('checkoutSuccessState');
+        if (successState) successState.style.display = 'none';
+        
+        const checkoutForm = document.getElementById('checkoutForm');
+        if (checkoutForm) checkoutForm.style.display = 'flex';
+        
+        const modalTitle = document.querySelector('#checkoutModalContainer > h2');
+        if (modalTitle) modalTitle.style.display = 'block';
+        
+        const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
+        if (closeBtn) closeBtn.style.display = 'block';
+        
+        const container = document.getElementById('checkoutModalContainer');
+        if (container) container.style.maxWidth = '500px';
+        
+        const successTitle = document.querySelector('#checkoutSuccessState h2');
+        if (successTitle) successTitle.textContent = 'Thank You';
+        
+        const continueBtn = document.querySelector('#checkoutSuccessState button');
+        if (continueBtn) continueBtn.style.display = 'block';
+      }, 400);
+    };
+
     window.submitOrder = async function(e) {
       if (e) e.preventDefault();
       
@@ -3560,15 +3631,32 @@
         placeBtn.textContent = 'Processing Order...';
         try {
           await saveOrderToDatabase('Confirmed');
+          
+          // Show Success State inside checkout modal
+          const form = document.getElementById('checkoutForm');
+          if (form) form.style.display = 'none';
+          
+          const modalTitle = document.querySelector('#checkoutModalContainer > h2');
+          if (modalTitle) modalTitle.style.display = 'none';
+          
+          const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
+          if (closeBtn) closeBtn.style.display = 'none';
+          
+          const container = document.getElementById('checkoutModalContainer');
+          if (container) container.style.maxWidth = '400px';
+          
+          const successOrderNumber = document.getElementById('successOrderNumber');
+          if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
+          
+          const successMessage = document.getElementById('successMessage');
+          if (successMessage) successMessage.textContent = 'Your order has been recorded successfully. A WhatsApp receipt has been generated for your records.';
+          
+          const successState = document.getElementById('checkoutSuccessState');
+          if (successState) successState.style.display = 'flex';
+
           showToast(`Order Placed Successfully! ID: ${orderNumber}`, "success");
           
           await triggerNotifications();
-
-          cart = {};
-          document.getElementById('checkoutForm').reset();
-          updateCartUI();
-          closeCheckoutModal();
-          closeCart();
         } catch (err) {
           console.error(err);
           showToast(err.message || "Failed to place order. Please try again.", "error");
@@ -3582,6 +3670,35 @@
         try {
           // Save order to database as Pending Payment
           await saveOrderToDatabase('Pending Payment');
+          
+          // Show Success State inside checkout modal with redirection message
+          const form = document.getElementById('checkoutForm');
+          if (form) form.style.display = 'none';
+          
+          const modalTitle = document.querySelector('#checkoutModalContainer > h2');
+          if (modalTitle) modalTitle.style.display = 'none';
+          
+          const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
+          if (closeBtn) closeBtn.style.display = 'none';
+          
+          const container = document.getElementById('checkoutModalContainer');
+          if (container) container.style.maxWidth = '400px';
+          
+          const successTitle = document.querySelector('#checkoutSuccessState h2');
+          if (successTitle) successTitle.textContent = 'Secure Payment';
+          
+          const successOrderNumber = document.getElementById('successOrderNumber');
+          if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
+          
+          const successMessage = document.getElementById('successMessage');
+          if (successMessage) successMessage.textContent = 'Redirecting you to Razorpay to complete your secure payment. Please do not close this window.';
+          
+          const continueBtn = document.querySelector('#checkoutSuccessState button');
+          if (continueBtn) continueBtn.style.display = 'none';
+          
+          const successState = document.getElementById('checkoutSuccessState');
+          if (successState) successState.style.display = 'flex';
+          
           showToast("Redirecting to Razorpay Onboarding...", "success");
           
           // Trigger notifications
@@ -3589,15 +3706,13 @@
 
           // Reset cart & UI
           cart = {};
-          document.getElementById('checkoutForm').reset();
+          if (form) form.reset();
           updateCartUI();
-          closeCheckoutModal();
-          closeCart();
 
-          // Redirect to Razorpay onboarding link
+          // Redirect to Razorpay onboarding link after 2 seconds
           setTimeout(() => {
             window.location.href = 'https://easy.razorpay.com/conversational/onboarding?redirecturl=https%3A%2F%2Feasy.razorpay.com&auth_intent=signup&product=payment_solutions&x-country-code=IN';
-          }, 1500);
+          }, 2000);
         } catch (dbErr) {
           console.error(dbErr);
           showToast("Failed to initiate checkout. Please try again.", "error");
