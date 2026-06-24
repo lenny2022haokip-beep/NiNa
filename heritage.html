@@ -2717,10 +2717,10 @@
         </div>
         <div style="width: 100%;">
           <label style="display: block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-dark); text-align: left;">Payment Method</label>
-          <select id="checkoutPayment" style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); outline: none; border-radius: 4px;">
-            <option value="Cash on Delivery">Cash on Delivery (COD)</option>
-            <option value="Online Payment">Online Payment (WhatsApp)</option>
-          </select>
+          <div style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); border-radius: 4px; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--accent-saffron);"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            <span>WhatsApp Pay (UPI / QR Code)</span>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary" id="placeOrderBtn" style="width: 100%; margin-top: 10px; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem;">Place Order</button>
       </form>
@@ -3785,7 +3785,7 @@
       const email = document.getElementById('checkoutEmail').value.trim();
       const phone = document.getElementById('checkoutPhone').value.trim();
       const address = document.getElementById('checkoutAddress').value.trim();
-      const paymentMethod = document.getElementById('checkoutPayment').value;
+      const paymentMethod = 'Online Payment';
       
       if (!name || !email || !phone || !address) {
         showToast("Please fill in all shipping fields.", "error");
@@ -3904,97 +3904,55 @@
         });
       };
 
-      if (paymentMethod === 'Cash on Delivery') {
-        placeBtn.disabled = true;
-        placeBtn.textContent = 'Processing Order...';
-        try {
-          await saveOrderToDatabase('Confirmed');
-          
-          // Show Success State inside checkout modal
-          const form = document.getElementById('checkoutForm');
-          if (form) form.style.display = 'none';
-          
-          const modalTitle = document.querySelector('#checkoutModalContainer > h2');
-          if (modalTitle) modalTitle.style.display = 'none';
-          
-          const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
-          if (closeBtn) closeBtn.style.display = 'none';
-          
-          const container = document.getElementById('checkoutModalContainer');
-          if (container) container.style.maxWidth = '400px';
-          
-          const successOrderNumber = document.getElementById('successOrderNumber');
-          if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
-          
-          const successMessage = document.getElementById('successMessage');
-          if (successMessage) successMessage.textContent = 'Your order has been recorded successfully. A WhatsApp receipt has been generated for your records.';
-          
-          const successState = document.getElementById('checkoutSuccessState');
-          if (successState) successState.style.display = 'flex';
+      placeBtn.disabled = true;
+      placeBtn.textContent = 'Processing Order...';
+      try {
+        // Show Success UI immediately — don't block on DB save
+        const form = document.getElementById('checkoutForm');
+        if (form) form.style.display = 'none';
+        
+        const modalTitle = document.querySelector('#checkoutModalContainer > h2');
+        if (modalTitle) modalTitle.style.display = 'none';
+        
+        const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
+        if (closeBtn) closeBtn.style.display = 'none';
+        
+        const container = document.getElementById('checkoutModalContainer');
+        if (container) container.style.maxWidth = '400px';
+        
+        const successTitle = document.querySelector('#checkoutSuccessState h2');
+        if (successTitle) successTitle.textContent = 'Payment Requested';
+        
+        const successOrderNumber = document.getElementById('successOrderNumber');
+        if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
+        
+        const successMessage = document.getElementById('successMessage');
+        if (successMessage) successMessage.textContent = 'Your order has been recorded successfully. A WhatsApp payment request has been generated. Please complete your payment via WhatsApp.';
+        
+        const successState = document.getElementById('checkoutSuccessState');
+        if (successState) successState.style.display = 'flex';
+        
+        showToast("Payment request generated on WhatsApp...", "success");
+        
+        // Open WhatsApp FIRST (must be synchronous in click context to avoid popup blocking)
+        triggerNotifications();
 
-          showToast(`Order Placed Successfully! ID: ${orderNumber}`, "success");
-          
-          await triggerNotifications();
+        // Save to DB in background (non-blocking)
+        saveOrderToDatabase('Pending Payment').catch(dbErr => {
+          console.warn('Order DB save failed (non-critical):', dbErr.message);
+        });
 
-          // Reset cart & UI
-          cart = {};
-          saveState();
-          if (form) form.reset();
-          updateCartUI();
-        } catch (err) {
-          console.error(err);
-          showToast(err.message || "Failed to place order. Please try again.", "error");
-        } finally {
-          placeBtn.disabled = false;
-          placeBtn.textContent = originalText;
-        }
-      } else {
-        placeBtn.disabled = true;
-        placeBtn.textContent = 'Processing Order...';
-        try {
-          await saveOrderToDatabase('Pending Payment');
-          
-          // Show Success State inside checkout modal with WhatsApp instructions
-          const form = document.getElementById('checkoutForm');
-          if (form) form.style.display = 'none';
-          
-          const modalTitle = document.querySelector('#checkoutModalContainer > h2');
-          if (modalTitle) modalTitle.style.display = 'none';
-          
-          const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
-          if (closeBtn) closeBtn.style.display = 'none';
-          
-          const container = document.getElementById('checkoutModalContainer');
-          if (container) container.style.maxWidth = '400px';
-          
-          const successTitle = document.querySelector('#checkoutSuccessState h2');
-          if (successTitle) successTitle.textContent = 'Payment Requested';
-          
-          const successOrderNumber = document.getElementById('successOrderNumber');
-          if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
-          
-          const successMessage = document.getElementById('successMessage');
-          if (successMessage) successMessage.textContent = 'Your order has been recorded successfully. A WhatsApp payment request has been generated. Please complete your payment via WhatsApp.';
-          
-          const successState = document.getElementById('checkoutSuccessState');
-          if (successState) successState.style.display = 'flex';
-          
-          showToast("Payment request generated on WhatsApp...", "success");
-          
-          await triggerNotifications();
-
-          // Reset cart & UI
-          cart = {};
-          saveState();
-          if (form) form.reset();
-          updateCartUI();
-        } catch (dbErr) {
-          console.error(dbErr);
-          showToast("Failed to initiate checkout. Please try again.", "error");
-        } finally {
-          placeBtn.disabled = false;
-          placeBtn.textContent = originalText;
-        }
+        // Reset cart & UI
+        cart = {};
+        saveState();
+        if (form) form.reset();
+        updateCartUI();
+      } catch (dbErr) {
+        console.error(dbErr);
+        showToast("Failed to initiate checkout. Please try again.", "error");
+      } finally {
+        placeBtn.disabled = false;
+        placeBtn.textContent = originalText;
       }
     };
 
