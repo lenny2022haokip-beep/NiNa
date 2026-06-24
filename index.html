@@ -3458,6 +3458,8 @@
         Your cart is empty.<br>
         <span style="font-size: 0.82rem; font-family: var(--font-body); color: var(--accent-saffron); cursor: pointer; text-decoration: underline;" onclick="closeCart(); document.getElementById('shop').scrollIntoView();">Explore Shop</span>
       </div>
+      <!-- Container for cart items so cartEmptyMessage doesn't get destroyed -->
+      <div id="cartItemsList" style="display: none; width: 100%; display: flex; flex-direction: column; gap: 20px;"></div>
     </div>
     <!-- Upsell Widget Container -->
     <div class="cart-upsell-widget" id="cartUpsellWidget" style="display: none;">
@@ -4865,6 +4867,8 @@
       const cartCount = document.getElementById('cartCount');
       const cartHeaderCount = document.getElementById('cartHeaderCount');
       const cartBody = document.getElementById('cartBody');
+      const cartItemsList = document.getElementById('cartItemsList');
+      const cartEmptyMessage = document.getElementById('cartEmptyMessage');
       const cartTotalPrice = document.getElementById('cartTotalPrice');
       const cartUpsellWidget = document.getElementById('cartUpsellWidget');
       const giftBlock = document.querySelector('.cart-gift-block');
@@ -4878,9 +4882,11 @@
       const cartKeys = Object.keys(cart);
 
       if (cartKeys.length === 0) {
-        document.getElementById('cartEmptyMessage').style.display = 'block';
-        cartBody.innerHTML = '';
-        cartBody.appendChild(document.getElementById('cartEmptyMessage'));
+        if (cartEmptyMessage) cartEmptyMessage.style.display = 'block';
+        if (cartItemsList) {
+          cartItemsList.style.display = 'none';
+          cartItemsList.innerHTML = '';
+        }
         
         if (cartUpsellWidget) cartUpsellWidget.style.display = 'none';
         if (giftCheckbox) {
@@ -4894,7 +4900,10 @@
         if (giftBlock) giftBlock.style.display = 'none';
         if (checkoutBtn) checkoutBtn.style.display = 'none';
       } else {
-        document.getElementById('cartEmptyMessage').style.display = 'none';
+        if (cartEmptyMessage) cartEmptyMessage.style.display = 'none';
+        if (cartItemsList) {
+          cartItemsList.style.display = 'flex';
+        }
         if (giftBlock) giftBlock.style.display = 'block';
         if (checkoutBtn) checkoutBtn.style.display = 'block';
         
@@ -4944,7 +4953,9 @@
           }
         });
         
-        cartBody.innerHTML = cartHtml;
+        if (cartItemsList) {
+          cartItemsList.innerHTML = cartHtml;
+        }
         
         // Show/hide upsell widget based on contents
         if (cartUpsellWidget) {
