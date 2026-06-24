@@ -3214,18 +3214,20 @@
     // Hydrate cart from localStorage first
     let cart = {};
     try {
-      cart = JSON.parse(localStorage.getItem('nina_cart') || '{}');
+      cart = JSON.parse(localStorage.getItem('nina_cart') || '{}') || {};
     } catch(e) {
       console.error("Error loading cart from localStorage", e);
+      cart = {};
     }
 
     // Hydrate wishlist from localStorage first
     let wishlist = new Set();
     try {
-      const savedWishlist = JSON.parse(localStorage.getItem('nina_wishlist') || '[]');
+      const savedWishlist = JSON.parse(localStorage.getItem('nina_wishlist') || '[]') || [];
       wishlist = new Set(savedWishlist);
     } catch(e) {
       console.error("Error loading wishlist from localStorage", e);
+      wishlist = new Set();
     }
 
     // Save cart & wishlist state to LocalStorage and sync with Supabase
