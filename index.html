@@ -654,26 +654,29 @@
   /* Category Hero Slider Styles */
   .category-slider-wrapper {
     position: relative;
-    max-width: 1000px;
+    width: 100%;
     margin: 0 auto;
     overflow: visible;
   }
   .category-slider {
     position: relative;
-    height: 400px;
+    height: 60vh;
+    min-height: 420px;
     overflow: hidden;
-    border-radius: 12px;
     background: #1C140F;
-    border: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
   }
   @media (min-width: 768px) {
     .category-slider {
-      height: 520px;
+      height: 75vh;
+      min-height: 550px;
     }
   }
   @media (min-width: 1024px) {
     .category-slider {
-      height: 600px;
+      height: 80vh;
+      min-height: 650px;
     }
   }
   .category-slide {
@@ -688,14 +691,14 @@
     visibility: hidden;
     display: flex;
     align-items: flex-end;
-    padding: 30px 24px;
+    padding: 40px 24px;
     box-sizing: border-box;
     cursor: pointer;
     transition: opacity 0.8s ease, visibility 0.8s ease;
   }
   @media (min-width: 768px) {
     .category-slide {
-      padding: 60px 80px;
+      padding: 80px 10%;
     }
   }
   .category-slide.active {
@@ -708,14 +711,14 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.85) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.85) 100%);
     z-index: 1;
   }
   .category-slide-content {
     position: relative;
     z-index: 2;
     color: #FFFFFF;
-    max-width: 600px;
+    max-width: 700px;
     text-align: left;
     transform: translateY(20px);
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -731,6 +734,7 @@
     margin-bottom: 8px;
     display: block;
     text-transform: uppercase;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   }
   @media (min-width: 768px) {
     .category-slide-num {
@@ -740,30 +744,32 @@
   }
   .category-slide-content h2 {
     font-family: 'Fraunces', serif;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 300;
     margin: 0 0 12px 0;
     line-height: 1.2;
     color: #FFFFFF;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   }
   @media (min-width: 768px) {
     .category-slide-content h2 {
-      font-size: 2.4rem;
+      font-size: 3.2rem;
       margin: 0 0 16px 0;
     }
   }
   .category-slide-content p {
-    font-size: 0.88rem;
-    color: rgba(255, 255, 255, 0.85);
-    margin: 0 0 20px 0;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 24px 0;
+    line-height: 1.6;
     font-weight: 300;
     font-family: var(--font-body);
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
   }
   @media (min-width: 768px) {
     .category-slide-content p {
-      font-size: 1.05rem;
-      margin: 0 0 28px 0;
+      font-size: 1.15rem;
+      margin: 0 0 32px 0;
     }
   }
   .category-slide-btn {
@@ -779,6 +785,7 @@
     color: var(--accent-saffron);
     transition: gap 0.3s ease;
     text-transform: uppercase;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   }
   @media (min-width: 768px) {
     .category-slide-btn {
@@ -792,8 +799,8 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(28, 20, 15, 0.6);
-    border: 1px solid rgba(244, 238, 227, 0.15);
+    background: rgba(28, 20, 15, 0.5);
+    border: 1px solid rgba(254, 251, 247, 0.15);
     color: #fff;
     width: 40px;
     height: 40px;
@@ -807,8 +814,8 @@
   }
   @media (min-width: 768px) {
     .category-slider-arrow {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
     }
   }
   .category-slider-arrow:hover {
@@ -817,38 +824,38 @@
     border-color: var(--accent-saffron);
   }
   .category-slider-arrow.prev {
-    left: -20px;
+    left: 15px;
   }
   .category-slider-arrow.next {
-    right: -20px;
+    right: 15px;
   }
-  @media (max-width: 768px) {
+  @media (min-width: 1024px) {
     .category-slider-arrow.prev {
-      left: 10px;
+      left: 40px;
     }
     .category-slider-arrow.next {
-      right: 10px;
+      right: 40px;
     }
   }
   .category-slider-dots {
     position: absolute;
-    bottom: 20px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 8px;
+    gap: 10px;
     z-index: 5;
   }
   .cat-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.35);
     cursor: pointer;
     transition: all 0.3s ease;
   }
   .cat-dot.active {
-    width: 24px;
+    width: 28px;
     border-radius: 4px;
     background: var(--accent-saffron);
   }
@@ -2857,81 +2864,81 @@
         <h2>Explore by <em>Category</em></h2>
         <p>Every piece represents generational artistry. Browse our handloomed selections.</p>
       </div>
+    </div>
 
-      <div class="category-slider-wrapper reveal">
-        <div class="category-slider" id="categorySlider">
-          <!-- Slide 1: Bags -->
-          <div class="category-slide active" style="background-image: url('assets/cat_bags.jpg');" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-            <div class="category-slide-overlay"></div>
-            <div class="category-slide-content">
-              <span class="category-slide-num">01 / BAGS</span>
-              <h2>Woven Tote & Slouchy Hobo Bags</h2>
-              <p>Historic backstrap-loomed patterns finished with premium leather details.</p>
-              <span class="category-slide-btn">EXPLORE BAGS <span>→</span></span>
-            </div>
+    <div class="category-slider-wrapper reveal">
+      <div class="category-slider" id="categorySlider">
+        <!-- Slide 1: Bags -->
+        <div class="category-slide active" style="background-image: url('assets/cat_bags.jpg');" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
+          <div class="category-slide-content">
+            <span class="category-slide-num">01 / BAGS</span>
+            <h2>Woven Tote & Slouchy Hobo Bags</h2>
+            <p>Historic backstrap-loomed patterns finished with premium leather details.</p>
+            <span class="category-slide-btn">EXPLORE BAGS <span>→</span></span>
           </div>
-          
-          <!-- Slide 2: Bandanas -->
-          <div class="category-slide" style="background-image: url('assets/cat_bandana.jpg');" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-            <div class="category-slide-overlay"></div>
-            <div class="category-slide-content">
-              <span class="category-slide-num">02 / BANDANAS</span>
-              <h2>Handwoven Accent Bandanas</h2>
-              <p>Vibrant geometric borders to wear as neckerchiefs, hair ties, or wrist wraps.</p>
-              <span class="category-slide-btn">EXPLORE BANDANAS <span>→</span></span>
-            </div>
+        </div>
+        
+        <!-- Slide 2: Bandanas -->
+        <div class="category-slide" style="background-image: url('assets/cat_bandana.jpg');" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
+          <div class="category-slide-content">
+            <span class="category-slide-num">02 / BANDANAS</span>
+            <h2>Handwoven Accent Bandanas</h2>
+            <p>Vibrant geometric borders to wear as neckerchiefs, hair ties, or wrist wraps.</p>
+            <span class="category-slide-btn">EXPLORE BANDANAS <span>→</span></span>
           </div>
-          
-          <!-- Slide 3: Scarves -->
-          <div class="category-slide" style="background-image: url('assets/cat_scarves.webp');" onclick="filterCategory('scarf'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-            <div class="category-slide-overlay"></div>
-            <div class="category-slide-content">
-              <span class="category-slide-num">03 / SCARVES</span>
-              <h2>Generational Silk & Cotton Scarves</h2>
-              <p>Soft, lightweight, and showcasing traditional Kuki motifs like Saipikhup and Thangnang.</p>
-              <span class="category-slide-btn">EXPLORE SCARVES <span>→</span></span>
-            </div>
-          </div>
-
-          <!-- Slide 4: Pins -->
-          <div class="category-slide" style="background-image: url('assets/cat_pins.webp');" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-            <div class="category-slide-overlay"></div>
-            <div class="category-slide-content">
-              <span class="category-slide-num">04 / PINS</span>
-              <h2>Heritage Brass & Enamel Pins</h2>
-              <p>Traditional musical instrument motifs and cultural patterns, perfect as accessories.</p>
-              <span class="category-slide-btn">EXPLORE PINS <span>→</span></span>
-            </div>
-          </div>
-
-          <!-- Slide 5: Shawls -->
-          <div class="category-slide" style="background-image: url('assets/cat_shawl.jpg');" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-            <div class="category-slide-overlay"></div>
-            <div class="category-slide-content">
-              <span class="category-slide-num">05 / SHAWLS</span>
-              <h2>Traditional Handloomed Puans & Shawls</h2>
-              <p>Exquisite full-sized wraps woven by master artisans, representing roots and status.</p>
-              <span class="category-slide-btn">EXPLORE SHAWLS <span>→</span></span>
-            </div>
+        </div>
+        
+        <!-- Slide 3: Scarves -->
+        <div class="category-slide" style="background-image: url('assets/cat_scarves.webp');" onclick="filterCategory('scarf'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
+          <div class="category-slide-content">
+            <span class="category-slide-num">03 / SCARVES</span>
+            <h2>Generational Silk & Cotton Scarves</h2>
+            <p>Soft, lightweight, and showcasing traditional Kuki motifs like Saipikhup and Thangnang.</p>
+            <span class="category-slide-btn">EXPLORE SCARVES <span>→</span></span>
           </div>
         </div>
 
-        <!-- Navigation Controls -->
-        <button class="category-slider-arrow prev" onclick="prevCategorySlide(event)" aria-label="Previous category">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 19l-7-7 7-7"/></svg>
-        </button>
-        <button class="category-slider-arrow next" onclick="nextCategorySlide(event)" aria-label="Next category">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg>
-        </button>
-
-        <!-- Dot Indicators -->
-        <div class="category-slider-dots">
-          <span class="cat-dot active" onclick="setCategorySlide(0, event)"></span>
-          <span class="cat-dot" onclick="setCategorySlide(1, event)"></span>
-          <span class="cat-dot" onclick="setCategorySlide(2, event)"></span>
-          <span class="cat-dot" onclick="setCategorySlide(3, event)"></span>
-          <span class="cat-dot" onclick="setCategorySlide(4, event)"></span>
+        <!-- Slide 4: Pins -->
+        <div class="category-slide" style="background-image: url('assets/cat_pins.webp');" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
+          <div class="category-slide-content">
+            <span class="category-slide-num">04 / PINS</span>
+            <h2>Heritage Brass & Enamel Pins</h2>
+            <p>Traditional musical instrument motifs and cultural patterns, perfect as accessories.</p>
+            <span class="category-slide-btn">EXPLORE PINS <span>→</span></span>
+          </div>
         </div>
+
+        <!-- Slide 5: Shawls -->
+        <div class="category-slide" style="background-image: url('assets/cat_shawl.jpg');" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
+          <div class="category-slide-content">
+            <span class="category-slide-num">05 / SHAWLS</span>
+            <h2>Traditional Handloomed Puans & Shawls</h2>
+            <p>Exquisite full-sized wraps woven by master artisans, representing roots and status.</p>
+            <span class="category-slide-btn">EXPLORE SHAWLS <span>→</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Controls -->
+      <button class="category-slider-arrow prev" onclick="prevCategorySlide(event)" aria-label="Previous category">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button class="category-slider-arrow next" onclick="nextCategorySlide(event)" aria-label="Next category">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+
+      <!-- Dot Indicators -->
+      <div class="category-slider-dots">
+        <span class="cat-dot active" onclick="setCategorySlide(0, event)"></span>
+        <span class="cat-dot" onclick="setCategorySlide(1, event)"></span>
+        <span class="cat-dot" onclick="setCategorySlide(2, event)"></span>
+        <span class="cat-dot" onclick="setCategorySlide(3, event)"></span>
+        <span class="cat-dot" onclick="setCategorySlide(4, event)"></span>
       </div>
     </div>
   </section>
