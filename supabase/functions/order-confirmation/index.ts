@@ -16,7 +16,14 @@ serve(async (req) => {
 
   try {
     if (!RESEND_API_KEY) {
-      throw new Error("Missing RESEND_API_KEY environment variable.");
+      console.warn("RESEND_API_KEY is not configured in Supabase. Skipping email notifications.");
+      return new Response(
+        JSON.stringify({ success: true, message: "Emails skipped: RESEND_API_KEY is not configured." }),
+        {
+          status: 200,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
     }
 
     const {
