@@ -4150,7 +4150,8 @@
       let hasPin = false;
       
       Object.keys(cart).forEach(key => {
-        const [productId] = key.split('-');
+        const lastDash = key.lastIndexOf('-');
+        const productId = lastDash !== -1 ? key.substring(0, lastDash) : key;
         const item = products[productId];
         if (item) {
           if (item.category === 'bag') {
@@ -4282,7 +4283,9 @@
       let totalPrice = 0;
       
       Object.keys(cart).forEach(key => {
-        const [productId, variant] = key.split('-');
+        const lastDash = key.lastIndexOf('-');
+        const productId = lastDash !== -1 ? key.substring(0, lastDash) : key;
+        const variant = lastDash !== -1 ? key.substring(lastDash + 1) : "Default";
         const item = products[productId];
         if (item) {
           const qty = cart[key];
@@ -4521,7 +4524,9 @@
         if (checkoutBtn) checkoutBtn.style.display = 'block';
         
         cartKeys.forEach(key => {
-          const [productId, variant] = key.split('-');
+          const lastDash = key.lastIndexOf('-');
+          const productId = lastDash !== -1 ? key.substring(0, lastDash) : key;
+          const variant = lastDash !== -1 ? key.substring(lastDash + 1) : "Default";
           const item = products[productId];
           if (item) {
             const qty = cart[key];
