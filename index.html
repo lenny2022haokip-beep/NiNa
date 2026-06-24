@@ -254,16 +254,19 @@
   .logo {
     display: flex;
     align-items: center;
-    height: 48px;
+    height: 56px;
     transition: var(--transition-smooth);
   }
   .logo-img {
-    height: 48px;
+    height: 56px;
     width: auto;
     object-fit: contain;
     mix-blend-mode: screen;
     filter: none;
     transition: var(--transition-smooth), filter 0.4s ease;
+  }
+  header.scrolled .logo, header.scrolled .logo-img {
+    height: 48px;
   }
   header.scrolled .logo-img {
     filter: invert(1);
@@ -281,18 +284,18 @@
   /* Responsive Logo Sizing */
   @media (min-width: 768px) {
     .logo, .logo-img {
-      height: 64px;
+      height: 100px;
     }
     header.scrolled .logo, header.scrolled .logo-img {
-      height: 52px;
+      height: 64px;
     }
   }
   @media (min-width: 1024px) {
     .logo, .logo-img {
-      height: 80px;
+      height: 140px;
     }
     header.scrolled .logo, header.scrolled .logo-img {
-      height: 60px;
+      height: 76px;
     }
   }
   .nav-links {
