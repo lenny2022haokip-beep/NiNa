@@ -2292,7 +2292,7 @@
   /* Floating Vertical Social Bar */
   .floating-social-bar {
     position: fixed;
-    right: 20px;
+    left: 20px;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
@@ -2328,7 +2328,15 @@
   
   @media (max-width: 767px) {
     .floating-social-bar {
-      display: none;
+      display: flex;
+      left: 12px;
+      right: auto;
+      padding: 10px 8px;
+      gap: 12px;
+    }
+    .floating-social-bar a {
+      width: 16px;
+      height: 16px;
     }
     
     /* Mobile Hero Video & Brackets Optimization */
