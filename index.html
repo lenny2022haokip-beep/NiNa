@@ -6,6 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>NiNa — Woven from the Hills</title>
 <meta name="description" content="Discover authentic handwoven textiles, traditional Puans, and accessories handcrafted by the Kuki artisans of Northeast India. Brand by NiNa." />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<!-- Open Graph Meta Tags -->
+<meta property="og:title" content="NiNa — Woven from the Hills" />
+<meta property="og:description" content="Discover authentic handwoven textiles, traditional Puans, and accessories handcrafted by the Kuki artisans of Northeast India. Brand by NiNa." />
+<meta property="og:image" content="assets/logo.png" />
+<meta property="og:type" content="website" />
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -3992,10 +3998,14 @@
         
         // Render to UI
         renderProducts();
+        updateCartUI();
+        updateWishlistUI();
       } catch (err) {
         console.error("Failed to fetch products from Supabase:", err);
         // Fallback to static catalog in case of error
         renderProducts();
+        updateCartUI();
+        updateWishlistUI();
       }
     }
 
@@ -4548,7 +4558,7 @@
       const placeBtn = document.getElementById('placeOrderBtn');
       const originalText = placeBtn.textContent;
 
-      const saveOrderToDatabase = async (finalStatus, gatewayPaymentId = null) => {
+      const saveOrderToDatabase = async (finalStatus) => {
         const payload = {
           order_number: orderNumber,
           customer_name: name,
@@ -4559,7 +4569,7 @@
           subtotal: totalPrice,
           status: finalStatus,
           is_gift: isGift,
-          notes: gatewayPaymentId ? (notes ? notes + " | " : "") + `Razorpay Payment ID: ${gatewayPaymentId}` : (notes || null),
+          notes: notes || null,
           payment_method: paymentMethod
         };
 
@@ -4579,7 +4589,7 @@
         }
       };
 
-      const triggerNotifications = async (gatewayPaymentId = null) => {
+      const triggerNotifications = async () => {
         let itemsSummary = orderItems.map(item => `- ${item.quantity}x ${item.title} (${item.variant}) @ ₹${item.price}`).join('\n');
         let waText = `*New Order: ${orderNumber}*\n\n` +
                      `*Customer Details:*\n` +
@@ -4591,9 +4601,13 @@
                      `*Gift Option:* ${isGift ? 'Yes' : 'No'}\n` +
                      (isGift ? `*Gift Note:* ${notes}\n` : '') +
                      `*Subtotal:* Rs. ${totalPrice.toLocaleString('en-IN')}\n` +
-                     `*Payment Method:* ${paymentMethod}\n` +
-                     (gatewayPaymentId ? `*Razorpay ID:* ${gatewayPaymentId}\n` : '') +
-                     `\nPlease confirm receipt of this order.`;
+                     `*Payment Method:* ${paymentMethod}\n`;
+                     
+        if (paymentMethod === 'Online Payment') {
+          waText += `\n*I would like to complete payment for Order #${orderNumber}. Please share payment details.*`;
+        } else {
+          waText += `\nPlease confirm receipt of this order.`;
+        }
         
         const encodedWaText = encodeURIComponent(waText);
         window.open(`https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedWaText}`, '_blank');
@@ -4615,8 +4629,7 @@
               subtotal: totalPrice,
               isGift,
               notes,
-              paymentMethod,
-              paymentId: gatewayPaymentId
+              paymentMethod
             })
           });
         } catch (edgeErr) {
@@ -4655,6 +4668,12 @@
           showToast(`Order Placed Successfully! ID: ${orderNumber}`, "success");
           
           await triggerNotifications();
+
+          // Reset cart & UI
+          cart = {};
+          saveState();
+          if (form) form.reset();
+          updateCartUI();
         } catch (err) {
           console.error(err);
           showToast(err.message || "Failed to place order. Please try again.", "error");
@@ -4664,12 +4683,11 @@
         }
       } else {
         placeBtn.disabled = true;
-        placeBtn.textContent = 'Redirecting to Payment...';
+        placeBtn.textContent = 'Processing Order...';
         try {
-          // Save order to database as Pending Payment
           await saveOrderToDatabase('Pending Payment');
           
-          // Show Success State inside checkout modal with redirection message
+          // Show Success State inside checkout modal with WhatsApp instructions
           const form = document.getElementById('checkoutForm');
           if (form) form.style.display = 'none';
           
@@ -4683,34 +4701,26 @@
           if (container) container.style.maxWidth = '400px';
           
           const successTitle = document.querySelector('#checkoutSuccessState h2');
-          if (successTitle) successTitle.textContent = 'Secure Payment';
+          if (successTitle) successTitle.textContent = 'Payment Requested';
           
           const successOrderNumber = document.getElementById('successOrderNumber');
           if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
           
           const successMessage = document.getElementById('successMessage');
-          if (successMessage) successMessage.textContent = 'Redirecting you to Razorpay to complete your secure payment. Please do not close this window.';
-          
-          const continueBtn = document.querySelector('#checkoutSuccessState button');
-          if (continueBtn) continueBtn.style.display = 'none';
+          if (successMessage) successMessage.textContent = 'Your order has been recorded successfully. A WhatsApp payment request has been generated. Please complete your payment via WhatsApp.';
           
           const successState = document.getElementById('checkoutSuccessState');
           if (successState) successState.style.display = 'flex';
           
-          showToast("Redirecting to Razorpay Onboarding...", "success");
+          showToast("Payment request generated on WhatsApp...", "success");
           
-          // Trigger notifications
           await triggerNotifications();
 
           // Reset cart & UI
           cart = {};
+          saveState();
           if (form) form.reset();
           updateCartUI();
-
-          // Redirect to Razorpay onboarding link after 2 seconds
-          setTimeout(() => {
-            window.location.href = 'https://easy.razorpay.com/conversational/onboarding?redirecturl=https%3A%2F%2Feasy.razorpay.com&auth_intent=signup&product=payment_solutions&x-country-code=IN';
-          }, 2000);
         } catch (dbErr) {
           console.error(dbErr);
           showToast("Failed to initiate checkout. Please try again.", "error");
@@ -4820,6 +4830,7 @@
       cartCount.textContent = totalQty;
       cartHeaderCount.textContent = totalQty;
       cartTotalPrice.textContent = `Rs. ${totalPrice.toLocaleString('en-IN')}`;
+      saveState();
     }
 
     function adjustCartQty(key, change) {
@@ -5199,8 +5210,17 @@
       startCategoryTimer();
     }
 
-    // Initialize Supabase product fetch
-    fetchProducts();
+    // Initialize Supabase product fetch and then parse URL search filter
+    fetchProducts().then(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const categoryFilter = urlParams.get('filter');
+      if (categoryFilter) {
+        filterCategory(categoryFilter);
+      }
+    });
+
+    // Sync cart and wishlist from Supabase in the background
+    loadSessionFromSupabase();
   </script>
 </body>
 </html>

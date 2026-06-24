@@ -2564,10 +2564,10 @@
       <div class="footer-col">
         <h4>Support</h4>
         <ul class="footer-links">
-          <li><a href="#">Shipping Policy</a></li>
-          <li><a href="#">Returns &amp; Exchanges</a></li>
-          <li><a href="#">Care Instructions</a></li>
-          <li><a href="#">Contact Us</a></li>
+          <li><a href="javascript:void(0)" onclick="openInfoModal('shipping')">Shipping Policy</a></li>
+          <li><a href="javascript:void(0)" onclick="openInfoModal('returns')">Returns &amp; Exchanges</a></li>
+          <li><a href="javascript:void(0)" onclick="openInfoModal('care')">Care Instructions</a></li>
+          <li><a href="javascript:void(0)" onclick="openInfoModal('contact')">Contact Us</a></li>
         </ul>
       </div>
     </div>
@@ -2577,6 +2577,7 @@
         <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener">Instagram</a>
         <a href="https://www.facebook.com/share/1BLe7FzkUZ/" target="_blank" rel="noopener">Facebook</a>
         <a href="https://pin.it/5nLgtcf3w" target="_blank" rel="noopener">Pinterest</a>
+        <a href="admin.html" style="margin-left: 15px; color: var(--accent-saffron); font-weight: 500;">Admin Portal</a>
       </div>
     </div>
   </footer>
@@ -2675,7 +2676,7 @@
           <label style="display: block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-dark); text-align: left;">Payment Method</label>
           <select id="checkoutPayment" style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); outline: none; border-radius: 4px;">
             <option value="Cash on Delivery">Cash on Delivery (COD)</option>
-            <option value="Online Payment">Online Payment (Razorpay)</option>
+            <option value="Online Payment">Online Payment (WhatsApp)</option>
           </select>
         </div>
         <button type="submit" class="btn btn-primary" id="placeOrderBtn" style="width: 100%; margin-top: 10px; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem;">Place Order</button>
@@ -2699,8 +2700,14 @@
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Razorpay Checkout Script -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <!-- Policy Info Modal -->
+  <div class="modal-backdrop" id="policyModalBackdrop" onclick="closePolicyModalOuter(event)">
+    <div class="modal-container glass-card" id="policyModalContainer" style="max-width: 500px; display: flex; flex-direction: column; background: var(--bg-dark); padding: 32px; box-shadow: 0 25px 50px rgba(0,0,0,0.25);">
+      <button class="modal-close-btn" onclick="closePolicyModal()" aria-label="Close Info Modal" style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">✕</button>
+      <h2 id="policyModalTitle" style="font-family: var(--font-heading); font-weight: 300; font-size: 1.8rem; margin: 0 0 16px 0; color: var(--text-dark); text-align: left; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;"></h2>
+      <div id="policyModalBody" style="font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--text-dark); text-align: left; max-height: 50vh; overflow-y: auto;"></div>
+    </div>
+  </div>
 
   <!-- Script logic -->
   <script>
@@ -3144,17 +3151,185 @@
           stock_count: 99,
           imageHtml: `<img src="assets/product_11.jpg" alt="Heritage Enamel Pin">`
         };
+        updateCartUI();
+        updateWishlistUI();
       } catch (err) {
         console.error("Failed to fetch products from Supabase:", err);
+        updateCartUI();
+        updateWishlistUI();
       }
     }
 
     // --- Global State ---
-    let cart = {}; // key: "product_id-variant" -> quantity
-    let wishlist = new Set();
     let currentModalProductId = null;
     let whatsappNumber = '9100000000'; // Default store WhatsApp number
-    const RAZORPAY_KEY_ID = 'rzp_test_5VvT9U5jQ7qK1c'; // Replace with actual Razorpay Key ID
+
+    // Retrieve/generate client UUID
+    let anonymousId = localStorage.getItem('nina_anonymous_id');
+    if (!anonymousId) {
+      if (window.crypto && window.crypto.randomUUID) {
+        anonymousId = window.crypto.randomUUID();
+      } else {
+        anonymousId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      }
+      localStorage.setItem('nina_anonymous_id', anonymousId);
+    }
+
+    // Hydrate cart from localStorage first
+    let cart = {};
+    try {
+      cart = JSON.parse(localStorage.getItem('nina_cart') || '{}');
+    } catch(e) {
+      console.error("Error loading cart from localStorage", e);
+    }
+
+    // Hydrate wishlist from localStorage first
+    let wishlist = new Set();
+    try {
+      const savedWishlist = JSON.parse(localStorage.getItem('nina_wishlist') || '[]');
+      wishlist = new Set(savedWishlist);
+    } catch(e) {
+      console.error("Error loading wishlist from localStorage", e);
+    }
+
+    // Save cart & wishlist state to LocalStorage and sync with Supabase
+    let saveTimeout = null;
+    function saveState() {
+      localStorage.setItem('nina_cart', JSON.stringify(cart));
+      localStorage.setItem('nina_wishlist', JSON.stringify([...wishlist]));
+
+      if (saveTimeout) clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(async () => {
+        try {
+          const payload = {
+            anonymous_id: anonymousId,
+            cart: cart,
+            wishlist: [...wishlist],
+            updated_at: new Date().toISOString()
+          };
+
+          await fetch('https://safgnxqeadujezefvahw.supabase.co/rest/v1/carts_wishlists?on_conflict=anonymous_id', {
+            method: 'POST',
+            headers: {
+              'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
+              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
+              'Content-Type': 'application/json',
+              'Prefer': 'resolution=merge-duplicates'
+            },
+            body: JSON.stringify(payload)
+          });
+        } catch(e) {
+          console.error("Failed to sync cart/wishlist to Supabase", e);
+        }
+      }, 500);
+    }
+
+    // Load cart & wishlist state from Supabase
+    async function loadSessionFromSupabase() {
+      try {
+        const response = await fetch(`https://safgnxqeadujezefvahw.supabase.co/rest/v1/carts_wishlists?anonymous_id=eq.${anonymousId}`, {
+          method: 'GET',
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg'
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.length > 0) {
+            const dbSession = data[0];
+            cart = dbSession.cart || {};
+            wishlist = new Set(dbSession.wishlist || []);
+            
+            localStorage.setItem('nina_cart', JSON.stringify(cart));
+            localStorage.setItem('nina_wishlist', JSON.stringify([...wishlist]));
+            
+            updateCartUI();
+            updateWishlistUI();
+          }
+        }
+      } catch(e) {
+        console.error("Failed to load session from Supabase", e);
+      }
+    }
+
+    function updateWishlistUI() {
+      document.querySelectorAll('.wish-btn').forEach(btn => {
+        const onClickAttr = btn.getAttribute('onclick');
+        if (onClickAttr) {
+          const match = onClickAttr.match(/toggleWishlist\(([^,]+),/);
+          if (match) {
+            const prodId = Number(match[1].trim());
+            if (wishlist.has(prodId)) {
+              btn.classList.add('active');
+            } else {
+              btn.classList.remove('active');
+            }
+          }
+        }
+      });
+    }
+
+    window.openInfoModal = function(type) {
+      const backdrop = document.getElementById('policyModalBackdrop');
+      const title = document.getElementById('policyModalTitle');
+      const body = document.getElementById('policyModalBody');
+      if (!backdrop || !title || !body) return;
+
+      let modalTitle = '';
+      let modalBody = '';
+
+      if (type === 'shipping') {
+        modalTitle = 'Shipping Policy';
+        modalBody = `<p>At NiNa Collective, we partner with Kuki artisan weavers from Lamka, Churachandpur, and Moreh in Manipur. Every product is handloomed on demand or in small batches.</p>
+                     <p style="margin-top: 12px;"><strong>Processing Time:</strong> Orders are processed within 2–5 business days.</p>
+                     <p style="margin-top: 12px;"><strong>Delivery:</strong> Shipping across India typically takes 5–8 business days via our premium courier partners. You will receive a WhatsApp message and email tracking confirmation as soon as your package ships.</p>`;
+      } else if (type === 'returns') {
+        modalTitle = 'Returns & Exchanges';
+        modalBody = `<p>Since each of our traditional Puans, bags, scarves, and accessories is individually handloomed, we hold a high standard of quality and craftsmanship.</p>
+                     <p style="margin-top: 12px;"><strong>Policies:</strong> We accept returns and exchanges within 7 days of delivery only for items that are damaged in transit or have manufacturing defects.</p>
+                     <p style="margin-top: 12px;"><strong>Process:</strong> To initiate a return, please contact us on WhatsApp with photos of the item. Refunds are processed to your original payment method once the item is inspected.</p>`;
+      } else if (type === 'care') {
+        modalTitle = 'Care Instructions';
+        modalBody = `<p>Our handloomed textiles are made with 100% organic cotton and traditional weaving techniques.</p>
+                     <ul style="margin-top: 12px; padding-left: 20px; list-style-type: decimal;">
+                       <li>Hand wash separately in cold water using a mild liquid detergent.</li>
+                       <li style="margin-top: 6px;">Do not wring or twist the fabric; press out excess water gently.</li>
+                       <li style="margin-top: 6px;">Dry flat in shade to prevent color fading and stretching.</li>
+                       <li style="margin-top: 6px;">Iron on a low-medium cotton setting on the reverse side of the motifs.</li>
+                       <li style="margin-top: 6px;">Dry cleaning is highly recommended for premium wool/cotton blend shawls and Puans.</li>
+                     </ul>`;
+      } else if (type === 'contact') {
+        modalTitle = 'Contact Us';
+        modalBody = `<p>We would love to hear from you!</p>
+                     <p style="margin-top: 12px;"><strong>WhatsApp Business:</strong> +91 91000 00000</p>
+                     <p style="margin-top: 6px;"><strong>Email Support:</strong> support@nina-collective.com</p>
+                     <p style="margin-top: 6px;"><strong>Artisan Studio:</strong> Churachandpur, Lamka, Manipur, India</p>
+                     <p style="margin-top: 6px;"><strong>Working Hours:</strong> Monday to Saturday, 10:00 AM – 6:00 PM IST</p>`;
+      }
+
+      title.innerHTML = modalTitle;
+      body.innerHTML = modalBody;
+      backdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closePolicyModal = function() {
+      const backdrop = document.getElementById('policyModalBackdrop');
+      if (backdrop) {
+        backdrop.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    };
+
+    window.closePolicyModalOuter = function(e) {
+      if (e.target === document.getElementById('policyModalBackdrop')) {
+        closePolicyModal();
+      }
+    };
 
     // --- Variant Color Change Logic ---
     function changeVariantColor(productId, colorHex, colorName, e) {
@@ -3605,7 +3780,7 @@
       const placeBtn = document.getElementById('placeOrderBtn');
       const originalText = placeBtn.textContent;
 
-      const saveOrderToDatabase = async (finalStatus, gatewayPaymentId = null) => {
+      const saveOrderToDatabase = async (finalStatus) => {
         const payload = {
           order_number: orderNumber,
           customer_name: name,
@@ -3616,7 +3791,7 @@
           subtotal: totalPrice,
           status: finalStatus,
           is_gift: isGift,
-          notes: gatewayPaymentId ? (notes ? notes + " | " : "") + `Razorpay Payment ID: ${gatewayPaymentId}` : (notes || null),
+          notes: notes || null,
           payment_method: paymentMethod
         };
 
@@ -3636,7 +3811,7 @@
         }
       };
 
-      const triggerNotifications = async (gatewayPaymentId = null) => {
+      const triggerNotifications = async () => {
         let itemsSummary = orderItems.map(item => `- ${item.quantity}x ${item.title} (${item.variant}) @ ₹${item.price}`).join('\n');
         let waText = `*New Order: ${orderNumber}*\n\n` +
                      `*Customer Details:*\n` +
@@ -3648,9 +3823,13 @@
                      `*Gift Option:* ${isGift ? 'Yes' : 'No'}\n` +
                      (isGift ? `*Gift Note:* ${notes}\n` : '') +
                      `*Subtotal:* Rs. ${totalPrice.toLocaleString('en-IN')}\n` +
-                     `*Payment Method:* ${paymentMethod}\n` +
-                     (gatewayPaymentId ? `*Razorpay ID:* ${gatewayPaymentId}\n` : '') +
-                     `\nPlease confirm receipt of this order.`;
+                     `*Payment Method:* ${paymentMethod}\n`;
+                     
+        if (paymentMethod === 'Online Payment') {
+          waText += `\n*I would like to complete payment for Order #${orderNumber}. Please share payment details.*`;
+        } else {
+          waText += `\nPlease confirm receipt of this order.`;
+        }
         
         const encodedWaText = encodeURIComponent(waText);
         window.open(`https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedWaText}`, '_blank');
@@ -3672,8 +3851,7 @@
               subtotal: totalPrice,
               isGift,
               notes,
-              paymentMethod,
-              paymentId: gatewayPaymentId
+              paymentMethod
             })
           });
         } catch (edgeErr) {
@@ -3712,6 +3890,12 @@
           showToast(`Order Placed Successfully! ID: ${orderNumber}`, "success");
           
           await triggerNotifications();
+
+          // Reset cart & UI
+          cart = {};
+          saveState();
+          if (form) form.reset();
+          updateCartUI();
         } catch (err) {
           console.error(err);
           showToast(err.message || "Failed to place order. Please try again.", "error");
@@ -3721,12 +3905,11 @@
         }
       } else {
         placeBtn.disabled = true;
-        placeBtn.textContent = 'Redirecting to Payment...';
+        placeBtn.textContent = 'Processing Order...';
         try {
-          // Save order to database as Pending Payment
           await saveOrderToDatabase('Pending Payment');
           
-          // Show Success State inside checkout modal with redirection message
+          // Show Success State inside checkout modal with WhatsApp instructions
           const form = document.getElementById('checkoutForm');
           if (form) form.style.display = 'none';
           
@@ -3740,34 +3923,26 @@
           if (container) container.style.maxWidth = '400px';
           
           const successTitle = document.querySelector('#checkoutSuccessState h2');
-          if (successTitle) successTitle.textContent = 'Secure Payment';
+          if (successTitle) successTitle.textContent = 'Payment Requested';
           
           const successOrderNumber = document.getElementById('successOrderNumber');
           if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
           
           const successMessage = document.getElementById('successMessage');
-          if (successMessage) successMessage.textContent = 'Redirecting you to Razorpay to complete your secure payment. Please do not close this window.';
-          
-          const continueBtn = document.querySelector('#checkoutSuccessState button');
-          if (continueBtn) continueBtn.style.display = 'none';
+          if (successMessage) successMessage.textContent = 'Your order has been recorded successfully. A WhatsApp payment request has been generated. Please complete your payment via WhatsApp.';
           
           const successState = document.getElementById('checkoutSuccessState');
           if (successState) successState.style.display = 'flex';
           
-          showToast("Redirecting to Razorpay Onboarding...", "success");
+          showToast("Payment request generated on WhatsApp...", "success");
           
-          // Trigger notifications
           await triggerNotifications();
 
           // Reset cart & UI
           cart = {};
+          saveState();
           if (form) form.reset();
           updateCartUI();
-
-          // Redirect to Razorpay onboarding link after 2 seconds
-          setTimeout(() => {
-            window.location.href = 'https://easy.razorpay.com/conversational/onboarding?redirecturl=https%3A%2F%2Feasy.razorpay.com&auth_intent=signup&product=payment_solutions&x-country-code=IN';
-          }, 2000);
         } catch (dbErr) {
           console.error(dbErr);
           showToast("Failed to initiate checkout. Please try again.", "error");
@@ -3877,6 +4052,7 @@
       cartCount.textContent = totalQty;
       cartHeaderCount.textContent = totalQty;
       cartTotalPrice.textContent = `Rs. ${totalPrice.toLocaleString('en-IN')}`;
+      saveState();
     }
 
     function adjustCartQty(key, change) {
@@ -4142,6 +4318,9 @@
 
     // Fetch dynamic products on load
     fetchProducts();
+
+    // Sync cart and wishlist from Supabase in the background
+    loadSessionFromSupabase();
   </script>
 </body>
 </html>
