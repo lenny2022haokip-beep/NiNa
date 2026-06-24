@@ -3541,7 +3541,7 @@
           <label style="display: block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-dark); text-align: left;">Payment Method</label>
           <select id="checkoutPayment" style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); outline: none; border-radius: 4px;">
             <option value="Cash on Delivery">Cash on Delivery (COD)</option>
-            <option value="Online Payment">Online Payment (Razorpay)</option>
+            <option value="Online Payment">Online Payment (WhatsApp)</option>
           </select>
         </div>
         <button type="submit" class="btn btn-primary" id="placeOrderBtn" style="width: 100%; margin-top: 10px; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem;">Place Order</button>
@@ -4124,7 +4124,6 @@
     // --- Global State ---
     let currentModalProductId = null;
     let whatsappNumber = '919233918107'; // Default store WhatsApp number (91 = India country code)
-    const RAZORPAY_KEY_ID = 'rzp_test_5VvT9U5jQ7qK1c'; // Replace with actual Razorpay Key ID
 
     // Retrieve/generate client UUID
     let anonymousId = localStorage.getItem('nina_anonymous_id');
@@ -4729,7 +4728,7 @@
                      `*Payment Method:* ${paymentMethod}\n`;
                      
         if (paymentMethod === 'Online Payment') {
-          waText += `\n*I would like to complete payment for Order #${orderNumber}. Please share payment details.*`;
+          waText += `\n*I would like to complete payment for Order #${orderNumber} via UPI. Please share your UPI payment instructions or QR code.*`;
         } else {
           waText += `\nPlease confirm receipt of this order.`;
         }
