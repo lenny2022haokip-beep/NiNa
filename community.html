@@ -3131,7 +3131,8 @@
             const dbSettings = await settingsRes.json();
             const waSetting = dbSettings.find(s => s.key === 'whatsapp_number');
             if (waSetting && waSetting.value) {
-              whatsappNumber = waSetting.value;
+              const rawNum = waSetting.value.replace(/\D/g, '');
+              whatsappNumber = rawNum.startsWith('91') ? rawNum : '91' + rawNum;
             }
           }
         } catch (settingsErr) {
@@ -3162,7 +3163,7 @@
 
     // --- Global State ---
     let currentModalProductId = null;
-    let whatsappNumber = '9233918107'; // Default store WhatsApp number
+    let whatsappNumber = '919233918107'; // Default store WhatsApp number (91 = India country code)
 
     // Retrieve/generate client UUID
     let anonymousId = localStorage.getItem('nina_anonymous_id');

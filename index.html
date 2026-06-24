@@ -3555,8 +3555,7 @@
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Razorpay Checkout Script -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <!-- WhatsApp Checkout - no external payment scripts needed -->
 
   <!-- Script logic -->
   <script>
@@ -3982,7 +3981,9 @@
             const dbSettings = await settingsRes.json();
             const waSetting = dbSettings.find(s => s.key === 'whatsapp_number');
             if (waSetting && waSetting.value) {
-              whatsappNumber = waSetting.value;
+              // Ensure country code 91 is always present
+              const rawNum = waSetting.value.replace(/\D/g, '');
+              whatsappNumber = rawNum.startsWith('91') ? rawNum : '91' + rawNum;
             }
           }
         } catch (settingsErr) {
@@ -4112,7 +4113,7 @@
 
     // --- Global State ---
     let currentModalProductId = null;
-    let whatsappNumber = '9233918107'; // Default store WhatsApp number
+    let whatsappNumber = '919233918107'; // Default store WhatsApp number (91 = India country code)
     const RAZORPAY_KEY_ID = 'rzp_test_5VvT9U5jQ7qK1c'; // Replace with actual Razorpay Key ID
 
     // Retrieve/generate client UUID
@@ -4754,9 +4755,7 @@
         placeBtn.disabled = true;
         placeBtn.textContent = 'Processing Order...';
         try {
-          await saveOrderToDatabase('Confirmed');
-          
-          // Show Success State inside checkout modal
+          // Show Success UI immediately — don't block on DB save
           const form = document.getElementById('checkoutForm');
           if (form) form.style.display = 'none';
           
@@ -4773,14 +4772,20 @@
           if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
           
           const successMessage = document.getElementById('successMessage');
-          if (successMessage) successMessage.textContent = 'Your order has been recorded successfully. A WhatsApp receipt has been generated for your records.';
+          if (successMessage) successMessage.textContent = 'Your order has been recorded. A WhatsApp receipt is being opened for your records.';
           
           const successState = document.getElementById('checkoutSuccessState');
           if (successState) successState.style.display = 'flex';
 
-          showToast(`Order Placed Successfully! ID: ${orderNumber}`, "success");
+          showToast(`Order Placed! ID: ${orderNumber}`, "success");
           
-          await triggerNotifications();
+          // Open WhatsApp FIRST (must be synchronous in click context to avoid popup blocking)
+          triggerNotifications();
+
+          // Save to DB in background (non-blocking)
+          saveOrderToDatabase('Confirmed').catch(dbErr => {
+            console.warn('Order DB save failed (non-critical):', dbErr.message);
+          });
 
           // Reset cart & UI
           cart = {};
@@ -4798,9 +4803,7 @@
         placeBtn.disabled = true;
         placeBtn.textContent = 'Processing Order...';
         try {
-          await saveOrderToDatabase('Pending Payment');
-          
-          // Show Success State inside checkout modal with WhatsApp instructions
+          // Show Success UI immediately
           const form = document.getElementById('checkoutForm');
           if (form) form.style.display = 'none';
           
@@ -4820,14 +4823,20 @@
           if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
           
           const successMessage = document.getElementById('successMessage');
-          if (successMessage) successMessage.textContent = 'Your order has been recorded successfully. A WhatsApp payment request has been generated. Please complete your payment via WhatsApp.';
+          if (successMessage) successMessage.textContent = 'Order recorded! Opening WhatsApp to complete your payment. Please send a screenshot of the payment confirmation.';
           
           const successState = document.getElementById('checkoutSuccessState');
           if (successState) successState.style.display = 'flex';
           
-          showToast("Payment request generated on WhatsApp...", "success");
+          showToast("Opening WhatsApp for payment...", "success");
           
-          await triggerNotifications();
+          // Open WhatsApp FIRST — synchronous call in click handler avoids popup blocking
+          triggerNotifications();
+
+          // Save to DB in background (non-blocking)
+          saveOrderToDatabase('Pending Payment').catch(dbErr => {
+            console.warn('Order DB save failed (non-critical):', dbErr.message);
+          });
 
           // Reset cart & UI
           cart = {};
