@@ -2291,6 +2291,50 @@
   .toast-info-icon { color: var(--accent-saffron); }
 
   /* Achievements Section */
+  .press-feature-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .press-feature-layout {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+  }
+  .read-press-link {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #000000;
+    text-decoration: underline;
+    font-weight: 700;
+    transition: var(--transition-smooth);
+  }
+  .read-press-link:hover {
+    color: var(--accent-saffron);
+  }
+  .press-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    background: #FFFFFF;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.02);
+  }
+  .press-image-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .press-image-wrapper:hover img {
+    transform: scale(1.02);
+  }
+
   .achievements-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -3171,31 +3215,46 @@
   <!-- Achievements Section -->
   <section class="section achievements-section" id="achievements" style="border-bottom: 1px solid var(--border-color); background: var(--bg-darker);">
     <div class="container">
-      <div class="section-header reveal">
-        <span class="eyebrow">Our Milestones</span>
-        <h2>Our <em>Achievements</em></h2>
-        <p>Preserving ancestral Kuki weaving traditions through real community impact.</p>
+      <div class="press-feature-layout reveal">
+        <!-- Left Text Content -->
+        <div class="press-text">
+          <span class="eyebrow" style="display: block; margin-bottom: 12px;">Press Feature • Hindustan Times</span>
+          <h2 style="font-size: 2.2rem; margin-bottom: 20px; font-weight: 300;">Featured in <em style="font-family: var(--font-serif); font-style: italic;">Hindustan Times</em></h2>
+          <p style="font-size: 0.95rem; line-height: 1.7; color: var(--color-muted); margin-bottom: 24px;">
+            Mangtinlen Kilong (Mangsee), the self-taught designer behind <strong>NiNa by Mangsee</strong>, was recently featured by <em>Hindustan Times</em> for his social commentary and poignant tribute designs. Using limited resources, Mangsee creates powerful collections that highlight Manipur's cultural heritage and weaver craft while advocating for slow, sustainable fashion.
+          </p>
+          <a href="https://www.hindustantimes.com/htcity/htcity-showstoppers/meet-this-northeastern-designer-who-takes-inspiration-from-his-personal-loss-101740996053123.html" target="_blank" rel="noopener" class="read-press-link">Read Full Article ↗</a>
+        </div>
+        <!-- Right Image Container -->
+        <div class="press-image-wrapper">
+          <img src="assets/press_ht_feature.jpg" alt="NiNa Tribute Design featured in Hindustan Times">
+          <div style="font-size: 0.72rem; color: var(--color-muted); font-family: var(--font-mono); margin-top: 12px; text-transform: uppercase; text-align: center; letter-spacing: 0.05em;">
+            "His design features traditional pon dum and khiba work"
+          </div>
+        </div>
       </div>
+
+      <!-- Highlights Grid -->
       <div class="achievements-grid reveal">
         <div class="achievement-card">
-          <div class="achievement-number">100+</div>
-          <h3>Weaver Families Supported</h3>
-          <p>Providing sustainable, fair-trade livelihoods to local women weavers across the hill districts of Manipur.</p>
+          <div class="achievement-number">NiNa</div>
+          <h3>Cultural Storytelling</h3>
+          <p>Launched by Mangtinlen Kilong to serve as a medium of creative expression and social commentary for the Kuki community.</p>
         </div>
         <div class="achievement-card">
-          <div class="achievement-number">3</div>
-          <h3>Heritage Designs Revived</h3>
-          <p>Preserving and looming the ancestral geometric patterns of Kuki tradition: Mangvom, Saipikhup, and Thangnang.</p>
+          <div class="achievement-number">96 Hrs</div>
+          <h3>Tribute Design</h3>
+          <p>Handcrafting a moving tribute piece utilizing the traditional <em>Pon Dum</em> (mourning wrap) and red <em>Khiba</em> beads.</p>
         </div>
         <div class="achievement-card">
-          <div class="achievement-number">0%</div>
-          <h3>Carbon Footprint</h3>
-          <p>Every wrap, bag, and textile is loomed entirely on traditional backstrap looms requiring zero electricity.</p>
+          <div class="achievement-number">100%</div>
+          <h3>Heritage Preserved</h3>
+          <p>Contemporizing traditional motifs and geometric tribal patterns while ensuring their deep cultural meanings are respected.</p>
         </div>
         <div class="achievement-card">
-          <div class="achievement-number">10+</div>
-          <h3>Exhibitions Conducted</h3>
-          <p>Representing indigenous handloom craftsmanship at regional and national textile exhibitions.</p>
+          <div class="achievement-number">Slow</div>
+          <h3>Sustainable Focus</h3>
+          <p>Moving away from fast-fashion norms by prioritizing handloom weaving, upcycled materials, and recycling.</p>
         </div>
       </div>
     </div>
