@@ -3442,10 +3442,10 @@
       <div class="footer-col">
         <h4>Support</h4>
         <ul class="footer-links">
-          <li><a href="#">Shipping Policy</a></li>
-          <li><a href="#">Returns &amp; Exchanges</a></li>
-          <li><a href="#">Care Instructions</a></li>
-          <li><a href="#">Contact Us</a></li>
+          <li><a href="javascript:void(0)" onclick="openInfoModal('shipping')">Shipping Policy</a></li>
+          <li><a href="javascript:void(0)" onclick="openInfoModal('returns')">Returns &amp; Exchanges</a></li>
+          <li><a href="javascript:void(0)" onclick="openInfoModal('care')">Care Instructions</a></li>
+          <li><a href="javascript:void(0)" onclick="openInfoModal('contact')">Contact Us</a></li>
         </ul>
       </div>
     </div>
@@ -3578,6 +3578,15 @@
 
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Policy Info Modal -->
+  <div class="modal-backdrop" id="policyModalBackdrop" onclick="closePolicyModalOuter(event)">
+    <div class="modal-container glass-card" id="policyModalContainer" style="max-width: 500px; display: flex; flex-direction: column; background: var(--bg-dark); padding: 32px; box-shadow: 0 25px 50px rgba(0,0,0,0.25);">
+      <button class="modal-close-btn" onclick="closePolicyModal()" aria-label="Close Info Modal" style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">✕</button>
+      <h2 id="policyModalTitle" style="font-family: var(--font-heading); font-weight: 300; font-size: 1.8rem; margin: 0 0 16px 0; color: var(--text-dark); text-align: left; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;"></h2>
+      <div id="policyModalBody" style="font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--text-dark); text-align: left; max-height: 50vh; overflow-y: auto;"></div>
+    </div>
+  </div>
 
   <!-- WhatsApp Checkout - no external payment scripts needed -->
 
@@ -4605,6 +4614,64 @@
     window.closeCheckoutModalOuter = function(e) {
       if (e.target === document.getElementById('checkoutModalBackdrop')) {
         closeCheckoutModal();
+      }
+    };
+
+    window.openInfoModal = function(type) {
+      const backdrop = document.getElementById('policyModalBackdrop');
+      const title = document.getElementById('policyModalTitle');
+      const body = document.getElementById('policyModalBody');
+      if (!backdrop || !title || !body) return;
+
+      let modalTitle = '';
+      let modalBody = '';
+
+      if (type === 'shipping') {
+        modalTitle = 'Shipping Policy';
+        modalBody = `<p>At NiNa Collective, we partner with Kuki artisan weavers from Lamka, Churachandpur, and Moreh in Manipur. Every product is handloomed on demand or in small batches.</p>
+                     <p style="margin-top: 12px;"><strong>Processing Time:</strong> Orders are processed within 2–5 business days.</p>
+                     <p style="margin-top: 12px;"><strong>Delivery:</strong> Shipping across India typically takes 5–8 business days via our premium courier partners. You will receive a WhatsApp message and email tracking confirmation as soon as your package ships.</p>`;
+      } else if (type === 'returns') {
+        modalTitle = 'Returns & Exchanges';
+        modalBody = `<p>Since each of our traditional Puans, bags, scarves, and accessories is individually handloomed, we hold a high standard of quality and craftsmanship.</p>
+                     <p style="margin-top: 12px;"><strong>Policies:</strong> We accept returns and exchanges within 7 days of delivery only for items that are damaged in transit or have manufacturing defects.</p>
+                     <p style="margin-top: 12px;"><strong>Process:</strong> To initiate a return, please contact us on WhatsApp with photos of the item. Refunds are processed to your original payment method once the item is inspected.</p>`;
+      } else if (type === 'care') {
+        modalTitle = 'Care Instructions';
+        modalBody = `<p>Our handloomed textiles are made with 100% organic cotton and traditional weaving techniques.</p>
+                     <ul style="margin-top: 12px; padding-left: 20px; list-style-type: decimal;">
+                       <li>Hand wash separately in cold water using a liquid detergent.</li>
+                       <li style="margin-top: 6px;">Do not wring or twist the fabric; press out excess water gently.</li>
+                       <li style="margin-top: 6px;">Dry flat in shade to prevent color fading and stretching.</li>
+                       <li style="margin-top: 6px;">Iron on a low-medium cotton setting on the reverse side of the motifs.</li>
+                       <li style="margin-top: 6px;">Dry cleaning is highly recommended for premium wool/cotton blend shawls and Puans.</li>
+                     </ul>`;
+      } else if (type === 'contact') {
+        modalTitle = 'Contact Us';
+        modalBody = `<p>We would love to hear from you!</p>
+                     <p style="margin-top: 12px;"><strong>WhatsApp Business:</strong> +91 92339 18107</p>
+                     <p style="margin-top: 6px;"><strong>Email Support:</strong> support@ninabymangsee.com</p>
+                     <p style="margin-top: 6px;"><strong>Artisan Studio:</strong> Churachandpur, Lamka, Manipur, India</p>
+                     <p style="margin-top: 6px;"><strong>Working Hours:</strong> Monday to Saturday, 10:00 AM – 6:00 PM IST</p>`;
+      }
+
+      title.innerHTML = modalTitle;
+      body.innerHTML = modalBody;
+      backdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closePolicyModal = function() {
+      const backdrop = document.getElementById('policyModalBackdrop');
+      if (backdrop) {
+        backdrop.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    };
+
+    window.closePolicyModalOuter = function(e) {
+      if (e.target === document.getElementById('policyModalBackdrop')) {
+        closePolicyModal();
       }
     };
 
