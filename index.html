@@ -2600,11 +2600,12 @@
     align-items: center;
     justify-content: center;
     background: var(--surface-dark); /* Clean solid background */
-    padding: 40px; /* Gallery mat board margin */
+    padding: 20px 10px; /* Reduced padding to make the image section larger */
     box-sizing: border-box;
     opacity: 0;
     transform: translateY(15px);
     transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow: hidden;
   }
 
   .ad-slide.active .ad-fg-wrapper {
@@ -2615,15 +2616,18 @@
   .ad-fg-image {
     max-height: 100%;
     max-width: 100%;
-    object-fit: contain; /* 100% of the image is always visible */
+    object-fit: contain;
     box-shadow: 0 15px 45px rgba(0, 0, 0, 0.12); /* Softer drop shadow for art-print feel */
     border: 1px solid rgba(0, 0, 0, 0.05); /* Clean border like a photo frame */
     background: #FFF;
-    transition: transform 5s ease-out;
+    clip-path: inset(0 0 18% 0); /* Cut off the bottom logo */
+    transform: scale(1.22); /* Enlarge the image section */
+    transform-origin: center top;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
   }
 
   .ad-slide.active .ad-fg-image {
-    transform: scale(1.02); /* Very subtle elegant expansion */
+    transform: scale(1.25); /* Subtle active zoom */
   }
 
   /* Center dots navigation at the bottom */
@@ -2656,7 +2660,13 @@
       height: 55vh; /* Optimized viewport ratio on mobile */
     }
     .ad-fg-wrapper {
-      padding: 20px; /* Snug gallery framing on smaller devices */
+      padding: 10px 5px; /* Snug gallery framing on smaller devices */
+    }
+    .ad-fg-image {
+      transform: scale(1.12); /* Slightly smaller scale on mobile to prevent side text clipping */
+    }
+    .ad-slide.active .ad-fg-image {
+      transform: scale(1.15);
     }
     .ad-slider-nav {
       bottom: 15px;
