@@ -2309,7 +2309,7 @@
   .toast-success-icon { color: var(--accent-jade); }
   .toast-info-icon { color: var(--accent-saffron); }
 
-  /* Achievements Section Split Layout */
+  /* Achievements Section Split Layout (Magazine Cover Style) */
   .achievements-split-container {
     display: flex;
     flex-direction: column;
@@ -2319,11 +2319,12 @@
   }
   .achievements-sidebar-panel {
     width: 100%;
-    padding: 60px 24px;
+    padding: 60px 24px 40px 68px; /* Extra left padding to clear the social bar */
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background: var(--bg-darker);
   }
 
   @media (min-width: 900px) {
@@ -2333,13 +2334,13 @@
     }
     .achievements-split-container {
       display: grid;
-      grid-template-columns: 35% 65%;
+      grid-template-columns: 40% 60%;
       height: 100dvh;
       width: 100%;
     }
     .achievements-sidebar-panel {
       height: 100dvh;
-      padding: 80px 60px; /* Enhanced luxury padding */
+      padding: 80px 60px 80px 100px; /* Extra left padding to clear the social bar */
       overflow-y: auto;
       border-right: 1px solid var(--border-color);
       background: var(--bg-darker);
@@ -2349,50 +2350,148 @@
     }
   }
 
-  .read-press-link {
+  /* Editorial Meta Header */
+  .editorial-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-family: var(--font-mono);
-    font-size: 0.76rem;
-    letter-spacing: 0.1em;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #000000;
-    text-decoration: underline;
-    font-weight: 700;
-    transition: var(--transition-smooth);
-    display: inline-block;
-  }
-  .read-press-link:hover {
-    color: var(--accent-saffron);
+    color: var(--color-muted);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px;
+    margin-bottom: 28px;
+    width: 100%;
   }
 
-  /* Right column full bleed slider container */
+  .editorial-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 28px;
+    color: var(--text-dark);
+    text-transform: none;
+    letter-spacing: -0.01em;
+  }
+  .magazine-title {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--text-dark);
+    border-bottom: 2px solid var(--text-dark);
+    display: inline-block;
+    padding-bottom: 4px;
+  }
+
+  .editorial-lead {
+    font-size: 1.02rem;
+    line-height: 1.85;
+    color: var(--text-dark);
+    font-weight: 300;
+    text-align: justify;
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .editorial-lead::first-letter {
+    float: left;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 4.5rem;
+    line-height: 0.8;
+    padding-top: 6px;
+    padding-right: 12px;
+    font-weight: 300;
+    color: var(--text-dark);
+  }
+
+  .editorial-meta-block {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 24px;
+    margin-bottom: 36px;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .meta-label {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .meta-value {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .editorial-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dark);
+    border: 1px solid var(--text-dark);
+    padding: 12px 28px;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    background: transparent;
+    align-self: flex-start;
+  }
+  .editorial-btn:hover {
+    background: var(--text-dark);
+    color: #FFFFFF;
+  }
+  .editorial-btn svg {
+    transition: transform 0.3s ease;
+  }
+  .editorial-btn:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Right column framed slider container */
   .press-image-wrapper {
     position: relative;
-    background: #000000;
+    background: var(--surface-dark); /* #F4F3EF */
     width: 100%;
     box-sizing: border-box;
+    transition: var(--transition-smooth);
   }
+  @media (min-width: 900px) {
+    .press-image-wrapper {
+      height: 100dvh;
+      padding: 48px; /* Frame margin */
+    }
+  }
+  @media (max-width: 899px) {
+    .press-image-wrapper {
+      padding: 24px;
+      background: var(--surface-dark);
+      border-top: 1px solid var(--border-color);
+    }
+  }
+
   .press-slider-container {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
+    background: #000000;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
   }
   @media (max-width: 899px) {
-    .press-image-wrapper {
-      border: 1px solid var(--border-color);
-      padding: 12px;
-      background: #FFFFFF;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.02);
-      margin-top: 30px;
-    }
     .press-slider-container {
       aspect-ratio: 3 / 4;
-      background: #f7f7f7;
-    }
-  }
-  @media (min-width: 900px) {
-    .press-image-wrapper {
-      height: 100dvh;
     }
   }
 
@@ -2425,115 +2524,123 @@
     display: block;
   }
 
-  /* Magazine overlay captions */
+  /* Magazine Page Style Captions (Floating Paper Tags) */
   .press-slide-caption {
     position: absolute;
-    bottom: 30px;
-    left: 20px;
-    right: 20px;
+    bottom: 24px;
+    left: 24px;
     z-index: 10;
-    color: #FFFFFF;
-    pointer-events: none;
+    background: rgba(253, 251, 247, 0.96); /* solid off-white cream */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    padding: 20px 24px;
+    max-width: calc(100% - 48px);
+    box-sizing: border-box;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
     opacity: 0;
-    transform: translateY(15px);
+    transform: translateY(10px);
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
   @media (min-width: 768px) {
     .press-slide-caption {
-      bottom: 50px;
-      left: 50px;
-      right: auto;
-      max-width: 450px;
+      bottom: 40px;
+      left: 40px;
+      max-width: 420px;
+      padding: 24px 32px;
     }
   }
   .press-slide.active .press-slide-caption {
     opacity: 1;
     transform: translateY(0);
-    transition-delay: 0.2s;
+    transition-delay: 0.15s;
   }
   .press-slide-caption .slide-number {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.25em;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--accent-saffron);
+    color: var(--accent-saffron-soft);
     display: block;
     margin-bottom: 6px;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
   }
   .press-slide-caption h3 {
-    font-family: var(--font-heading);
-    font-size: 1.6rem;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.4rem;
     font-weight: 400;
-    margin-bottom: 8px;
-    line-height: 1.25;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+    margin-bottom: 6px;
+    line-height: 1.2;
+    color: var(--text-dark);
   }
   @media (min-width: 768px) {
     .press-slide-caption h3 {
-      font-size: 2.2rem;
+      font-size: 1.8rem;
     }
   }
   .press-slide-caption p {
     font-family: var(--font-body);
-    font-size: 0.82rem;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.78rem;
+    color: var(--color-muted);
     line-height: 1.5;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
   }
   @media (min-width: 768px) {
     .press-slide-caption p {
-      font-size: 0.9rem;
+      font-size: 0.84rem;
     }
   }
 
   /* Luxury controls overlay pill */
   .press-slider-controls-overlay {
     position: absolute;
-    bottom: 30px;
-    right: 20px;
+    bottom: 24px;
+    right: 24px;
     z-index: 10;
     display: flex;
     align-items: center;
-    gap: 16px;
-    background: rgba(28, 28, 26, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 8px 18px;
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    gap: 12px;
+    background: rgba(253, 251, 247, 0.96); /* solid off-white cream */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    color: var(--text-dark);
   }
   @media (min-width: 768px) {
     .press-slider-controls-overlay {
-      bottom: 50px;
-      right: 50px;
-      padding: 10px 22px;
+      bottom: 40px;
+      right: 40px;
+      padding: 8px 18px;
+      border-radius: 24px;
     }
   }
   .press-slider-counter-overlay {
-    color: rgba(255, 255, 255, 0.9);
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
   }
   .press-slider-controls-overlay .sep {
-    height: 12px;
     width: 1px;
-    background: rgba(255, 255, 255, 0.25);
+    height: 12px;
+    background: var(--border-color);
   }
   .press-slider-arrow-btn {
     background: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 0.9rem;
     cursor: pointer;
-    transition: color 0.3s ease;
-    padding: 0 4px;
+    padding: 4px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    color: var(--text-dark);
+    transition: var(--transition-smooth);
   }
   .press-slider-arrow-btn:hover {
-    color: #FFFFFF;
+    color: var(--accent-saffron-soft);
+    transform: scale(1.1);
   }
 
   /* Slogan Highlights Grid */
@@ -3460,12 +3567,31 @@
       <div class="achievements-sidebar-panel reveal">
         <!-- Press Text -->
         <div class="press-text">
-          <span class="eyebrow" style="display: block; margin-bottom: 16px;">Press Feature • Hindustan Times</span>
-          <h2 style="font-size: 2.6rem; margin-bottom: 24px; font-weight: 300; line-height: 1.25;">Featured in <em style="font-family: var(--font-serif); font-style: italic;">Hindustan Times</em></h2>
-          <p style="font-size: 1.05rem; line-height: 1.8; color: var(--color-muted); margin-bottom: 32px;">
+          <div class="editorial-header">
+            <span class="editorial-tag">Press Feature</span>
+            <span class="editorial-date">Hindustan Times</span>
+          </div>
+          <h2 class="editorial-title">
+            Featured in <br>
+            <span class="magazine-title">Hindustan Times</span>
+          </h2>
+          <p class="editorial-lead">
             Mangtinlen Kilong (Mangsee), the self-taught designer behind <strong>NiNa by Mangsee</strong>, was recently featured by <em>Hindustan Times</em> for his social commentary and poignant tribute designs. Using limited resources, Mangsee creates powerful collections that highlight KUKI's cultural heritage and weaver craft while advocating for slow, sustainable fashion.
           </p>
-          <a href="https://www.hindustantimes.com/htcity/htcity-showstoppers/meet-this-northeastern-designer-who-takes-inspiration-from-his-personal-loss-101740996053123.html" target="_blank" rel="noopener" class="read-press-link">Read Full Article ↗</a>
+          <div class="editorial-meta-block">
+            <div class="meta-item">
+              <span class="meta-label">Focus</span>
+              <span class="meta-value">Social Commentary</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Approach</span>
+              <span class="meta-value">Slow Handloom Weaving</span>
+            </div>
+          </div>
+          <a href="https://www.hindustantimes.com/htcity/htcity-showstoppers/meet-this-northeastern-designer-who-takes-inspiration-from-his-personal-loss-101740996053123.html" target="_blank" rel="noopener" class="editorial-btn">
+            <span>Read Full Article</span>
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </a>
         </div>
       </div>
 
