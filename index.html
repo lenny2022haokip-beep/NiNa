@@ -2302,19 +2302,77 @@
   .toast-success-icon { color: var(--accent-jade); }
   .toast-info-icon { color: var(--accent-saffron); }
 
-  /* Achievements Section */
-  .press-feature-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 40px;
-    margin-bottom: 48px;
-    align-items: center;
+  /* Achievements Section Split Layout */
+  .achievements-split-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    z-index: 2;
   }
+  .achievements-sidebar-panel {
+    width: 100%;
+    padding: 60px 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .achievements-sidebar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 30px;
+  }
+
   @media (min-width: 900px) {
-    .press-feature-layout {
-      grid-template-columns: 2fr 1fr; /* 2/3 text, 1/3 slideshow split */
+    .achievements-section.scroll-section {
+      padding: 0 !important;
+      height: 100dvh;
+    }
+    .achievements-split-container {
+      display: grid;
+      grid-template-columns: 35% 65%;
+      height: 100dvh;
+      width: 100%;
+    }
+    .achievements-sidebar-panel {
+      height: 100dvh;
+      padding: 80px 48px;
+      overflow-y: auto;
+      border-right: 1px solid var(--border-color);
+      background: var(--bg-darker);
+    }
+    .achievements-sidebar-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .achievements-sidebar-grid .achievement-card {
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      text-align: left;
+    }
+    .achievements-sidebar-grid .achievement-card:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    .achievements-sidebar-grid .achievement-card .achievement-number {
+      font-size: 1.8rem;
+      margin-bottom: 2px;
+    }
+    .achievements-sidebar-grid .achievement-card h3 {
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+    }
+    .achievements-sidebar-grid .achievement-card p {
+      font-size: 0.74rem;
+      line-height: 1.4;
     }
   }
+
   .read-press-link {
     font-family: var(--font-mono);
     font-size: 0.76rem;
@@ -2324,24 +2382,44 @@
     text-decoration: underline;
     font-weight: 700;
     transition: var(--transition-smooth);
+    display: inline-block;
   }
   .read-press-link:hover {
     color: var(--accent-saffron);
   }
+
+  /* Right column full bleed slider container */
   .press-image-wrapper {
     position: relative;
-    border: 1px solid var(--border-color);
-    padding: 12px;
-    background: #FFFFFF;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.02);
+    background: #000000;
+    width: 100%;
+    box-sizing: border-box;
   }
   .press-slider-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 4; /* Portrait fashion ratio */
+    height: 100%;
     overflow: hidden;
-    background: #f7f7f7;
   }
+  @media (max-width: 899px) {
+    .press-image-wrapper {
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      background: #FFFFFF;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.02);
+      margin-top: 30px;
+    }
+    .press-slider-container {
+      aspect-ratio: 3 / 4;
+      background: #f7f7f7;
+    }
+  }
+  @media (min-width: 900px) {
+    .press-image-wrapper {
+      height: 100dvh;
+    }
+  }
+
   .press-slider-track {
     width: 100%;
     height: 100%;
@@ -2354,7 +2432,7 @@
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 0.6s ease-in-out;
+    transition: opacity 0.8s ease-in-out;
     z-index: 1;
     display: flex;
     align-items: center;
@@ -2370,51 +2448,116 @@
     object-fit: cover;
     display: block;
   }
-  .press-slider-btn {
+
+  /* Magazine overlay captions */
+  .press-slide-caption {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid var(--border-color);
-    color: #000000;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
+    bottom: 30px;
+    left: 20px;
+    right: 20px;
+    z-index: 10;
+    color: #FFFFFF;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @media (min-width: 768px) {
+    .press-slide-caption {
+      bottom: 50px;
+      left: 50px;
+      right: auto;
+      max-width: 450px;
+    }
+  }
+  .press-slide.active .press-slide-caption {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+  }
+  .press-slide-caption .slide-number {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-saffron);
+    display: block;
+    margin-bottom: 6px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .press-slide-caption h3 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 8px;
+    line-height: 1.25;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  }
+  @media (min-width: 768px) {
+    .press-slide-caption h3 {
+      font-size: 2.2rem;
+    }
+  }
+  .press-slide-caption p {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  }
+  @media (min-width: 768px) {
+    .press-slide-caption p {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Luxury controls overlay pill */
+  .press-slider-controls-overlay {
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
     z-index: 10;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    transition: var(--transition-smooth);
-    opacity: 0;
+    gap: 16px;
+    background: rgba(28, 28, 26, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
-  .press-slider-container:hover .press-slider-btn {
-    opacity: 1;
+  @media (min-width: 768px) {
+    .press-slider-controls-overlay {
+      bottom: 50px;
+      right: 50px;
+      padding: 10px 22px;
+    }
   }
-  .press-slider-btn:hover {
-    background: #000000;
-    color: #FFFFFF;
-    border-color: #000000;
-  }
-  .press-slider-btn.prev-btn {
-    left: 12px;
-  }
-  .press-slider-btn.next-btn {
-    right: 12px;
-  }
-  .press-slider-counter {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    background: rgba(0, 0, 0, 0.75);
-    color: #FFFFFF;
-    padding: 4px 10px;
+  .press-slider-counter-overlay {
+    color: rgba(255, 255, 255, 0.9);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     letter-spacing: 0.1em;
-    z-index: 10;
-    border-radius: 20px;
+  }
+  .press-slider-controls-overlay .sep {
+    height: 12px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.25);
+  }
+  .press-slider-arrow-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+  }
+  .press-slider-arrow-btn:hover {
+    color: #FFFFFF;
   }
 
   .achievements-grid {
@@ -3306,67 +3449,169 @@
 
   <!-- Achievements Section -->
   <section class="section achievements-section scroll-section" id="achievements" style="border-bottom: 1px solid var(--border-color); background: var(--bg-darker);">
-    <div class="container">
-      <div class="press-feature-layout reveal">
-        <!-- Left Text Content -->
+    <div class="achievements-split-container">
+      <!-- Left Column: Sidebar Panel (Context & Grid) -->
+      <div class="achievements-sidebar-panel reveal">
+        <!-- Press Text -->
         <div class="press-text">
           <span class="eyebrow" style="display: block; margin-bottom: 12px;">Press Feature • Hindustan Times</span>
           <h2 style="font-size: 2.2rem; margin-bottom: 20px; font-weight: 300;">Featured in <em style="font-family: var(--font-serif); font-style: italic;">Hindustan Times</em></h2>
           <p style="font-size: 0.95rem; line-height: 1.7; color: var(--color-muted); margin-bottom: 24px;">
             Mangtinlen Kilong (Mangsee), the self-taught designer behind <strong>NiNa by Mangsee</strong>, was recently featured by <em>Hindustan Times</em> for his social commentary and poignant tribute designs. Using limited resources, Mangsee creates powerful collections that highlight Manipur's cultural heritage and weaver craft while advocating for slow, sustainable fashion.
           </p>
-          <a href="https://www.hindustantimes.com/htcity/htcity-showstoppers/meet-this-northeastern-designer-who-takes-inspiration-from-his-personal-loss-101740996053123.html" target="_blank" rel="noopener" class="read-press-link">Read Full Article ↗</a>
+          <a href="https://www.hindustantimes.com/htcity/htcity-showstoppers/meet-this-northeastern-designer-who-takes-inspiration-from-his-personal-loss-101740996053123.html" target="_blank" rel="noopener" class="read-press-link" style="margin-bottom: 10px;">Read Full Article ↗</a>
         </div>
-        <!-- Right Slideshow Container -->
-        <div class="press-image-wrapper">
-          <div class="press-slider-container">
-            <div class="press-slider-track">
-              <div class="press-slide active"><img src="assets/agou/agou_1.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 1"></div>
-              <div class="press-slide"><img src="assets/agou/agou_2.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 2"></div>
-              <div class="press-slide"><img src="assets/agou/agou_3.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 3"></div>
-              <div class="press-slide"><img src="assets/agou/agou_4.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 4"></div>
-              <div class="press-slide"><img src="assets/agou/agou_5.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 5"></div>
-              <div class="press-slide"><img src="assets/agou/agou_6.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 6"></div>
-              <div class="press-slide"><img src="assets/agou/agou_7.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 7"></div>
-              <div class="press-slide"><img src="assets/agou/agou_8.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 8"></div>
-              <div class="press-slide"><img src="assets/agou/agou_9.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 9"></div>
-              <div class="press-slide"><img src="assets/agou/agou_10.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 10"></div>
-              <div class="press-slide"><img src="assets/agou/agou_11.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 11"></div>
-              <div class="press-slide"><img src="assets/agou/agou_12.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 12"></div>
-            </div>
-            <!-- Navigation buttons -->
-            <button class="press-slider-btn prev-btn" aria-label="Previous Slide">⟵</button>
-            <button class="press-slider-btn next-btn" aria-label="Next Slide">⟶</button>
-            <!-- Slideshow Counter -->
-            <span class="press-slider-counter">1 / 12</span>
+
+        <!-- Sidebar highlights 2x2 grid -->
+        <div class="achievements-sidebar-grid">
+          <div class="achievement-card">
+            <div class="achievement-number">NiNa</div>
+            <h3>Cultural Storytelling</h3>
+            <p>Launched by Mangtinlen Kilong to serve as a medium of creative expression and social commentary for the Kuki community.</p>
           </div>
-          <div style="font-size: 0.72rem; color: var(--color-muted); font-family: var(--font-mono); margin-top: 12px; text-transform: uppercase; text-align: center; letter-spacing: 0.05em;">
-            NiNa featured designs • traditional handloom
+          <div class="achievement-card">
+            <div class="achievement-number">96 Hrs</div>
+            <h3>Tribute Design</h3>
+            <p>Handcrafting a moving tribute piece utilizing the traditional <em>Pon Dum</em> (mourning wrap) and red <em>Khiba</em> beads.</p>
+          </div>
+          <div class="achievement-card">
+            <div class="achievement-number">100%</div>
+            <h3>Heritage Preserved</h3>
+            <p>Contemporizing traditional motifs and geometric tribal patterns while ensuring their deep cultural meanings are respected.</p>
+          </div>
+          <div class="achievement-card">
+            <div class="achievement-number">Slow</div>
+            <h3>Sustainable Focus</h3>
+            <p>Moving away from fast-fashion norms by prioritizing handloom weaving, upcycled materials, and recycling.</p>
           </div>
         </div>
       </div>
 
-      <!-- Highlights Grid -->
-      <div class="achievements-grid reveal">
-        <div class="achievement-card">
-          <div class="achievement-number">NiNa</div>
-          <h3>Cultural Storytelling</h3>
-          <p>Launched by Mangtinlen Kilong to serve as a medium of creative expression and social commentary for the Kuki community.</p>
-        </div>
-        <div class="achievement-card">
-          <div class="achievement-number">96 Hrs</div>
-          <h3>Tribute Design</h3>
-          <p>Handcrafting a moving tribute piece utilizing the traditional <em>Pon Dum</em> (mourning wrap) and red <em>Khiba</em> beads.</p>
-        </div>
-        <div class="achievement-card">
-          <div class="achievement-number">100%</div>
-          <h3>Heritage Preserved</h3>
-          <p>Contemporizing traditional motifs and geometric tribal patterns while ensuring their deep cultural meanings are respected.</p>
-        </div>
-        <div class="achievement-card">
-          <div class="achievement-number">Slow</div>
-          <h3>Sustainable Focus</h3>
-          <p>Moving away from fast-fashion norms by prioritizing handloom weaving, upcycled materials, and recycling.</p>
+      <!-- Right Column: Full-Bleed Slideshow -->
+      <div class="press-image-wrapper">
+        <div class="press-slider-container">
+          <div class="press-slider-track">
+            <!-- Slide 1 -->
+            <div class="press-slide active">
+              <img src="assets/agou/agou_1.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 1">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 01 / 12</span>
+                <h3>Traditional Pon Dum Drape</h3>
+                <p>A contemporary editorial drape utilizing the symbolic Kuki mourning wrap.</p>
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="press-slide">
+              <img src="assets/agou/agou_2.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 2">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 02 / 12</span>
+                <h3>The Sacred Red Khiba Beads</h3>
+                <p>Generational bloodlines and memory hand-woven into structured garment details.</p>
+              </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="press-slide">
+              <img src="assets/agou/agou_3.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 3">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 03 / 12</span>
+                <h3>Architectural Tribal Wrap</h3>
+                <p>Blending historic geometric blankets with modern editorial silhouettes.</p>
+              </div>
+            </div>
+            <!-- Slide 4 -->
+            <div class="press-slide">
+              <img src="assets/agou/agou_4.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 4">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 04 / 12</span>
+                <h3>Generational Weaver Legacy</h3>
+                <p>Ethically handcrafted backstrap loomed patterns honoring slow design.</p>
+              </div>
+            </div>
+            <!-- Slide 5 -->
+            <div class="press-slide">
+              <img src="assets/agou/agou_5.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 5">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 05 / 12</span>
+                <h3>Artisanal Slow Fashion</h3>
+                <p>Each design requires over 96 hours of meticulous hand-weaving in Lamka.</p>
+              </div>
+            </div>
+            <!-- Slide 6 -->
+            <div class="press-slide">
+              <img src="assets/agou/agou_6.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 6">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 06 / 12</span>
+                <h3>Ethical Craft Commentary</h3>
+                <p>Mangsee's poignant tribute designs serving as a voice for the hills.</p>
+              </div>
+            </div>
+            <!-- Slide 7 -->
+            <div class="press-slide">
+              <img src="assets/agou/agou_7.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 7">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 07 / 12</span>
+                <h3>Contrast Tribal Borders</h3>
+                <p>Saffron, emerald, and crimson details woven against solid charcoal fields.</p>
+              </div>
+            </div>
+            <!-- Slide 8 -->
+            <div class="press-slide">
+              <img src="assets/agou/agou_8.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 8">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 08 / 12</span>
+                <h3>The Weaving Motifs</h3>
+                <p>Generational diamond motifs representing tribal identity and history.</p>
+              </div>
+            </div>
+            <!-- Slide 9 -->
+            <div class="press-slide">
+              <img src="assets/agou/agou_9.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 9">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 09 / 12</span>
+                <h3>Contemporary Handloom</h3>
+                <p>Redefining traditional Puans into high-fashion avant-garde statements.</p>
+              </div>
+            </div>
+            <!-- Slide 10 -->
+            <div class="press-slide">
+              <img src="assets/agou/agou_10.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 10">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 10 / 12</span>
+                <h3>Generational Memory</h3>
+                <p>A moving tribute using design as a powerful medium of remembrance.</p>
+              </div>
+            </div>
+            <!-- Slide 11 -->
+            <div class="press-slide">
+              <img src="assets/agou/agou_11.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 11">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 11 / 12</span>
+                <h3>Manipur Hill Crafts</h3>
+                <p>Honoring backstrap weavers from Churachandpur, Lamka, and Moreh.</p>
+              </div>
+            </div>
+            <!-- Slide 12 -->
+            <div class="press-slide">
+              <img src="assets/agou/agou_12.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 12">
+              <div class="press-slide-caption">
+                <span class="slide-number">Look 12 / 12</span>
+                <h3>Wear Your Roots</h3>
+                <p>Bridging traditional Northeast Indian heritage with global contemporary audiences.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls Overlay Pill -->
+          <div class="press-slider-controls-overlay">
+            <span class="press-slider-counter press-slider-counter-overlay">1 / 12</span>
+            <div class="sep"></div>
+            <button class="press-slider-arrow-btn prev-btn" aria-label="Previous Slide">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <button class="press-slider-arrow-btn next-btn" aria-label="Next Slide">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
