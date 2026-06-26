@@ -1371,6 +1371,11 @@
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg';
     const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+    // Authorized Admin Email Allowlist
+    const ALLOWED_EMAILS = [
+      'lenny2022haokip@gmail.com'
+    ];
+
     // Dynamic State
     let orders = [];
     let products = [];
@@ -1411,6 +1416,13 @@
       // Listen to Auth state changes
       _supabase.auth.onAuthStateChange((event, session) => {
         if (session) {
+          // Security Guard: Check if the authenticated email is whitelisted
+          const userEmail = session.user?.email?.toLowerCase();
+          if (!userEmail || !ALLOWED_EMAILS.includes(userEmail)) {
+            _supabase.auth.signOut();
+            showToast("Unauthorized access. This email is not on the admin allowlist.", "error");
+            return;
+          }
           document.body.classList.add('logged-in');
           document.getElementById('loginScreen').style.display = 'none';
           document.getElementById('dashboardLayout').style.display = 'grid';
@@ -1434,6 +1446,14 @@
 
       submitBtn.disabled = true;
       submitBtn.textContent = 'Authenticating...';
+
+      // Security Guard: Pre-login check to avoid sending requests for non-whitelisted emails
+      if (!ALLOWED_EMAILS.includes(email.toLowerCase())) {
+        showToast("Unauthorized access. This email is not on the admin allowlist.", "error");
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Authenticate';
+        return;
+      }
 
       try {
         const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
