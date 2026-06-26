@@ -4799,6 +4799,67 @@
     };
 
     // --- Dynamic Supabase Fetch and Sorting ---
+    async function fetchSiteContent() {
+      try {
+        const response = await fetch('https://safgnxqeadujezefvahw.supabase.co/rest/v1/site_content', {
+          method: 'GET',
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg'
+          }
+        });
+        if (response.ok) {
+          const dbContent = await response.json();
+          
+          // 1. Hero Content
+          const heroData = dbContent.find(c => c.key === 'hero')?.value;
+          if (heroData) {
+            const subTop = document.querySelector('.hermes-subtitle-top');
+            const mainTitle = document.querySelector('.hermes-main-title');
+            const subBottom = document.querySelector('.hermes-subtitle-bottom');
+            const ctaBtn = document.querySelector('.hermes-btn-link');
+            const storyPara = document.querySelector('.slogan-narrative-paragraph');
+            
+            if (subTop && heroData.subtitle_top) subTop.textContent = heroData.subtitle_top;
+            if (mainTitle && heroData.title) mainTitle.textContent = heroData.title;
+            if (subBottom && heroData.subtitle_bottom) subBottom.textContent = heroData.subtitle_bottom;
+            if (ctaBtn && heroData.cta_text) ctaBtn.textContent = heroData.cta_text;
+            if (storyPara && heroData.story) {
+              const story = heroData.story;
+              const firstChar = story.charAt(0);
+              const restStr = story.slice(1);
+              storyPara.innerHTML = `<span class="editorial-dropcap">${firstChar}</span>${restStr}`;
+            }
+          }
+          
+          // 2. Stats Grid
+          const statsData = dbContent.find(c => c.key === 'stats')?.value;
+          if (statsData && Array.isArray(statsData)) {
+            const statItems = document.querySelectorAll('.stats-grid .stat-item');
+            statsData.forEach((stat, idx) => {
+              if (statItems[idx]) {
+                const valElem = statItems[idx].querySelector('.stat-value');
+                const lblElem = statItems[idx].querySelector('.stat-label');
+                if (valElem && stat.value) valElem.textContent = stat.value;
+                if (lblElem && stat.label) lblElem.textContent = stat.label;
+              }
+            });
+          }
+          
+          // 3. Editorial Quote
+          const quoteData = dbContent.find(c => c.key === 'quote')?.value;
+          if (quoteData) {
+            const bqElem = document.querySelector('.editorial-quote blockquote');
+            const citeElem = document.querySelector('.editorial-quote cite');
+            if (bqElem && quoteData.text) bqElem.textContent = `"${quoteData.text}"`;
+            if (citeElem && quoteData.author) citeElem.textContent = quoteData.author;
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching site content from Supabase:", err);
+      }
+    }
+
     async function fetchProducts() {
       try {
         const response = await fetch('https://safgnxqeadujezefvahw.supabase.co/rest/v1/products', {
@@ -6322,8 +6383,8 @@
       startCategoryTimer();
     }
 
-    // Initialize Supabase product fetch and then parse URL search filter
-    fetchProducts().then(() => {
+    // Initialize Supabase product & content fetch and then parse URL search filter
+    Promise.all([fetchSiteContent(), fetchProducts()]).then(() => {
       const urlParams = new URLSearchParams(window.location.search);
       const categoryFilter = urlParams.get('filter');
       if (categoryFilter) {

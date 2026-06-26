@@ -9,7 +9,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Courier+Prime&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Courier+Prime&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
   
   <!-- Supabase JS Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -25,7 +25,7 @@
       --accent-saffron: #D47200;
       --accent-saffron-glow: rgba(212, 114, 0, 0.15);
       --text-main: #F4F3EF;
-      --text-muted: #A3A19C;
+      --text-muted: #BCB9B3;
       --status-pending: #E0A96D;
       --status-confirmed: #68B0AB;
       --status-shipped: #8FC0A9;
@@ -227,17 +227,22 @@
     }
 
     .sidebar-brand {
-      font-family: var(--font-heading);
-      font-size: 1.25rem;
-      font-weight: 500;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-style: italic;
+      font-weight: 300;
       letter-spacing: 0.05em;
+      color: var(--text-main);
+      text-transform: lowercase;
+      line-height: 1;
+      margin-top: -2px;
     }
 
     .nav-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 4px;
       flex-grow: 1;
     }
 
@@ -249,18 +254,21 @@
       border-radius: 8px;
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       transition: var(--transition-smooth);
+      border-left: 3px solid transparent;
+      margin: 2px 0;
     }
 
-    .nav-item:hover, .nav-item.active {
+    .nav-item:hover {
       color: var(--text-main);
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.03);
     }
 
     .nav-item.active {
-      border-left: 3px solid var(--accent-saffron);
+      border-left-color: var(--accent-saffron);
       background: rgba(212, 114, 0, 0.08);
+      color: var(--text-main);
       font-weight: 500;
     }
 
@@ -484,6 +492,10 @@
       font-family: var(--font-body);
       font-size: 0.82rem;
       cursor: pointer;
+    }
+    .status-select option {
+      background: var(--bg-sidebar);
+      color: var(--text-main);
     }
 
     .status-select:focus {
@@ -1149,7 +1161,7 @@
     <aside class="sidebar">
       <div class="sidebar-logo">
         <img src="assets/logo.png" alt="NiNa Logo">
-        <span class="sidebar-brand">NiNa Admin</span>
+        <span class="sidebar-brand">admin</span>
       </div>
       
       <nav style="flex-grow: 1;">
@@ -1165,6 +1177,10 @@
           <li class="nav-item" onclick="switchTab('inventory')">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
             Inventory
+          </li>
+          <li class="nav-item" onclick="switchTab('content')">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            Site Content
           </li>
           <li class="nav-item" onclick="switchTab('settings')">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -1293,7 +1309,127 @@
         </div>
       </div>
 
-      <!-- Tab 4: Settings Panel -->
+      <!-- Tab 4: Site Content Manager -->
+      <div id="tab-content" class="tab-content">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 32px;">
+          
+          <!-- Hero Slogan Form -->
+          <div class="glass-card" style="padding: 24px;">
+            <h3 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 500; margin-bottom: 20px; color: var(--accent-saffron); letter-spacing:0.02em;">Hero Slogan Area</h3>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div>
+                <label class="input-label">Subtitle Top</label>
+                <input type="text" id="heroSubTop" class="input-field">
+              </div>
+              <div>
+                <label class="input-label">Hero Title</label>
+                <input type="text" id="heroTitle" class="input-field">
+              </div>
+              <div>
+                <label class="input-label">Subtitle Bottom</label>
+                <input type="text" id="heroSubBottom" class="input-field">
+              </div>
+              <div>
+                <label class="input-label">CTA Button Text</label>
+                <input type="text" id="heroCta" class="input-field">
+              </div>
+              <div>
+                <label class="input-label">Brand Narrative / Story</label>
+                <textarea id="heroStory" class="input-field" rows="4" style="resize: none; line-height: 1.5;"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Impact Stats Form -->
+          <div class="glass-card" style="padding: 24px;">
+            <h3 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 500; margin-bottom: 20px; color: var(--accent-saffron); letter-spacing:0.02em;">Impact Stats Grid</h3>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: grid; grid-template-columns: 80px 1fr; gap: 12px; align-items: end;">
+                <div>
+                  <label class="input-label">Stat 1 Val</label>
+                  <input type="text" id="stat1Val" class="input-field" style="text-align: center;">
+                </div>
+                <div>
+                  <label class="input-label">Stat 1 Label</label>
+                  <input type="text" id="stat1Lbl" class="input-field">
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: 80px 1fr; gap: 12px; align-items: end;">
+                <div>
+                  <label class="input-label">Stat 2 Val</label>
+                  <input type="text" id="stat2Val" class="input-field" style="text-align: center;">
+                </div>
+                <div>
+                  <label class="input-label">Stat 2 Label</label>
+                  <input type="text" id="stat2Lbl" class="input-field">
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: 80px 1fr; gap: 12px; align-items: end;">
+                <div>
+                  <label class="input-label">Stat 3 Val</label>
+                  <input type="text" id="stat3Val" class="input-field" style="text-align: center;">
+                </div>
+                <div>
+                  <label class="input-label">Stat 3 Label</label>
+                  <input type="text" id="stat3Lbl" class="input-field">
+                </div>
+              </div>
+              <div style="display: grid; grid-template-columns: 80px 1fr; gap: 12px; align-items: end;">
+                <div>
+                  <label class="input-label">Stat 4 Val</label>
+                  <input type="text" id="stat4Val" class="input-field" style="text-align: center;">
+                </div>
+                <div>
+                  <label class="input-label">Stat 4 Label</label>
+                  <input type="text" id="stat4Lbl" class="input-field">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Editorial Quote Form -->
+          <div class="glass-card" style="padding: 24px; display: flex; flex-direction: column;">
+            <h3 style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 500; margin-bottom: 20px; color: var(--accent-saffron); letter-spacing:0.02em;">Editorial Quote</h3>
+            <div style="display: flex; flex-direction: column; gap: 16px; flex-grow: 1;">
+              <div>
+                <label class="input-label">Quote Text</label>
+                <textarea id="quoteText" class="input-field" rows="4" style="resize: none; line-height: 1.5;"></textarea>
+              </div>
+              <div>
+                <label class="input-label">Author / Citation</label>
+                <input type="text" id="quoteAuthor" class="input-field">
+              </div>
+              <button class="btn btn-primary" onclick="saveStandardContent()" style="margin-top: auto; font-family: var(--font-mono); font-size: 0.8rem; width: 100%;">Save Standard Content</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Custom Elements Section -->
+        <div class="header-bar" style="margin-top: 40px; margin-bottom: 16px;">
+          <h2 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 400; letter-spacing: 0.02em;">All Site Elements & Context Items</h2>
+          <button class="btn" style="border: 1px solid var(--accent-saffron); background: rgba(212, 114, 0, 0.08); font-size: 0.8rem; color: var(--text-main); font-family: var(--font-mono);" onclick="openNewContentModal()">
+            + Add Content Block
+          </button>
+        </div>
+
+        <div class="table-container glass-card" style="padding: 12px;">
+          <table class="admin-table" id="contentTable">
+            <thead>
+              <tr>
+                <th>Element Key</th>
+                <th>Last Updated</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="3" style="text-align: center; color: var(--text-muted);">Syncing site elements...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 5: Settings Panel -->
       <div id="tab-settings" class="tab-content">
         <div class="settings-group">
           
@@ -1378,6 +1514,30 @@
     </div>
   </div>
 
+  <!-- Raw Content Edit Modal -->
+  <div class="modal-backdrop" id="rawContentModal">
+    <div class="modal-container glass-card" style="max-width: 580px;">
+      <button class="modal-close" onclick="closeRawContentModal()">✕</button>
+      <h2 class="modal-title" id="rawContentModalTitle">Edit Raw Content Block</h2>
+      <form id="rawContentForm" onsubmit="handleSaveRawContent(event)">
+        <div class="form-grid" style="grid-template-columns: 1fr;">
+          <div>
+            <label class="input-label">Element Key</label>
+            <input type="text" id="rawContentKey" class="input-field" required placeholder="e.g. hero_story">
+          </div>
+          <div>
+            <label class="input-label">Content Value (JSON or Plain Text)</label>
+            <textarea id="rawContentValue" class="input-field" rows="12" required style="resize: vertical; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.5;"></textarea>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button type="button" class="btn" style="flex: 1; background: transparent; border: 1px solid var(--border-glass);" onclick="closeRawContentModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Save Content</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
     // Supabase Configuration
     const supabaseUrl = 'https://safgnxqeadujezefvahw.supabase.co';
@@ -1394,6 +1554,7 @@
     let orders = [];
     let products = [];
     let siteSettings = [];
+    let siteContent = [];
     let activeOrderFilter = 'all';
     let activeInventoryCategory = 'all';
 
@@ -1510,6 +1671,7 @@
         'dashboard': 'Admin Overview',
         'orders': 'Manage Orders',
         'inventory': 'Artisan Inventory',
+        'content': 'Site Content & Context Manager',
         'settings': 'Global Store Settings'
       };
       document.getElementById('currentSectionTitle').textContent = titleMap[tabId] || 'Admin Portal';
@@ -1524,12 +1686,14 @@
       await Promise.all([
         fetchOrders(),
         fetchProducts(),
-        fetchSettings()
+        fetchSettings(),
+        fetchSiteContent()
       ]);
       populateOverviewStats();
       renderOrders();
       renderInventory();
       populateSettings();
+      renderSiteContent();
     }
 
     // Fetch orders from Supabase
@@ -2033,6 +2197,207 @@
         console.error(err);
         showToast("Failed to update maintenance settings.", "error");
         checkbox.checked = !isChecked; // revert on error
+      }
+    // Fetch site content from Supabase
+    async function fetchSiteContent() {
+      try {
+        const { data, error } = await _supabase
+          .from('site_content')
+          .select('*')
+          .order('key', { ascending: true });
+        if (error) throw error;
+        siteContent = data || [];
+      } catch(err) {
+        console.error(err);
+        showToast("Failed to fetch site content.", "error");
+      }
+    }
+
+    // Render site content to the Site Content Tab
+    function renderSiteContent() {
+      // 1. Hero fields
+      const hero = siteContent.find(c => c.key === 'hero')?.value;
+      if (hero) {
+        document.getElementById('heroSubTop').value = hero.subtitle_top || '';
+        document.getElementById('heroTitle').value = hero.title || '';
+        document.getElementById('heroSubBottom').value = hero.subtitle_bottom || '';
+        document.getElementById('heroCta').value = hero.cta_text || '';
+        document.getElementById('heroStory').value = hero.story || '';
+      }
+
+      // 2. Stats fields
+      const stats = siteContent.find(c => c.key === 'stats')?.value;
+      if (stats && Array.isArray(stats)) {
+        if (stats[0]) {
+          document.getElementById('stat1Val').value = stats[0].value || '';
+          document.getElementById('stat1Lbl').value = stats[0].label || '';
+        }
+        if (stats[1]) {
+          document.getElementById('stat2Val').value = stats[1].value || '';
+          document.getElementById('stat2Lbl').value = stats[1].label || '';
+        }
+        if (stats[2]) {
+          document.getElementById('stat3Val').value = stats[2].value || '';
+          document.getElementById('stat3Lbl').value = stats[2].label || '';
+        }
+        if (stats[3]) {
+          document.getElementById('stat4Val').value = stats[3].value || '';
+          document.getElementById('stat4Lbl').value = stats[3].label || '';
+        }
+      }
+
+      // 3. Quote fields
+      const quote = siteContent.find(c => c.key === 'quote')?.value;
+      if (quote) {
+        document.getElementById('quoteText').value = quote.text || '';
+        document.getElementById('quoteAuthor').value = quote.author || '';
+      }
+
+      // 4. Render key-value table
+      const tbody = document.querySelector('#contentTable tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (siteContent.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--text-muted);">No content keys stored in database.</td></tr>`;
+        return;
+      }
+
+      siteContent.forEach(item => {
+        const isProtected = ['hero', 'stats', 'quote'].includes(item.key);
+        const date = item.updated_at ? new Date(item.updated_at).toLocaleString() : 'N/A';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-saffron); font-weight: 600;">${item.key}</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">${date}</td>
+          <td>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn" style="padding: 6px 12px; font-size: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); color: var(--text-main);" onclick="openRawContentModal('${item.key}')">Edit Raw</button>
+              ${isProtected ? '' : `<button class="btn" style="padding: 6px 12px; font-size: 0.75rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.2); color: #EF4444;" onclick="deleteContentKey('${item.key}')">Delete</button>`}
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Save standard elements (Hero, Stats, Quote)
+    async function saveStandardContent() {
+      try {
+        const heroVal = {
+          subtitle_top: document.getElementById('heroSubTop').value.trim(),
+          title: document.getElementById('heroTitle').value.trim(),
+          subtitle_bottom: document.getElementById('heroSubBottom').value.trim(),
+          cta_text: document.getElementById('heroCta').value.trim(),
+          story: document.getElementById('heroStory').value.trim()
+        };
+        const quoteVal = {
+          text: document.getElementById('quoteText').value.trim(),
+          author: document.getElementById('quoteAuthor').value.trim()
+        };
+        const statsVal = [
+          { value: document.getElementById('stat1Val').value.trim(), label: document.getElementById('stat1Lbl').value.trim() },
+          { value: document.getElementById('stat2Val').value.trim(), label: document.getElementById('stat2Lbl').value.trim() },
+          { value: document.getElementById('stat3Val').value.trim(), label: document.getElementById('stat3Lbl').value.trim() },
+          { value: document.getElementById('stat4Val').value.trim(), label: document.getElementById('stat4Lbl').value.trim() }
+        ];
+
+        // Upsert hero
+        let { error: err1 } = await _supabase.from('site_content').upsert({ key: 'hero', value: heroVal, updated_at: new Date() });
+        if (err1) throw err1;
+
+        // Upsert quote
+        let { error: err2 } = await _supabase.from('site_content').upsert({ key: 'quote', value: quoteVal, updated_at: new Date() });
+        if (err2) throw err2;
+
+        // Upsert stats
+        let { error: err3 } = await _supabase.from('site_content').upsert({ key: 'stats', value: statsVal, updated_at: new Date() });
+        if (err3) throw err3;
+
+        showToast("Standard site content updated successfully!", "success");
+        refreshAllData();
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || "Failed to save content.", "error");
+      }
+    }
+
+    // Modal controls for Raw Content Editor
+    let currentRawKey = '';
+    function openRawContentModal(key) {
+      currentRawKey = key;
+      const item = siteContent.find(c => c.key === key);
+      const jsonVal = item ? JSON.stringify(item.value, null, 2) : '';
+      document.getElementById('rawContentKey').value = key;
+      document.getElementById('rawContentKey').disabled = true;
+      document.getElementById('rawContentValue').value = jsonVal;
+      document.getElementById('rawContentModalTitle').textContent = `Edit Raw Site Content: ${key}`;
+      document.getElementById('rawContentModal').classList.add('open');
+    }
+
+    function openNewContentModal() {
+      currentRawKey = '';
+      document.getElementById('rawContentKey').value = '';
+      document.getElementById('rawContentKey').disabled = false;
+      document.getElementById('rawContentValue').value = '{\n  "label": "value"\n}';
+      document.getElementById('rawContentModalTitle').textContent = 'Add New Content Element';
+      document.getElementById('rawContentModal').classList.add('open');
+    }
+
+    function closeRawContentModal() {
+      document.getElementById('rawContentModal').classList.remove('open');
+    }
+
+    async function handleSaveRawContent(e) {
+      e.preventDefault();
+      const key = document.getElementById('rawContentKey').value.trim();
+      const valStr = document.getElementById('rawContentValue').value.trim();
+
+      if (!key) {
+        showToast("Key name cannot be empty", "error");
+        return;
+      }
+
+      let parsedVal;
+      try {
+        parsedVal = JSON.parse(valStr);
+      } catch (err) {
+        // Fallback to string if not valid JSON
+        parsedVal = valStr;
+      }
+
+      try {
+        const { error } = await _supabase
+          .from('site_content')
+          .upsert({ key, value: parsedVal, updated_at: new Date() });
+        
+        if (error) throw error;
+        
+        showToast(`Site content "${key}" saved successfully!`, "success");
+        closeRawContentModal();
+        refreshAllData();
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || "Failed to save raw content", "error");
+      }
+    }
+
+    async function deleteContentKey(key) {
+      if (!confirm(`Are you sure you want to delete the site content element "${key}"? This cannot be undone.`)) return;
+
+      try {
+        const { error } = await _supabase
+          .from('site_content')
+          .delete()
+          .eq('key', key);
+        
+        if (error) throw error;
+        
+        showToast(`Deleted key "${key}"`, "success");
+        refreshAllData();
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || "Failed to delete key", "error");
       }
     }
   </script>
