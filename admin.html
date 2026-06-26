@@ -67,6 +67,19 @@
       background: var(--accent-saffron);
     }
 
+    /* Hide scrollbar on mobile devices */
+    @media (max-width: 767px) {
+      html::-webkit-scrollbar,
+      body::-webkit-scrollbar,
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      html, body {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    }
+
     /* Glass Container */
     .glass-card {
       background: var(--surface-glass);

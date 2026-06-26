@@ -58,6 +58,18 @@
     scrollbar-width: thin;
     scrollbar-color: var(--accent-emerald) var(--bg-dark);
   }
+  
+  /* Hide scrollbar on mobile devices */
+  @media (max-width: 767px) {
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+    }
+    html, body {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  }
   body {
     background: var(--bg-dark);
     color: var(--color-cream);
