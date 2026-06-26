@@ -243,20 +243,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 24px;
+    padding: 8px 16px;
     transition: var(--transition-smooth);
   }
   header.scrolled .nav-bar {
-    padding: 8px 24px;
+    padding: 6px 16px;
   }
   .logo {
     display: flex;
     align-items: center;
-    height: 38px;
+    height: 20px;
     transition: var(--transition-smooth);
   }
   .logo-img {
-    height: 38px;
+    height: 20px;
     width: auto;
     object-fit: contain;
     mix-blend-mode: screen;
@@ -264,48 +264,55 @@
     transition: var(--transition-smooth), filter 0.4s ease;
   }
   header.scrolled .logo, header.scrolled .logo-img {
-    height: 32px;
+    height: 16px;
   }
   header.scrolled .logo-img {
     filter: invert(1);
     mix-blend-mode: normal;
   }
   .footer-brand .logo {
-    height: 60px;
+    height: 48px;
     margin-bottom: 16px;
   }
   .footer-brand .logo-img {
-    height: 60px;
+    height: 48px;
     filter: invert(1);
   }
   
   /* Responsive Logo Sizing */
   @media (min-width: 768px) {
     .nav-bar {
-      padding: 14px 24px;
-    }
-    header.scrolled .nav-bar {
       padding: 10px 24px;
     }
+    header.scrolled .nav-bar {
+      padding: 8px 24px;
+    }
     .logo, .logo-img {
-      height: 44px;
+      height: 24px;
     }
     header.scrolled .logo, header.scrolled .logo-img {
-      height: 36px;
+      height: 20px;
+    }
+    .action-icon-btn {
+      padding: 8px;
+    }
+    .menu-toggle {
+      gap: 6px;
+      padding: 8px;
     }
   }
   @media (min-width: 1024px) {
     .nav-bar {
-      padding: 16px 24px;
+      padding: 12px 24px;
     }
     header.scrolled .nav-bar {
-      padding: 10px 24px;
+      padding: 8px 24px;
     }
     .logo, .logo-img {
-      height: 48px;
+      height: 28px;
     }
     header.scrolled .logo, header.scrolled .logo-img {
-      height: 40px;
+      height: 24px;
     }
   }
   .nav-links {
@@ -350,7 +357,7 @@
   .action-icon-btn {
     position: relative;
     cursor: pointer;
-    padding: 8px;
+    padding: 6px;
     color: var(--color-cream);
     transition: var(--transition-smooth);
     border-radius: 50%;
@@ -382,9 +389,9 @@
   .menu-toggle {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
     cursor: pointer;
-    padding: 8px;
+    padding: 6px;
     z-index: 102;
   }
   .menu-toggle span {
