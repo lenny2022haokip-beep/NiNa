@@ -1953,116 +1953,53 @@
     }
   }
 
-  /* Footer Section */
-  footer {
-    background: var(--bg-darker);
-    padding: 40px 0 24px;
-    font-size: 0.86rem;
-    color: var(--color-muted);
-    border-top: 1px solid var(--border-color);
+  /* Standalone Instagram Feed Section */
+  .instagram-feed-section {
+    background-color: var(--bg-dark);
+    padding: 100px 24px;
+    border-bottom: 1px solid var(--border-color);
   }
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 30px;
-    margin-bottom: 30px;
-  }
-  @media (min-width: 768px) {
-    .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; }
-  }
-  .footer-brand .logo {
-    margin-bottom: 12px;
-    color: var(--color-cream);
-  }
-  .footer-brand p {
-    font-size: 0.88rem;
-    line-height: 1.5;
-    margin-bottom: 15px;
-    max-width: 320px;
-  }
-  .footer-col h4 {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent-saffron);
-    margin-bottom: 12px;
-  }
-  .footer-links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .footer-links a {
-    transition: var(--transition-smooth);
-  }
-  .footer-links a:hover {
-    color: var(--accent-saffron-soft);
-    padding-left: 4px;
-  }
-  .footer-bottom {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
-  }
-  @media (min-width: 768px) {
-    .footer-bottom {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
+  @media (max-width: 767px) {
+    .instagram-feed-section {
+      padding: 60px 20px;
     }
   }
-  .footer-socials {
-    display: flex;
-    gap: 24px;
-    font-family: var(--font-mono);
-    font-size: 0.74rem;
-  }
-  .footer-socials a {
-    transition: var(--transition-smooth);
-  }
-  .footer-socials a:hover {
-    color: var(--accent-saffron-soft);
-  }
 
-  /* Footer Instagram Feed Grid */
+  /* Instagram Feed Styling */
   .footer-instagram-feed {
-    margin-bottom: 32px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 24px;
+    max-width: var(--max-width);
+    margin: 0 auto;
   }
   .insta-feed-header {
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 32px;
   }
   .insta-feed-header h3 {
     font-family: var(--font-heading);
-    font-size: 1.1rem;
-    font-weight: 400;
+    font-size: 1.25rem;
+    font-weight: 300;
     letter-spacing: 0.05em;
-    color: var(--accent-saffron);
+    color: var(--text-dark);
   }
   .insta-feed-header h3 a {
     text-decoration: underline;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--color-muted);
     transition: var(--transition-smooth);
   }
   .insta-feed-header h3 a:hover {
-    color: var(--accent-saffron-soft);
+    color: var(--text-dark);
   }
   .insta-feed-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 12px;
   }
   @media (min-width: 768px) {
     .insta-feed-grid {
       grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
     }
   }
   .insta-feed-item {
@@ -2071,6 +2008,7 @@
     overflow: hidden;
     border: 1px solid var(--border-color);
     display: block;
+    border-radius: 4px;
   }
   .insta-feed-item img {
     width: 100%;
@@ -2081,7 +2019,7 @@
   .insta-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.4);
     opacity: 0;
     display: flex;
     align-items: center;
@@ -2090,8 +2028,8 @@
     color: #FFF;
   }
   .insta-overlay svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     fill: currentColor;
     transform: scale(0.8);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -2104,6 +2042,108 @@
   }
   .insta-feed-item:hover .insta-overlay svg {
     transform: scale(1);
+  }
+
+  /* Minimized Footer Styling */
+  .minimized-footer {
+    background-color: var(--bg-dark);
+    padding: 60px 24px 40px;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    position: relative;
+    z-index: 5;
+  }
+  .footer-min-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+    gap: 28px;
+  }
+  .footer-min-logo {
+    display: block;
+    max-width: 140px;
+    opacity: 0.95;
+    transition: var(--transition-smooth);
+  }
+  .footer-min-logo:hover {
+    opacity: 0.7;
+  }
+  .footer-min-logo img {
+    width: 100%;
+    height: auto;
+  }
+  .footer-min-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px 32px;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-min-links a {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-dark);
+    transition: var(--transition-smooth);
+    font-weight: 700;
+  }
+  .footer-min-links a:hover {
+    color: var(--color-muted);
+  }
+  .footer-min-socials {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    text-transform: uppercase;
+  }
+  .footer-min-socials a {
+    color: var(--text-dark);
+    transition: var(--transition-smooth);
+  }
+  .footer-min-socials a:hover {
+    color: var(--color-muted);
+  }
+  .footer-min-tagline {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin: 0;
+    opacity: 0.85;
+  }
+  .footer-min-copy {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+    margin: 0;
+    text-transform: uppercase;
+  }
+  @media (max-width: 767px) {
+    .minimized-footer {
+      padding: 48px 20px 32px;
+    }
+    .footer-min-container {
+      gap: 20px;
+    }
+    .footer-min-links {
+      gap: 12px 20px;
+    }
+    .footer-min-links a {
+      font-size: 0.68rem;
+    }
+    .footer-min-tagline {
+      font-size: 0.85rem;
+    }
   }
 
   /* Cart Sidebar Slider */
@@ -4149,8 +4189,8 @@
   <div class="kuki-border bottom-pattern"></div>
 
   <!-- Footer Section -->
-  <footer>
-    <!-- Social Media Feed Grid -->
+  <!-- Standalone Instagram Feed Section -->
+  <section class="instagram-feed-section scroll-section">
     <div class="footer-instagram-feed container">
       <div class="insta-feed-header">
         <span class="eyebrow" style="margin-bottom: 4px;">Wear Your Roots</span>
@@ -4183,50 +4223,36 @@
         </a>
       </div>
     </div>
+  </section>
 
-    <div class="footer-grid container">
-      <div class="footer-brand">
-        <a href="index.html" class="logo" aria-label="NiNa by Mangsee Logo">
-          <img src="assets/logo.png" alt="NiNa by Mangsee Logo" class="logo-img">
-        </a>
-        <p>Reviving traditional backstrap loom weaving in Northeast India through ethically handcrafted contemporary accessories, apparel wraps, and home products.</p>
-        <p style="font-size: 0.76rem; color: var(--accent-saffron);">© 2026 NiNa Collective. All rights reserved.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Shop</h4>
-        <ul class="footer-links">
-          <li><a href="#shop" onclick="filterCategory('bag')">Bags</a></li>
-          <li><a href="#shop" onclick="filterCategory('scarf')">Scarves</a></li>
-          <li><a href="#shop" onclick="filterCategory('bandana')">Bandanas</a></li>
-          <li><a href="#shop" onclick="filterCategory('shawl')">Shawls</a></li>
-          <li><a href="#shop" onclick="filterCategory('pin')">Pins</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Heritage</h4>
-        <ul class="footer-links">
-          <li><a href="heritage.html">The Loom Legacy</a></li>
-          <li><a href="community.html">Our Community</a></li>
-          <li><a href="heritage.html#motifs">Weaving Motifs</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Support</h4>
-        <ul class="footer-links">
-          <li><a href="javascript:void(0)" onclick="openInfoModal('shipping')">Shipping Policy</a></li>
-          <li><a href="javascript:void(0)" onclick="openInfoModal('returns')">Returns &amp; Exchanges</a></li>
-          <li><a href="javascript:void(0)" onclick="openInfoModal('care')">Care Instructions</a></li>
-          <li><a href="javascript:void(0)" onclick="openInfoModal('contact')">Contact Us</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom container">
-      <p>Handloomed with honor in Churachandpur, Lamka, and Moreh, KUKI.</p>
-      <div class="footer-socials">
+  <!-- Minimized Footer Section -->
+  <footer class="minimized-footer">
+    <div class="footer-min-container container">
+      <a href="#" class="footer-min-logo" aria-label="NiNa by Mangsee Logo">
+        <img src="assets/logo.png" alt="NiNa by Mangsee Logo">
+      </a>
+      
+      <ul class="footer-min-links">
+        <li><a href="#shop" onclick="filterCategory('all')">Shop All</a></li>
+        <li><a href="heritage.html">Heritage</a></li>
+        <li><a href="community.html">Our People</a></li>
+        <li><a href="javascript:void(0)" onclick="openInfoModal('shipping')">Shipping</a></li>
+        <li><a href="javascript:void(0)" onclick="openInfoModal('returns')">Returns</a></li>
+        <li><a href="javascript:void(0)" onclick="openInfoModal('care')">Care</a></li>
+        <li><a href="javascript:void(0)" onclick="openInfoModal('contact')">Contact</a></li>
+        <li><a href="admin.html">Admin Portal</a></li>
+      </ul>
+
+      <div class="footer-min-socials">
         <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener">Instagram</a>
+        <span>•</span>
         <a href="https://www.facebook.com/share/1BLe7FzkUZ/" target="_blank" rel="noopener">Facebook</a>
+        <span>•</span>
         <a href="https://pin.it/5nLgtcf3w" target="_blank" rel="noopener">Pinterest</a>
       </div>
+
+      <p class="footer-min-tagline">Handloomed with honor in Churachandpur, Lamka, and Moreh, KUKI.</p>
+      <p class="footer-min-copy">© 2026 NiNa Collective. All rights reserved.</p>
     </div>
   </footer>
 
