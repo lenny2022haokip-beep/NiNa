@@ -251,20 +251,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 24px;
+    padding: 12px 24px;
     transition: var(--transition-smooth);
   }
   header.scrolled .nav-bar {
-    padding: 12px 24px;
+    padding: 8px 24px;
   }
   .logo {
     display: flex;
     align-items: center;
-    height: 56px;
+    height: 38px;
     transition: var(--transition-smooth);
   }
   .logo-img {
-    height: 56px;
+    height: 38px;
     width: auto;
     object-fit: contain;
     mix-blend-mode: screen;
@@ -272,7 +272,7 @@
     transition: var(--transition-smooth), filter 0.4s ease;
   }
   header.scrolled .logo, header.scrolled .logo-img {
-    height: 48px;
+    height: 32px;
   }
   header.scrolled .logo-img {
     filter: invert(1);
@@ -289,19 +289,31 @@
   
   /* Responsive Logo Sizing */
   @media (min-width: 768px) {
+    .nav-bar {
+      padding: 14px 24px;
+    }
+    header.scrolled .nav-bar {
+      padding: 10px 24px;
+    }
     .logo, .logo-img {
-      height: 100px;
+      height: 44px;
     }
     header.scrolled .logo, header.scrolled .logo-img {
-      height: 64px;
+      height: 36px;
     }
   }
   @media (min-width: 1024px) {
+    .nav-bar {
+      padding: 16px 24px;
+    }
+    header.scrolled .nav-bar {
+      padding: 10px 24px;
+    }
     .logo, .logo-img {
-      height: 140px;
+      height: 48px;
     }
     header.scrolled .logo, header.scrolled .logo-img {
-      height: 76px;
+      height: 40px;
     }
   }
   .nav-links {
