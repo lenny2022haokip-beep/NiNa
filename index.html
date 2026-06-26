@@ -2699,6 +2699,145 @@
     stroke-dashoffset: 24;
     animation: drawCheck 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
   }
+
+  /* --- Scroll Snapping & Background Animations --- */
+  @media (min-width: 768px) {
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+    .scroll-section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .hero-section.scroll-section {
+      height: 100dvh !important;
+    }
+    footer {
+      scroll-snap-align: end;
+      scroll-snap-stop: always;
+    }
+    .kuki-border,
+    .marquee-ticker {
+      scroll-snap-align: none !important;
+    }
+  }
+
+  /* --- Background & Media Transition Animations --- */
+  .hero-bg-scale-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: scale(1.12);
+  }
+  .hero-section.section-active .hero-bg-scale-wrapper {
+    transform: scale(1.0);
+  }
+
+  .hero-slogan-section {
+    position: relative;
+  }
+  .hero-slogan-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(212, 130, 10, 0.04) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 1.8s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-slogan-section.section-active::after {
+    opacity: 1;
+  }
+
+  #collections {
+    position: relative;
+  }
+  #collections::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('assets/filler_black.png');
+    background-size: 200px auto;
+    background-repeat: repeat;
+    opacity: 0.01;
+    transform: scale(1.08);
+    transition: opacity 2s ease, transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 1;
+  }
+  #collections.section-active::before {
+    opacity: 0.025;
+    transform: scale(1);
+  }
+
+  #shop {
+    transition: background-color 1.5s ease;
+  }
+  #shop.section-active {
+    background-color: var(--surface-dark) !important;
+  }
+  #shop:not(.section-active) {
+    background-color: var(--bg-dark) !important;
+  }
+
+  .impact-section {
+    transition: background-color 1.5s ease;
+  }
+  .impact-section.section-active {
+    background-color: var(--surface-dark) !important;
+  }
+  .impact-section:not(.section-active) {
+    background-color: var(--bg-darker) !important;
+  }
+
+  .achievements-section::before {
+    transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1), opacity 2s ease !important;
+    transform: scale(1.1) rotate(1deg);
+    opacity: 0.005;
+  }
+  .achievements-section.section-active::before {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.025;
+  }
+
+  #journal {
+    position: relative;
+  }
+  #journal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(212, 130, 10, 0.03) 0%, transparent 60%);
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 1.8s ease, transform 1.8s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+  #journal.section-active::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .newsletter-model-img {
+    transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .newsletter-section.section-active .newsletter-model-img {
+    transform: scale(1);
+  }
+  .newsletter-section:not(.section-active) .newsletter-model-img {
+    transform: scale(1.08);
+  }
 </style>
   <!-- Vercel Speed Insights -->
   <script>
@@ -2768,7 +2907,7 @@
   </div>
 
   <!-- Hero Section -->
-  <section class="hero-section">
+  <section class="hero-section scroll-section">
     <!-- Luxury Corner Brackets -->
     <div class="hero-corner tl"></div>
     <div class="hero-corner tr"></div>
@@ -2777,16 +2916,18 @@
 
     <!-- Full-Bleed Video Background -->
     <div class="hero-bg-container" id="heroBg">
-      <video class="hero-bg-video" autoplay loop muted playsinline id="heroVideo">
-        <source src="assets/brand_ads.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
+      <div class="hero-bg-scale-wrapper">
+        <video class="hero-bg-video" autoplay loop muted playsinline id="heroVideo">
+          <source src="assets/brand_ads.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
       <div class="hero-vignette"></div>
     </div>
   </section>
 
   <!-- Dedicated Hero Slogan Area -->
-  <section class="hero-slogan-section">
+  <section class="hero-slogan-section scroll-section">
     <div class="container">
       <div class="hero-content-hermes">
         <p class="hermes-subtitle-top">NINA x KUKI</p>
@@ -2815,7 +2956,7 @@
   </div>
 
   <!-- Collections Category Section -->
-  <section class="section" id="collections">
+  <section class="section scroll-section" id="collections">
     <div class="container">
       <div class="section-header reveal">
         <span class="eyebrow">Collections Catalog</span>
@@ -2904,7 +3045,7 @@
   <div class="kuki-border red"></div>
 
   <!-- Shop Section -->
-  <section class="section" id="shop" style="background: var(--surface-dark); border-bottom: 1px solid var(--border-color);">
+  <section class="section scroll-section" id="shop" style="border-bottom: 1px solid var(--border-color);">
     <div class="container">
       <div class="section-header reveal">
         <span class="eyebrow">Shop Catalog</span>
@@ -3053,7 +3194,7 @@
   </section>
 
   <!-- Stats & Quote Section -->
-  <section class="section impact-section">
+  <section class="section impact-section scroll-section">
     <div class="container">
       <div class="stats-grid reveal">
         <div class="stat-item">
@@ -3082,7 +3223,7 @@
   <div class="kuki-border"></div>
 
   <!-- Achievements Section -->
-  <section class="section achievements-section" id="achievements" style="border-bottom: 1px solid var(--border-color); background: var(--bg-darker);">
+  <section class="section achievements-section scroll-section" id="achievements" style="border-bottom: 1px solid var(--border-color); background: var(--bg-darker);">
     <div class="container">
       <div class="press-feature-layout reveal">
         <!-- Left Text Content -->
@@ -3130,7 +3271,7 @@
   </section>
 
   <!-- Testimonials Section -->
-  <section class="section" id="journal">
+  <section class="section scroll-section" id="journal">
     <div class="container">
       <div class="section-header reveal">
         <span class="eyebrow">Customer Diaries</span>
@@ -3243,7 +3384,7 @@
   <div class="kuki-border red"></div>
 
   <!-- Newsletter Subscription -->
-  <section class="section newsletter-section">
+  <section class="section newsletter-section scroll-section">
     <div class="container newsletter-grid">
       <div class="newsletter-inner reveal">
         <span class="eyebrow">Inner Circle</span>
@@ -4204,6 +4345,28 @@
         heroBg.style.transform = `translate3d(0, ${scrollVal * 0.22}px, 0)`;
       }
     });
+
+    // --- Active Section Observer for Background Animations ---
+    try {
+      const scrollSections = document.querySelectorAll('.scroll-section');
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('section-active');
+          } else {
+            entry.target.classList.remove('section-active');
+          }
+        });
+      }, {
+        threshold: 0.35 // Active when 35% visible
+      });
+
+      if (scrollSections) {
+        scrollSections.forEach(sec => sectionObserver.observe(sec));
+      }
+    } catch (e) {
+      console.warn("IntersectionObserver for sections failed", e);
+    }
 
     // --- Scroll Reveal Animation ---
     try {
