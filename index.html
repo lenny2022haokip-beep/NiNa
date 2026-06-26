@@ -2300,7 +2300,7 @@
   }
   @media (min-width: 900px) {
     .press-feature-layout {
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 2fr 1fr; /* 2/3 text, 1/3 slideshow split */
     }
   }
   .read-press-link {
@@ -2318,21 +2318,91 @@
   }
   .press-image-wrapper {
     position: relative;
-    overflow: hidden;
     border: 1px solid var(--border-color);
     padding: 12px;
     background: #FFFFFF;
     box-shadow: 0 8px 24px rgba(0,0,0,0.02);
   }
-  .press-image-wrapper img {
+  .press-slider-container {
+    position: relative;
     width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    aspect-ratio: 3 / 4; /* Portrait fashion ratio */
+    overflow: hidden;
+    background: #f7f7f7;
   }
-  .press-image-wrapper:hover img {
-    transform: scale(1.02);
+  .press-slider-track {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .press-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .press-slide.active {
+    opacity: 1;
+    z-index: 2;
+  }
+  .press-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .press-slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--border-color);
+    color: #000000;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: var(--transition-smooth);
+    opacity: 0;
+  }
+  .press-slider-container:hover .press-slider-btn {
+    opacity: 1;
+  }
+  .press-slider-btn:hover {
+    background: #000000;
+    color: #FFFFFF;
+    border-color: #000000;
+  }
+  .press-slider-btn.prev-btn {
+    left: 12px;
+  }
+  .press-slider-btn.next-btn {
+    right: 12px;
+  }
+  .press-slider-counter {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #FFFFFF;
+    padding: 4px 10px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    z-index: 10;
+    border-radius: 20px;
   }
 
   .achievements-grid {
@@ -3235,11 +3305,31 @@
           </p>
           <a href="https://www.hindustantimes.com/htcity/htcity-showstoppers/meet-this-northeastern-designer-who-takes-inspiration-from-his-personal-loss-101740996053123.html" target="_blank" rel="noopener" class="read-press-link">Read Full Article ↗</a>
         </div>
-        <!-- Right Image Container -->
+        <!-- Right Slideshow Container -->
         <div class="press-image-wrapper">
-          <img src="assets/press_ht_feature.jpg" alt="NiNa Tribute Design featured in Hindustan Times">
+          <div class="press-slider-container">
+            <div class="press-slider-track">
+              <div class="press-slide active"><img src="assets/agou/agou_1.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 1"></div>
+              <div class="press-slide"><img src="assets/agou/agou_2.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 2"></div>
+              <div class="press-slide"><img src="assets/agou/agou_3.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 3"></div>
+              <div class="press-slide"><img src="assets/agou/agou_4.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 4"></div>
+              <div class="press-slide"><img src="assets/agou/agou_5.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 5"></div>
+              <div class="press-slide"><img src="assets/agou/agou_6.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 6"></div>
+              <div class="press-slide"><img src="assets/agou/agou_7.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 7"></div>
+              <div class="press-slide"><img src="assets/agou/agou_8.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 8"></div>
+              <div class="press-slide"><img src="assets/agou/agou_9.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 9"></div>
+              <div class="press-slide"><img src="assets/agou/agou_10.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 10"></div>
+              <div class="press-slide"><img src="assets/agou/agou_11.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 11"></div>
+              <div class="press-slide"><img src="assets/agou/agou_12.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 12"></div>
+            </div>
+            <!-- Navigation buttons -->
+            <button class="press-slider-btn prev-btn" aria-label="Previous Slide">⟵</button>
+            <button class="press-slider-btn next-btn" aria-label="Next Slide">⟶</button>
+            <!-- Slideshow Counter -->
+            <span class="press-slider-counter">1 / 12</span>
+          </div>
           <div style="font-size: 0.72rem; color: var(--color-muted); font-family: var(--font-mono); margin-top: 12px; text-transform: uppercase; text-align: center; letter-spacing: 0.05em;">
-            "His design features traditional pon dum and khiba work"
+            NiNa featured designs • traditional handloom
           </div>
         </div>
       </div>
@@ -5232,6 +5322,68 @@
     }
 
     startAutoRotate();
+
+    // --- Hindustan Times Press Feature Slideshow ---
+    function initPressSlider() {
+      const container = document.querySelector('.press-slider-container');
+      if (!container) return;
+
+      const slides = container.querySelectorAll('.press-slide');
+      const prevBtn = container.querySelector('.prev-btn');
+      const nextBtn = container.querySelector('.next-btn');
+      const counter = container.querySelector('.press-slider-counter');
+      let currentIndex = 0;
+      let timer = null;
+
+      function updateSlides(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[index].classList.add('active');
+        if (counter) {
+          counter.textContent = `${index + 1} / ${slides.length}`;
+        }
+      }
+
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateSlides(currentIndex);
+      }
+
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateSlides(currentIndex);
+      }
+
+      function startTimer() {
+        stopTimer();
+        timer = setInterval(nextSlide, 4000);
+      }
+
+      function stopTimer() {
+        if (timer) clearInterval(timer);
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          nextSlide();
+          startTimer();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          prevSlide();
+          startTimer();
+        });
+      }
+
+      container.addEventListener('mouseenter', stopTimer);
+      container.addEventListener('mouseleave', startTimer);
+
+      updateSlides(0);
+      startTimer();
+    }
+
+    initPressSlider();
 
     // --- Newsletter Form Submission ---
     const newsletterForm = document.getElementById('newsletterForm');
