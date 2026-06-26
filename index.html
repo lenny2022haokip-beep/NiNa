@@ -3929,6 +3929,24 @@
         <h2 style="font-family: var(--font-heading); font-weight: 300; font-size: 2rem; margin: 0; color: var(--text-dark);">Thank You</h2>
         <p style="font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-saffron); margin: 0;" id="successOrderNumber">Order #NINA-XXXX</p>
         <p style="font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: #4A4A48; margin: 0;" id="successMessage">Your order has been recorded successfully. A WhatsApp receipt has been generated for your records.</p>
+        
+        <!-- UPI Payment details (shown only for Online Payment) -->
+        <div id="upiPaymentContainer" style="display: none; flex-direction: column; align-items: center; gap: 12px; background: #fafaf9; border: 1px dashed var(--border-color); padding: 16px; border-radius: 8px; width: 100%; margin: 10px 0;">
+          <p style="font-family: var(--font-body); font-size: 0.85rem; color: var(--text-dark); margin: 0; font-weight: bold;">Scan QR Code or Tap to Pay Instant UPI</p>
+          <img id="upiQrImg" src="" alt="UPI QR Code" style="width: 150px; height: 150px; background: #fff; border: 1px solid #eee; padding: 4px; border-radius: 4px;" />
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; color: #4A4A48; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%;">
+            <span id="upiDisplayId">UPI: lenny93haokip-1@okicici</span>
+            <button type="button" id="copyUpiBtn" style="background: none; border: none; cursor: pointer; color: var(--accent-saffron); padding: 2px; display: inline-flex; align-items: center;">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+            </button>
+          </div>
+          <a id="upiDeepLink" href="" class="btn btn-primary" style="width: 100%; padding: 10px; font-family: var(--font-mono); text-transform: uppercase; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            Tap to Pay on Mobile
+          </a>
+          <span style="font-family: var(--font-body); font-size: 0.75rem; color: #888; margin-top: 4px;">Please send payment screenshot on WhatsApp to confirm order</span>
+        </div>
+
         <button type="button" class="btn btn-primary" onclick="handleCheckoutCompletion()" style="width: 100%; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem; margin-top: 10px;">Continue Shopping</button>
       </div>
     </div>
@@ -4505,6 +4523,8 @@
     // --- Global State ---
     let currentModalProductId = null;
     let whatsappNumber = '919233918107'; // Default store WhatsApp number (91 = India country code)
+    let storeUpiId = 'lenny93haokip-1@okicici'; // Store UPI ID for instant checkout
+    const RAZORPAY_KEY_ID = 'rzp_test_5VvT9U5jQ7qK1c'; // Replace with actual Razorpay Key ID
 
     // Retrieve/generate client UUID
     let anonymousId = localStorage.getItem('nina_anonymous_id');
@@ -5075,6 +5095,9 @@
         const successState = document.getElementById('checkoutSuccessState');
         if (successState) successState.style.display = 'none';
         
+        const upiContainer = document.getElementById('upiPaymentContainer');
+        if (upiContainer) upiContainer.style.display = 'none';
+        
         const checkoutForm = document.getElementById('checkoutForm');
         if (checkoutForm) checkoutForm.style.display = 'flex';
         
@@ -5189,7 +5212,8 @@
                      `*Payment Method:* ${paymentMethod}\n`;
                      
         if (paymentMethod === 'Online Payment') {
-          waText += `\n*I would like to complete payment for Order #${orderNumber} via UPI. Please share your UPI payment instructions or QR code.*`;
+          const upiPayUrl = `upi://pay?pa=${storeUpiId}&pn=NiNa%20by%20Mangsee&am=${totalPrice}&cu=INR&tn=${orderNumber}`;
+          waText += `\n*Instant UPI Payment Link:* \n${upiPayUrl}\n\n*Or pay to UPI ID:* ${storeUpiId}\n\n*Please share the payment screenshot to confirm order.*`;
         } else {
           waText += `\nPlease confirm receipt of this order.`;
         }
@@ -5221,55 +5245,134 @@
         });
       };
 
-      placeBtn.disabled = true;
-      placeBtn.textContent = 'Processing Order...';
-      try {
-        // Show Success UI immediately
-        const form = document.getElementById('checkoutForm');
-        if (form) form.style.display = 'none';
-        
-        const modalTitle = document.querySelector('#checkoutModalContainer > h2');
-        if (modalTitle) modalTitle.style.display = 'none';
-        
-        const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
-        if (closeBtn) closeBtn.style.display = 'none';
-        
-        const container = document.getElementById('checkoutModalContainer');
-        if (container) container.style.maxWidth = '400px';
-        
-        const successTitle = document.querySelector('#checkoutSuccessState h2');
-        if (successTitle) successTitle.textContent = 'Payment Requested';
-        
-        const successOrderNumber = document.getElementById('successOrderNumber');
-        if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
-        
-        const successMessage = document.getElementById('successMessage');
-        if (successMessage) successMessage.textContent = 'Order recorded! Opening WhatsApp to complete your payment. Please send a screenshot of the payment confirmation.';
-        
-        const successState = document.getElementById('checkoutSuccessState');
-        if (successState) successState.style.display = 'flex';
-        
-        showToast("Opening WhatsApp for payment...", "success");
-        
-        // Open WhatsApp FIRST — synchronous call in click handler avoids popup blocking
-        triggerNotifications();
+      if (paymentMethod === 'Cash on Delivery') {
+        placeBtn.disabled = true;
+        placeBtn.textContent = 'Processing Order...';
+        try {
+          // Hide UPI payment container for COD
+          const upiContainer = document.getElementById('upiPaymentContainer');
+          if (upiContainer) upiContainer.style.display = 'none';
 
-        // Save to DB in background (non-blocking)
-        saveOrderToDatabase('Pending Payment').catch(dbErr => {
-          console.warn('Order DB save failed (non-critical):', dbErr.message);
-        });
+          // Show Success UI immediately — don't block on DB save
+          const form = document.getElementById('checkoutForm');
+          if (form) form.style.display = 'none';
+          
+          const modalTitle = document.querySelector('#checkoutModalContainer > h2');
+          if (modalTitle) modalTitle.style.display = 'none';
+          
+          const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
+          if (closeBtn) closeBtn.style.display = 'none';
+          
+          const container = document.getElementById('checkoutModalContainer');
+          if (container) container.style.maxWidth = '400px';
+          
+          const successOrderNumber = document.getElementById('successOrderNumber');
+          if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
+          
+          const successMessage = document.getElementById('successMessage');
+          if (successMessage) successMessage.textContent = 'Your order has been recorded. A WhatsApp receipt is being opened for your records.';
+          
+          const successState = document.getElementById('checkoutSuccessState');
+          if (successState) successState.style.display = 'flex';
 
-        // Reset cart & UI
-        cart = {};
-        saveState();
-        if (form) form.reset();
-        updateCartUI();
-      } catch (dbErr) {
-        console.error(dbErr);
-        showToast("Failed to initiate checkout. Please try again.", "error");
-      } finally {
-        placeBtn.disabled = false;
-        placeBtn.textContent = originalText;
+          showToast(`Order Placed! ID: ${orderNumber}`, "success");
+          
+          // Open WhatsApp FIRST (must be synchronous in click context to avoid popup blocking)
+          triggerNotifications();
+
+          // Save to DB in background (non-blocking)
+          saveOrderToDatabase('Confirmed').catch(dbErr => {
+            console.warn('Order DB save failed (non-critical):', dbErr.message);
+          });
+
+          // Reset cart & UI
+          cart = {};
+          saveState();
+          if (form) form.reset();
+          updateCartUI();
+        } catch (err) {
+          console.error(err);
+          showToast(err.message || "Failed to place order. Please try again.", "error");
+        } finally {
+          placeBtn.disabled = false;
+          placeBtn.textContent = originalText;
+        }
+      } else {
+        placeBtn.disabled = true;
+        placeBtn.textContent = 'Processing Order...';
+        try {
+          // Set up dynamic UPI QR and link
+          const upiUrl = `upi://pay?pa=${storeUpiId}&pn=NiNa%20by%20Mangsee&am=${totalPrice}&cu=INR&tn=${orderNumber}`;
+          const qrCodeApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+          
+          const qrImg = document.getElementById('upiQrImg');
+          if (qrImg) qrImg.src = qrCodeApiUrl;
+          
+          const deepLink = document.getElementById('upiDeepLink');
+          if (deepLink) deepLink.href = upiUrl;
+          
+          const upiDisplayId = document.getElementById('upiDisplayId');
+          if (upiDisplayId) upiDisplayId.textContent = `UPI: ${storeUpiId}`;
+          
+          const copyUpiBtn = document.getElementById('copyUpiBtn');
+          if (copyUpiBtn) {
+            copyUpiBtn.onclick = () => {
+              navigator.clipboard.writeText(storeUpiId);
+              showToast('UPI ID Copied!', 'info');
+            };
+          }
+          
+          const upiContainer = document.getElementById('upiPaymentContainer');
+          if (upiContainer) upiContainer.style.display = 'flex';
+
+          // Show Success UI immediately
+          const form = document.getElementById('checkoutForm');
+          if (form) form.style.display = 'none';
+          
+          const modalTitle = document.querySelector('#checkoutModalContainer > h2');
+          if (modalTitle) modalTitle.style.display = 'none';
+          
+          const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
+          if (closeBtn) closeBtn.style.display = 'none';
+          
+          const container = document.getElementById('checkoutModalContainer');
+          if (container) container.style.maxWidth = '400px';
+          
+          const successTitle = document.querySelector('#checkoutSuccessState h2');
+          if (successTitle) successTitle.textContent = 'Payment Requested';
+          
+          const successOrderNumber = document.getElementById('successOrderNumber');
+          if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
+          
+          const successMessage = document.getElementById('successMessage');
+          if (successMessage) successMessage.textContent = 'Order recorded! Opening WhatsApp to complete your payment. Please send a screenshot of the payment confirmation.';
+          
+          const successState = document.getElementById('checkoutSuccessState');
+          if (successState) successState.style.display = 'flex';
+          
+          showToast("Opening WhatsApp for payment...", "success");
+          
+          // Open WhatsApp FIRST — synchronous call in click handler avoids popup blocking
+          triggerNotifications();
+
+          // Save to DB in background (non-blocking)
+          saveOrderToDatabase('Pending Payment').catch(dbErr => {
+            console.warn('Order DB save failed (non-critical):', dbErr.message);
+          });
+
+          // Reset cart & UI
+          cart = {};
+          saveState();
+          if (form) form.reset();
+          updateCartUI();
+        } catch (dbErr) {
+          console.error(dbErr);
+          showToast("Failed to initiate checkout. Please try again.", "error");
+        } finally {
+          placeBtn.disabled = false;
+          placeBtn.textContent = originalText;
+        }
+      }
       }
     };
 
