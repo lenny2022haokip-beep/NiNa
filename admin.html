@@ -13,6 +13,12 @@
   
   <!-- Supabase JS Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    if (typeof supabase === 'undefined') {
+      console.warn("jsDelivr failed to load Supabase. Trying unpkg fallback...");
+      document.write('<script src="https://unpkg.com/@supabase/supabase-js@2"><\/script>');
+    }
+  </script>
   
   <style>
     :root {
@@ -816,7 +822,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      z-index: 1000;
+      z-index: 9999;
     }
 
     .toast {
@@ -1539,6 +1545,37 @@
   </div>
 
   <script>
+    // Robust check for Supabase SDK presence
+    if (typeof supabase === 'undefined') {
+      document.addEventListener('DOMContentLoaded', () => {
+        const submitBtn = document.getElementById('loginSubmitBtn');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Error: Supabase SDK missing';
+        }
+        
+        // Render error toast immediately if toastContainer is available
+        const container = document.getElementById('toastContainer');
+        if (container) {
+          const toast = document.createElement('div');
+          toast.className = 'toast';
+          toast.style.borderColor = 'rgba(255, 94, 94, 0.2)';
+          toast.innerHTML = `
+            <span style="font-weight:bold; color: #FF5E5E">✕</span>
+            <span>Supabase SDK failed to load. Please check your network or ad blocker.</span>
+          `;
+          container.appendChild(toast);
+        }
+
+        // Prevent reload on login form submission
+        document.getElementById('loginForm')?.addEventListener('submit', (e) => {
+          e.preventDefault();
+          alert("Cannot authenticate: Supabase SDK is not loaded. Try disabling VPN/ad-blockers.");
+        });
+      });
+      throw new Error("Supabase SDK is not loaded.");
+    }
+
     // Supabase Configuration
     const supabaseUrl = 'https://safgnxqeadujezefvahw.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg';
@@ -1561,6 +1598,7 @@
     // Toast Notification helper
     function showToast(message, type = "success") {
       const container = document.getElementById('toastContainer');
+      if (!container) return;
       const toast = document.createElement('div');
       toast.className = 'toast';
       
@@ -1588,16 +1626,23 @@
 
     // Check Auth State on Load
     window.addEventListener('DOMContentLoaded', async () => {
+      console.log("Setting up Supabase auth listener...");
+      
       // Listen to Auth state changes
       _supabase.auth.onAuthStateChange((event, session) => {
+        console.log("Supabase Auth Event:", event, "Session present:", !!session);
+        
         if (session) {
-          // Security Guard: Check if the authenticated email is whitelisted
-          const userEmail = session.user?.email?.toLowerCase();
+          const userEmail = session.user?.email?.trim().toLowerCase();
+          console.log("Logged in user email:", userEmail);
+          
           if (!userEmail || !ALLOWED_EMAILS.includes(userEmail)) {
+            console.warn("User is not in the ALLOWED_EMAILS whitelist:", userEmail);
             _supabase.auth.signOut();
             showToast("Unauthorized access. This email is not on the admin allowlist.", "error");
             return;
           }
+          
           document.body.classList.add('logged-in');
           document.getElementById('loginScreen').style.display = 'none';
           document.getElementById('dashboardLayout').style.display = 'grid';
@@ -1622,8 +1667,11 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Authenticating...';
 
+      console.log("Form submitted. Attempting pre-login check for email:", email);
+
       // Security Guard: Pre-login check to avoid sending requests for non-whitelisted emails
       if (!ALLOWED_EMAILS.includes(email.toLowerCase())) {
+        console.warn("Pre-login check failed: email is not in the whitelist:", email);
         showToast("Unauthorized access. This email is not on the admin allowlist.", "error");
         submitBtn.disabled = false;
         submitBtn.textContent = 'Authenticate';
@@ -1631,11 +1679,13 @@
       }
 
       try {
+        console.log("Sending signInWithPassword request to Supabase...");
         const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        console.log("SignIn response:", data);
         showToast("Access Authorized!", "success");
       } catch (err) {
-        console.error(err);
+        console.error("Authentication error details:", err);
         showToast(err.message || "Failed to authenticate.", "error");
       } finally {
         submitBtn.disabled = false;
