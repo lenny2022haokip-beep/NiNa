@@ -10,7 +10,7 @@
 <!-- Open Graph Meta Tags -->
 <meta property="og:title" content="NiNa — Woven from the Hills" />
 <meta property="og:description" content="Discover authentic handwoven textiles, traditional Puans, and accessories handcrafted by the Kuki artisans of Northeast India. Brand by NiNa." />
-<meta property="og:image" content="assets/logo.png" />
+<meta property="og:image" content="https://ninabymangsee.com/assets/logo.png" />
 <meta property="og:type" content="website" />
 
 <!-- Google Fonts -->
@@ -3077,7 +3077,7 @@
   <!-- Header / Navigation -->
   <header id="header">
     <div class="nav-bar container">
-      <a href="#" class="logo" aria-label="NiNa by Mangsee Logo">
+      <a href="index.html" class="logo" aria-label="NiNa by Mangsee Logo">
         <img src="assets/logo.png" alt="NiNa by Mangsee Logo" class="logo-img">
       </a>
       <nav class="nav-links">
@@ -3773,7 +3773,7 @@
 
     <div class="footer-grid container">
       <div class="footer-brand">
-        <a href="#" class="logo" aria-label="NiNa by Mangsee Logo">
+        <a href="index.html" class="logo" aria-label="NiNa by Mangsee Logo">
           <img src="assets/logo.png" alt="NiNa by Mangsee Logo" class="logo-img">
         </a>
         <p>Reviving traditional backstrap loom weaving in Northeast India through ethically handcrafted contemporary accessories, apparel wraps, and home products.</p>
@@ -3794,7 +3794,7 @@
         <ul class="footer-links">
           <li><a href="heritage.html">The Loom Legacy</a></li>
           <li><a href="community.html">Our Community</a></li>
-          <li><a href="#journal">Weaving Motifs</a></li>
+          <li><a href="heritage.html#motifs">Weaving Motifs</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -4328,7 +4328,7 @@
         desc: "An exquisite crimson red traditional shawl, handloomed on traditional backstrap looms with fine black geometric Saipikhup repeating diamond motifs.",
         weaver: "Nengzamoi Haokip (Churachandpur)",
         imageHtml: `<img src="assets/filler_red.png" alt="Red Traditional Shawl">`,
-        stock_count: 10
+        stock_count: 0
       },
       31: {
         id: 31,
@@ -4340,7 +4340,19 @@
         desc: "A bold black traditional shawl accented with beautiful pink and lavender Saipikhup geometric weaves, capturing the warrior prestige of Lamka weavers.",
         weaver: "Kimkhosei Touthang (Lamka)",
         imageHtml: `<img src="assets/filler_black.png" alt="Black Traditional Shawl">`,
-        stock_count: 10
+        stock_count: 0
+      },
+      "11-upsell": {
+        id: "11-upsell",
+        title: "Heritage Enamel Pin",
+        category: "pin",
+        categoryDisplay: "Lapel Pin · Enamel",
+        price: 150,
+        priceDisplay: "Rs. 150",
+        desc: "Special Complete the Look discount enamel pin.",
+        weaver: "Ginzalian Mate (Moreh)",
+        stock_count: 99,
+        imageHtml: `<img src="assets/product_11.jpg" alt="Heritage Enamel Pin">`
       }
     };
 
@@ -4374,6 +4386,11 @@
           };
         });
         
+        // Carry over upsell product if defined in static products
+        if (products["11-upsell"]) {
+          newProducts["11-upsell"] = products["11-upsell"];
+        }
+
         // Update global products reference
         products = newProducts;
 
@@ -4399,20 +4416,6 @@
           console.error("Error fetching site settings:", settingsErr);
         }
 
-        // Inject upsell product definition
-        products["11-upsell"] = {
-          id: "11-upsell",
-          title: "Heritage Enamel Pin",
-          category: "pin",
-          categoryDisplay: "Lapel Pin · Enamel",
-          price: 150,
-          priceDisplay: "Rs. 150",
-          desc: "Special Complete the Look discount enamel pin.",
-          weaver: "Ginzalian Mate (Moreh)",
-          stock_count: 99,
-          imageHtml: `<img src="assets/product_11.jpg" alt="Heritage Enamel Pin">`
-        };
-        
         // Render to UI
         renderProducts();
         updateCartUI();
@@ -4524,7 +4527,6 @@
     let currentModalProductId = null;
     let whatsappNumber = '919233918107'; // Default store WhatsApp number (91 = India country code)
     let storeUpiId = 'lenny93haokip-1@okicici'; // Store UPI ID for instant checkout
-    const RAZORPAY_KEY_ID = 'rzp_test_5VvT9U5jQ7qK1c'; // Replace with actual Razorpay Key ID
 
     // Retrieve/generate client UUID
     let anonymousId = localStorage.getItem('nina_anonymous_id');
