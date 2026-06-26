@@ -38,6 +38,24 @@ const server = http.createServer((req, res) => {
   
   fs.stat(filePath, (err, stats) => {
     if (err) {
+      // If file not found, check if it's a clean URL (e.g. /admin -> /admin.html)
+      if (err.code === 'ENOENT' && !path.extname(filePath)) {
+        const htmlFilePath = filePath + '.html';
+        fs.stat(htmlFilePath, (errHtml, statsHtml) => {
+          if (!errHtml && statsHtml.isFile()) {
+            res.writeHead(200, { 
+              'Content-Type': 'text/html',
+              'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate'
+            });
+            fs.createReadStream(htmlFilePath).pipe(res);
+            return;
+          }
+          res.statusCode = 404;
+          res.writeHead(404, { 'Content-Type': 'text/plain' });
+          res.end('Not Found');
+        });
+        return;
+      }
       res.statusCode = 404;
       res.writeHead(404, { 'Content-Type': 'text/plain' });
       res.end('Not Found');
@@ -48,7 +66,10 @@ const server = http.createServer((req, res) => {
       const indexFile = path.join(filePath, 'index.html');
       fs.stat(indexFile, (errIdx, statsIdx) => {
         if (!errIdx && statsIdx.isFile()) {
-          res.writeHead(200, { 'Content-Type': 'text/html' });
+          res.writeHead(200, { 
+            'Content-Type': 'text/html',
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate'
+          });
           fs.createReadStream(indexFile).pipe(res);
         } else {
           res.statusCode = 404;
@@ -61,8 +82,14 @@ const server = http.createServer((req, res) => {
     
     const ext = path.extname(filePath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+    const headers = { 'Content-Type': contentType };
     
-    res.writeHead(200, { 'Content-Type': contentType });
+    // Prevent caching for HTML files
+    if (ext === '.html') {
+      headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate';
+    }
+    
+    res.writeHead(200, headers);
     fs.createReadStream(filePath).pipe(res);
   });
 });
