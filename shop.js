@@ -714,26 +714,40 @@ function changeVariantColor(productId, colorHex, colorName, e) {
 }
 window.changeVariantColor = changeVariantColor;
 
-// --- Sticky Header Scrolled State ---
+// --- Sticky Header Scrolled State (Optimized) ---
+let headerScheduled = false;
 window.addEventListener('scroll', () => {
-  const header = document.getElementById('header');
-  if (header) {
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
+  if (!headerScheduled) {
+    headerScheduled = true;
+    requestAnimationFrame(() => {
+      const header = document.getElementById('header');
+      if (header) {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }
+      headerScheduled = false;
+    });
   }
-});
+}, { passive: true });
 
-// --- Parallax Hero ---
+// --- Parallax Hero (Optimized) ---
+let parallaxScheduled = false;
 window.addEventListener('scroll', () => {
-  const scrollVal = window.scrollY;
-  const heroBg = document.getElementById('heroBg');
-  if (heroBg) {
-    heroBg.style.transform = `translate3d(0, ${scrollVal * 0.22}px, 0)`;
+  if (!parallaxScheduled) {
+    parallaxScheduled = true;
+    requestAnimationFrame(() => {
+      const scrollVal = window.scrollY;
+      const heroBg = document.getElementById('heroBg');
+      if (heroBg) {
+        heroBg.style.transform = `translate3d(0, ${scrollVal * 0.22}px, 0)`;
+      }
+      parallaxScheduled = false;
+    });
   }
-});
+}, { passive: true });
 
 // --- Active Section Observer for Background Animations ---
 try {
@@ -771,20 +785,6 @@ try {
   if (revealElements) {
     revealElements.forEach(el => revealObserver.observe(el));
   }
-
-  // Fallback: check visible elements on scroll and load
-  function checkReveal() {
-    if (revealElements) {
-      revealElements.forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 1.1) {
-          el.classList.add('active');
-        }
-      });
-    }
-  }
-
-  window.addEventListener('scroll', checkReveal);
   
   // Page Load Trigger Reveal
   function triggerInitialReveal() {
@@ -795,7 +795,6 @@ try {
     setTimeout(() => {
       const firstReveal = document.querySelector('.hero-content-hermes');
       if (firstReveal) firstReveal.classList.add('active');
-      checkReveal();
     }, 150);
   }
 
