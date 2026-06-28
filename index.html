@@ -215,6 +215,26 @@
     background: rgba(212, 130, 10, 0.05);
   }
 
+  /* Announcement Bar Styling */
+  .announcement-bar {
+    background: var(--bg-darker);
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    transition: var(--transition-smooth);
+    width: 100%;
+    position: relative;
+    z-index: 101;
+  }
+  header.scrolled .announcement-bar {
+    background: rgba(253, 251, 247, 0.96);
+  }
+
   /* Header / Navigation */
   header {
     position: fixed;
@@ -280,11 +300,11 @@
   .logo {
     display: flex;
     align-items: center;
-    height: 20px;
+    height: 32px;
     transition: var(--transition-smooth);
   }
   .logo-img {
-    height: 20px;
+    height: 32px;
     width: auto;
     object-fit: contain;
     mix-blend-mode: screen;
@@ -292,7 +312,7 @@
     transition: var(--transition-smooth), filter 0.4s ease;
   }
   header.scrolled .logo, header.scrolled .logo-img {
-    height: 16px;
+    height: 26px;
   }
   header.scrolled .logo-img {
     filter: invert(1);
@@ -316,10 +336,10 @@
       padding: 8px 24px;
     }
     .logo, .logo-img {
-      height: 24px;
+      height: 42px;
     }
     header.scrolled .logo, header.scrolled .logo-img {
-      height: 20px;
+      height: 32px;
     }
     .action-icon-btn {
       padding: 8px;
@@ -337,10 +357,10 @@
       padding: 8px 24px;
     }
     .logo, .logo-img {
-      height: 28px;
+      height: 48px;
     }
     header.scrolled .logo, header.scrolled .logo-img {
-      height: 24px;
+      height: 38px;
     }
   }
   .nav-links {
@@ -482,7 +502,7 @@
   /* Hero Section with Full Bleed Video Background */
   .hero-section {
     position: relative;
-    height: 85vh;
+    height: 75vh; /* Reduced from 85vh to blend with page layout and show content earlier */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -528,13 +548,13 @@
     transition: var(--transition-smooth);
   }
   .hero-corner.tl {
-    top: 32px;
+    top: calc(32px + 100px); /* Frame below the fixed header (announcement + nav) on desktop */
     left: 32px;
     border-right: none;
     border-bottom: none;
   }
   .hero-corner.tr {
-    top: 32px;
+    top: calc(32px + 100px);
     right: 32px;
     border-left: none;
     border-bottom: none;
@@ -3233,11 +3253,11 @@
       height: 18px;
     }
     .hero-corner.tl {
-      top: 16px;
+      top: calc(16px + 80px); /* Frame below the fixed header on mobile */
       left: 16px;
     }
     .hero-corner.tr {
-      top: 16px;
+      top: calc(16px + 80px);
       right: 16px;
     }
     .hero-corner.bl {
@@ -3395,7 +3415,7 @@
       box-sizing: border-box;
     }
     .hero-section.scroll-section {
-      height: 100dvh !important;
+      height: 80dvh !important;
     }
   }
 
@@ -3679,13 +3699,12 @@
     </a>
   </div>
 
-  <!-- Announcement Bar -->
-  <div style="background: var(--bg-darker); border-bottom: 1px solid var(--border-color); padding: 8px 0; text-align: center; font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-muted);">
-    Honoring Kuki Weaving Traditions | Made in KUKI | Shipping Pan-India & Globally (US, UK, Australia)
-  </div>
-
   <!-- Header / Navigation -->
   <header id="header">
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+      Honoring Kuki Weaving Traditions | Made in KUKI | Shipping Pan-India & Globally (US, UK, Australia)
+    </div>
     <div class="nav-bar container">
       <a href="index.html" class="logo" aria-label="NiNa by Mangsee Logo">
         <img src="assets/logo.png" alt="NiNa by Mangsee Logo" class="logo-img">

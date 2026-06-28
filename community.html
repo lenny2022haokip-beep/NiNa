@@ -94,6 +94,14 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
+  .subpage-body {
+    padding-top: 100px;
+  }
+  @media (max-width: 767px) {
+    .subpage-body {
+      padding-top: 80px;
+    }
+  }
   img {
     max-width: 100%;
     display: block;
@@ -222,6 +230,26 @@
     background: rgba(212, 130, 10, 0.05);
   }
 
+  /* Announcement Bar Styling */
+  .announcement-bar {
+    background: var(--bg-darker);
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    transition: var(--transition-smooth);
+    width: 100%;
+    position: relative;
+    z-index: 101;
+  }
+  header.scrolled .announcement-bar {
+    background: rgba(253, 251, 247, 0.96);
+  }
+
   /* Header / Navigation */
   header {
     position: fixed;
@@ -287,11 +315,11 @@
   .logo {
     display: flex;
     align-items: center;
-    height: 20px;
+    height: 32px;
     transition: var(--transition-smooth);
   }
   .logo-img {
-    height: 20px;
+    height: 32px;
     width: auto;
     object-fit: contain;
     mix-blend-mode: screen;
@@ -299,7 +327,7 @@
     transition: var(--transition-smooth), filter 0.4s ease;
   }
   header.scrolled .logo, header.scrolled .logo-img {
-    height: 16px;
+    height: 26px;
   }
   header.scrolled .logo-img {
     filter: invert(1);
@@ -323,10 +351,10 @@
       padding: 8px 24px;
     }
     .logo, .logo-img {
-      height: 24px;
+      height: 42px;
     }
     header.scrolled .logo, header.scrolled .logo-img {
-      height: 20px;
+      height: 32px;
     }
     .action-icon-btn {
       padding: 8px;
@@ -344,10 +372,10 @@
       padding: 8px 24px;
     }
     .logo, .logo-img {
-      height: 28px;
+      height: 48px;
     }
     header.scrolled .logo, header.scrolled .logo-img {
-      height: 24px;
+      height: 38px;
     }
   }
   .nav-links {
@@ -2526,13 +2554,12 @@
     </a>
   </div>
 
-  <!-- Announcement Bar -->
-  <div style="background: var(--bg-darker); border-bottom: 1px solid var(--border-color); padding: 8px 0; text-align: center; font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-muted);">
-    Honoring Kuki Weaving Traditions | Made in KUKI | Shipping Pan-India & Globally (US, UK, Australia)
-  </div>
-
   <!-- Header / Navigation -->
   <header id="header" class="subpage-header scrolled">
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+      Honoring Kuki Weaving Traditions | Made in KUKI | Shipping Pan-India & Globally (US, UK, Australia)
+    </div>
     <div class="nav-bar container">
       <a href="index.html" class="logo" aria-label="NiNa by Mangsee Logo">
         <img src="assets/logo.png" alt="NiNa by Mangsee Logo" class="logo-img">
