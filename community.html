@@ -1580,6 +1580,39 @@
     }
   }
 
+  /* Brand Tagline Section Styling */
+  .brand-tagline-section {
+    background-color: var(--bg-dark);
+    padding: 60px 24px;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    position: relative;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .brand-tagline-container {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .brand-tagline-img {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    filter: invert(1);
+    opacity: 0.85;
+    transition: var(--transition-smooth);
+  }
+  .brand-tagline-img:hover {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+
   /* Footer Section */
   footer {
     background: var(--bg-darker);
@@ -2547,6 +2580,13 @@
       <div class="newsletter-media-inner reveal">
         <img src="assets/newsletter_model.jpg" alt="NiNa Wear Your Roots - Model with Handwoven Bag" class="newsletter-model-img">
       </div>
+    </div>
+  </section>
+
+  <!-- Brand Tagline Section -->
+  <section class="brand-tagline-section">
+    <div class="container brand-tagline-container">
+      <img src="assets/logo_tagline_transparent.png" alt="NINA BY MANGSEE — Elevating Our Roots" class="brand-tagline-img">
     </div>
   </section>
 
