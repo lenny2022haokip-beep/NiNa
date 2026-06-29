@@ -3002,85 +3002,6 @@
     transform: scale(1.1);
   }
 
-  /* Slogan Highlights Grid */
-  .slogan-highlights-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
-    margin-top: 64px;
-    width: 100%;
-    border-top: 1px solid var(--border-color);
-    padding-top: 48px;
-    box-sizing: border-box;
-    position: relative;
-    z-index: 10;
-  }
-  .slogan-highlight-item {
-    text-align: left;
-    padding: 16px;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
-    border-radius: 6px;
-  }
-  .slogan-highlight-item:hover {
-    transform: translateY(-6px);
-    background-color: var(--surface-dark);
-  }
-  .slogan-highlight-item .highlight-number {
-    font-family: var(--font-heading);
-    font-size: 2.8rem;
-    font-weight: 300;
-    color: var(--accent-saffron-soft);
-    margin-bottom: 12px;
-    line-height: 1;
-  }
-  .slogan-highlight-item h3 {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: 12px;
-    font-weight: 700;
-    color: var(--text-dark);
-  }
-  .slogan-highlight-item p {
-    font-size: 0.8rem;
-    color: var(--color-muted);
-    line-height: 1.6;
-  }
-  @media (min-width: 768px) {
-    .slogan-highlights-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      margin-top: 80px;
-      padding-top: 40px;
-    }
-    .slogan-highlight-item {
-      padding: 0 24px;
-      border-right: 1px solid var(--border-color);
-      border-radius: 0;
-    }
-    .slogan-highlight-item:hover {
-      transform: translateY(-6px);
-      background-color: transparent;
-    }
-    .slogan-highlight-item:first-child {
-      padding-left: 0;
-    }
-    .slogan-highlight-item:last-child {
-      padding-right: 0;
-      border-right: none;
-    }
-  }
-  @media (min-width: 576px) and (max-width: 767px) {
-    .slogan-highlights-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px 24px;
-    }
-    .slogan-highlight-item {
-      padding: 12px;
-    }
-  }
-
   /* Instagram Review Card Integration */
   .instagram-review-card {
     background: #FFFFFF;
@@ -3879,27 +3800,37 @@
         </div>
       </div>
 
-      <!-- Slogan highlights grid -->
-      <div class="slogan-highlights-grid reveal">
-        <div class="slogan-highlight-item">
-          <div class="highlight-number">NiNa</div>
-          <h3>Cultural Storytelling</h3>
-          <p>Launched by Mangtinlen Kilong to serve as a medium of creative expression and social commentary for the Kuki community.</p>
+      <!-- Instagram Feed Grid -->
+      <div class="footer-instagram-feed reveal" style="border-top: 1px solid var(--border-color); padding-top: 48px; margin-top: 64px; width: 100%;">
+        <div class="insta-feed-header">
+          <span class="eyebrow" style="margin-bottom: 4px;">Wear Your Roots</span>
+          <h3>Shop the Collection on Instagram • <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener">@nina_wearyourroots</a></h3>
         </div>
-        <div class="slogan-highlight-item">
-          <div class="highlight-number">96 Hrs</div>
-          <h3>Tribute Design</h3>
-          <p>Handcrafting a moving tribute piece utilizing the traditional <em>Pon Dum</em> (mourning wrap) and red <em>Khiba</em> beads.</p>
-        </div>
-        <div class="slogan-highlight-item">
-          <div class="highlight-number">100%</div>
-          <h3>Heritage Preserved</h3>
-          <p>Contemporizing traditional motifs and geometric tribal patterns while ensuring their deep cultural meanings are respected.</p>
-        </div>
-        <div class="slogan-highlight-item">
-          <div class="highlight-number">Slow</div>
-          <h3>Sustainable Focus</h3>
-          <p>Moving away from fast-fashion norms by prioritizing handloom weaving, upcycled materials, and recycling.</p>
+        <div class="insta-feed-grid">
+          <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+            <img src="assets/insta_new_1.jpg" alt="Handwoven textile accessories - NiNa Collection">
+            <div class="insta-overlay">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </div>
+          </a>
+          <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+            <img src="assets/insta_new_2.webp" alt="Traditional artisan backstrap loomed products - NiNa">
+            <div class="insta-overlay">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </div>
+          </a>
+          <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+            <img src="assets/insta_new_3.jpg" alt="Premium KUKI handcrafted textiles - NiNa">
+            <div class="insta-overlay">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </div>
+          </a>
+          <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+            <img src="assets/insta_new_4.webp" alt="NiNa ethically handcrafted product showcase">
+            <div class="insta-overlay">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </div>
+          </a>
         </div>
       </div>
     </div>
@@ -4185,39 +4116,7 @@
         <cite>— Northeast India craft review</cite>
       </div>
     </div>
-
-    <!-- Instagram Feed Grid -->
-    <div class="footer-instagram-feed container">
-      <div class="insta-feed-header">
-        <span class="eyebrow" style="margin-bottom: 4px;">Wear Your Roots</span>
-        <h3>Shop the Collection on Instagram • <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener">@nina_wearyourroots</a></h3>
-      </div>
-      <div class="insta-feed-grid">
-        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
-          <img src="assets/insta_new_1.jpg" alt="Handwoven textile accessories - NiNa Collection">
-          <div class="insta-overlay">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          </div>
-        </a>
-        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
-          <img src="assets/insta_new_2.webp" alt="Traditional artisan backstrap loomed products - NiNa">
-          <div class="insta-overlay">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          </div>
-        </a>
-        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
-          <img src="assets/insta_new_3.jpg" alt="Premium KUKI handcrafted textiles - NiNa">
-          <div class="insta-overlay">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          </div>
-        </a>
-        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
-          <img src="assets/insta_new_4.webp" alt="NiNa ethically handcrafted product showcase">
-          <div class="insta-overlay">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          </div>
-        </a>
-      </div>
+    </div>
   </section>
   <div class="kuki-border"></div>
 
