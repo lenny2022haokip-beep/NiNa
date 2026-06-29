@@ -2075,10 +2075,10 @@
     transform: scale(1);
   }
 
-  /* Brand Tagline Section Styling - Editorial Collage Layout */
+  /* Brand Tagline Section Styling - Minimalist Look */
   .brand-tagline-section {
     background-color: var(--bg-dark);
-    padding: 140px 24px;
+    padding: 70px 24px;
     text-align: center;
     border-top: 1px solid var(--border-color);
     position: relative;
@@ -2087,52 +2087,16 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    transition: background-color 0.4s ease;
   }
-  .brand-tagline-bg-images {
+  .brand-tagline-section::before {
+    content: '';
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
+    opacity: 0.02; /* Extremely subtle loom detail */
+    background-image: url('assets/loom_detail.png');
+    background-size: cover;
+    background-position: center;
     pointer-events: none;
-    z-index: 1;
-  }
-  .tagline-collage-img {
-    position: absolute;
-    width: 240px;
-    height: 320px;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-    border: 1px solid var(--border-color);
-    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
-    opacity: 0; /* Starts hidden and reveals via IntersectionObserver */
-  }
-  .tagline-collage-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  /* Asymmetric placement on desktop */
-  .tagline-collage-img.left-img {
-    left: 8%;
-    top: 50%;
-    transform: translateY(-50%) rotate(-4deg) scale(0.95);
-  }
-  .tagline-collage-img.right-img {
-    right: 8%;
-    top: 50%;
-    transform: translateY(-50%) rotate(5deg) scale(0.95);
-  }
-  /* Parallax scaling and reveal when active in viewport */
-  .brand-tagline-section.section-active .tagline-collage-img {
-    opacity: 0.85;
-  }
-  .brand-tagline-section.section-active .left-img {
-    transform: translateY(-50%) rotate(-2deg) scale(1);
-  }
-  .brand-tagline-section.section-active .right-img {
-    transform: translateY(-50%) rotate(3deg) scale(1);
   }
   .brand-tagline-container {
     max-width: 800px;
@@ -2153,61 +2117,11 @@
   }
   .brand-tagline-img:hover {
     opacity: 1;
-    transform: scale(1.02);
+    transform: scale(1.015);
   }
-  /* Responsive layouts for tablets/mobile */
-  @media (max-width: 1200px) {
-    .tagline-collage-img {
-      width: 190px;
-      height: 250px;
-    }
-    .tagline-collage-img.left-img {
-      left: 4%;
-    }
-    .tagline-collage-img.right-img {
-      right: 4%;
-    }
-  }
-  @media (max-width: 991px) {
+  @media (max-width: 767px) {
     .brand-tagline-section {
-      padding: 100px 24px;
-      flex-direction: column;
-    }
-    .brand-tagline-bg-images {
-      position: static;
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin-bottom: 40px;
-      height: auto;
-      pointer-events: auto;
-    }
-    .tagline-collage-img {
-      position: relative;
-      width: 180px;
-      height: 230px;
-      opacity: 0.9 !important;
-      transform: none !important;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    }
-    .tagline-collage-img.left-img, 
-    .tagline-collage-img.right-img {
-      left: auto;
-      right: auto;
-      top: auto;
-    }
-  }
-  @media (max-width: 576px) {
-    .brand-tagline-section {
-      padding: 70px 24px;
-    }
-    .brand-tagline-bg-images {
-      gap: 16px;
-      margin-bottom: 30px;
-    }
-    .tagline-collage-img {
-      width: 135px;
-      height: 180px;
+      padding: 50px 24px;
     }
   }
 
@@ -4729,14 +4643,6 @@
 
   <!-- Brand Tagline Section -->
   <section class="brand-tagline-section">
-    <div class="brand-tagline-bg-images">
-      <div class="tagline-collage-img left-img reveal">
-        <img src="assets/newsletter_model.jpg" alt="NiNa Heritage Model Showcase">
-      </div>
-      <div class="tagline-collage-img right-img reveal">
-        <img src="assets/product_15.jpg" alt="NiNa Weaving Campaign Showcase">
-      </div>
-    </div>
     <div class="container brand-tagline-container reveal">
       <img src="assets/logo_tagline_transparent.png" alt="NINA BY MANGSEE — Elevating Our Roots" class="brand-tagline-img">
     </div>
