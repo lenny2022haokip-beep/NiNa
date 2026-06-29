@@ -516,6 +516,101 @@ async function fetchProducts() {
 }
 window.fetchProducts = fetchProducts;
 
+function renderProducts() {
+  const productGrid = document.getElementById('productGrid');
+  if (!productGrid) return;
+  
+  // Clear skeleton loader
+  productGrid.innerHTML = '';
+  
+  const productList = Object.values(products);
+  
+  // Sort: Priority to Handwoven Bags priced between ₹850 and ₹1,000
+  productList.sort((a, b) => {
+    const isHighValBagA = (a.category === 'bag' && a.price >= 850 && a.price <= 1000);
+    const isHighValBagB = (b.category === 'bag' && b.price >= 850 && b.price <= 1000);
+    
+    if (isHighValBagA && !isHighValBagB) return -1;
+    if (!isHighValBagA && isHighValBagB) return 1;
+    return a.id - b.id; // Stable secondary sort by id
+  });
+  
+  productList.forEach(prod => {
+    let badgeHtml = '';
+    
+    // Dynamic visual triggers based on stock scarcity strategy
+    if (prod.stock_count >= 1 && prod.stock_count <= 5) {
+      badgeHtml = `<span class="product-badge scarcity">Batch 01 — Only ${prod.stock_count} pieces woven</span>`;
+    } else if (prod.stock_count > 5) {
+      // Fallback to design category badges for normal stock items
+      if (prod.id === 1 || prod.id === 31 || prod.id === 5) {
+        badgeHtml = `<span class="product-badge bestseller">Bestseller</span>`;
+      } else if (prod.id === 2 || prod.id === 8) {
+        badgeHtml = `<span class="product-badge new">New</span>`;
+      } else if (prod.id === 3 || prod.id === 10) {
+        badgeHtml = `<span class="product-badge handcrafted">Handcrafted</span>`;
+      }
+    }
+    
+    let soldOutClass = '';
+    let soldOutOverlayHtml = '';
+    if (prod.stock_count === 0) {
+      soldOutClass = ' sold-out';
+      soldOutOverlayHtml = `<div class="sold-out-overlay">Sold Out</div>`;
+    }
+    
+    // Match traditional patterns
+    let pattern = 'none';
+    const titleLower = prod.title.toLowerCase();
+    if (titleLower.includes('saipikhup')) {
+      pattern = 'saipikhup';
+    } else if (titleLower.includes('thangnang')) {
+      pattern = 'thangnang';
+    } else if (titleLower.includes('mangvom') || titleLower.includes('mongvom')) {
+      pattern = 'mangvom';
+    }
+    
+    // Search metadata
+    const searchTerms = [
+      `id:${prod.id}`,
+      prod.category,
+      pattern,
+      prod.title.toLowerCase(),
+      prod.desc.toLowerCase(),
+      prod.weaver.toLowerCase(),
+      "handwoven"
+    ].join(' ');
+    
+    const cardHtml = `
+      <article class="product-card${soldOutClass}" 
+               data-category="${prod.category}" 
+               data-pattern="${pattern}" 
+               data-search="${searchTerms}"
+               id="card-prod-${prod.id}">
+        ${badgeHtml}
+        <button class="wish-btn${wishlist.has(prod.id) ? ' active' : ''}" aria-label="Add to wishlist" onclick="toggleWishlist(${prod.id}, event)">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </button>
+        <div class="product-media" onclick="openQuickView(${prod.id})">
+          ${prod.imageHtml}
+          ${soldOutOverlayHtml}
+        </div>
+        <div class="product-info">
+          <div class="product-category">${prod.categoryDisplay}</div>
+          <h3 class="product-title" onclick="openQuickView(${prod.id})" style="cursor:pointer;">${prod.title}</h3>
+          <span class="product-price">${prod.priceDisplay}</span>
+        </div>
+      </article>
+    `;
+    
+    productGrid.insertAdjacentHTML('beforeend', cardHtml);
+  });
+  
+  // Re-apply filter states to the newly generated DOM elements
+  applyFilterAndSearch();
+}
+window.renderProducts = renderProducts;
+
 // --- Dynamic Supabase Fetch and Sorting for Site Content ---
 let fetchSiteContentPromise = null;
 async function fetchSiteContent() {
