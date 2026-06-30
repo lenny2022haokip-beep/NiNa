@@ -988,8 +988,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
     opacity: 0;
     visibility: hidden;
     display: flex;
@@ -998,11 +996,22 @@
     box-sizing: border-box;
     cursor: pointer;
     transition: opacity 0.8s ease, visibility 0.8s ease;
+    background-color: #120e0c; /* rich dark base */
+    overflow: hidden;
   }
-  @media (min-width: 768px) {
-    .category-slide {
-      padding: 80px 10%;
-    }
+  .category-slide-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .category-slide:hover .category-slide-image {
+    transform: scale(1.04);
   }
   .category-slide.active {
     opacity: 1;
@@ -1014,12 +1023,13 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.85) 100%);
-    z-index: 1;
+    background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.9) 100%);
+    z-index: 2;
+    transition: opacity 0.8s ease;
   }
   .category-slide-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     color: #FFFFFF;
     max-width: 700px;
     text-align: left;
@@ -1028,6 +1038,42 @@
   }
   .category-slide.active .category-slide-content {
     transform: translateY(0);
+  }
+
+  @media (min-width: 768px) {
+    .category-slide {
+      display: grid;
+      grid-template-columns: 4.5fr 5.5fr; /* Split layout: 45% text column, 55% image column */
+      align-items: center;
+      padding: 0;
+    }
+    .category-slide-image {
+      grid-column: 2;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      border-left: 1px solid rgba(254, 251, 247, 0.1);
+    }
+    .category-slide-overlay {
+      background: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.0) 100%);
+      grid-column: 2;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .category-slide-content {
+      grid-column: 1;
+      padding: 60px 10% 60px 12%;
+      max-width: 100%;
+      box-sizing: border-box;
+      transform: translateX(-20px);
+      opacity: 0;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+    }
+    .category-slide.active .category-slide-content {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
   .category-slide-num {
     font-family: var(--font-mono);
@@ -1148,6 +1194,19 @@
     display: flex;
     gap: 10px;
     z-index: 5;
+  }
+  @media (min-width: 768px) {
+    .category-slider-dots {
+      left: 12%;
+      transform: none;
+      bottom: 64px;
+    }
+    .category-slide-content h2,
+    .category-slide-content p,
+    .category-slide-num,
+    .category-slide-btn {
+      text-shadow: none !important;
+    }
   }
   .cat-dot {
     width: 8px;
@@ -3864,7 +3923,8 @@
     <div class="category-slider-wrapper reveal">
       <div class="category-slider" id="categorySlider">
         <!-- Slide 1: Bags -->
-        <div class="category-slide active" style="background-image: url('assets/cat_bags.jpg');" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide active" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-image" style="background-image: url('assets/cat_bags.jpg');"></div>
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">01 / BAGS</span>
@@ -3875,7 +3935,8 @@
         </div>
         
         <!-- Slide 2: Bandanas -->
-        <div class="category-slide" style="background-image: url('assets/cat_bandana.jpg');" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-image" style="background-image: url('assets/cat_bandana.jpg');"></div>
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">02 / BANDANAS</span>
@@ -3886,7 +3947,8 @@
         </div>
         
         <!-- Slide 3: Scarves -->
-        <div class="category-slide" style="background-image: url('assets/cat_scarves.webp');" onclick="filterCategory('scarf'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" onclick="filterCategory('scarf'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-image" style="background-image: url('assets/cat_scarves.webp');"></div>
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">03 / SCARVES</span>
@@ -3897,7 +3959,8 @@
         </div>
 
         <!-- Slide 4: Pins -->
-        <div class="category-slide" style="background-image: url('assets/cat_pins.webp');" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-image" style="background-image: url('assets/cat_pins.webp'); background-position: center 60%;"></div>
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">04 / PINS</span>
@@ -3908,7 +3971,8 @@
         </div>
 
         <!-- Slide 5: Shawls -->
-        <div class="category-slide" style="background-image: url('assets/cat_shawl.jpg');" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-image" style="background-image: url('assets/cat_shawl.jpg');"></div>
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">05 / SHAWLS</span>
