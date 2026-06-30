@@ -362,15 +362,15 @@ let products = {
   },
   31: {
     id: 31,
-    title: "Black Traditional Shawl",
+    title: "Pondum (Exclusive)",
     category: "shawl",
     categoryDisplay: "Shawl · Handwoven",
     price: 600,
     priceDisplay: "Rs. 600",
-    desc: "A bold black traditional shawl accented with beautiful pink and lavender Saipikhup geometric weaves, capturing the warrior prestige of Lamka weavers.",
+    desc: "A timeless piece crafted to pay tribute and respect during days of mourning and condolence",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/filler_black.png" alt="Black Traditional Shawl">`,
-    stock_count: 0
+    imageHtml: `<img src="assets/cat_pondum_new.jpg" alt="Pondum (Exclusive)">`,
+    stock_count: 10
   },
   "11-upsell": {
     id: "11-upsell",
@@ -1762,7 +1762,7 @@ function openQuickView(id) {
   if (modalTitle) modalTitle.textContent = prod.title;
   if (modalPrice) modalPrice.textContent = prod.priceDisplay;
   if (modalDesc) modalDesc.textContent = prod.desc + (prod.selectedVariant ? ` Currently viewing the ${prod.selectedVariant} edition.` : '');
-  if (modalWeaver) modalWeaver.textContent = prod.weaver;
+  // if (modalWeaver) modalWeaver.textContent = prod.weaver;
 
   // Reset add button listener
   if (modalAddBtn) {

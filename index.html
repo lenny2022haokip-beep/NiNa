@@ -750,27 +750,51 @@
   }
   
   .frame-main {
-    width: 60%;
-    height: 80%;
-    top: 0;
-    right: 5%;
+    width: 38%;
+    height: 50%;
+    top: 5%;
+    left: 0%;
     z-index: 2;
   }
   .frame-main:hover {
     transform: translate(-5px, -5px) scale(1.02);
-    z-index: 4;
+    z-index: 6;
   }
   
   .frame-secondary {
-    width: 48%;
-    height: 65%;
-    bottom: 0;
-    left: 5%;
+    width: 32%;
+    height: 42%;
+    bottom: 5%;
+    left: 6%;
     z-index: 3;
   }
   .frame-secondary:hover {
     transform: translate(5px, 5px) scale(1.02);
+    z-index: 6;
+  }
+
+  .frame-tertiary {
+    width: 36%;
+    height: 55%;
+    top: 12%;
+    left: 34%;
     z-index: 4;
+  }
+  .frame-tertiary:hover {
+    transform: translate(-5px, 5px) scale(1.02);
+    z-index: 6;
+  }
+
+  .frame-quaternary {
+    width: 34%;
+    height: 48%;
+    bottom: 8%;
+    right: 0%;
+    z-index: 5;
+  }
+  .frame-quaternary:hover {
+    transform: translate(5px, -5px) scale(1.02);
+    z-index: 6;
   }
 
   /* Narrow Modal Styling (for Checkout & Policy Modals) */
@@ -3763,6 +3787,80 @@
       transform: translate3d(-50%, 0, 0);
     }
   }
+
+  /* Kingoicho Award Section Styling */
+  .award-section {
+    padding: 100px 0;
+    background-color: #0b0b0a;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .award-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  @media (min-width: 992px) {
+    .award-grid {
+      grid-template-columns: 1fr 1.2fr;
+    }
+  }
+  .award-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .award-text .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #C5A880;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    display: block;
+  }
+  .award-text h2 {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: #FDFBF7;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+  .award-text h2 sup {
+    font-size: 0.6em;
+    top: -0.4em;
+  }
+  .award-text p {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(253, 251, 247, 0.7);
+    line-height: 1.7;
+    margin: 0;
+  }
+  .award-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .award-img-wrapper {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    aspect-ratio: 0.75;
+    transition: transform 0.6s ease;
+  }
+  .award-img-wrapper:hover {
+    transform: translateY(-5px);
+  }
+  .award-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
 </style>
   <!-- Vercel Speed Insights -->
   <script>
@@ -3791,7 +3889,7 @@
   <header id="header">
     <!-- Announcement Bar -->
     <div class="announcement-bar">
-      Honoring Kuki Weaving Traditions | Made in KUKI | Shipping Pan-India & Globally (US, UK, Australia)
+      HONOURING KUKI HERITAGE : MADE IN THANGKANPHAI : SHIPPING PAN INDIA : ELEVATING OUR ROOTS
     </div>
     <div class="nav-bar container">
       <a href="index.html" class="logo" aria-label="NiNa by Mangsee Logo">
@@ -3876,6 +3974,14 @@
             <img src="assets/yarn_detail.png" alt="Organic cotton yarn and natural dyes detail" loading="lazy">
             <span class="collage-caption">FIG. 02 — ORGANIC COTTON & DYES</span>
           </div>
+          <div class="collage-frame frame-tertiary">
+            <img src="assets/designer_vans.png" alt="Mangtinlen Kilong - Designer behind NiNa" loading="lazy">
+            <span class="collage-caption">DESIGNER — MANGSEE</span>
+          </div>
+          <div class="collage-frame frame-quaternary">
+            <img src="assets/sewing_machine.jpeg" alt="NiNa workshop sewing detail" loading="lazy">
+            <span class="collage-caption">WORKSHOP — SEWING</span>
+          </div>
         </div>
       </div>
 
@@ -3912,10 +4018,10 @@
   <div class="marquee-ticker">
     <div class="marquee-track">
       <span>
-        Traditional Backstrap Weaving <span class="sep">◆</span> Geometric Heritage <span class="sep">◆</span> Support Hill Artisans <span class="sep">◆</span> 100% Handcrafted <span class="sep">◆</span> Made in KUKI <span class="sep">◆</span> Limited Drops <span class="sep">◆</span>
+        SUPPORTING LOCAL WEAVERS <span class="sep">◆</span> EXCLUSIVE LIMITED DROPS <span class="sep">◆</span> REVIVING TRADITIONAL HERITAGE <span class="sep">◆</span> 100% HANDCRAFTED <span class="sep">◆</span>
       </span>
       <span>
-        Traditional Backstrap Weaving <span class="sep">◆</span> Geometric Heritage <span class="sep">◆</span> Support Hill Artisans <span class="sep">◆</span> 100% Handcrafted <span class="sep">◆</span> Made in KUKI <span class="sep">◆</span> Limited Drops <span class="sep">◆</span>
+        SUPPORTING LOCAL WEAVERS <span class="sep">◆</span> EXCLUSIVE LIMITED DROPS <span class="sep">◆</span> REVIVING TRADITIONAL HERITAGE <span class="sep">◆</span> 100% HANDCRAFTED <span class="sep">◆</span>
       </span>
     </div>
   </div>
@@ -3933,7 +4039,7 @@
     <div class="category-slider-wrapper reveal">
       <div class="category-slider" id="categorySlider">
         <!-- Slide 1: Bags -->
-        <div class="category-slide active" style="background-image: url('assets/cat_bags.jpg');" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide active" style="background-image: url('assets/cat_bags_new.jpg');" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">01 / BAGS</span>
@@ -3944,12 +4050,12 @@
         </div>
         
         <!-- Slide 2: Bandanas -->
-        <div class="category-slide" style="background-image: url('assets/cat_bandana.jpg');" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/cat_bandana_new.jpg');" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">02 / BANDANAS</span>
             <h2>Handwoven Accent Bandanas</h2>
-            <p>Vibrant geometric borders to wear as neckerchiefs, hair ties, or wrist wraps.</p>
+            <p>Crafted using the iconic Saipikhup, Thangnang and Mongvom Pattern. Symbol of Strength, Resilience and Power. Designed both for Men and Women, Each Bandana blends cultural heritage with contemporary style.</p>
             <span class="category-slide-btn">EXPLORE BANDANAS <span>→</span></span>
           </div>
         </div>
@@ -3966,7 +4072,7 @@
         </div>
 
         <!-- Slide 4: Pins -->
-        <div class="category-slide" style="background-image: url('assets/cat_pins.webp');" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/cat_pins_new.jpg');" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">04 / PINS</span>
@@ -3977,13 +4083,24 @@
         </div>
 
         <!-- Slide 5: Shawls -->
-        <div class="category-slide" style="background-image: url('assets/cat_shawl.jpg');" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/cat_shawl_new.jpg');" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">05 / SHAWLS</span>
             <h2>Traditional Handloomed Puans & Shawls</h2>
             <p>Exquisite full-sized wraps woven by master artisans, representing roots and status.</p>
             <span class="category-slide-btn">EXPLORE SHAWLS <span>→</span></span>
+          </div>
+        </div>
+        
+        <!-- Slide 6: Pondum -->
+        <div class="category-slide" style="background-image: url('assets/cat_pondum_new.jpg');" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
+          <div class="category-slide-content">
+            <span class="category-slide-num">06 / PONDUM</span>
+            <h2>Pondum (Exclusive)</h2>
+            <p>A timeless piece crafted to pay tribute and respect during days of mourning and condolence.</p>
+            <span class="category-slide-btn">EXPLORE PONDUM <span>→</span></span>
           </div>
         </div>
       </div>
@@ -4003,6 +4120,7 @@
         <span class="cat-dot" onclick="setCategorySlide(2, event)"></span>
         <span class="cat-dot" onclick="setCategorySlide(3, event)"></span>
         <span class="cat-dot" onclick="setCategorySlide(4, event)"></span>
+        <span class="cat-dot" onclick="setCategorySlide(5, event)"></span>
       </div>
     </div>
   </section>
@@ -4189,7 +4307,7 @@
     <!-- Instagram Feed Grid -->
     <div class="footer-instagram-feed container">
       <div class="insta-feed-header">
-        <span class="eyebrow" style="margin-bottom: 4px;">Wear Your Roots</span>
+        <span class="eyebrow" style="margin-bottom: 4px;">Elevate Your Roots</span>
         <h3>Shop the Collection on Instagram • <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener">@nina_wearyourroots</a></h3>
       </div>
       <div class="insta-feed-grid">
@@ -4227,7 +4345,7 @@
       <div class="custom-orders-header reveal">
         <span class="eyebrow">Bespoke Craft</span>
         <h2>CUSTOM DESIGN ORDERS</h2>
-        <p class="custom-orders-desc">Collaborate with our master weavers to create bespoke handloomed pieces. Specify your own dimensions, color palettes, and traditional motifs to bring your vision to life.</p>
+        <p class="custom-orders-desc">Collaborate with us to design personalized pieces, crafted just for you</p>
         <div class="custom-orders-cta">
           <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20placing%20a%20Custom%20Design%20Order.%20Could%20you%20please%20provide%20more%20information%20on%20the%20options%20and%20process%3F" target="_blank" rel="noopener" class="btn-custom-order">INQUIRE ON WHATSAPP</a>
         </div>
@@ -4485,7 +4603,7 @@
               <img src="assets/agou/agou_12.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 12">
               <div class="press-slide-caption">
                 <span class="slide-number">Look 12 / 12</span>
-                <h3>Wear Your Roots</h3>
+                <h3>Elevate Your Roots</h3>
                 <p>Bridging traditional Northeast Indian heritage with global contemporary audiences.</p>
               </div>
             </div>
@@ -4501,6 +4619,30 @@
             <button class="press-slider-arrow-btn next-btn" aria-label="Next Slide">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Award & Achievement Section -->
+  <section class="section award-section scroll-section" id="achievement">
+    <div class="container">
+      <div class="award-grid">
+        <!-- Left Column: Typography -->
+        <div class="award-text reveal">
+          <span class="eyebrow">Achievement</span>
+          <h2>PROUDLY AWARDED 1<sup>ST</sup> RUNNERS UP AT KINGOICHO FESTIVAL, HOSTED BY THE TRADE AND COMMERCE DEPARTMENT OF KUKI INPI MANIPUR.</h2>
+          <p>We are honored to have been awarded 1st Runners up at Kingoicho Festival, A recognition that celebrates our dedication to preserving and promoting KUKI Heritage through craftsmanship. This achievement inspires us to continue creating handcrafting pieces that honour our culture and community.</p>
+        </div>
+        
+        <!-- Right Column: Flex Collage Images -->
+        <div class="award-images reveal">
+          <div class="award-img-wrapper">
+            <img src="assets/achievement_stage.jpeg" alt="Award Stage Presentation - Kingoicho Festival" loading="lazy">
+          </div>
+          <div class="award-img-wrapper">
+            <img src="assets/achievement_award.jpeg" alt="Award Ceremony Winners - Kingoicho Festival" loading="lazy">
           </div>
         </div>
       </div>
@@ -4735,11 +4877,7 @@
         <h2 class="modal-title" id="modalTitle">Product Title</h2>
         <div class="modal-price" id="modalPrice">Rs. 0</div>
         <p class="modal-desc" id="modalDesc">Detailed description here.</p>
-        <ul class="modal-meta-list">
-          <li><strong>Weaver:</strong> <span id="modalWeaver">Artisan Name</span></li>
-          <li><strong>Loom:</strong> <span id="modalLoom">Backstrap loin loom</span></li>
-          <li><strong>Material:</strong> <span>100% Organic Cotton</span></li>
-        </ul>
+        
         <div class="modal-actions">
           <div class="modal-qty-select">
             <button class="modal-qty-btn" onclick="adjustModalQty(-1)">-</button>
@@ -5008,7 +5146,7 @@
 
     // --- Category Slider Logic ---
     let currentCategorySlide = 0;
-    const categorySlidesCount = 5;
+    const categorySlidesCount = 6;
     let categorySlideInterval;
 
     function showCategorySlide(index) {
