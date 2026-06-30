@@ -1452,6 +1452,17 @@
 
           <div class="setting-row glass-card">
             <div class="setting-info">
+              <span class="setting-title">Store UPI Address (VPA)</span>
+              <span class="setting-desc">UPI ID used to generate dynamic checkout QR codes and links</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="settingUpiId" class="input-field" style="width: 240px; text-align: center;" placeholder="e.g. merchant@okaxis">
+              <button class="btn" style="background: rgba(255,255,255,0.05); color: var(--text-main); font-family: var(--font-mono); border: 1px solid var(--border-glass);" onclick="saveUpiSetting()">Save</button>
+            </div>
+          </div>
+
+          <div class="setting-row glass-card">
+            <div class="setting-info">
               <span class="setting-title">Store Maintenance Mode</span>
               <span class="setting-desc">Redirect visitors to a maintenance placeholder page</span>
             </div>
@@ -2192,6 +2203,11 @@
       if (waSetting) {
         document.getElementById('settingWhatsapp').value = waSetting.value;
       }
+
+      const upiSetting = siteSettings.find(s => s.key === 'upi_id');
+      if (upiSetting) {
+        document.getElementById('settingUpiId').value = upiSetting.value;
+      }
       
       const maintSetting = siteSettings.find(s => s.key === 'maintenance_mode');
       if (maintSetting) {
@@ -2223,6 +2239,33 @@
       } catch(err) {
         console.error(err);
         showToast("Failed to update merchant number.", "error");
+      }
+    }
+
+    // Save UPI Address setting
+    async function saveUpiSetting() {
+      const input = document.getElementById('settingUpiId');
+      const val = input.value.trim();
+      if (!val || !val.includes('@')) {
+        showToast("Please enter a valid UPI ID (containing '@').", "error");
+        return;
+      }
+
+      try {
+        const { error } = await _supabase
+          .from('site_settings')
+          .update({ value: val })
+          .eq('key', 'upi_id');
+        
+        if (error) throw error;
+        
+        showToast(`Store UPI ID updated to: ${val}`);
+        
+        const setting = siteSettings.find(s => s.key === 'upi_id');
+        if (setting) setting.value = val;
+      } catch(err) {
+        console.error(err);
+        showToast("Failed to update UPI ID.", "error");
       }
     }
 

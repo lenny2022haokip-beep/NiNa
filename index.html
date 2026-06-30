@@ -4776,11 +4776,11 @@
           <textarea id="checkoutAddress" required rows="3" class="checkout-input checkout-textarea" placeholder="Full street address, city, state, postal code..."></textarea>
         </div>
         <div class="checkout-input-group">
-          <label class="checkout-label">Payment Method</label>
-          <div class="checkout-payment-box">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--accent-saffron);"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-            <span>WhatsApp Pay (UPI / QR Code)</span>
-          </div>
+          <label class="checkout-label">Payment Method *</label>
+          <select id="checkoutPaymentMethod" required class="checkout-input">
+            <option value="Online Payment">Online Payment (UPI / QR Code)</option>
+            <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+          </select>
         </div>
         <button type="submit" class="btn btn-primary" id="placeOrderBtn" style="width: 100%; margin-top: 10px; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem;">Place Order</button>
       </form>
