@@ -720,21 +720,24 @@
   
   .collage-frame {
     position: absolute;
-    background: var(--bg-dark);
-    border: 1px solid var(--border-color);
-    padding: 12px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+    background: #FDFBF7;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 16px 16px 24px 16px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.06);
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    gap: 12px;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+  }
+  .collage-frame:hover {
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.12);
   }
   
   .collage-frame img {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
-    filter: grayscale(10%) contrast(1.05);
+    filter: grayscale(8%) contrast(1.03);
     transition: filter 0.4s ease;
   }
   .collage-frame:hover img {
@@ -743,33 +746,34 @@
   
   .collage-frame .collage-caption {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    color: var(--color-muted);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: #C5A880; /* Warm champagne gold */
     text-transform: uppercase;
+    font-weight: 500;
   }
   
   .frame-main {
-    width: 60%;
-    height: 80%;
+    width: 58%;
+    aspect-ratio: 1 / 1;
     top: 0;
     right: 5%;
     z-index: 2;
   }
   .frame-main:hover {
-    transform: translate(-5px, -5px) scale(1.02);
+    transform: translate(-6px, -6px) scale(1.015);
     z-index: 4;
   }
   
   .frame-secondary {
-    width: 48%;
-    height: 65%;
+    width: 46%;
+    aspect-ratio: 1 / 1;
     bottom: 0;
     left: 5%;
     z-index: 3;
   }
   .frame-secondary:hover {
-    transform: translate(5px, 5px) scale(1.02);
+    transform: translate(6px, 6px) scale(1.015);
     z-index: 4;
   }
 
@@ -3811,12 +3815,12 @@
         <div class="slogan-media-collage reveal">
           <div class="collage-bg-texture"></div>
           <div class="collage-frame frame-main">
-            <img src="assets/loom_detail.png" alt="Traditional Kuki backstrap loom weaving detail" loading="lazy">
-            <span class="collage-caption">FIG. 01 — TRADITIONAL BACKSTRAP LOOM</span>
+            <img src="assets/artisan_story.png" alt="Artisan weaving cotton threads on a traditional Kuki backstrap loom" loading="lazy">
+            <span class="collage-caption">FIG. 01 — ARTISAN BACKSTRAP LOOM</span>
           </div>
           <div class="collage-frame frame-secondary">
-            <img src="assets/yarn_detail.png" alt="Organic cotton yarn and natural dyes detail" loading="lazy">
-            <span class="collage-caption">FIG. 02 — ORGANIC COTTON & DYES</span>
+            <img src="assets/puan_product.png" alt="Traditional handloomed Kuki Puan wrap" loading="lazy">
+            <span class="collage-caption">FIG. 02 — HERITAGE PUAN TEXTILE</span>
           </div>
         </div>
       </div>
