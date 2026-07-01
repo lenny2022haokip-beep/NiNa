@@ -33,7 +33,7 @@
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -2558,7 +2558,7 @@
   <header id="header" class="subpage-header scrolled">
     <!-- Announcement Bar -->
     <div class="announcement-bar">
-      Honoring Kuki Weaving Traditions | Made in KUKI | Shipping Pan-India & Globally (US, UK, Australia)
+      HONOURING KUKI HERITAGE : MADE IN THANGKANPHAI : SHIPPING PAN INDIA : ELEVATING OUR ROOTS
     </div>
     <div class="nav-bar container">
       <a href="index.html" class="logo" aria-label="NiNa by Mangsee Logo">
@@ -2692,7 +2692,7 @@
     <!-- Social Media Feed Grid -->
     <div class="footer-instagram-feed container">
       <div class="insta-feed-header">
-        <span class="eyebrow" style="margin-bottom: 4px;">Wear Your Roots</span>
+        <span class="eyebrow" style="margin-bottom: 4px;">Elevate Your Roots</span>
         <h3>Shop the Collection on Instagram • <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener">@nina_wearyourroots</a></h3>
       </div>
       <div class="insta-feed-grid">
@@ -2821,11 +2821,7 @@
         <h2 class="modal-title" id="modalTitle">Product Title</h2>
         <div class="modal-price" id="modalPrice">Rs. 0</div>
         <p class="modal-desc" id="modalDesc">Detailed description here.</p>
-        <ul class="modal-meta-list">
-          <li><strong>Weaver:</strong> <span id="modalWeaver">Artisan Name</span></li>
-          <li><strong>Loom:</strong> <span id="modalLoom">Backstrap loin loom</span></li>
-          <li><strong>Material:</strong> <span>100% Organic Cotton</span></li>
-        </ul>
+        
         <div class="modal-actions">
           <div class="modal-qty-select">
             <button class="modal-qty-btn" onclick="adjustModalQty(-1)">-</button>
@@ -2862,11 +2858,11 @@
           <textarea id="checkoutAddress" required rows="3" style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); outline: none; resize: none; border-radius: 4px;" placeholder="Full street address, city, state, postal code..."></textarea>
         </div>
         <div style="width: 100%;">
-          <label style="display: block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-dark); text-align: left;">Payment Method</label>
-          <div style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); border-radius: 4px; display: flex; align-items: center; gap: 8px;">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--accent-saffron);"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-            <span>WhatsApp Pay (UPI / QR Code)</span>
-          </div>
+          <label style="display: block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; color: var(--text-dark); text-align: left;">Payment Method *</label>
+          <select id="checkoutPaymentMethod" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); font-family: var(--font-body); font-size: 0.9rem; background: var(--surface-light); color: var(--text-dark); outline: none; border-radius: 4px;">
+            <option value="Online Payment">Online Payment (UPI / QR Code)</option>
+            <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+          </select>
         </div>
         <button type="submit" class="btn btn-primary" id="placeOrderBtn" style="width: 100%; margin-top: 10px; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem;">Place Order</button>
       </form>

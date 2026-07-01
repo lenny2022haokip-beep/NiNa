@@ -362,15 +362,15 @@ let products = {
   },
   31: {
     id: 31,
-    title: "Black Traditional Shawl",
+    title: "Pondum (Exclusive)",
     category: "shawl",
     categoryDisplay: "Shawl · Handwoven",
     price: 600,
     priceDisplay: "Rs. 600",
-    desc: "A bold black traditional shawl accented with beautiful pink and lavender Saipikhup geometric weaves, capturing the warrior prestige of Lamka weavers.",
+    desc: "A timeless piece crafted to pay tribute and respect during days of mourning and condolence",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/filler_black.png" alt="Black Traditional Shawl">`,
-    stock_count: 0
+    imageHtml: `<img src="assets/cat_pondum_new.jpg" alt="Pondum (Exclusive)">`,
+    stock_count: 10
   },
   "11-upsell": {
     id: "11-upsell",
@@ -490,6 +490,17 @@ async function fetchProducts() {
           const rawNum = waSetting.value.replace(/\D/g, '');
           whatsappNumber = rawNum.startsWith('91') ? rawNum : '91' + rawNum;
           window.whatsappNumber = whatsappNumber;
+        }
+
+        const upiSetting = dbSettings.find(s => s.key === 'upi_id');
+        if (upiSetting && upiSetting.value) {
+          storeUpiId = upiSetting.value.trim();
+          window.storeUpiId = storeUpiId;
+        }
+
+        const maintSetting = dbSettings.find(s => s.key === 'maintenance_mode');
+        if (maintSetting && maintSetting.value === 'true') {
+          showMaintenanceScreen();
         }
       }
     } catch (settingsErr) {
@@ -1287,7 +1298,8 @@ window.submitOrder = async function(e) {
   const email = document.getElementById('checkoutEmail').value.trim();
   const phone = document.getElementById('checkoutPhone').value.trim();
   const address = document.getElementById('checkoutAddress').value.trim();
-  const paymentMethod = 'Online Payment';
+  const paymentMethodSelect = document.getElementById('checkoutPaymentMethod');
+  const paymentMethod = paymentMethodSelect ? paymentMethodSelect.value : 'Online Payment';
   
   if (!name || !email || !phone || !address) {
     showToast("Please fill in all shipping fields.", "error");
@@ -1750,7 +1762,7 @@ function openQuickView(id) {
   if (modalTitle) modalTitle.textContent = prod.title;
   if (modalPrice) modalPrice.textContent = prod.priceDisplay;
   if (modalDesc) modalDesc.textContent = prod.desc + (prod.selectedVariant ? ` Currently viewing the ${prod.selectedVariant} edition.` : '');
-  if (modalWeaver) modalWeaver.textContent = prod.weaver;
+  // if (modalWeaver) modalWeaver.textContent = prod.weaver;
 
   // Reset add button listener
   if (modalAddBtn) {
@@ -1835,6 +1847,61 @@ function showToast(message, type = "success") {
 }
 window.showToast = showToast;
 
+
+
+// --- Premium Maintenance Mode Overlay ---
+function showMaintenanceScreen() {
+  if (document.getElementById('maintenanceOverlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.id = 'maintenanceOverlay';
+  overlay.style.position = 'fixed';
+  overlay.style.inset = '0';
+  overlay.style.backgroundColor = '#0B0B0A';
+  overlay.style.zIndex = '999999';
+  overlay.style.display = 'flex';
+  overlay.style.flexDirection = 'column';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+  overlay.style.padding = '40px 24px';
+  overlay.style.color = '#F4F3EF';
+  overlay.style.fontFamily = "'Outfit', 'DM Sans', sans-serif";
+  overlay.style.textAlign = 'center';
+  overlay.style.overflowY = 'auto';
+  overlay.style.background = 'radial-gradient(circle at center, #261605 0%, #0B0B0A 100%)';
+
+  overlay.innerHTML = `
+    <div style="position: absolute; top: 0; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(90deg, #D47200 0px, #D47200 10px, #D4A24E 10px, #D4A24E 20px, #0B0B0A 20px, #0B0B0A 30px); opacity: 0.8;"></div>
+    
+    <div class="glass-card" style="max-width: 500px; padding: 48px; border-radius: 16px; background: rgba(26, 26, 25, 0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 25px 50px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; gap: 24px; position: relative;">
+      <img src="assets/logo.png" alt="NiNa Collective Logo" style="height: 64px; width: auto; filter: drop-shadow(0 0 8px rgba(212, 114, 0, 0.3));" />
+      <div style="height: 1px; width: 40px; background: #D47200; margin: 8px 0;"></div>
+      <h1 style="font-family: 'Fraunces', 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; line-height: 1.2; letter-spacing: 0.02em; color: #F4F3EF; margin: 0;">
+        Under <em>Maintenance</em>
+      </h1>
+      <p style="font-size: 0.95rem; line-height: 1.7; color: #A3A19C; margin: 0; font-weight: 300;">
+        The NiNa Collective team is currently updating the catalog with new handloomed drops. We will be back shortly with premium handcrafted textiles, traditional Puans, and accessories.
+      </p>
+      <p style="font-size: 0.88rem; line-height: 1.7; color: #D47200; font-family: 'Courier Prime', monospace; margin: 0;">
+        Follow our journey for live update notifications:
+      </p>
+      <div style="display: flex; gap: 16px; margin-top: 8px;">
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" style="padding: 10px 20px; font-family: 'Courier Prime', monospace; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); color: #F4F3EF; cursor: pointer; text-decoration: none; transition: all 0.3s ease; display: inline-block;" onmouseover="this.style.borderColor='#D47200'; this.style.background='rgba(212, 114, 0, 0.05)';" onmouseout="this.style.borderColor='rgba(255, 255, 255, 0.1)'; this.style.background='rgba(255, 255, 255, 0.02)';">
+          Instagram
+        </a>
+        <a href="https://www.facebook.com/share/1BLe7FzkUZ/" target="_blank" rel="noopener" style="padding: 10px 20px; font-family: 'Courier Prime', monospace; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02); color: #F4F3EF; cursor: pointer; text-decoration: none; transition: all 0.3s ease; display: inline-block;" onmouseover="this.style.borderColor='#D47200'; this.style.background='rgba(212, 114, 0, 0.05)';" onmouseout="this.style.borderColor='rgba(255, 255, 255, 0.1)'; this.style.background='rgba(255, 255, 255, 0.02)';">
+          Facebook
+        </a>
+      </div>
+    </div>
+    
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(90deg, #D47200 0px, #D47200 10px, #D4A24E 10px, #D4A24E 20px, #0B0B0A 20px, #0B0B0A 30px); opacity: 0.8;"></div>
+  `;
+
+  document.body.style.overflow = 'hidden';
+  document.body.appendChild(overlay);
+}
+window.showMaintenanceScreen = showMaintenanceScreen;
 
 // Auto-initialize when the script is loaded
 fetchProducts();

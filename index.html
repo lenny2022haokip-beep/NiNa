@@ -754,13 +754,16 @@
   }
   
   .frame-main {
+
     width: 58%;
     aspect-ratio: 1 / 1;
+
     top: 0;
-    right: 5%;
+    left: 5%;
     z-index: 2;
   }
   .frame-main:hover {
+
     transform: translate(-6px, -6px) scale(1.015);
     z-index: 4;
   }
@@ -768,13 +771,16 @@
   .frame-secondary {
     width: 46%;
     aspect-ratio: 1 / 1;
+
     bottom: 0;
-    left: 5%;
+    right: 5%;
     z-index: 3;
   }
   .frame-secondary:hover {
-    transform: translate(6px, 6px) scale(1.015);
-    z-index: 4;
+
+    transform: translate(5px, 5px) scale(1.02);
+    z-index: 5;
+
   }
 
   /* Narrow Modal Styling (for Checkout & Policy Modals) */
@@ -3709,6 +3715,80 @@
       transform: translate3d(-50%, 0, 0);
     }
   }
+
+  /* Kingoicho Award Section Styling */
+  .award-section {
+    padding: 100px 0;
+    background-color: #0b0b0a;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .award-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  @media (min-width: 992px) {
+    .award-grid {
+      grid-template-columns: 1fr 1.2fr;
+    }
+  }
+  .award-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .award-text .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #C5A880;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    display: block;
+  }
+  .award-text h2 {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: #FDFBF7;
+    line-height: 1.3;
+    text-transform: uppercase;
+  }
+  .award-text h2 sup {
+    font-size: 0.6em;
+    top: -0.4em;
+  }
+  .award-text p {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(253, 251, 247, 0.7);
+    line-height: 1.7;
+    margin: 0;
+  }
+  .award-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .award-img-wrapper {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    aspect-ratio: 0.75;
+    transition: transform 0.6s ease;
+  }
+  .award-img-wrapper:hover {
+    transform: translateY(-5px);
+  }
+  .award-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
 </style>
   <!-- Vercel Speed Insights -->
   <script>
@@ -3737,7 +3817,7 @@
   <header id="header">
     <!-- Announcement Bar -->
     <div class="announcement-bar">
-      Honoring Kuki Weaving Traditions | Made in KUKI | Shipping Pan-India & Globally (US, UK, Australia)
+      HONOURING KUKI HERITAGE : MADE IN THANGKANPHAI : SHIPPING PAN INDIA : ELEVATING OUR ROOTS
     </div>
     <div class="nav-bar container">
       <a href="index.html" class="logo" aria-label="NiNa by Mangsee Logo">
@@ -3815,12 +3895,14 @@
         <div class="slogan-media-collage reveal">
           <div class="collage-bg-texture"></div>
           <div class="collage-frame frame-main">
+
             <img src="assets/artisan_story.png" alt="Artisan weaving cotton threads on a traditional Kuki backstrap loom" loading="lazy">
             <span class="collage-caption">FIG. 01 — ARTISAN BACKSTRAP LOOM</span>
           </div>
           <div class="collage-frame frame-secondary">
             <img src="assets/puan_product.png" alt="Traditional handloomed Kuki Puan wrap" loading="lazy">
             <span class="collage-caption">FIG. 02 — HERITAGE PUAN TEXTILE</span>
+
           </div>
         </div>
       </div>
@@ -3868,10 +3950,10 @@
   <div class="marquee-ticker">
     <div class="marquee-track">
       <span>
-        Traditional Backstrap Weaving <span class="sep">◆</span> Geometric Heritage <span class="sep">◆</span> Support Hill Artisans <span class="sep">◆</span> 100% Handcrafted <span class="sep">◆</span> Made in KUKI <span class="sep">◆</span> Limited Drops <span class="sep">◆</span>
+        SUPPORTING LOCAL WEAVERS <span class="sep">◆</span> EXCLUSIVE LIMITED DROPS <span class="sep">◆</span> REVIVING TRADITIONAL HERITAGE <span class="sep">◆</span> 100% HANDCRAFTED <span class="sep">◆</span>
       </span>
       <span>
-        Traditional Backstrap Weaving <span class="sep">◆</span> Geometric Heritage <span class="sep">◆</span> Support Hill Artisans <span class="sep">◆</span> 100% Handcrafted <span class="sep">◆</span> Made in KUKI <span class="sep">◆</span> Limited Drops <span class="sep">◆</span>
+        SUPPORTING LOCAL WEAVERS <span class="sep">◆</span> EXCLUSIVE LIMITED DROPS <span class="sep">◆</span> REVIVING TRADITIONAL HERITAGE <span class="sep">◆</span> 100% HANDCRAFTED <span class="sep">◆</span>
       </span>
     </div>
   </div>
@@ -3889,8 +3971,9 @@
     <div class="category-slider-wrapper reveal">
       <div class="category-slider" id="categorySlider">
         <!-- Slide 1: Bags -->
-        <div class="category-slide active" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-image" style="background-image: url('assets/cat_bags.jpg');"></div>
+
+        <div class="category-slide active" style="background-image: url('assets/cat_bags_new.jpg');" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">01 / BAGS</span>
@@ -3901,13 +3984,14 @@
         </div>
         
         <!-- Slide 2: Bandanas -->
-        <div class="category-slide" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-image" style="background-image: url('assets/cat_bandana.jpg');"></div>
+
+        <div class="category-slide" style="background-image: url('assets/cat_bandana_new.jpg');" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">02 / BANDANAS</span>
             <h2>Handwoven Accent Bandanas</h2>
-            <p>Vibrant geometric borders to wear as neckerchiefs, hair ties, or wrist wraps.</p>
+            <p>Crafted using the iconic Saipikhup, Thangnang and Mongvom Pattern. Symbol of Strength, Resilience and Power. Designed both for Men and Women, Each Bandana blends cultural heritage with contemporary style.</p>
             <span class="category-slide-btn">EXPLORE BANDANAS <span>→</span></span>
           </div>
         </div>
@@ -3925,8 +4009,9 @@
         </div>
 
         <!-- Slide 4: Pins -->
-        <div class="category-slide" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-image" style="background-image: url('assets/cat_pins.webp'); background-position: center 60%;"></div>
+
+        <div class="category-slide" style="background-image: url('assets/cat_pins_new.jpg');" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">04 / PINS</span>
@@ -3937,14 +4022,26 @@
         </div>
 
         <!-- Slide 5: Shawls -->
-        <div class="category-slide" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-image" style="background-image: url('assets/cat_shawl.jpg');"></div>
+
+        <div class="category-slide" style="background-image: url('assets/cat_shawl_new.jpg');" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">05 / SHAWLS</span>
             <h2>Traditional Handloomed Puans & Shawls</h2>
             <p>Exquisite full-sized wraps woven by master artisans, representing roots and status.</p>
             <span class="category-slide-btn">EXPLORE SHAWLS <span>→</span></span>
+          </div>
+        </div>
+        
+        <!-- Slide 6: Pondum -->
+        <div class="category-slide" style="background-image: url('assets/cat_pondum_new.jpg');" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
+          <div class="category-slide-content">
+            <span class="category-slide-num">06 / PONDUM</span>
+            <h2>Pondum (Exclusive)</h2>
+            <p>A timeless piece crafted to pay tribute and respect during days of mourning and condolence.</p>
+            <span class="category-slide-btn">EXPLORE PONDUM <span>→</span></span>
           </div>
         </div>
       </div>
@@ -3964,6 +4061,7 @@
         <span class="cat-dot" onclick="setCategorySlide(2, event)"></span>
         <span class="cat-dot" onclick="setCategorySlide(3, event)"></span>
         <span class="cat-dot" onclick="setCategorySlide(4, event)"></span>
+        <span class="cat-dot" onclick="setCategorySlide(5, event)"></span>
       </div>
     </div>
   </section>
@@ -4146,7 +4244,41 @@
         <cite>— Northeast India craft review</cite>
       </div>
     </div>
-    </div>
+
+
+    <!-- Instagram Feed Grid -->
+    <div class="footer-instagram-feed container">
+      <div class="insta-feed-header">
+        <span class="eyebrow" style="margin-bottom: 4px;">Elevate Your Roots</span>
+        <h3>Shop the Collection on Instagram • <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener">@nina_wearyourroots</a></h3>
+      </div>
+      <div class="insta-feed-grid">
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/insta_new_1.jpg" alt="Handwoven textile accessories - NiNa Collection">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/insta_new_2.webp" alt="Traditional artisan backstrap loomed products - NiNa">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/insta_new_3.jpg" alt="Premium KUKI handcrafted textiles - NiNa">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+        <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" class="insta-feed-item">
+          <img src="assets/insta_new_4.webp" alt="NiNa ethically handcrafted product showcase">
+          <div class="insta-overlay">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051C.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+        </a>
+      </div>
+
   </section>
   <div class="kuki-border"></div>
 
@@ -4156,7 +4288,7 @@
       <div class="custom-orders-header reveal">
         <span class="eyebrow">Bespoke Craft</span>
         <h2>CUSTOM DESIGN ORDERS</h2>
-        <p class="custom-orders-desc">Collaborate with our master weavers to create bespoke handloomed pieces. Specify your own dimensions, color palettes, and traditional motifs to bring your vision to life.</p>
+        <p class="custom-orders-desc">Collaborate with us to design personalized pieces, crafted just for you</p>
         <div class="custom-orders-cta">
           <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20placing%20a%20Custom%20Design%20Order.%20Could%20you%20please%20provide%20more%20information%20on%20the%20options%20and%20process%3F" target="_blank" rel="noopener" class="btn-custom-order">INQUIRE ON WHATSAPP</a>
         </div>
@@ -4414,7 +4546,7 @@
               <img src="assets/agou/agou_12.jpg" alt="NiNa Tribute Design featured in Hindustan Times - View 12">
               <div class="press-slide-caption">
                 <span class="slide-number">Look 12 / 12</span>
-                <h3>Wear Your Roots</h3>
+                <h3>Elevate Your Roots</h3>
                 <p>Bridging traditional Northeast Indian heritage with global contemporary audiences.</p>
               </div>
             </div>
@@ -4430,6 +4562,30 @@
             <button class="press-slider-arrow-btn next-btn" aria-label="Next Slide">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Award & Achievement Section -->
+  <section class="section award-section scroll-section" id="achievement">
+    <div class="container">
+      <div class="award-grid">
+        <!-- Left Column: Typography -->
+        <div class="award-text reveal">
+          <span class="eyebrow">Achievement</span>
+          <h2>PROUDLY AWARDED 1<sup>ST</sup> RUNNERS UP AT KINGOICHO FESTIVAL, HOSTED BY THE TRADE AND COMMERCE DEPARTMENT OF KUKI INPI MANIPUR.</h2>
+          <p>We are honored to have been awarded 1st Runners up at Kingoicho Festival, A recognition that celebrates our dedication to preserving and promoting KUKI Heritage through craftsmanship. This achievement inspires us to continue creating handcrafting pieces that honour our culture and community.</p>
+        </div>
+        
+        <!-- Right Column: Flex Collage Images -->
+        <div class="award-images reveal">
+          <div class="award-img-wrapper">
+            <img src="assets/achievement_stage.jpeg" alt="Award Stage Presentation - Kingoicho Festival" loading="lazy">
+          </div>
+          <div class="award-img-wrapper">
+            <img src="assets/achievement_award.jpeg" alt="Award Ceremony Winners - Kingoicho Festival" loading="lazy">
           </div>
         </div>
       </div>
@@ -4664,11 +4820,7 @@
         <h2 class="modal-title" id="modalTitle">Product Title</h2>
         <div class="modal-price" id="modalPrice">Rs. 0</div>
         <p class="modal-desc" id="modalDesc">Detailed description here.</p>
-        <ul class="modal-meta-list">
-          <li><strong>Weaver:</strong> <span id="modalWeaver">Artisan Name</span></li>
-          <li><strong>Loom:</strong> <span id="modalLoom">Backstrap loin loom</span></li>
-          <li><strong>Material:</strong> <span>100% Organic Cotton</span></li>
-        </ul>
+        
         <div class="modal-actions">
           <div class="modal-qty-select">
             <button class="modal-qty-btn" onclick="adjustModalQty(-1)">-</button>
@@ -4705,11 +4857,11 @@
           <textarea id="checkoutAddress" required rows="3" class="checkout-input checkout-textarea" placeholder="Full street address, city, state, postal code..."></textarea>
         </div>
         <div class="checkout-input-group">
-          <label class="checkout-label">Payment Method</label>
-          <div class="checkout-payment-box">
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color: var(--accent-saffron);"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-            <span>WhatsApp Pay (UPI / QR Code)</span>
-          </div>
+          <label class="checkout-label">Payment Method *</label>
+          <select id="checkoutPaymentMethod" required class="checkout-input">
+            <option value="Online Payment">Online Payment (UPI / QR Code)</option>
+            <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+          </select>
         </div>
         <button type="submit" class="btn btn-primary" id="placeOrderBtn" style="width: 100%; margin-top: 10px; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem;">Place Order</button>
       </form>
@@ -4937,7 +5089,7 @@
 
     // --- Category Slider Logic ---
     let currentCategorySlide = 0;
-    const categorySlidesCount = 5;
+    const categorySlidesCount = 6;
     let categorySlideInterval;
 
     function showCategorySlide(index) {
