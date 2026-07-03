@@ -946,6 +946,12 @@
     margin-top: 14px;
   }
 
+  #collections .section-header h2 {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.05em !important;
+  }
+
   /* Category Hero Slider Styles */
   .category-slider-wrapper {
     position: relative;
@@ -1063,7 +1069,7 @@
     font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.12em;
-    color: var(--accent-saffron);
+    color: #DFD3C3 !important; /* Soft gold for high-fashion readability */
     margin-bottom: 6px;
     display: block;
     text-transform: uppercase;
@@ -1075,13 +1081,14 @@
     }
   }
   .category-slide-content h2 {
-    font-family: 'Fraunces', serif;
-    font-size: 1.5rem;
-    font-weight: 300;
+    font-family: 'Cormorant Garamond', serif !important;
+    font-size: 1.6rem;
+    font-weight: 400; /* Regular weight for high contrast elegance */
     margin: 0 0 8px 0;
     line-height: 1.2;
     color: #FDFBF7 !important;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase; /* Classic fashion magazine look */
   }
   @media (min-width: 768px) {
     .category-slide-content h2 {
@@ -3995,7 +4002,7 @@
     <div class="category-slider-wrapper reveal">
       <div class="category-slider" id="categorySlider">
         <!-- Slide 1: Bags -->
-        <div class="category-slide active" style="background-image: url('assets/cat_bags_new.jpeg'); background-position: center 50%;" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide active" style="background-image: url('assets/cat_bags_new.jpg'); background-position: center 50%;" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">01 / BAGS</span>
@@ -4006,7 +4013,7 @@
         </div>
         
         <!-- Slide 2: Bandanas -->
-        <div class="category-slide" style="background-image: url('assets/cat_bandana_new.jpeg'); background-position: center 35%;" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/cat_bandana_new.jpg'); background-position: center 35%;" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">02 / BANDANAS</span>
@@ -4028,7 +4035,7 @@
         </div>
 
         <!-- Slide 4: Pins -->
-        <div class="category-slide" style="background-image: url('assets/cat_pins_new.webp'); background-position: center;" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/cat_pins_new.jpg'); background-position: center;" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">04 / PINS</span>
@@ -4039,7 +4046,7 @@
         </div>
 
         <!-- Slide 5: Shawls -->
-        <div class="category-slide" style="background-image: url('assets/cat_shawl_new.jpeg'); background-position: center 40%;" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/cat_shawl_new.jpg'); background-position: center 40%;" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">05 / SHAWLS</span>
