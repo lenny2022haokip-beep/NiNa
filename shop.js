@@ -394,8 +394,7 @@ window.currentModalProductId = currentModalProductId;
 let whatsappNumber = '919233918107'; // Default store WhatsApp number (91 = India country code)
 window.whatsappNumber = whatsappNumber;
 
-let storeUpiId = 'lenny93haokip-1@okicici'; // Store UPI ID for instant checkout
-window.storeUpiId = storeUpiId;
+// Store UPI ID removed — payments are now arranged directly via WhatsApp.
 
 // Retrieve/generate client UUID
 let anonymousId = localStorage.getItem('nina_anonymous_id');
@@ -490,12 +489,6 @@ async function fetchProducts() {
           const rawNum = waSetting.value.replace(/\D/g, '');
           whatsappNumber = rawNum.startsWith('91') ? rawNum : '91' + rawNum;
           window.whatsappNumber = whatsappNumber;
-        }
-
-        const upiSetting = dbSettings.find(s => s.key === 'upi_id');
-        if (upiSetting && upiSetting.value) {
-          storeUpiId = upiSetting.value.trim();
-          window.storeUpiId = storeUpiId;
         }
 
         const maintSetting = dbSettings.find(s => s.key === 'maintenance_mode');
@@ -1282,8 +1275,8 @@ window.handleCheckoutCompletion = function() {
     const successState = document.getElementById('checkoutSuccessState');
     if (successState) successState.style.display = 'none';
     
-    const upiContainer = document.getElementById('upiPaymentContainer');
-    if (upiContainer) upiContainer.style.display = 'none';
+    const paymentContainer = document.getElementById('paymentInstructionsContainer');
+    if (paymentContainer) paymentContainer.style.display = 'none';
     
     const checkoutForm = document.getElementById('checkoutForm');
     if (checkoutForm) checkoutForm.style.display = 'flex';
@@ -1399,9 +1392,8 @@ window.submitOrder = async function(e) {
                  `*Subtotal:* ₹${totalPrice.toLocaleString('en-IN')}\n` +
                  `*Payment Method:* ${paymentMethod}\n`;
                  
-    if (paymentMethod === 'Online Payment') {
-      const upiPayUrl = `upi://pay?pa=${storeUpiId}&pn=NiNa%20by%20Mangsee&am=${totalPrice}&cu=INR&tn=${orderNumber}`;
-      waText += `\n*Instant UPI Payment Link:* \n${upiPayUrl}\n\n*Or pay to UPI ID:* ${storeUpiId}\n\n*Please share the payment screenshot to confirm order.*`;
+    if (paymentMethod === 'Pay via WhatsApp') {
+      waText += `\n*Please confirm this order and we'll share payment instructions right here on WhatsApp.*`;
     } else {
       waText += `\nPlease confirm receipt of this order.`;
     }
@@ -1438,8 +1430,8 @@ window.submitOrder = async function(e) {
     placeBtn.textContent = 'Processing Order...';
     try {
       // Hide UPI payment container for COD
-      const upiContainer = document.getElementById('upiPaymentContainer');
-      if (upiContainer) upiContainer.style.display = 'none';
+      const paymentContainer = document.getElementById('paymentInstructionsContainer');
+      if (paymentContainer) paymentContainer.style.display = 'none';
 
       // Show Success UI immediately — don't block on DB save
       const form = document.getElementById('checkoutForm');
@@ -1490,29 +1482,9 @@ window.submitOrder = async function(e) {
     placeBtn.disabled = true;
     placeBtn.textContent = 'Processing Order...';
     try {
-      // Set up dynamic UPI QR and link
-      const upiUrl = `upi://pay?pa=${storeUpiId}&pn=NiNa%20by%20Mangsee&am=${totalPrice}&cu=INR&tn=${orderNumber}`;
-      const qrCodeApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
-      
-      const qrImg = document.getElementById('upiQrImg');
-      if (qrImg) qrImg.src = qrCodeApiUrl;
-      
-      const deepLink = document.getElementById('upiDeepLink');
-      if (deepLink) deepLink.href = upiUrl;
-      
-      const upiDisplayId = document.getElementById('upiDisplayId');
-      if (upiDisplayId) upiDisplayId.textContent = `UPI: ${storeUpiId}`;
-      
-      const copyUpiBtn = document.getElementById('copyUpiBtn');
-      if (copyUpiBtn) {
-        copyUpiBtn.onclick = () => {
-          navigator.clipboard.writeText(storeUpiId);
-          showToast('UPI ID Copied!', 'info');
-        };
-      }
-      
-      const upiContainer = document.getElementById('upiPaymentContainer');
-      if (upiContainer) upiContainer.style.display = 'flex';
+      // Reveal the "pay on WhatsApp" note in the success state
+      const paymentContainer = document.getElementById('paymentInstructionsContainer');
+      if (paymentContainer) paymentContainer.style.display = 'flex';
 
       // Show Success UI immediately
       const form = document.getElementById('checkoutForm');
@@ -1534,7 +1506,7 @@ window.submitOrder = async function(e) {
       if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
       
       const successMessage = document.getElementById('successMessage');
-      if (successMessage) successMessage.textContent = 'Order recorded! Opening WhatsApp to complete your payment. Please send a screenshot of the payment confirmation.';
+      if (successMessage) successMessage.textContent = 'Order recorded! Opening WhatsApp so we can confirm your order and share payment details.';
       
       const successState = document.getElementById('checkoutSuccessState');
       if (successState) successState.style.display = 'flex';

@@ -4943,7 +4943,7 @@
         <div class="checkout-input-group">
           <label class="checkout-label">Payment Method *</label>
           <select id="checkoutPaymentMethod" required class="checkout-input">
-            <option value="Online Payment">Online Payment (UPI / QR Code)</option>
+            <option value="Pay via WhatsApp">Pay via WhatsApp</option>
             <option value="Cash on Delivery">Cash on Delivery (COD)</option>
           </select>
         </div>
@@ -4961,21 +4961,10 @@
         <p style="font-family: var(--font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-saffron); margin: 0;" id="successOrderNumber">Order #NINA-XXXX</p>
         <p style="font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: #4A4A48; margin: 0;" id="successMessage">Your order has been recorded successfully. A WhatsApp receipt has been generated for your records.</p>
         
-        <!-- UPI Payment details (shown only for Online Payment) -->
-        <div id="upiPaymentContainer" style="display: none; flex-direction: column; align-items: center; gap: 12px; background: #fafaf9; border: 1px dashed var(--border-color); padding: 16px; border-radius: 8px; width: 100%; margin: 10px 0;">
-          <p style="font-family: var(--font-body); font-size: 0.85rem; color: var(--text-dark); margin: 0; font-weight: bold;">Scan QR Code or Tap to Pay Instant UPI</p>
-          <img id="upiQrImg" src="" alt="UPI QR Code" style="width: 150px; height: 150px; background: #fff; border: 1px solid #eee; padding: 4px; border-radius: 4px;" />
-          <div style="font-family: var(--font-mono); font-size: 0.8rem; color: #4A4A48; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%;">
-            <span id="upiDisplayId">UPI: lenny93haokip-1@okicici</span>
-            <button type="button" id="copyUpiBtn" style="background: none; border: none; cursor: pointer; color: var(--accent-saffron); padding: 2px; display: inline-flex; align-items: center;">
-              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
-            </button>
-          </div>
-          <a id="upiDeepLink" href="" class="btn btn-primary" style="width: 100%; padding: 10px; font-family: var(--font-mono); text-transform: uppercase; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-            Tap to Pay on Mobile
-          </a>
-          <span style="font-family: var(--font-body); font-size: 0.75rem; color: #888; margin-top: 4px;">Please send payment screenshot on WhatsApp to confirm order</span>
+        <!-- Payment instructions (shown only when paying via WhatsApp) -->
+        <div id="paymentInstructionsContainer" style="display: none; flex-direction: column; align-items: center; gap: 10px; background: #fafaf9; border: 1px dashed var(--border-color); padding: 16px; border-radius: 8px; width: 100%; margin: 10px 0;">
+          <p style="font-family: var(--font-body); font-size: 0.85rem; color: var(--text-dark); margin: 0; font-weight: bold;">Complete your payment on WhatsApp</p>
+          <span style="font-family: var(--font-body); font-size: 0.8rem; color: #888;">We've opened WhatsApp with your order details — our team will share payment instructions there and confirm your order once payment is received.</span>
         </div>
 
         <button type="button" class="btn btn-primary" onclick="handleCheckoutCompletion()" style="width: 100%; padding: 14px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.85rem; margin-top: 10px;">Continue Shopping</button>
