@@ -43,7 +43,7 @@ serve(async (req) => {
     const itemsHtml = items
       .map(
         (item: any) =>
-          `<li><strong>${item.quantity}x ${item.title}</strong> (${item.variant}) - Rs. ${Number(
+          `<li><strong>${item.quantity}x ${item.title}</strong> (${item.variant}) - ₹${Number(
             item.price
           ).toLocaleString("en-IN")}</li>`
       )
@@ -64,7 +64,7 @@ serve(async (req) => {
           ${itemsHtml}
         </ul>
         
-        <p style="font-size: 1.1rem; margin-top: 16px;"><strong>Total Amount Paid:</strong> Rs. ${Number(
+        <p style="font-size: 1.1rem; margin-top: 16px;"><strong>Total Amount Paid:</strong> ₹${Number(
           subtotal
         ).toLocaleString("en-IN")}</p>
         

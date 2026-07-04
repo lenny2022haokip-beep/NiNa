@@ -4013,7 +4013,7 @@
     <!-- Full-Bleed Video Background -->
     <div class="hero-bg-container" id="heroBg">
       <div class="hero-bg-scale-wrapper">
-        <video class="hero-bg-video" autoplay loop muted playsinline id="heroVideo">
+        <video class="hero-bg-video" autoplay loop muted playsinline preload="auto" poster="assets/brand_ads_poster.jpg" id="heroVideo">
           <source src="assets/brand_ads.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
@@ -4835,7 +4835,8 @@
         <li><a href="javascript:void(0)" onclick="openInfoModal('returns')">Returns</a></li>
         <li><a href="javascript:void(0)" onclick="openInfoModal('care')">Care</a></li>
         <li><a href="javascript:void(0)" onclick="openInfoModal('contact')">Contact</a></li>
-        <li><a href="admin.html">Admin Portal</a></li>
+        <li><a href="javascript:void(0)" onclick="openInfoModal('privacy')">Privacy</a></li>
+        <li><a href="javascript:void(0)" onclick="openInfoModal('terms')">Terms</a></li>
       </ul>
 
       <div class="footer-min-socials">
@@ -4885,7 +4886,7 @@
       </div>
       <div class="cart-total-row">
         <span>Subtotal</span>
-        <span class="cart-total-price" id="cartTotalPrice">Rs. 0</span>
+        <span class="cart-total-price" id="cartTotalPrice">₹0</span>
       </div>
       <button class="btn btn-primary checkout-btn" onclick="triggerCheckout()">Proceed to Checkout</button>
     </div>
@@ -4901,7 +4902,7 @@
       <div class="modal-details">
         <span class="modal-cat" id="modalCat">Category</span>
         <h2 class="modal-title" id="modalTitle">Product Title</h2>
-        <div class="modal-price" id="modalPrice">Rs. 0</div>
+        <div class="modal-price" id="modalPrice">₹0</div>
         <p class="modal-desc" id="modalDesc">Detailed description here.</p>
         
         <div class="modal-actions">
