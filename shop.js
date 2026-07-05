@@ -1242,14 +1242,37 @@ window.openInfoModal = function(type) {
 
   if (type === 'shipping') {
     modalTitle = 'Shipping Policy';
-    modalBody = `<p>At NiNa Collective, we partner with Kuki artisan weavers from Lamka, Churachandpur, and Moreh in Manipur. Every product is handloomed on demand or in small batches.</p>
-                 <p style="margin-top: 12px;"><strong>Processing Time:</strong> Orders are processed within 2–5 business days.</p>
-                 <p style="margin-top: 12px;"><strong>Delivery:</strong> Shipping across India typically takes 5–8 business days via our premium courier partners. You will receive a WhatsApp message and email tracking confirmation as soon as your package ships.</p>`;
+    modalBody = `<p>Thank you for shopping with us. Please review our shipping policy below to understand how we process and deliver your orders.</p>
+                 <h4 style="margin-top: 16px; margin-bottom: 8px; color: var(--accent-saffron); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">1. Processing Time</h4>
+                 <p>All orders are processed within <strong>3–4 business days</strong> after being placed. Please note that orders are not dispatched on Sundays or Government Holidays.</p>
+                 <h4 style="margin-top: 16px; margin-bottom: 8px; color: var(--accent-saffron); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">2. Delivery Time</h4>
+                 <p>Delivery timelines vary depending on your location:</p>
+                 <ul style="margin-top: 6px; padding-left: 20px; list-style-type: disc;">
+                   <li><strong>Kangpokpi District Area:</strong> 1–2 business days</li>
+                   <li style="margin-top: 4px;"><strong>North East (NE) Circle:</strong> 4–5 business days</li>
+                   <li style="margin-top: 4px;"><strong>Other Parts of India:</strong> 7–8 business days</li>
+                 </ul>
+                 <p style="margin-top: 8px; font-style: italic; font-size: 0.85rem; color: var(--text-muted);">Please note that delivery times are estimates and may vary due to unforeseen circumstances. For any delays, an update message and mail will be sent to you via WhatsApp and Email.</p>
+                 <h4 style="margin-top: 16px; margin-bottom: 8px; color: var(--accent-saffron); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">3. Shipping Charges</h4>
+                 <ul style="margin-top: 6px; padding-left: 20px; list-style-type: disc;">
+                   <li><strong>Kangpokpi District Area:</strong> Free shipping</li>
+                   <li style="margin-top: 4px;"><strong>Rest of India:</strong> Shipping charges are calculated based on the weight and number of products purchased.</li>
+                 </ul>
+                 <h4 style="margin-top: 16px; margin-bottom: 8px; color: var(--accent-saffron); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">4. Tracking Your Order</h4>
+                 <p>Once your order is dispatched, you will receive a <strong>tracking number via WhatsApp and email</strong>. If you do not receive your tracking details, please feel free to contact us for assistance.</p>
+                 <h4 style="margin-top: 16px; margin-bottom: 8px; color: var(--accent-saffron); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">5. International Shipping & Customs</h4>
+                 <ul style="margin-top: 6px; padding-left: 20px; list-style-type: disc;">
+                   <li>International shipping is currently unavailable.</li>
+                   <li style="margin-top: 4px;">Therefore, customs and international duties do not apply at this time.</li>
+                 </ul>
+                 <p style="margin-top: 16px; font-weight: 500;">We use <strong>India Post (Speed Post)</strong> as our trusted delivery partner to ensure safe and reliable shipping.</p>`;
   } else if (type === 'returns') {
     modalTitle = 'Returns & Exchanges';
-    modalBody = `<p>Since each of our traditional Puans, bags, scarves, and accessories is individually handloomed, we hold a high standard of quality and craftsmanship.</p>
-                 <p style="margin-top: 12px;"><strong>Policies:</strong> We accept returns and exchanges within 7 days of delivery only for items that are damaged in transit or have manufacturing defects.</p>
-                 <p style="margin-top: 12px;"><strong>Process:</strong> To initiate a return, please contact us on WhatsApp with photos of the item. Refunds are processed to your original payment method once the item is inspected.</p>`;
+    modalBody = `<p>Since each of our traditional Puans, bags, scarves, and accessories is individually handloomed, we maintain a high standard of quality and craftsmanship.</p>
+                 <h4 style="margin-top: 16px; margin-bottom: 8px; color: var(--accent-saffron); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">Policy</h4>
+                 <p>We do not accept returns or exchanges unless the product is received in a damaged condition due to shipping.</p>
+                 <h4 style="margin-top: 16px; margin-bottom: 8px; color: var(--accent-saffron); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">Process</h4>
+                 <p>To report a damaged item, customers must provide clear video and image proof of the product and contact us via WhatsApp within <strong>7 days of delivery</strong>. After verification, appropriate action will be taken.</p>`;
   } else if (type === 'care') {
     modalTitle = 'Care Instructions';
     modalBody = `<p>Our handloomed textiles are made with 100% organic cotton and traditional weaving techniques.</p>
@@ -1265,7 +1288,7 @@ window.openInfoModal = function(type) {
     modalBody = `<p>We would love to hear from you!</p>
                  <p style="margin-top: 12px;"><strong>WhatsApp Business:</strong> +91 92339 18107</p>
                  <p style="margin-top: 6px;"><strong>Email Support:</strong> support@ninabymangsee.com</p>
-                 <p style="margin-top: 6px;"><strong>Artisan Studio:</strong> Churachandpur, Lamka, Manipur, India</p>
+                 <p style="margin-top: 6px;"><strong>Artisan Studio:</strong> Thangkanphai, Kangpokpi District</p>
                  <p style="margin-top: 6px;"><strong>Working Hours:</strong> Monday to Saturday, 10:00 AM – 6:00 PM IST</p>`;
   } else if (type === 'privacy') {
     modalTitle = 'Privacy Policy';
