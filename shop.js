@@ -612,6 +612,19 @@ function renderProducts() {
   
   // Re-apply filter states to the newly generated DOM elements
   applyFilterAndSearch();
+  
+  // Check URL parameters for category filter on initial load
+  if (!window.hasParsedUrlParams) {
+    window.hasParsedUrlParams = true;
+    const urlParams = new URLSearchParams(window.location.search);
+    const filterParam = urlParams.get('filter');
+    if (filterParam) {
+      const targetBtn = Array.from(document.querySelectorAll('.filter-btn')).find(btn => btn.getAttribute('data-filter') === filterParam);
+      if (targetBtn) {
+        targetBtn.click();
+      }
+    }
+  }
 }
 window.renderProducts = renderProducts;
 
@@ -733,13 +746,39 @@ async function loadSessionFromSupabase() {
       const data = await response.json();
       if (data && data.length > 0) {
         const dbSession = data[0];
-        cart = dbSession.cart || {};
+        const dbCart = dbSession.cart || {};
+        const dbWishlist = dbSession.wishlist || [];
+        
+        let cartChanged = false;
+        Object.keys(dbCart).forEach(key => {
+          if (cart[key]) {
+            if (cart[key] !== dbCart[key]) {
+              cart[key] = Math.max(cart[key], dbCart[key]);
+              cartChanged = true;
+            }
+          } else {
+            cart[key] = dbCart[key];
+            cartChanged = true;
+          }
+        });
+        
+        let wishlistChanged = false;
+        dbWishlist.forEach(id => {
+          if (!wishlist.has(id)) {
+            wishlist.add(id);
+            wishlistChanged = true;
+          }
+        });
+        
         window.cart = cart;
-        wishlist = new Set(dbSession.wishlist || []);
         window.wishlist = wishlist;
         
-        localStorage.setItem('nina_cart', JSON.stringify(cart));
-        localStorage.setItem('nina_wishlist', JSON.stringify([...wishlist]));
+        if (cartChanged || wishlistChanged) {
+          saveState();
+        } else {
+          localStorage.setItem('nina_cart', JSON.stringify(cart));
+          localStorage.setItem('nina_wishlist', JSON.stringify([...wishlist]));
+        }
         
         updateCartUI();
         updateWishlistUI();
@@ -1075,6 +1114,16 @@ function addToCart(productId, e, qtyToAdd = 1) {
   }
   const variant = (prod && prod.selectedVariant) || "Default";
   const cartKey = `${productId}-${variant}`;
+  const currentQty = cart[cartKey] || 0;
+
+  if (prod && currentQty + qtyToAdd > prod.stock_count) {
+    showToast(`Only ${prod.stock_count} items available in stock.`, "error");
+    if (prod.stock_count - currentQty > 0) {
+      cart[cartKey] = prod.stock_count;
+      updateCartUI();
+    }
+    return;
+  }
 
   if (cart[cartKey]) {
     cart[cartKey] += qtyToAdd;
@@ -1651,6 +1700,14 @@ window.updateCartUI = updateCartUI;
 
 function adjustCartQty(key, change) {
   if (cart[key]) {
+    const lastDash = key.lastIndexOf('-');
+    const productId = lastDash !== -1 ? key.substring(0, lastDash) : key;
+    const prod = products[productId];
+    if (change > 0 && prod && cart[key] + change > prod.stock_count) {
+      showToast(`Only ${prod.stock_count} items available in stock.`, "error");
+      return;
+    }
+    
     cart[key] += change;
     if (cart[key] <= 0) {
       delete cart[key];
