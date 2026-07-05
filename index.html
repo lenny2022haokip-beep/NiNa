@@ -1005,10 +1005,15 @@
     background-repeat: no-repeat;
     transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
+  @media (max-width: 1024px) and (min-width: 768px) {
+    .category-slide-media {
+      width: 65%; /* 65% width on tablet for wider text area */
+    }
+  }
   @media (max-width: 767px) {
     .category-slide-media {
       width: 100%;
-      height: 72%; /* Split height on mobile to focus on the product image */
+      height: 72%; /* Split height on mobile */
     }
   }
   .category-slide:hover .category-slide-media {
@@ -1033,6 +1038,12 @@
     transform: translateY(15px);
     opacity: 0;
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+  }
+  @media (max-width: 1024px) and (min-width: 768px) {
+    .category-slide-content {
+      width: 35%; /* 35% width on tablet for wider text area */
+      padding: 40px 30px;
+    }
   }
   @media (max-width: 767px) {
     .category-slide-content {
@@ -1071,9 +1082,15 @@
     letter-spacing: 0.08em;
     text-transform: uppercase; /* Classic fashion magazine look */
   }
-  @media (min-width: 768px) {
+  @media (min-width: 768px) and (max-width: 1024px) {
     .category-slide-content h2 {
-      font-size: 1.8rem; /* Scaled to fit 20% column nicely */
+      font-size: 2.2rem; /* Taller on tablet due to 35% width */
+      margin: 0 0 12px 0;
+    }
+  }
+  @media (min-width: 1025px) {
+    .category-slide-content h2 {
+      font-size: 1.8rem; /* Compact 1.8rem to fit 20% column nicely */
       margin: 0 0 12px 0;
     }
   }
@@ -1091,10 +1108,18 @@
       display: none !important; /* Hide description on mobile to prevent vertical overflow */
     }
   }
-  @media (min-width: 768px) {
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .category-slide-content p {
+      font-size: 0.95rem;
+      margin: 0 auto 24px auto;
+      display: block !important;
+    }
+  }
+  @media (min-width: 1025px) {
     .category-slide-content p {
       font-size: 0.92rem;
       margin: 0 auto 24px auto;
+      display: block !important;
     }
   }
   .category-slide-btn {
