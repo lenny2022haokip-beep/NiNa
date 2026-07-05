@@ -999,7 +999,7 @@
     visibility: visible;
   }
   .category-slide-media {
-    width: 50%;
+    width: 80%; /* 80% width on desktop for maximum product focus */
     height: 100%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1008,7 +1008,7 @@
   @media (max-width: 767px) {
     .category-slide-media {
       width: 100%;
-      height: 48%; /* Split height on mobile to focus on the product image */
+      height: 72%; /* Split height on mobile to focus on the product image */
     }
   }
   .category-slide:hover .category-slide-media {
@@ -1018,14 +1018,14 @@
     display: none !important; /* Hide overlay gradients since text is on solid light background */
   }
   .category-slide-content {
-    width: 50%;
+    width: 20%; /* 20% width on desktop */
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    text-align: left;
-    padding: 60px 80px; /* Luxury editorial padding */
+    align-items: center; /* Center aligned for narrow column symmetry */
+    text-align: center;
+    padding: 40px 24px; /* Balanced padding for narrow column */
     background-color: #FAF8F5; /* Premium off-white solid background */
     box-sizing: border-box;
     position: relative;
@@ -1037,10 +1037,9 @@
   @media (max-width: 767px) {
     .category-slide-content {
       width: 100%;
-      height: 52%; /* Take up the bottom half on mobile */
-      align-items: center;
-      text-align: center;
-      padding: 30px 24px;
+      height: 28%; /* Take up the bottom half on mobile */
+      padding: 20px 16px;
+      justify-content: center;
     }
   }
   .category-slide.active .category-slide-content {
@@ -1049,7 +1048,7 @@
   }
   .category-slide-num {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     letter-spacing: 0.12em;
     color: #C5A880 !important; /* Premium fashion gold eyebrow */
     margin-bottom: 6px;
@@ -1058,13 +1057,13 @@
   }
   @media (min-width: 768px) {
     .category-slide-num {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       margin-bottom: 10px;
     }
   }
   .category-slide-content h2 {
     font-family: 'Cormorant Garamond', serif !important;
-    font-size: 1.6rem;
+    font-size: 1.35rem;
     font-weight: 400; /* Regular weight for high contrast elegance */
     margin: 0 0 8px 0;
     line-height: 1.2;
@@ -1074,29 +1073,28 @@
   }
   @media (min-width: 768px) {
     .category-slide-content h2 {
-      font-size: 2.6rem;
+      font-size: 1.8rem; /* Scaled to fit 20% column nicely */
       margin: 0 0 12px 0;
     }
   }
   .category-slide-content p {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #555555 !important; /* Muted dark grey for readability */
-    margin: 0 0 16px 0; /* Left margin 0 for left alignment */
-    line-height: 1.6;
+    margin: 0 auto 16px auto;
+    line-height: 1.5;
     font-weight: 300;
     font-family: var(--font-body);
-    max-width: 500px;
+    max-width: 100%;
   }
   @media (max-width: 767px) {
     .category-slide-content p {
-      margin: 0 auto 16px auto; /* Center on mobile */
+      display: none !important; /* Hide description on mobile to prevent vertical overflow */
     }
   }
   @media (min-width: 768px) {
     .category-slide-content p {
-      font-size: 1.05rem;
-      margin: 0 0 24px 0;
-      max-width: 580px;
+      font-size: 0.92rem;
+      margin: 0 auto 24px auto;
     }
   }
   .category-slide-btn {
