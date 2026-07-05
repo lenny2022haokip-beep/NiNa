@@ -250,7 +250,7 @@
     background: rgba(253, 251, 247, 0.96);
   }
 
-  /* Header / Navigation */
+  /* Header / Navigation — Solid & High Contrast for Subpages */
   header {
     position: fixed;
     top: 0;
@@ -258,47 +258,31 @@
     width: 100%;
     z-index: 100;
     transition: var(--transition-smooth);
-    border-bottom: 1px solid transparent;
-  }
-  header.scrolled {
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(253, 251, 247, 0.96);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   }
   
-  /* When header is transparent over the hero background */
-  #header:not(.scrolled) .nav-links a {
-    color: rgba(255, 255, 255, 0.78);
-  }
-  #header:not(.scrolled) .nav-links a:hover {
-    color: #FFFFFF;
-  }
-  #header:not(.scrolled) .action-icon-btn {
-    color: #FFFFFF;
-  }
-  #header:not(.scrolled) .action-icon-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
-  }
-  #header:not(.scrolled) .menu-toggle span {
-    background: #FFFFFF;
-  }
-  
-  /* Scrolled header styling defaults */
-  header.scrolled .nav-links a {
+  /* Subpage Header default styles (high contrast) */
+  header .nav-links a {
     color: var(--color-muted);
   }
-  header.scrolled .nav-links a:hover {
+  header .nav-links a:hover,
+  header .nav-links a.active {
     color: var(--color-cream);
   }
-  header.scrolled .action-icon-btn {
+  header .nav-links a.active::after {
+    width: 100%;
+  }
+  header .action-icon-btn {
     color: var(--color-cream);
   }
-  header.scrolled .action-icon-btn:hover {
+  header .action-icon-btn:hover {
     background: rgba(0, 0, 0, 0.05);
   }
-  header.scrolled .menu-toggle span {
+  header .menu-toggle span {
     background: var(--color-cream);
   }
   
@@ -322,16 +306,12 @@
     height: 32px;
     width: auto;
     object-fit: contain;
-    mix-blend-mode: screen;
-    filter: none;
+    mix-blend-mode: normal;
+    filter: invert(1);
     transition: var(--transition-smooth), filter 0.4s ease;
   }
   header.scrolled .logo, header.scrolled .logo-img {
     height: 26px;
-  }
-  header.scrolled .logo-img {
-    filter: invert(1);
-    mix-blend-mode: normal;
   }
   .footer-brand .logo {
     height: 48px;
@@ -1634,7 +1614,7 @@
   /* Brand Tagline Section Styling */
   .brand-tagline-section {
     background-color: var(--bg-dark);
-    padding: 110px 24px;
+    padding: 70px 24px;
     text-align: center;
     border-top: 1px solid var(--border-color);
     position: relative;
@@ -1665,7 +1645,7 @@
     z-index: 2;
   }
   .brand-tagline-img {
-    max-width: 600px;
+    max-width: 580px;
     width: 90%;
     height: auto;
     opacity: 0.95;
@@ -1674,6 +1654,12 @@
   .brand-tagline-img:hover {
     opacity: 1;
     transform: scale(1.01);
+  }
+
+  @media (max-width: 767px) {
+    .brand-tagline-section {
+      padding: 50px 24px;
+    }
   }
 
   /* Footer Section */
