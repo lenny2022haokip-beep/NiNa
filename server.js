@@ -96,5 +96,5 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);
-  console.log(`Preview URL: http://localhost:${PORT}/kuki/index.html`);
+  console.log(`Preview URL: http://localhost:${PORT}/index.html`);
 });
