@@ -2560,6 +2560,36 @@
     stroke-dashoffset: 24;
     animation: drawCheck 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
   }
+
+  /* Heritage Page Slideshow Styles */
+  .slider-container {
+    position: relative;
+    overflow: hidden;
+  }
+  .slider-container .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+  }
+  .slider-container .slide.active {
+    opacity: 1;
+    z-index: 2;
+  }
+  .slider-container .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  /* Subtle Ken Burns zoom effect on active slide image */
+  .slider-container .slide.active img {
+    transform: scale(1.04);
+  }
 </style>
 </head>
 <body class="subpage-body">
@@ -2641,9 +2671,20 @@
           <p>NiNa exists to carry forward generational Kuki artistry and roots, ensuring that every handloomed thread is a celebration of identity. Through this brand, we aim to ensure our customers feel deeply connected, proud, bold, and confident in carrying Kuki heritage into the world.</p>
         </div>
 
-        <!-- Loom Close-up Image Card -->
-        <div class="heritage-card image-card card-img-loom">
-          <img src="assets/loom_detail.png" alt="Macro close-up of a traditional Kuki backstrap loin loom with organic cotton warp threads under natural lighting">
+        <!-- Loom Close-up Image Card (Slideshow) -->
+        <div class="heritage-card image-card card-img-loom slider-container" id="loomSlider">
+          <div class="slide active">
+            <img src="assets/heritage_1.webp" alt="Traditional Kuki backstrap loin loom and weaving process - Detail 1" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/heritage_2.webp" alt="Traditional Kuki backstrap loin loom and weaving process - Detail 2" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/heritage_3.jpg" alt="Traditional Kuki backstrap loin loom and weaving process - Detail 3" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/heritage_4.jpg" alt="Traditional Kuki backstrap loin loom and weaving process - Detail 4" loading="lazy">
+          </div>
         </div>
 
         <!-- Backstrap Loom description -->
@@ -2653,9 +2694,17 @@
           <p>Unlike automated power looms, the traditional Kuki backstrap (or loin) loom requires no electricity. The weaver sits on the floor, using her body weight and a leather strap to control the warp tension. Every row is woven line by line from memory.</p>
         </div>
 
-        <!-- Yarn Close-up Image Card -->
-        <div class="heritage-card image-card card-img-yarn">
-          <img src="assets/yarn_detail.png" alt="Macro detail of naturally dyed black, crimson red, and saffron yellow organic cotton yarn skeins">
+        <!-- Yarn Close-up Image Card (Slideshow) -->
+        <div class="heritage-card image-card card-img-yarn slider-container" id="yarnSlider">
+          <div class="slide active">
+            <img src="assets/heritage_5.jpg" alt="Naturally dyed organic cotton yarn and materials - Detail 1" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/heritage_6.jpg" alt="Naturally dyed organic cotton yarn and materials - Detail 2" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/heritage_7.jpg" alt="Naturally dyed organic cotton yarn and materials - Detail 3" loading="lazy">
+          </div>
         </div>
 
         <!-- Cooperative privacy/ethics text block -->
@@ -2672,9 +2721,17 @@
           <p>Our three signature patterns — Saipikhup (elephant footprint), Thangnang (lattice repeat), and Mongvom (layered diamond rows) — represent a visual language spoken in thread. We collaborate directly with master weavers to translate these historic wraps into modern clothing, lightweight scarves, and accessories.</p>
         </div>
 
-        <!-- Puan textile image block -->
-        <div class="heritage-card image-card card-img-puan">
-          <img src="assets/puan_product.png" alt="Macro details of the intricate geometric weaving patterns on traditional Kuki Puan fabric">
+        <!-- Puan textile image block (Slideshow) -->
+        <div class="heritage-card image-card card-img-puan slider-container" id="puanSlider">
+          <div class="slide active">
+            <img src="assets/heritage_8.jpg" alt="Intricate geometric weaving patterns on traditional Kuki Puan fabric - Detail 1" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/heritage_9.jpg" alt="Intricate geometric weaving patterns on traditional Kuki Puan fabric - Detail 2" loading="lazy">
+          </div>
+          <div class="slide">
+            <img src="assets/heritage_10.jpg" alt="Intricate geometric weaving patterns on traditional Kuki Puan fabric - Detail 3" loading="lazy">
+          </div>
         </div>
       </div>
     </div>
@@ -2920,6 +2977,28 @@
   </div>
 
   <!-- Script logic -->
-<script src="shop.js"></script>
+  <script src="shop.js"></script>
+  <script>
+    // --- Heritage Page Image Slideshows ---
+    document.addEventListener('DOMContentLoaded', () => {
+      const initSlider = (sliderId, intervalTime = 4000) => {
+        const slider = document.getElementById(sliderId);
+        if (!slider) return;
+        const slides = slider.querySelectorAll('.slide');
+        if (slides.length <= 1) return;
+        
+        let current = 0;
+        setInterval(() => {
+          slides[current].classList.remove('active');
+          current = (current + 1) % slides.length;
+          slides[current].classList.add('active');
+        }, intervalTime);
+      };
+      
+      initSlider('loomSlider', 4500);
+      initSlider('yarnSlider', 5000);
+      initSlider('puanSlider', 5500);
+    });
+  </script>
 </body>
 </html>
