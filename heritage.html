@@ -160,22 +160,22 @@
 
   /* Traditional Kuki Pattern Border */
   .kuki-border {
-    height: 28px;
+    height: 29px; /* Exact height of border_pattern.png */
     width: 100%;
-    background-image: url('assets/filler_black.png');
+    background-image: url('assets/border_pattern.png') !important;
     background-repeat: repeat-x;
-    background-size: auto 180px;
-    background-position: top;
+    background-size: auto 29px;
+    background-position: center;
     opacity: 0.95;
     position: relative;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     z-index: 10;
   }
   .kuki-border.red {
-    background-image: url('assets/filler_red.png');
+    background-image: url('assets/border_pattern.png') !important;
   }
   .kuki-border.bottom-pattern {
-    background-position: bottom;
+    background-position: center;
   }
   .kuki-border::after {
     content: none;
@@ -192,6 +192,43 @@
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(246, 245, 243, 0.85) 100%);
     border: 1px solid var(--border-color);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  /* Pattern Borders to replace solid border lines */
+  .pattern-border-bottom {
+    position: relative;
+    border-bottom: none !important;
+  }
+  .pattern-border-bottom::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background-image: url('assets/border_pattern.png');
+    background-size: auto 12px;
+    background-repeat: repeat-x;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .pattern-border-top {
+    position: relative;
+    border-top: none !important;
+  }
+  .pattern-border-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background-image: url('assets/border_pattern.png');
+    background-size: auto 12px;
+    background-repeat: repeat-x;
+    z-index: 10;
+    pointer-events: none;
   }
 
   /* Button Styles */
