@@ -544,27 +544,8 @@ function renderProducts() {
   
   productList.forEach(prod => {
     let badgeHtml = '';
-    
-    // Dynamic visual triggers based on stock scarcity strategy
-    if (prod.stock_count >= 1 && prod.stock_count <= 5) {
-      badgeHtml = `<span class="product-badge scarcity">Batch 01 — Only ${prod.stock_count} pieces woven</span>`;
-    } else if (prod.stock_count > 5) {
-      // Fallback to design category badges for normal stock items
-      if (prod.id === 1 || prod.id === 31 || prod.id === 5) {
-        badgeHtml = `<span class="product-badge bestseller">Bestseller</span>`;
-      } else if (prod.id === 2 || prod.id === 8) {
-        badgeHtml = `<span class="product-badge new">New</span>`;
-      } else if (prod.id === 3 || prod.id === 10) {
-        badgeHtml = `<span class="product-badge handcrafted">Handcrafted</span>`;
-      }
-    }
-    
     let soldOutClass = '';
     let soldOutOverlayHtml = '';
-    if (prod.stock_count === 0) {
-      soldOutClass = ' sold-out';
-      soldOutOverlayHtml = `<div class="sold-out-overlay">Sold Out</div>`;
-    }
     
     // Match traditional patterns
     let pattern = 'none';
@@ -1888,22 +1869,14 @@ function openQuickView(id) {
 
   // Reset add button listener
   if (modalAddBtn) {
-    if (prod.stock_count === 0) {
-      modalAddBtn.disabled = true;
-      modalAddBtn.textContent = 'SOLD OUT';
-      modalAddBtn.style.opacity = '0.5';
-      modalAddBtn.style.cursor = 'not-allowed';
-      modalAddBtn.onclick = null;
-    } else {
-      modalAddBtn.disabled = false;
-      modalAddBtn.textContent = 'Add to Cart';
-      modalAddBtn.style.opacity = '';
-      modalAddBtn.style.cursor = '';
-      modalAddBtn.onclick = (e) => {
-        addToCart(id, e, modalQty);
-        closeQuickView();
-      };
-    }
+    modalAddBtn.disabled = false;
+    modalAddBtn.textContent = 'Add to Cart';
+    modalAddBtn.style.opacity = '';
+    modalAddBtn.style.cursor = '';
+    modalAddBtn.onclick = (e) => {
+      addToCart(id, e, modalQty);
+      closeQuickView();
+    };
   }
 
   if (modalBackdrop) {
