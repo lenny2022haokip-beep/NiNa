@@ -981,17 +981,22 @@
     opacity: 0;
     visibility: hidden;
     display: flex;
-    flex-direction: row; /* Split screen layout */
-    align-items: stretch;
-    justify-content: stretch;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end; /* Align content to bottom to keep products clear */
+    text-align: center;
+    padding: 60px 40px; /* Spacious luxury padding */
+    box-sizing: border-box;
     cursor: pointer;
     transition: opacity 0.6s ease, visibility 0.6s ease;
-    background-color: #FAF8F5; /* Premium off-white/cream solid background */
+    background-color: #FAF8F5;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
     overflow: hidden;
   }
   @media (max-width: 767px) {
     .category-slide {
-      flex-direction: column; /* Stacked layout on mobile */
+      padding: 40px 20px !important;
     }
   }
   .category-slide.active {
@@ -999,67 +1004,41 @@
     visibility: visible;
   }
   .category-slide-media {
-    width: 75%; /* 75% width on desktop for maximum product focus */
-    height: 100%;
-    background-color: #FAF8F5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-  }
-  @media (max-width: 1024px) and (min-width: 768px) {
-    .category-slide-media {
-      width: 60%; /* wider text area on tablet */
-    }
-  }
-  @media (max-width: 767px) {
-    .category-slide-media {
-      width: 100%;
-      height: 65%; /* Split height on mobile */
-    }
-  }
-  .category-slide-media img {
-    max-width: 88%;
-    max-height: 88%;
-    object-fit: contain; /* Never crop or zoom */
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .category-slide:hover .category-slide-media img {
-    transform: scale(1.02);
+    display: none !important; /* Replaced by full-bleed background-image */
   }
   .category-slide-overlay {
-    display: none !important; /* Hide overlay gradients since text is on solid light background */
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(18, 18, 17, 0.95) 0%, rgba(18, 18, 17, 0.45) 55%, rgba(18, 18, 17, 0.1) 100%) !important;
+    z-index: 1;
+    pointer-events: none;
   }
   .category-slide-content {
-    width: 25%; /* 25% width on desktop */
-    height: 100%;
+    width: 100%;
+    max-width: 700px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center; /* Center aligned for column symmetry */
+    justify-content: flex-end;
+    align-items: center;
     text-align: center;
-    padding: 40px 24px; /* Balanced padding */
-    background-color: #FAF8F5; /* Premium off-white solid background */
+    padding: 0;
+    background-color: transparent !important;
     box-sizing: border-box;
     position: relative;
     z-index: 3;
+    color: #FDFBF7 !important;
     transform: translateY(15px);
     opacity: 0;
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
   }
-  @media (max-width: 1024px) and (min-width: 768px) {
-    .category-slide-content {
-      width: 40%;
-      padding: 40px 30px;
-    }
-  }
   @media (max-width: 767px) {
     .category-slide-content {
       width: 100%;
-      height: 35%; /* Take up the bottom third on mobile */
-      padding: 20px 16px;
-      justify-content: center;
+      padding: 0;
     }
   }
   .category-slide.active .category-slide-content {
@@ -1070,7 +1049,7 @@
     font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: 0.12em;
-    color: #C5A880 !important; /* Premium fashion gold eyebrow */
+    color: #DFD3C3 !important; /* Premium fashion gold eyebrow */
     margin-bottom: 6px;
     display: block;
     text-transform: uppercase;
@@ -1083,101 +1062,40 @@
   }
   .category-slide-content h2 {
     font-family: 'Cormorant Garamond', serif !important;
-    font-size: 1.35rem;
+    font-size: 2rem;
     font-weight: 400; /* Regular weight for high contrast elegance */
     margin: 0 0 8px 0;
     line-height: 1.2;
-    color: var(--text-dark) !important; /* Dark text on light background */
+    color: #FDFBF7 !important;
     letter-spacing: 0.08em;
     text-transform: uppercase; /* Classic fashion magazine look */
   }
-  @media (min-width: 768px) and (max-width: 1024px) {
+  @media (min-width: 768px) {
     .category-slide-content h2 {
-      font-size: 2.2rem;
-      margin: 0 0 12px 0;
-    }
-  }
-  @media (min-width: 1025px) {
-    .category-slide-content h2 {
-      font-size: 1.8rem;
+      font-size: 2.8rem;
       margin: 0 0 12px 0;
     }
   }
   .category-slide-content p {
-    font-size: 0.8rem;
-    color: #555555 !important; /* Muted dark grey for readability */
-    margin: 0 auto 16px auto;
+    font-size: 0.82rem;
+    color: rgba(253, 251, 247, 0.8) !important; /* Muted light text for readability */
+    margin: 0 auto 12px auto;
     line-height: 1.5;
     font-weight: 300;
     font-family: var(--font-body);
-    max-width: 100%;
+    max-width: 440px;
   }
   @media (max-width: 767px) {
     .category-slide-content p {
       display: none !important; /* Hide description on mobile to prevent vertical overflow */
     }
   }
-  @media (min-width: 768px) and (max-width: 1024px) {
+  @media (min-width: 768px) {
     .category-slide-content p {
       font-size: 0.95rem;
-      margin: 0 auto 24px auto;
-      display: block !important;
+      margin: 0 auto 20px auto;
+      max-width: 500px;
     }
-  }
-  @media (min-width: 1025px) {
-    .category-slide-content p {
-      font-size: 0.92rem;
-      margin: 0 auto 24px auto;
-      display: block !important;
-    }
-  }
-
-  /* Orientation-Specific Responsive Layouts (Desktop) */
-  @media (min-width: 1025px) {
-    .category-slide.slide-landscape .category-slide-media { width: 76%; }
-    .category-slide.slide-landscape .category-slide-content { width: 24%; }
-    .category-slide.slide-landscape .category-slide-content h2 { font-size: 1.8rem; margin-bottom: 12px; }
-    .category-slide.slide-landscape .category-slide-content p { font-size: 0.88rem; max-width: 280px; line-height: 1.5; }
-
-    .category-slide.slide-portrait .category-slide-media { width: 72%; }
-    .category-slide.slide-portrait .category-slide-content { width: 28%; }
-    .category-slide.slide-portrait .category-slide-content h2 { font-size: 1.6rem; margin-bottom: 10px; }
-    .category-slide.slide-portrait .category-slide-content p { font-size: 0.85rem; max-width: 260px; line-height: 1.5; }
-
-    .category-slide.slide-square .category-slide-media { width: 74%; }
-    .category-slide.slide-square .category-slide-content { width: 26%; }
-    .category-slide.slide-square .category-slide-content h2 { font-size: 1.7rem; margin-bottom: 12px; }
-    .category-slide.slide-square .category-slide-content p { font-size: 0.86rem; max-width: 270px; line-height: 1.5; }
-  }
-
-  /* Orientation-Specific Responsive Layouts (Tablet) */
-  @media (max-width: 1024px) and (min-width: 768px) {
-    .category-slide.slide-landscape .category-slide-media { width: 68%; }
-    .category-slide.slide-landscape .category-slide-content { width: 32%; }
-    .category-slide.slide-landscape .category-slide-content h2 { font-size: 1.8rem; }
-    .category-slide.slide-landscape .category-slide-content p { font-size: 0.88rem; max-width: 260px; }
-
-    .category-slide.slide-portrait .category-slide-media { width: 65%; }
-    .category-slide.slide-portrait .category-slide-content { width: 35%; }
-    .category-slide.slide-portrait .category-slide-content h2 { font-size: 1.6rem; }
-    .category-slide.slide-portrait .category-slide-content p { font-size: 0.85rem; max-width: 240px; }
-
-    .category-slide.slide-square .category-slide-media { width: 66%; }
-    .category-slide.slide-square .category-slide-content { width: 34%; }
-    .category-slide.slide-square .category-slide-content h2 { font-size: 1.7rem; }
-    .category-slide.slide-square .category-slide-content p { font-size: 0.86rem; max-width: 250px; }
-  }
-
-  /* Orientation-Specific Responsive Layouts (Mobile) */
-  @media (max-width: 767px) {
-    .category-slide.slide-landscape .category-slide-media { height: 76%; }
-    .category-slide.slide-landscape .category-slide-content { height: 24%; }
-
-    .category-slide.slide-portrait .category-slide-media { height: 76%; }
-    .category-slide.slide-portrait .category-slide-content { height: 24%; }
-
-    .category-slide.slide-square .category-slide-media { height: 76%; }
-    .category-slide.slide-square .category-slide-content { height: 24%; }
   }
   .category-slide-btn {
     font-family: var(--font-mono);
@@ -4180,10 +4098,8 @@
     <div class="category-slider-wrapper reveal">
       <div class="category-slider" id="categorySlider">
         <!-- Slide 1: Bags -->
-        <div class="category-slide active slide-portrait" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media">
-            <img src="assets/Bags.jpeg" alt="Bags">
-          </div>
+        <div class="category-slide active" style="background-image: url('assets/Bags.jpeg'); background-position: center 66%;" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">01 / BAGS</span>
             <h2>BAG COLLECTION</h2>
@@ -4193,10 +4109,8 @@
         </div>
         
         <!-- Slide 2: Bandanas -->
-        <div class="category-slide slide-landscape" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media">
-            <img src="assets/cat_bandana_new.jpg" alt="Bandanas">
-          </div>
+        <div class="category-slide" style="background-image: url('assets/cat_bandana_new.jpg'); background-position: center 35%;" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">02 / BANDANAS</span>
             <h2>BANDANA COLLECTION</h2>
@@ -4206,10 +4120,8 @@
         </div>
         
         <!-- Slide 3: Scarves -->
-        <div class="category-slide slide-square" onclick="filterCategory('scarf'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media">
-            <img src="assets/cat_scarves.webp" alt="Scarves">
-          </div>
+        <div class="category-slide" style="background-image: url('assets/cat_scarves.webp'); background-position: center 35%;" onclick="filterCategory('scarf'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">03 / SCARVES</span>
             <h2>SCARF COLLECTION</h2>
@@ -4219,10 +4131,8 @@
         </div>
 
         <!-- Slide 4: Pins -->
-        <div class="category-slide slide-square" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media">
-            <img src="assets/cat_pins_new.webp" alt="Pins">
-          </div>
+        <div class="category-slide" style="background-image: url('assets/cat_pins_new.webp'); background-position: center 50%;" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">04 / PINS</span>
             <h2>LAPEL PIN COLLECTION</h2>
@@ -4232,10 +4142,8 @@
         </div>
 
         <!-- Slide 5: Shawls -->
-        <div class="category-slide slide-landscape" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media">
-            <img src="assets/cat_shawl_new.jpg" alt="Shawls">
-          </div>
+        <div class="category-slide" style="background-image: url('assets/cat_shawl_new.jpg'); background-position: center 50%;" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">05 / SHAWLS</span>
             <h2>SHAWL COLLECTION</h2>
@@ -4245,10 +4153,8 @@
         </div>
         
         <!-- Slide 6: Pondum -->
-        <div class="category-slide slide-portrait" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media">
-            <img src="assets/cat_pondum_new.jpg" alt="Pondum">
-          </div>
+        <div class="category-slide" style="background-image: url('assets/cat_pondum_new.jpg'); background-position: center 60%;" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+          <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">06 / PONDUM</span>
             <h2>PONDUM (EXCLUSIVE)</h2>
