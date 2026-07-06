@@ -1131,6 +1131,54 @@
       display: block !important;
     }
   }
+
+  /* Orientation-Specific Responsive Layouts (Desktop) */
+  @media (min-width: 1025px) {
+    .category-slide.slide-landscape .category-slide-media { width: 68%; }
+    .category-slide.slide-landscape .category-slide-content { width: 32%; }
+    .category-slide.slide-landscape .category-slide-content h2 { font-size: 2.2rem; margin-bottom: 16px; }
+    .category-slide.slide-landscape .category-slide-content p { font-size: 1.05rem; max-width: 85%; line-height: 1.6; }
+
+    .category-slide.slide-portrait .category-slide-media { width: 55%; }
+    .category-slide.slide-portrait .category-slide-content { width: 45%; }
+    .category-slide.slide-portrait .category-slide-content h2 { font-size: 1.8rem; margin-bottom: 14px; }
+    .category-slide.slide-portrait .category-slide-content p { font-size: 0.95rem; max-width: 80%; line-height: 1.6; }
+
+    .category-slide.slide-square .category-slide-media { width: 62%; }
+    .category-slide.slide-square .category-slide-content { width: 38%; }
+    .category-slide.slide-square .category-slide-content h2 { font-size: 2.0rem; margin-bottom: 14px; }
+    .category-slide.slide-square .category-slide-content p { font-size: 0.98rem; max-width: 82%; line-height: 1.6; }
+  }
+
+  /* Orientation-Specific Responsive Layouts (Tablet) */
+  @media (max-width: 1024px) and (min-width: 768px) {
+    .category-slide.slide-landscape .category-slide-media { width: 60%; }
+    .category-slide.slide-landscape .category-slide-content { width: 40%; }
+    .category-slide.slide-landscape .category-slide-content h2 { font-size: 2.2rem; }
+    .category-slide.slide-landscape .category-slide-content p { font-size: 1.0rem; }
+
+    .category-slide.slide-portrait .category-slide-media { width: 50%; }
+    .category-slide.slide-portrait .category-slide-content { width: 50%; }
+    .category-slide.slide-portrait .category-slide-content h2 { font-size: 2.0rem; }
+    .category-slide.slide-portrait .category-slide-content p { font-size: 0.92rem; }
+
+    .category-slide.slide-square .category-slide-media { width: 55%; }
+    .category-slide.slide-square .category-slide-content { width: 45%; }
+    .category-slide.slide-square .category-slide-content h2 { font-size: 2.1rem; }
+    .category-slide.slide-square .category-slide-content p { font-size: 0.95rem; }
+  }
+
+  /* Orientation-Specific Responsive Layouts (Mobile) */
+  @media (max-width: 767px) {
+    .category-slide.slide-landscape .category-slide-media { height: 55%; }
+    .category-slide.slide-landscape .category-slide-content { height: 45%; }
+
+    .category-slide.slide-portrait .category-slide-media { height: 70%; }
+    .category-slide.slide-portrait .category-slide-content { height: 30%; }
+
+    .category-slide.slide-square .category-slide-media { height: 62%; }
+    .category-slide.slide-square .category-slide-content { height: 38%; }
+  }
   .category-slide-btn {
     font-family: var(--font-mono);
     font-size: 0.72rem;
@@ -4132,9 +4180,9 @@
     <div class="category-slider-wrapper reveal">
       <div class="category-slider" id="categorySlider">
         <!-- Slide 1: Bags -->
-        <div class="category-slide active" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide active slide-portrait" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-media">
-            <img src="assets/cat_bags_new.jpg" alt="Bags">
+            <img src="assets/Bags.jpeg" alt="Bags">
           </div>
           <div class="category-slide-content">
             <span class="category-slide-num">01 / BAGS</span>
@@ -4145,7 +4193,7 @@
         </div>
         
         <!-- Slide 2: Bandanas -->
-        <div class="category-slide" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide slide-landscape" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-media">
             <img src="assets/cat_bandana_new.jpg" alt="Bandanas">
           </div>
@@ -4158,9 +4206,9 @@
         </div>
         
         <!-- Slide 3: Scarves -->
-        <div class="category-slide" onclick="filterCategory('scarf'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide slide-square" onclick="filterCategory('scarf'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-media">
-            <img src="assets/cat_scarves_new.webp" alt="Scarves">
+            <img src="assets/cat_scarves.webp" alt="Scarves">
           </div>
           <div class="category-slide-content">
             <span class="category-slide-num">03 / SCARVES</span>
@@ -4171,9 +4219,9 @@
         </div>
 
         <!-- Slide 4: Pins -->
-        <div class="category-slide" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide slide-square" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-media">
-            <img src="assets/cat_pins_new.jpg" alt="Pins">
+            <img src="assets/cat_pins_new.webp" alt="Pins">
           </div>
           <div class="category-slide-content">
             <span class="category-slide-num">04 / PINS</span>
@@ -4184,7 +4232,7 @@
         </div>
 
         <!-- Slide 5: Shawls -->
-        <div class="category-slide" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide slide-landscape" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-media">
             <img src="assets/cat_shawl_new.jpg" alt="Shawls">
           </div>
@@ -4197,7 +4245,7 @@
         </div>
         
         <!-- Slide 6: Pondum -->
-        <div class="category-slide" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide slide-portrait" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-media">
             <img src="assets/cat_pondum_new.jpg" alt="Pondum">
           </div>
