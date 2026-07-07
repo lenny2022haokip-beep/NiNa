@@ -1108,6 +1108,48 @@ function filterCategory(cat) {
 }
 window.filterCategory = filterCategory;
 
+function filterCategoryAndSub(cat, sub) {
+  if (filterBtns) {
+    const targetBtn = Array.from(filterBtns).find(b => b.dataset.filter === cat);
+    if (targetBtn) {
+      // Set the main category
+      filterBtns.forEach(b => b.classList.remove('active'));
+      targetBtn.classList.add('active');
+      activeFilter = cat;
+      
+      // Update sub-filters UI
+      updateSubFilterUI();
+      
+      // Set the active sub-filter
+      activeSubfilter = sub;
+      const subBtns = document.querySelectorAll('.sub-filter-btn');
+      if (subBtns) {
+        subBtns.forEach(sb => {
+          if (sb.dataset.subfilter === sub) {
+            sb.classList.add('active');
+          } else {
+            sb.classList.remove('active');
+          }
+        });
+      }
+      
+      // Show sub-filters
+      if (subFilterTabs) {
+        if (activeFilter !== 'all') {
+          subFilterTabs.classList.add('show');
+        } else {
+          subFilterTabs.classList.remove('show');
+        }
+      }
+      
+      applyFilterAndSearch();
+    }
+  }
+  const shopSec = document.getElementById('shop');
+  if (shopSec) shopSec.scrollIntoView({ behavior: 'smooth' });
+}
+window.filterCategoryAndSub = filterCategoryAndSub;
+
 // Focus shop search on header search click
 const searchHeaderBtn = document.getElementById('searchHeaderBtn');
 if (searchHeaderBtn) {

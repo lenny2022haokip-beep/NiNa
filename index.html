@@ -1134,6 +1134,33 @@
       max-width: 500px;
     }
   }
+  .category-subcategories {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+  .subcategory-pill {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dark) !important;
+    background: transparent;
+    border: 1px solid rgba(18, 18, 17, 0.25);
+    padding: 6px 14px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .subcategory-pill:hover {
+    background: var(--text-dark);
+    color: #ffffff !important;
+    border-color: var(--text-dark);
+    transform: translateY(-1.5px);
+  }
   .category-slide-btn {
     font-family: var(--font-mono);
     font-size: 0.72rem;
@@ -4116,67 +4143,94 @@
     <div class="category-slider-wrapper reveal">
       <div class="category-slider pattern-border-top pattern-border-bottom" id="categorySlider">
         <!-- Slide 1: Bags -->
-        <div class="category-slide active" style="background-image: url('assets/Bags.jpeg'); background-position: center 66%;" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide active" style="background-image: url('assets/products/cover_bag.jpg'); background-position: center 66%;" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">01 / BAGS</span>
             <h2>BAG COLLECTION</h2>
             <p>Historic backstrap-loomed patterns finished with premium leather details.</p>
+            <div class="category-subcategories">
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bag', 'mangvom'); event.stopPropagation();">Mongvom</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bag', 'saipikhup'); event.stopPropagation();">Saipikhup</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bag', 'thangnang'); event.stopPropagation();">Thangnang</span>
+            </div>
             <span class="category-slide-btn">EXPLORE BAGS <span>→</span></span>
           </div>
         </div>
         
         <!-- Slide 2: Bandanas -->
-        <div class="category-slide" style="background-image: url('assets/cat_bandana_new.jpg'); background-position: center 35%;" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/products/cover_bandana.jpg'); background-position: center 35%;" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">02 / BANDANAS</span>
             <h2>BANDANA COLLECTION</h2>
-            <p>Crafted using the iconic Saipikhup, Thangnang and Mongvom Pattern. Symbol of Strength, Resilience and Power. Designed both for Men and Women, Each Bandana blends cultural heritage with contemporary style.</p>
+            <p>Crafted using the iconic Saipikhup, Thangnang and Mongvom Pattern. Designed both for Men and Women.</p>
+            <div class="category-subcategories">
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bandana', 'mangvom'); event.stopPropagation();">Mongvom</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bandana', 'saipikhup'); event.stopPropagation();">Saipikhup</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bandana', 'thangnang'); event.stopPropagation();">Thangnang</span>
+            </div>
             <span class="category-slide-btn">EXPLORE BANDANAS <span>→</span></span>
           </div>
         </div>
         
         <!-- Slide 3: Scarves -->
-        <div class="category-slide" style="background-image: url('assets/cat_scarves.webp'); background-position: center 20%;" onclick="filterCategory('scarf'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/products/cover_scarf.webp'); background-position: center 20%;" onclick="filterCategory('scarf'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">03 / SCARVES</span>
             <h2>SCARF COLLECTION</h2>
-            <p>Soft, lightweight, and showcasing traditional Kuki motifs like Saipikhup and Thangnang.</p>
+            <p>Soft, lightweight, and showcasing traditional Kuki motifs like Dahpi, Phoulva and Saipikhup.</p>
+            <div class="category-subcategories">
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('scarf', 'dahpi'); event.stopPropagation();">Dahpi</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('scarf', 'phoulva'); event.stopPropagation();">Phoulva</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('scarf', 'saipikhup'); event.stopPropagation();">Saipikhup</span>
+            </div>
             <span class="category-slide-btn">EXPLORE SCARVES <span>→</span></span>
           </div>
         </div>
 
         <!-- Slide 4: Pins -->
-        <div class="category-slide" style="background-image: url('assets/cat_pins_new.webp'); background-position: center 22%;" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/products/cover_pin.webp'); background-position: center 22%;" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">04 / PINS</span>
             <h2>LAPEL PIN COLLECTION</h2>
             <p>Traditional musical instrument motifs and cultural patterns, perfect as accessories.</p>
+            <div class="category-subcategories">
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('pin', 'gosem'); event.stopPropagation();">Gosem</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('pin', 'tahchapa'); event.stopPropagation();">Tahchapa</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('pin', 'tahchanu'); event.stopPropagation();">Tahchanu</span>
+            </div>
             <span class="category-slide-btn">EXPLORE PINS <span>→</span></span>
           </div>
         </div>
 
         <!-- Slide 5: Shawls -->
-        <div class="category-slide" style="background-image: url('assets/cat_shawl_new.jpg'); background-position: center 50%;" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/products/cover_shawl.jpg'); background-position: center 50%;" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">05 / SHAWLS</span>
             <h2>SHAWL COLLECTION</h2>
             <p>Exquisite full-sized wraps woven by master artisans, representing roots and status.</p>
+            <div class="category-subcategories">
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('shawl', 'saipikhup'); event.stopPropagation();">Saipikhup</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('shawl', 'pondum'); event.stopPropagation();">Pondum</span>
+            </div>
             <span class="category-slide-btn">EXPLORE SHAWLS <span>→</span></span>
           </div>
         </div>
         
         <!-- Slide 6: Pondum -->
-        <div class="category-slide" style="background-image: url('assets/cat_pondum_new.jpg'); background-position: center 60%;" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/products/cover_pondum.jpg'); background-position: center 60%;" onclick="filterCategoryAndSub('shawl', 'pondum'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">06 / PONDUM</span>
             <h2>PONDUM (EXCLUSIVE)</h2>
             <p>A timeless piece crafted to pay tribute and respect during days of mourning and condolence.</p>
+            <div class="category-subcategories">
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('shawl', 'pondum'); event.stopPropagation();">Pondum</span>
+            </div>
             <span class="category-slide-btn">EXPLORE PONDUM <span>→</span></span>
           </div>
         </div>
