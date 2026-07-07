@@ -4153,6 +4153,7 @@
               <span class="subcategory-pill" onclick="filterCategoryAndSub('bag', 'mangvom'); event.stopPropagation();">Mongvom</span>
               <span class="subcategory-pill" onclick="filterCategoryAndSub('bag', 'saipikhup'); event.stopPropagation();">Saipikhup</span>
               <span class="subcategory-pill" onclick="filterCategoryAndSub('bag', 'thangnang'); event.stopPropagation();">Thangnang</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bag', 'thangnang_green'); event.stopPropagation();">Thangnang Bag green</span>
             </div>
             <span class="category-slide-btn">EXPLORE BAGS <span>→</span></span>
           </div>
@@ -4167,8 +4168,11 @@
             <p>Crafted using the iconic Saipikhup, Thangnang and Mongvom Pattern. Designed both for Men and Women.</p>
             <div class="category-subcategories">
               <span class="subcategory-pill" onclick="filterCategoryAndSub('bandana', 'mangvom'); event.stopPropagation();">Mongvom</span>
-              <span class="subcategory-pill" onclick="filterCategoryAndSub('bandana', 'saipikhup'); event.stopPropagation();">Saipikhup</span>
-              <span class="subcategory-pill" onclick="filterCategoryAndSub('bandana', 'thangnang'); event.stopPropagation();">Thangnang</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bandana', 'saipikhup_orange'); event.stopPropagation();">Saipikhup Orange</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bandana', 'saipikhup_bw'); event.stopPropagation();">Saipikhup B&W</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bandana', 'saipikhup_white'); event.stopPropagation();">Saipikhup White</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bandana', 'thangnang_red'); event.stopPropagation();">Thangnang Red</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('bandana', 'thangnang_yellow'); event.stopPropagation();">Thangnang Yellow</span>
             </div>
             <span class="category-slide-btn">EXPLORE BANDANAS <span>→</span></span>
           </div>
@@ -4214,28 +4218,29 @@
             <h2>SHAWL COLLECTION</h2>
             <p>Exquisite full-sized wraps woven by master artisans, representing roots and status.</p>
             <div class="category-subcategories">
-              <span class="subcategory-pill" onclick="filterCategoryAndSub('shawl', 'saipikhup'); event.stopPropagation();">Saipikhup</span>
-              <span class="subcategory-pill" onclick="filterCategoryAndSub('shawl', 'pondum'); event.stopPropagation();">Pondum</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('shawl', 'shawl_grey'); event.stopPropagation();">Black & Grey</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('shawl', 'shawl_pink'); event.stopPropagation();">Pink & Black</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('shawl', 'shawl_red'); event.stopPropagation();">Red & Black</span>
             </div>
             <span class="category-slide-btn">EXPLORE SHAWLS <span>→</span></span>
           </div>
         </div>
         
         <!-- Slide 6: Pondum -->
-        <div class="category-slide" style="background-image: url('assets/products/cover_pondum.jpg'); background-position: center 60%;" onclick="filterCategoryAndSub('shawl', 'pondum'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
+        <div class="category-slide" style="background-image: url('assets/products/cover_pondum.jpg'); background-position: center 60%;" onclick="filterCategory('pondum'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
           <div class="category-slide-overlay"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">06 / PONDUM</span>
             <h2>PONDUM (EXCLUSIVE)</h2>
             <p>A timeless piece crafted to pay tribute and respect during days of mourning and condolence.</p>
             <div class="category-subcategories">
-              <span class="subcategory-pill" onclick="filterCategoryAndSub('shawl', 'pondum'); event.stopPropagation();">Pondum</span>
+              <span class="subcategory-pill" onclick="filterCategoryAndSub('pondum', 'pondum'); event.stopPropagation();">Pondum</span>
             </div>
             <span class="category-slide-btn">EXPLORE PONDUM <span>→</span></span>
           </div>
         </div>
       </div>
-
+      
       <!-- Navigation Controls -->
       <button class="category-slider-arrow prev" onclick="prevCategorySlide(event)" aria-label="Previous category">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 19l-7-7 7-7"/></svg>
@@ -4287,9 +4292,10 @@
             <button class="filter-btn active" data-filter="all">All Items</button>
             <button class="filter-btn" data-filter="bag">Bags</button>
             <button class="filter-btn" data-filter="bandana">Bandanas</button>
+            <button class="filter-btn" data-filter="pin">Label Pins</button>
+            <button class="filter-btn" data-filter="pondum">Pondum</button>
             <button class="filter-btn" data-filter="scarf">Scarves</button>
             <button class="filter-btn" data-filter="shawl">Shawls</button>
-            <button class="filter-btn" data-filter="pin">Pins</button>
           </div>
           <div class="sub-filter-tabs" id="subFilterTabs">
             <button class="sub-filter-btn active" data-subfilter="all">All Designs</button>
