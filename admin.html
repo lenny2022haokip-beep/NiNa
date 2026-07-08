@@ -1720,6 +1720,11 @@
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg';
     const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
     // Authorized Admin Email Allowlist
     const ALLOWED_EMAILS = [
       'lenny2022haokip@gmail.com',
@@ -1967,14 +1972,14 @@
         });
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-saffron); font-weight:600;">${order.order_number}</td>
+          <td style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-saffron); font-weight:600;">${escapeHtml(order.order_number)}</td>
           <td>${dateStr}</td>
           <td>
-            <div style="font-weight: 500;">${order.customer_name}</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">${order.customer_phone}</div>
+            <div style="font-weight: 500;">${escapeHtml(order.customer_name)}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${escapeHtml(order.customer_phone)}</div>
           </td>
           <td style="font-weight: 600;">₹${Number(order.subtotal).toLocaleString('en-IN')}</td>
-          <td><span class="order-status status-${order.status.toLowerCase().replace(' ', '-')}">${order.status}</span></td>
+          <td><span class="order-status status-${escapeHtml(order.status).toLowerCase().replace(' ', '-')}">${escapeHtml(order.status)}</span></td>
         `;
         tbody.appendChild(tr);
       });
@@ -2021,25 +2026,25 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>
-            <div style="font-family: var(--font-mono); font-size: 0.82rem; font-weight:600; color: var(--accent-saffron); margin-bottom: 6px;">${order.order_number}</div>
+            <div style="font-family: var(--font-mono); font-size: 0.82rem; font-weight:600; color: var(--accent-saffron); margin-bottom: 6px;">${escapeHtml(order.order_number)}</div>
             <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">Received: ${dateStr}</div>
-            <div style="font-size: 0.85rem; font-weight: 500;">${order.customer_name}</div>
+            <div style="font-size: 0.85rem; font-weight: 500;">${escapeHtml(order.customer_name)}</div>
             <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;">
-              Email: ${order.customer_email}<br>
-              Phone: ${order.customer_phone}<br>
-              Address: ${order.customer_address}
+              Email: ${escapeHtml(order.customer_email)}<br>
+              Phone: ${escapeHtml(order.customer_phone)}<br>
+              Address: ${escapeHtml(order.customer_address)}
             </div>
-            ${order.is_gift ? `<div style="margin-top: 6px; font-size: 0.75rem; color: var(--accent-saffron); font-family: var(--font-mono);">🎁 GIFT WRAPPED | Note: "${order.notes || ''}"</div>` : ''}
+            ${order.is_gift ? `<div style="margin-top: 6px; font-size: 0.75rem; color: var(--accent-saffron); font-family: var(--font-mono);">🎁 GIFT WRAPPED | Note: "${escapeHtml(order.notes || '')}"</div>` : ''}
           </td>
           <td>
             <ul class="items-list">${itemsList}</ul>
           </td>
           <td style="font-weight: 600;">
             ₹${Number(order.subtotal).toLocaleString('en-IN')}
-            <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); margin-top: 4px; text-transform: uppercase;">${order.payment_method}</div>
+            <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--text-muted); margin-top: 4px; text-transform: uppercase;">${escapeHtml(order.payment_method)}</div>
           </td>
           <td>
-            <select class="status-select" onchange="updateOrderStatus('${order.order_number}', this.value)">
+            <select class="status-select" onchange="updateOrderStatus('${escapeHtml(order.order_number)}', this.value)">
               <option value="Pending Payment" ${order.status === 'Pending Payment' ? 'selected' : ''}>Pending Payment</option>
               <option value="Confirmed" ${order.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
               <option value="Shipped" ${order.status === 'Shipped' ? 'selected' : ''}>Shipped</option>
@@ -2048,12 +2053,12 @@
             </select>
             
             <div class="tracking-wrapper">
-              <input type="text" class="tracking-input" placeholder="Tracking #" value="${trackingNum}" id="track-${order.order_number}">
-              <button class="tracking-btn" onclick="saveTrackingNumber('${order.order_number}')">Save</button>
+              <input type="text" class="tracking-input" placeholder="Tracking #" value="${escapeHtml(trackingNum)}" id="track-${escapeHtml(order.order_number)}">
+              <button class="tracking-btn" onclick="saveTrackingNumber('${escapeHtml(order.order_number)}')">Save</button>
             </div>
           </td>
           <td>
-            <button class="whatsapp-btn" onclick="messageCustomer('${order.order_number}')">
+            <button class="whatsapp-btn" onclick="messageCustomer('${escapeHtml(order.order_number)}')">
               💬 Update Customer
             </button>
           </td>
@@ -2192,15 +2197,15 @@
         card.className = 'inventory-card glass-card';
         card.innerHTML = `
           <div class="inv-header">
-            <img src="${prod.image_url || 'assets/filler_black.png'}" class="inv-img" alt="${prod.title}">
+            <img src="${escapeHtml(prod.image_url) || 'assets/filler_black.png'}" class="inv-img" alt="${escapeHtml(prod.title)}">
             <div class="inv-meta">
-              <span class="inv-category">${prod.category}</span>
-              <h3 class="inv-title">${prod.title}</h3>
+              <span class="inv-category">${escapeHtml(prod.category)}</span>
+              <h3 class="inv-title">${escapeHtml(prod.title)}</h3>
               <span class="inv-price">₹${Number(prod.price).toLocaleString('en-IN')}</span>
             </div>
           </div>
           <div style="font-size: 0.8rem; color: var(--text-muted);">
-            <div><strong>Weaver:</strong> ${prod.weaver || 'Not Assigned'}</div>
+            <div><strong>Weaver:</strong> ${escapeHtml(prod.weaver) || 'Not Assigned'}</div>
           </div>
           <div class="inv-stock-control">
             <span class="stock-label">Stock Status</span>

@@ -1,5 +1,10 @@
 // --- Data Definitions (31 Products) ---
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 function prodImageHtml(id, alt, count) {
   if (count === 1) {
     return `<img src="assets/products/prod_${id}_1.jpg" alt="${alt}" loading="lazy" id="img-prod-${id}">`;
@@ -315,7 +320,7 @@ let products = {
   },
   26: {
     id: 26,
-    title: "Mangvom Dahpi Scarf",
+    title: "Mongvom Dahpi Scarf",
     category: "scarf",
     categoryDisplay: "Scarf · Handwoven",
     price: 500,
@@ -415,10 +420,12 @@ if (!anonymousId) {
   if (window.crypto && window.crypto.randomUUID) {
     anonymousId = window.crypto.randomUUID();
   } else {
-    anonymousId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
+  var arr = new Uint8Array(16);
+  crypto.getRandomValues(arr);
+  arr[6] = (arr[6] & 0x0f) | 0x40;
+  arr[8] = (arr[8] & 0x3f) | 0x80;
+  anonymousId = Array.from(arr, function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+  anonymousId = anonymousId.substr(0, 8) + '-' + anonymousId.substr(8, 4) + '-4' + anonymousId.substr(13, 3) + '-' + anonymousId.substr(16, 4) + '-' + anonymousId.substr(20);
   }
   localStorage.setItem('nina_anonymous_id', anonymousId);
 }
@@ -462,29 +469,37 @@ async function fetchProducts() {
     // Convert database array to products object keyed by id
     const newProducts = {};
     dbProducts.forEach(prod => {
+      const safeTitle = escapeHtml(prod.title || '');
+      const safeCategory = escapeHtml(prod.category || '');
+      const safeCategoryDisplay = escapeHtml(prod.category_display || '');
+      const safeDesc = escapeHtml(prod.description || '');
+      const safeWeaver = escapeHtml(prod.weaver || '');
+      const safePattern = escapeHtml(prod.pattern || '');
+      const safeImageUrl = (prod.image_url || '').replace(/"/g, '%22').replace(/'/g, '%27');
+      const safeImageUrl2 = (prod.image_url_2 || '').replace(/"/g, '%22').replace(/'/g, '%27');
       newProducts[prod.id] = {
         id: prod.id,
-        title: prod.title,
-        category: prod.category,
-        categoryDisplay: prod.category_display || (prod.category.charAt(0).toUpperCase() + prod.category.slice(1) + " · Handwoven"),
+        title: safeTitle,
+        category: safeCategory,
+        categoryDisplay: safeCategoryDisplay || (safeCategory.charAt(0).toUpperCase() + safeCategory.slice(1) + " · Handwoven"),
         price: Number(prod.price),
         priceDisplay: prod.price_display || `₹${Number(prod.price).toLocaleString('en-IN')}`,
-        desc: prod.description || '',
-        weaver: prod.weaver || '',
-        pattern: prod.pattern || '',
+        desc: safeDesc,
+        weaver: safeWeaver,
+        pattern: safePattern,
         stock_count: prod.stock_count !== null ? prod.stock_count : 10,
-        image_url: prod.image_url || '',
-        image_url_2: prod.image_url_2 || '',
-        image_url_3: prod.image_url_3 || '',
-        image_url_4: prod.image_url_4 || '',
-        image_url_5: prod.image_url_5 || '',
-        image_url_6: prod.image_url_6 || '',
-        image_url_7: prod.image_url_7 || '',
-        image_url_8: prod.image_url_8 || '',
-        image_url_9: prod.image_url_9 || '',
-        image_url_10: prod.image_url_10 || '',
-        image_url_11: prod.image_url_11 || '',
-        imageHtml: `<img src="${prod.image_url || 'assets/filler_black.png'}" alt="${prod.title}" loading="lazy" id="img-prod-${prod.id}" onerror="this.src='${prod.image_url_2 || 'assets/filler_black.png'}'">`
+        image_url: safeImageUrl,
+        image_url_2: safeImageUrl2,
+        image_url_3: (prod.image_url_3 || '').replace(/"/g, '%22'),
+        image_url_4: (prod.image_url_4 || '').replace(/"/g, '%22'),
+        image_url_5: (prod.image_url_5 || '').replace(/"/g, '%22'),
+        image_url_6: (prod.image_url_6 || '').replace(/"/g, '%22'),
+        image_url_7: (prod.image_url_7 || '').replace(/"/g, '%22'),
+        image_url_8: (prod.image_url_8 || '').replace(/"/g, '%22'),
+        image_url_9: (prod.image_url_9 || '').replace(/"/g, '%22'),
+        image_url_10: (prod.image_url_10 || '').replace(/"/g, '%22'),
+        image_url_11: (prod.image_url_11 || '').replace(/"/g, '%22'),
+        imageHtml: `<img src="${safeImageUrl || 'assets/filler_black.png'}" alt="${safeTitle}" loading="lazy" id="img-prod-${prod.id}" onerror="this.src='${safeImageUrl2 || 'assets/filler_black.png'}'">`
       };
     });
     
@@ -589,7 +604,7 @@ function renderProducts() {
                data-search="${searchTerms}"
                id="card-prod-${prod.id}">
         ${badgeHtml}
-        <button class="wish-btn${wishlist.has(prod.id) ? ' active' : ''}" aria-label="Add to wishlist" onclick="toggleWishlist(${prod.id}, event)">
+        <button class="wish-btn${wishlist.has(prod.id) ? ' active' : ''}" data-prod-id="${prod.id}" aria-label="Add to wishlist" onclick="toggleWishlist('${prod.id}', event)">
           <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
         </button>
         <div class="product-media" onclick="openQuickView(${prod.id})">
@@ -790,59 +805,44 @@ async function loadSessionFromSupabase() {
 window.loadSessionFromSupabase = loadSessionFromSupabase;
 
 function updateWishlistUI() {
+  const wishArr = [...wishlist].map(id => String(id));
   document.querySelectorAll('.wish-btn').forEach(btn => {
-    const onClickAttr = btn.getAttribute('onclick');
-    if (onClickAttr) {
-      const match = onClickAttr.match(/toggleWishlist\(([^,]+),/);
-      if (match) {
-        const prodId = Number(match[1].trim());
-        if (wishlist.has(prodId)) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      }
+    const prodId = btn.getAttribute('data-prod-id');
+    if (prodId !== null && wishArr.includes(prodId)) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
     }
   });
 }
 window.updateWishlistUI = updateWishlistUI;
 
 // --- Variant Color Change Logic ---
+function getColorFilter(colorName) {
+  if (colorName === 'Maroon' || colorName === 'Crimson') return 'hue-rotate(330deg) saturate(1.4)';
+  if (colorName === 'Pink') return 'hue-rotate(290deg) saturate(1.8)';
+  if (colorName === 'Black' || colorName === 'Charcoal') return 'grayscale(1) brightness(0.6)';
+  if (colorName === 'Yellow') return 'hue-rotate(40deg) saturate(1.2) sepia(0.2)';
+  if (colorName === 'Forest Green') return 'hue-rotate(100deg) saturate(1.2)';
+  return '';
+}
+
 function changeVariantColor(productId, colorHex, colorName, e) {
   if (e) e.stopPropagation();
   
-  // Update active state of dots
-  const card = document.querySelector(`.product-card[data-search*="id:${productId}"]`) || e.currentTarget.closest('.product-card');
+  const card = document.querySelector(`.product-card[data-search*="id:${productId}"]`) || (e ? e.currentTarget.closest('.product-card') : null);
   if (card) {
     const dots = card.querySelectorAll('.swatch-dot');
     dots.forEach(dot => {
-      if (dot.getAttribute('title') === colorName) {
-        dot.classList.add('active');
-      } else {
-        dot.classList.remove('active');
-      }
+      dot.classList.toggle('active', dot.getAttribute('title') === colorName);
     });
   }
 
-  // Save selected variant to data definition
   products[productId].selectedVariant = colorName;
 
-  // Apply quick color shifts on thumbnail to visually represent variation changes
   const img = document.getElementById(`img-prod-${productId}`);
   if (img) {
-    if (colorName === 'Maroon' || colorName === 'Crimson') {
-      img.style.filter = 'hue-rotate(330deg) saturate(1.4)';
-    } else if (colorName === 'Pink') {
-      img.style.filter = 'hue-rotate(290deg) saturate(1.8)';
-    } else if (colorName === 'Black' || colorName === 'Charcoal') {
-      img.style.filter = 'grayscale(1) brightness(0.6)';
-    } else if (colorName === 'Yellow') {
-      img.style.filter = 'hue-rotate(40deg) saturate(1.2) sepia(0.2)';
-    } else if (colorName === 'Forest Green') {
-      img.style.filter = 'hue-rotate(100deg) saturate(1.2)';
-    } else {
-      img.style.filter = ''; // Reset
-    }
+    img.style.filter = getColorFilter(colorName);
   }
 
   showToast(`Selected variant: ${colorName}`, "info");
@@ -1102,13 +1102,14 @@ if (searchInput) {
 function toggleWishlist(productId, e) {
   if (e) e.stopPropagation();
   const btn = e ? e.currentTarget : null;
+  const normalId = String(productId);
   
-  if (wishlist.has(productId)) {
-    wishlist.delete(productId);
+  if (wishlist.has(normalId)) {
+    wishlist.delete(normalId);
     if (btn) btn.classList.remove('active');
     showToast("Removed from wishlist", "info");
   } else {
-    wishlist.add(productId);
+    wishlist.add(normalId);
     if (btn) btn.classList.add('active');
     showToast("Added to wishlist", "success");
   }
@@ -1404,7 +1405,7 @@ window.submitOrder = async function(e) {
     totalPrice += 50;
   }
 
-  const orderNumber = `NINA-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  const orderNumber = `NINA-${Date.now()}-${(crypto.randomUUID ? crypto.randomUUID() : '').split('-')[0]}`;
   const placeBtn = document.getElementById('placeOrderBtn');
   const originalText = placeBtn.textContent;
 
@@ -1653,12 +1654,7 @@ function updateCartUI() {
         totalPrice += item.price * qty;
 
         // Apply visual filters to thumbnails in cart to match selected color variant
-        let filterStyle = '';
-        if (variant === 'Maroon') filterStyle = 'filter: hue-rotate(330deg) saturate(1.4);';
-        else if (variant === 'Pink') filterStyle = 'filter: hue-rotate(290deg) saturate(1.8);';
-        else if (variant === 'Black' || variant === 'Charcoal') filterStyle = 'filter: grayscale(1) brightness(0.6);';
-        else if (variant === 'Yellow') filterStyle = 'filter: hue-rotate(40deg) saturate(1.2) sepia(0.2);';
-        else if (variant === 'Forest Green') filterStyle = 'filter: hue-rotate(100deg) saturate(1.2);';
+        let filterStyle = getColorFilter(variant) ? `filter: ${getColorFilter(variant)};` : '';
 
         let imageWithFilter = item.imageHtml;
         if (filterStyle) {
@@ -1799,13 +1795,8 @@ function openQuickView(id) {
   if (modalQtyVal) modalQtyVal.textContent = modalQty;
 
   // Apply same filter logic to quickview modal image based on active color swatch selection
-  let filterStyle = '';
   const variant = prod.selectedVariant || "Default";
-  if (variant === 'Maroon') filterStyle = 'hue-rotate(330deg) saturate(1.4)';
-  else if (variant === 'Pink') filterStyle = 'hue-rotate(290deg) saturate(1.8)';
-  else if (variant === 'Black' || variant === 'Charcoal') filterStyle = 'grayscale(1) brightness(0.6)';
-  else if (variant === 'Yellow') filterStyle = 'hue-rotate(40deg) saturate(1.2) sepia(0.2)';
-  else if (variant === 'Forest Green') filterStyle = 'hue-rotate(100deg) saturate(1.2)';
+  const filterStyle = getColorFilter(variant);
 
   // --- Dynamic Gallery Slider inside Quick View Modal ---
   const modalSlidesContainer = document.getElementById('modalSlidesContainer');
