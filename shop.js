@@ -34,7 +34,7 @@ let products = {
     priceDisplay: "₹700",
     desc: "An elegant, slouchy hobo bag showcasing the classic Thangnang diamond lattice pattern. Fully lined with inner zipper pocket.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: prodImageHtml(2, "Thangnang Hobo Bag", 2),
+    imageHtml: `<img src="assets/products/prod_2_2.jpg" alt="Thangnang Hobo Bag" loading="lazy" id="img-prod-2">`,
     stock_count: 2
   },
   3: {
@@ -178,7 +178,7 @@ let products = {
     priceDisplay: "₹700",
     desc: "Premium travel backpack featuring Thangnang crimson-gold geometric panels, leather closures, and laptop compartment.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: prodImageHtml(14, "Thangnang Backpack", 3),
+    imageHtml: `<div class="product-slideshow"><div class="slideshow-viewport"><div class="slideshow-track" data-track="14"><img src="assets/products/prod_14_1.jpg" alt="Thangnang Backpack" class="slideshow-img" loading="lazy"><img src="assets/products/prod_14_3.jpg" alt="Thangnang Backpack" class="slideshow-img" loading="lazy"></div><button class="slideshow-arrow left" onclick="event.stopPropagation(); slideProduct(this, -1)">‹</button><button class="slideshow-arrow right" onclick="event.stopPropagation(); slideProduct(this, 1)">›</button></div><div class="slideshow-dots" data-dots="14"><span class="slideshow-dot active"></span><span class="slideshow-dot"></span></div></div>`,
     stock_count: 10
   },
   15: {
@@ -346,7 +346,7 @@ let products = {
     priceDisplay: "₹500",
     desc: "A stunning, versatile scarf loomed in the traditional Thangnang diamond checkerboard patterns. Durable yet extremely soft.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: prodImageHtml(28, "Thangnang Phoulva Scarf", 3),
+    imageHtml: `<div class="product-slideshow"><div class="slideshow-viewport"><div class="slideshow-track" data-track="28"><img src="assets/products/prod_28_1.jpg" alt="Thangnang Phoulva Scarf" class="slideshow-img" loading="lazy"><img src="assets/products/prod_28_3.jpg" alt="Thangnang Phoulva Scarf" class="slideshow-img" loading="lazy"></div><button class="slideshow-arrow left" onclick="event.stopPropagation(); slideProduct(this, -1)">‹</button><button class="slideshow-arrow right" onclick="event.stopPropagation(); slideProduct(this, 1)">›</button></div><div class="slideshow-dots" data-dots="28"><span class="slideshow-dot active"></span><span class="slideshow-dot"></span></div></div>`,
     stock_count: 3
   },
   29: {
@@ -358,7 +358,7 @@ let products = {
     priceDisplay: "₹600",
     desc: "A stunning white traditional shawl handloomed in Churachandpur, featuring the historic Saipikhup pattern in contrast grey and black margins.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: prodImageHtml(29, "White Traditional Shawl", 3),
+    imageHtml: `<div class="product-slideshow"><div class="slideshow-viewport"><div class="slideshow-track" data-track="29"><img src="assets/products/prod_29_1.jpg" alt="White Traditional Shawl" class="slideshow-img" loading="lazy"><img src="assets/products/prod_29_3.jpg" alt="White Traditional Shawl" class="slideshow-img" loading="lazy"></div><button class="slideshow-arrow left" onclick="event.stopPropagation(); slideProduct(this, -1)">‹</button><button class="slideshow-arrow right" onclick="event.stopPropagation(); slideProduct(this, 1)">›</button></div><div class="slideshow-dots" data-dots="29"><span class="slideshow-dot active"></span><span class="slideshow-dot"></span></div></div>`,
     stock_count: 10
   },
   30: {
@@ -370,7 +370,7 @@ let products = {
     priceDisplay: "₹600",
     desc: "An exquisite crimson red traditional shawl, handloomed on traditional backstrap looms with fine black geometric Saipikhup repeating diamond motifs.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: prodImageHtml(30, "Red Traditional Shawl", 3),
+    imageHtml: `<div class="product-slideshow"><div class="slideshow-viewport"><div class="slideshow-track" data-track="30"><img src="assets/products/prod_30_2.jpg" alt="Red Traditional Shawl" class="slideshow-img" loading="lazy"><img src="assets/products/prod_30_3.jpg" alt="Red Traditional Shawl" class="slideshow-img" loading="lazy"></div><button class="slideshow-arrow left" onclick="event.stopPropagation(); slideProduct(this, -1)">‹</button><button class="slideshow-arrow right" onclick="event.stopPropagation(); slideProduct(this, 1)">›</button></div><div class="slideshow-dots" data-dots="30"><span class="slideshow-dot active"></span><span class="slideshow-dot"></span></div></div>`,
     stock_count: 0
   },
   31: {
