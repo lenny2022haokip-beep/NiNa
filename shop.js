@@ -541,21 +541,6 @@ function renderProducts() {
   
   productList.forEach(prod => {
     let badgeHtml = '';
-    
-    // Dynamic visual triggers based on stock scarcity strategy
-    if (prod.stock_count >= 1 && prod.stock_count <= 5) {
-      badgeHtml = `<span class="product-badge scarcity">Batch 01 — Only ${prod.stock_count} pieces woven</span>`;
-    } else if (prod.stock_count > 5) {
-      // Fallback to design category badges for normal stock items
-      if (prod.id === 1 || prod.id === 31 || prod.id === 5) {
-        badgeHtml = `<span class="product-badge bestseller">Bestseller</span>`;
-      } else if (prod.id === 2 || prod.id === 8) {
-        badgeHtml = `<span class="product-badge new">New</span>`;
-      } else if (prod.id === 3 || prod.id === 10) {
-        badgeHtml = `<span class="product-badge handcrafted">Handcrafted</span>`;
-      }
-    }
-    
     let soldOutClass = '';
     let soldOutOverlayHtml = '';
     if (prod.stock_count === 0) {
@@ -563,22 +548,10 @@ function renderProducts() {
       soldOutOverlayHtml = `<div class="sold-out-overlay">Sold Out</div>`;
     }
     
-    // Match traditional patterns
-    let pattern = 'none';
-    const titleLower = prod.title.toLowerCase();
-    if (titleLower.includes('saipikhup')) {
-      pattern = 'saipikhup';
-    } else if (titleLower.includes('thangnang')) {
-      pattern = 'thangnang';
-    } else if (titleLower.includes('mangvom') || titleLower.includes('mongvom')) {
-      pattern = 'mangvom';
-    }
-    
     // Search metadata
     const searchTerms = [
       `id:${prod.id}`,
       prod.category,
-      pattern,
       prod.title.toLowerCase(),
       prod.desc.toLowerCase(),
       prod.weaver.toLowerCase(),
@@ -588,7 +561,6 @@ function renderProducts() {
     const cardHtml = `
       <article class="product-card${soldOutClass}" 
                data-category="${prod.category}" 
-               data-pattern="${pattern}" 
                data-search="${searchTerms}"
                id="card-prod-${prod.id}">
         ${badgeHtml}
@@ -984,26 +956,21 @@ window.closeMobileMenu = closeMobileMenu;
 
 // --- Filters & Search Logic ---
 const filterBtns = document.querySelectorAll('.filter-btn');
-const subFilterBtns = document.querySelectorAll('.sub-filter-btn');
-const subFilterTabs = document.getElementById('subFilterTabs');
 const searchInput = document.getElementById('searchInput');
 const productGrid = document.getElementById('productGrid');
 let activeFilter = 'all';
-let activeSubfilter = 'all';
 let activeSearch = '';
 
 function applyFilterAndSearch() {
   const cards = document.querySelectorAll('.product-grid .product-card:not(.skeleton)');
   cards.forEach(card => {
     const category = card.dataset.category;
-    const pattern = card.dataset.pattern || 'none';
     const searchText = card.dataset.search.toLowerCase();
     
     const matchesCategory = (activeFilter === 'all' || category === activeFilter);
-    const matchesSubfilter = (activeSubfilter === 'all' || pattern === activeSubfilter);
     const matchesSearch = (activeSearch === '' || searchText.includes(activeSearch));
 
-    if (matchesCategory && matchesSubfilter && matchesSearch) {
+    if (matchesCategory && matchesSearch) {
       card.style.display = 'flex';
     } else {
       card.style.display = 'none';
@@ -1017,39 +984,6 @@ if (filterBtns) {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       activeFilter = btn.dataset.filter;
-      
-      // Reset sub-filter on main category change
-      activeSubfilter = 'all';
-      if (subFilterBtns) {
-        subFilterBtns.forEach(sb => {
-          if (sb.dataset.subfilter === 'all') {
-            sb.classList.add('active');
-          } else {
-            sb.classList.remove('active');
-          }
-        });
-      }
-      
-      // Show sub-filters only when bag, bandana, or scarf is selected
-      if (subFilterTabs) {
-        if (activeFilter === 'bag' || activeFilter === 'bandana' || activeFilter === 'scarf') {
-          subFilterTabs.classList.add('show');
-        } else {
-          subFilterTabs.classList.remove('show');
-        }
-      }
-      
-      applyFilterAndSearch();
-    });
-  });
-}
-
-if (subFilterBtns) {
-  subFilterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      subFilterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeSubfilter = btn.dataset.subfilter;
       applyFilterAndSearch();
     });
   });
