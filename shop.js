@@ -484,7 +484,7 @@ async function fetchProducts() {
         image_url_9: prod.image_url_9 || '',
         image_url_10: prod.image_url_10 || '',
         image_url_11: prod.image_url_11 || '',
-        imageHtml: `<img src="${prod.image_url || 'assets/filler_black.png'}" alt="${prod.title}" loading="lazy" id="img-prod-${prod.id}">`
+        imageHtml: `<img src="${prod.image_url || 'assets/filler_black.png'}" alt="${prod.title}" loading="lazy" id="img-prod-${prod.id}" onerror="this.src='${prod.image_url_2 || 'assets/filler_black.png'}'">`
       };
     });
     
