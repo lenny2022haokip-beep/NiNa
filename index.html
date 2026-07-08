@@ -982,9 +982,6 @@
     height: 100%;
     opacity: 0;
     visibility: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     cursor: pointer;
     transition: opacity 0.6s ease, visibility 0.6s ease;
     background-color: #FAF8F5;
@@ -995,54 +992,40 @@
     visibility: visible;
   }
   .category-slide-media {
-    width: 70%;
+    width: 100%;
     height: 100%;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     background-color: #F5F0EB;
+    position: relative;
     transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-    border: 1px solid #D4C5B0;
-    outline: 6px solid #F5F0EB;
-    box-shadow: 0 0 0 7px #D4C5B0;
   }
-  @media (max-width: 1024px) and (min-width: 768px) {
-    .category-slide-media {
-      width: 60%;
-    }
-  }
-  @media (max-width: 767px) {
-    .category-slide-media {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .category-slide-media::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 55%;
-      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
-      pointer-events: none;
-    }
+  .category-slide-media::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(250,248,245,0.92) 0%, rgba(250,248,245,0.5) 40%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
   }
   .category-slide:hover .category-slide-media {
     transform: scale(1.02);
   }
   .category-slide-content {
-    width: 30%;
-    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 38%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 40px 32px;
-    background-color: #FAF8F5;
     box-sizing: border-box;
-    position: relative;
     z-index: 3;
     transform: translateY(15px);
     opacity: 0;
@@ -1050,11 +1033,14 @@
   }
   @media (max-width: 1024px) and (min-width: 768px) {
     .category-slide-content {
-      width: 40%;
+      width: 45%;
       padding: 32px 28px;
     }
   }
   @media (max-width: 767px) {
+    .category-slide-media::after {
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+    }
     .category-slide-content {
       position: absolute;
       bottom: 0;
@@ -1071,6 +1057,29 @@
   .category-slide.active .category-slide-content {
     transform: translateY(0);
     opacity: 1;
+  }
+
+  /* Four Corner Borders for Category Section */
+  .border-corner {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background-image: url('assets/border_new.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 20;
+    pointer-events: none;
+  }
+  .border-corner.tl { top: 10px; left: 10px; }
+  .border-corner.tr { top: 10px; right: 10px; transform: scaleX(-1); }
+  .border-corner.bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
+  .border-corner.br { bottom: 10px; right: 10px; transform: scale(-1, -1); }
+  @media (min-width: 768px) {
+    .border-corner { width: 56px; height: 56px; }
+    .border-corner.tl { top: 16px; left: 16px; }
+    .border-corner.tr { top: 16px; right: 16px; }
+    .border-corner.bl { bottom: 16px; left: 16px; }
+    .border-corner.br { bottom: 16px; right: 16px; }
   }
   .category-slide-num {
     font-family: var(--font-mono);
@@ -4305,6 +4314,10 @@
     </div>
 
     <div class="category-slider-wrapper reveal">
+      <span class="border-corner tl"></span>
+      <span class="border-corner tr"></span>
+      <span class="border-corner bl"></span>
+      <span class="border-corner br"></span>
       <div class="category-slider" id="categorySlider">
         <!-- Slide 1: Bags -->
         <div class="category-slide active" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
