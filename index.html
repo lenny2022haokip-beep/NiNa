@@ -3474,21 +3474,39 @@
   @media (max-width: 767px) {
     .floating-social-bar {
       display: flex;
-      left: 12px;
+      left: auto;
       right: auto;
-      padding: 12px 6px;
-      gap: 10px;
-      border-radius: 24px;
+      top: auto;
+      bottom: auto;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      transform: none;
+      flex-direction: row;
+      justify-content: center;
+      padding: 8px 12px;
+      gap: 8px;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     }
     .floating-social-bar a {
-      width: 44px;
-      height: 44px;
+      width: 36px;
+      height: 36px;
     }
     .floating-social-bar svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
     }
     
+    .achievements-sidebar-panel {
+      padding: 40px 20px;
+    }
     /* Mobile Hero Video & Brackets Optimization */
     .hero-section {
       height: 50vh;
