@@ -169,6 +169,11 @@
       box-shadow: 0 0 0 3px var(--accent-saffron-glow);
     }
 
+    .input-field option {
+      background: #121211;
+      color: var(--text-main);
+    }
+
     .btn {
       display: inline-flex;
       align-items: center;
@@ -1304,19 +1309,25 @@
 
       <!-- Tab 3: Inventory Manager -->
       <div id="tab-inventory" class="tab-content">
-        <div class="controls-row">
-          <div class="search-input-wrapper">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="inventorySearch" placeholder="Search inventory by title or weaver..." oninput="filterInventory()">
+        <div class="controls-row" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap; flex: 1;">
+            <div class="search-input-wrapper" style="max-width: 320px; flex: 1;">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="inventorySearch" placeholder="Search title, weaver, or reference..." oninput="filterInventory()">
+            </div>
+            <div class="filter-group" style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="filter-btn active" onclick="setInventoryCategory('all', this)">All Categories</button>
+              <button class="filter-btn" onclick="setInventoryCategory('bag', this)">Bags</button>
+              <button class="filter-btn" onclick="setInventoryCategory('scarf', this)">Scarves</button>
+              <button class="filter-btn" onclick="setInventoryCategory('bandana', this)">Bandanas</button>
+              <button class="filter-btn" onclick="setInventoryCategory('shawl', this)">Shawls</button>
+              <button class="filter-btn" onclick="setInventoryCategory('pin', this)">Pins</button>
+              <button class="filter-btn" onclick="setInventoryCategory('pondum', this)">Pondum</button>
+            </div>
           </div>
-          <div class="filter-group">
-            <button class="filter-btn active" onclick="setInventoryCategory('all', this)">All Categories</button>
-            <button class="filter-btn" onclick="setInventoryCategory('bag', this)">Bags</button>
-            <button class="filter-btn" onclick="setInventoryCategory('scarf', this)">Scarves</button>
-            <button class="filter-btn" onclick="setInventoryCategory('bandana', this)">Bandanas</button>
-            <button class="filter-btn" onclick="setInventoryCategory('shawl', this)">Shawls</button>
-            <button class="filter-btn" onclick="setInventoryCategory('pin', this)">Pins</button>
-          </div>
+          <button class="btn btn-primary" onclick="openAddModal()" style="padding: 10px 20px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px;">
+            <span>+</span> Add New Product
+          </button>
         </div>
 
         <div class="inventory-grid" id="inventoryGrid">
@@ -1489,9 +1500,9 @@
 
   <!-- Product Edit Modal -->
   <div class="modal-backdrop" id="editProductModal">
-    <div class="modal-container glass-card">
+    <div class="modal-container glass-card" style="max-width: 580px; max-height: 90vh; overflow-y: auto;">
       <button class="modal-close" onclick="closeEditModal()">✕</button>
-      <h2 class="modal-title">Edit Product Details</h2>
+      <h2 class="modal-title" style="margin-bottom: 20px;">Edit Product Details</h2>
       <form id="editProductForm">
         <input type="hidden" id="editProdId">
         <div class="form-grid">
@@ -1501,18 +1512,19 @@
           </div>
           <div>
             <label class="input-label">Category</label>
-            <select id="editProdCategory" class="input-field" required>
+            <select id="editProdCategory" class="input-field" required onchange="autoFillEditDisplayLabel()">
               <option value="bag">Bag</option>
               <option value="scarf">Scarf</option>
               <option value="bandana">Bandana</option>
               <option value="shawl">Shawl</option>
               <option value="pin">Pin</option>
+              <option value="pondum">Pondum</option>
             </select>
           </div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
             <div>
               <label class="input-label">Price (INR)</label>
-              <input type="number" id="editProdPrice" class="input-field" required>
+              <input type="number" id="editProdPrice" class="input-field" required oninput="autoFillEditPriceLabel()">
             </div>
             <div>
               <label class="input-label">Stock Qty</label>
@@ -1524,19 +1536,126 @@
             <input type="text" id="editProdWeaver" class="input-field">
           </div>
           <div>
-            <label class="input-label">Image URL</label>
-            <input type="text" id="editProdImageUrl" class="input-field">
+            <label class="input-label">Reference / Pattern Code</label>
+            <input type="text" id="editProdPattern" class="input-field" placeholder="e.g. saipikhup">
           </div>
-          <div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="input-label">Category Display Label</label>
+              <input type="text" id="editProdCategoryDisplay" class="input-field" required>
+            </div>
+            <div>
+              <label class="input-label">Price Display Label</label>
+              <input type="text" id="editProdPriceDisplay" class="input-field" required>
+            </div>
+          </div>
+          <div style="grid-column: 1 / -1;">
             <label class="input-label">Description</label>
             <textarea id="editProdDesc" class="input-field" rows="3" style="resize: none;"></textarea>
           </div>
         </div>
-        <div style="display: flex; gap: 12px; margin-top: 24px;">
-          <button type="button" class="btn" style="flex: 1; background: transparent; border: 1px solid var(--border-glass);" onclick="closeEditModal()">Cancel</button>
-          <button type="submit" class="btn btn-primary" style="flex: 1;">Save Changes</button>
+
+        <details class="glass-card" style="padding: 16px; border: 1px solid var(--border-glass); border-radius: 8px; margin-top: 16px;">
+          <summary style="font-size: 0.85rem; color: var(--accent-saffron); font-weight: 500; cursor: pointer; user-select: none;">Product Gallery Images (11 Slots)</summary>
+          <div id="editProdImagesContainer" style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px; max-height: 250px; overflow-y: auto; padding-right: 8px;">
+            <!-- Generated dynamically via JS -->
+          </div>
+        </details>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; gap: 12px; flex-wrap: wrap;">
+          <button type="button" class="btn" style="border: 1px solid #E29578; color: #E29578; background: transparent; padding: 10px 16px; font-size: 0.82rem;" onclick="handleDeleteProductClick()">Delete Product</button>
+          <div style="display: flex; gap: 12px; flex: 1; justify-content: flex-end;">
+            <button type="button" class="btn" style="background: transparent; border: 1px solid var(--border-glass);" onclick="closeEditModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- Product Add Modal -->
+  <div class="modal-backdrop" id="addProductModal">
+    <div class="modal-container glass-card" style="max-width: 580px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close" onclick="closeAddModal()">✕</button>
+      <h2 class="modal-title" style="margin-bottom: 20px;">Add New Product</h2>
+      <form id="addProductForm">
+        <div class="form-grid">
+          <div>
+            <label class="input-label">Product Title</label>
+            <input type="text" id="addProdTitle" class="input-field" placeholder="e.g. Saipikhup Handwoven Bag" required>
+          </div>
+          <div>
+            <label class="input-label">Category</label>
+            <select id="addProdCategory" class="input-field" required onchange="autoFillAddDisplayLabel()">
+              <option value="bag">Bag</option>
+              <option value="scarf">Scarf</option>
+              <option value="bandana">Bandana</option>
+              <option value="shawl">Shawl</option>
+              <option value="pin">Pin</option>
+              <option value="pondum">Pondum</option>
+            </select>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="input-label">Price (INR)</label>
+              <input type="number" id="addProdPrice" class="input-field" placeholder="e.g. 1000" required oninput="autoFillAddPriceLabel()">
+            </div>
+            <div>
+              <label class="input-label">Stock Qty</label>
+              <input type="number" id="addProdStock" class="input-field" value="10" required min="0">
+            </div>
+          </div>
+          <div>
+            <label class="input-label">Artisan Weaver</label>
+            <input type="text" id="addProdWeaver" class="input-field" placeholder="e.g. Tingneichin Haokip">
+          </div>
+          <div>
+            <label class="input-label">Reference / Pattern Code</label>
+            <input type="text" id="addProdPattern" class="input-field" placeholder="e.g. saipikhup">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div>
+              <label class="input-label">Category Display Label</label>
+              <input type="text" id="addProdCategoryDisplay" class="input-field" placeholder="e.g. Bag · Handwoven" required>
+            </div>
+            <div>
+              <label class="input-label">Price Display Label</label>
+              <input type="text" id="addProdPriceDisplay" class="input-field" placeholder="e.g. ₹1,000" required>
+            </div>
+          </div>
+          <div style="grid-column: 1 / -1;">
+            <label class="input-label">Description</label>
+            <textarea id="addProdDesc" class="input-field" rows="3" style="resize: none;" placeholder="Enter product description..."></textarea>
+          </div>
+        </div>
+        
+        <details class="glass-card" style="padding: 16px; border: 1px solid var(--border-glass); border-radius: 8px; margin-top: 16px;">
+          <summary style="font-size: 0.85rem; color: var(--accent-saffron); font-weight: 500; cursor: pointer; user-select: none;">Product Gallery Images (11 Slots)</summary>
+          <div id="addProdImagesContainer" style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px; max-height: 250px; overflow-y: auto; padding-right: 8px;">
+            <!-- Generated dynamically via JS -->
+          </div>
+        </details>
+
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button type="button" class="btn" style="flex: 1; background: transparent; border: 1px solid var(--border-glass);" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Create Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-backdrop" id="deleteConfirmModal" style="z-index: 1000000;">
+    <div class="modal-container glass-card" style="max-width: 400px; padding: 32px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+      <span style="font-size: 2.5rem; color: #E29578;">⚠️</span>
+      <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 500; color: var(--text-main); margin: 0;">Confirm Product Deletion</h3>
+      <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+        Are you sure you want to permanently delete <strong id="deleteConfirmTitle" style="color: var(--text-main);">this product</strong>? This action cannot be undone and will immediately sync with the database and live storefront.
+      </p>
+      <div style="display: flex; gap: 12px; width: 100%; margin-top: 8px;">
+        <button type="button" class="btn" style="flex: 1; background: transparent; border: 1px solid var(--border-glass);" onclick="closeDeleteConfirmModal()">Cancel</button>
+        <button type="button" class="btn" style="flex: 1; background: #E29578; color: #0B0B0A; border: none; font-weight: 600;" onclick="executeProductDeletion()">Delete permanently</button>
+      </div>
     </div>
   </div>
 
@@ -2136,6 +2255,97 @@
       }
     }
 
+    // Update live thumbnail preview for an image slot
+    function updateModalImagePreview(inputId, imgId, emptyId) {
+      const input = document.getElementById(inputId);
+      const img = document.getElementById(imgId);
+      const empty = document.getElementById(emptyId);
+      if (!input || !img || !empty) return;
+
+      const url = input.value.trim();
+      if (url) {
+        img.src = url;
+        img.style.display = 'block';
+        empty.style.display = 'none';
+      } else {
+        img.src = '';
+        img.style.display = 'none';
+        empty.style.display = 'block';
+      }
+    }
+
+    // Generate image preview inputs for 11 slots
+    function generateImageSlots(containerId, prefixVal) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+
+      for (let i = 1; i <= 11; i++) {
+        const inputId = `${prefixVal}ImageUrl${i}`;
+        const imgId = `${prefixVal}ImagePreview${i}`;
+        const emptyId = `${prefixVal}ImageEmpty${i}`;
+        
+        const labelText = i === 1 ? "Image 1 (Cover / Main)" : `Image ${i} (Gallery Slide)`;
+        const slotDiv = document.createElement('div');
+        slotDiv.style.display = 'flex';
+        slotDiv.style.gap = '12px';
+        slotDiv.style.alignItems = 'center';
+        slotDiv.innerHTML = `
+          <div style="width: 42px; height: 42px; border-radius: 6px; border: 1px solid var(--border-glass); overflow: hidden; background: #000; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+            <img id="${imgId}" src="" style="max-width: 100%; max-height: 100%; object-fit: cover; display: none;">
+            <span id="${emptyId}" style="font-size: 0.58rem; color: var(--text-muted); text-transform: uppercase; font-family: var(--font-mono);">Empty</span>
+          </div>
+          <div style="flex: 1;">
+            <label class="input-label" style="font-size: 0.72rem; margin-bottom: 2px;">${labelText}</label>
+            <input type="text" id="${inputId}" class="input-field" style="font-size: 0.8rem; padding: 6px 10px;" placeholder="e.g. assets/products/prod_X_Y.jpg">
+          </div>
+        `;
+        container.appendChild(slotDiv);
+
+        // Bind input event to update thumbnail immediately
+        const inputEl = slotDiv.querySelector('input');
+        inputEl.addEventListener('input', () => updateModalImagePreview(inputId, imgId, emptyId));
+      }
+    }
+
+    // Helper to autofill display label based on category choice
+    function getDisplayLabelForCategory(category) {
+      switch (category) {
+        case 'bag': return 'Bag · Handwoven';
+        case 'scarf': return 'Scarf · Handwoven';
+        case 'bandana': return 'Bandana · Handwoven';
+        case 'shawl': return 'Shawl · Handwoven';
+        case 'pin': return 'Label Pin · Heritage';
+        case 'pondum': return 'Pondum · Traditional';
+        default: return category ? (category.charAt(0).toUpperCase() + category.slice(1) + ' · Handwoven') : '';
+      }
+    }
+
+    function autoFillEditDisplayLabel() {
+      const category = document.getElementById('editProdCategory').value;
+      document.getElementById('editProdCategoryDisplay').value = getDisplayLabelForCategory(category);
+    }
+
+    function autoFillAddDisplayLabel() {
+      const category = document.getElementById('addProdCategory').value;
+      document.getElementById('addProdCategoryDisplay').value = getDisplayLabelForCategory(category);
+    }
+
+    function formatPriceDisplay(price) {
+      if (!price && price !== 0) return '';
+      return '₹' + Number(price).toLocaleString('en-IN');
+    }
+
+    function autoFillEditPriceLabel() {
+      const price = document.getElementById('editProdPrice').value;
+      document.getElementById('editProdPriceDisplay').value = formatPriceDisplay(price);
+    }
+
+    function autoFillAddPriceLabel() {
+      const price = document.getElementById('addProdPrice').value;
+      document.getElementById('addProdPriceDisplay').value = formatPriceDisplay(price);
+    }
+
     // Open Edit details Modal
     function openEditModal(productId) {
       const prod = products.find(p => p.id === productId);
@@ -2147,8 +2357,27 @@
       document.getElementById('editProdPrice').value = prod.price;
       document.getElementById('editProdStock').value = prod.stock_count;
       document.getElementById('editProdWeaver').value = prod.weaver || '';
-      document.getElementById('editProdImageUrl').value = prod.image_url || '';
+      document.getElementById('editProdPattern').value = prod.pattern || '';
+      document.getElementById('editProdCategoryDisplay').value = prod.category_display || getDisplayLabelForCategory(prod.category);
+      document.getElementById('editProdPriceDisplay').value = prod.price_display || formatPriceDisplay(prod.price);
       document.getElementById('editProdDesc').value = prod.description || '';
+
+      // Generate the 11 image slots
+      generateImageSlots('editProdImagesContainer', 'edit');
+
+      // Populate current image slot values
+      const imgFields = [
+        'image_url', 'image_url_2', 'image_url_3', 'image_url_4', 'image_url_5',
+        'image_url_6', 'image_url_7', 'image_url_8', 'image_url_9', 'image_url_10', 'image_url_11'
+      ];
+      imgFields.forEach((field, index) => {
+        const inputId = `editImageUrl${index + 1}`;
+        const inputEl = document.getElementById(inputId);
+        if (inputEl) {
+          inputEl.value = prod[field] || '';
+          updateModalImagePreview(inputId, `editImagePreview${index + 1}`, `editImageEmpty${index + 1}`);
+        }
+      });
 
       document.getElementById('editProductModal').classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -2169,7 +2398,9 @@
       const price = Number(document.getElementById('editProdPrice').value);
       const stock = Number(document.getElementById('editProdStock').value);
       const weaver = document.getElementById('editProdWeaver').value.trim();
-      const imageUrl = document.getElementById('editProdImageUrl').value.trim();
+      const pattern = document.getElementById('editProdPattern').value.trim();
+      const categoryDisplay = document.getElementById('editProdCategoryDisplay').value.trim();
+      const priceDisplay = document.getElementById('editProdPriceDisplay').value.trim();
       const desc = document.getElementById('editProdDesc').value.trim();
 
       const payload = {
@@ -2178,8 +2409,22 @@
         price,
         stock_count: stock,
         weaver: weaver || null,
-        image_url: imageUrl || null,
-        description: desc || null
+        pattern: pattern || null,
+        category_display: categoryDisplay || null,
+        price_display: priceDisplay || null,
+        description: desc || null,
+        in_stock: stock > 0,
+        image_url: document.getElementById('editImageUrl1').value.trim() || null,
+        image_url_2: document.getElementById('editImageUrl2').value.trim() || null,
+        image_url_3: document.getElementById('editImageUrl3').value.trim() || null,
+        image_url_4: document.getElementById('editImageUrl4').value.trim() || null,
+        image_url_5: document.getElementById('editImageUrl5').value.trim() || null,
+        image_url_6: document.getElementById('editImageUrl6').value.trim() || null,
+        image_url_7: document.getElementById('editImageUrl7').value.trim() || null,
+        image_url_8: document.getElementById('editImageUrl8').value.trim() || null,
+        image_url_9: document.getElementById('editImageUrl9').value.trim() || null,
+        image_url_10: document.getElementById('editImageUrl10').value.trim() || null,
+        image_url_11: document.getElementById('editImageUrl11').value.trim() || null
       };
 
       try {
@@ -2205,6 +2450,142 @@
         showToast("Failed to save changes.", "error");
       }
     });
+
+    // Add Product Modal functions
+    function openAddModal() {
+      document.getElementById('addProductForm').reset();
+      
+      // Auto fill defaults
+      document.getElementById('addProdCategory').value = 'bag';
+      autoFillAddDisplayLabel();
+      document.getElementById('addProdStock').value = 10;
+
+      // Generate the 11 empty image slots
+      generateImageSlots('addProdImagesContainer', 'add');
+
+      // Initialize preview empties
+      for (let i = 1; i <= 11; i++) {
+        updateModalImagePreview(`addImageUrl${i}`, `addImagePreview${i}`, `addImageEmpty${i}`);
+      }
+
+      document.getElementById('addProductModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAddModal() {
+      document.getElementById('addProductModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('addProductForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const title = document.getElementById('addProdTitle').value.trim();
+      const category = document.getElementById('addProdCategory').value;
+      const price = Number(document.getElementById('addProdPrice').value);
+      const stock = Number(document.getElementById('addProdStock').value);
+      const weaver = document.getElementById('addProdWeaver').value.trim();
+      const pattern = document.getElementById('addProdPattern').value.trim();
+      const categoryDisplay = document.getElementById('addProdCategoryDisplay').value.trim();
+      const priceDisplay = document.getElementById('addProdPriceDisplay').value.trim();
+      const desc = document.getElementById('addProdDesc').value.trim();
+
+      const payload = {
+        title,
+        category,
+        price,
+        stock_count: stock,
+        weaver: weaver || null,
+        pattern: pattern || null,
+        category_display: categoryDisplay || null,
+        price_display: priceDisplay || null,
+        description: desc || null,
+        in_stock: stock > 0,
+        image_url: document.getElementById('addImageUrl1').value.trim() || null,
+        image_url_2: document.getElementById('addImageUrl2').value.trim() || null,
+        image_url_3: document.getElementById('addImageUrl3').value.trim() || null,
+        image_url_4: document.getElementById('addImageUrl4').value.trim() || null,
+        image_url_5: document.getElementById('addImageUrl5').value.trim() || null,
+        image_url_6: document.getElementById('addImageUrl6').value.trim() || null,
+        image_url_7: document.getElementById('addImageUrl7').value.trim() || null,
+        image_url_8: document.getElementById('addImageUrl8').value.trim() || null,
+        image_url_9: document.getElementById('addImageUrl9').value.trim() || null,
+        image_url_10: document.getElementById('addImageUrl10').value.trim() || null,
+        image_url_11: document.getElementById('addImageUrl11').value.trim() || null
+      };
+
+      try {
+        const { error } = await _supabase
+          .from('products')
+          .insert([payload]);
+
+        if (error) throw error;
+
+        showToast("New product created successfully!");
+        closeAddModal();
+
+        // Refresh products list
+        await fetchProducts();
+        renderInventory();
+        populateOverviewStats();
+      } catch(err) {
+        console.error(err);
+        showToast("Failed to create product.", "error");
+      }
+    });
+
+    // Delete Product handlers
+    let deleteTargetProductId = null;
+
+    function handleDeleteProductClick() {
+      const id = Number(document.getElementById('editProdId').value);
+      const prod = products.find(p => p.id === id);
+      if (!prod) return;
+
+      deleteTargetProductId = id;
+      document.getElementById('deleteConfirmTitle').textContent = prod.title;
+      document.getElementById('deleteConfirmModal').classList.add('open');
+    }
+
+    function closeDeleteConfirmModal() {
+      document.getElementById('deleteConfirmModal').classList.remove('open');
+      deleteTargetProductId = null;
+    }
+
+    async function executeProductDeletion() {
+      if (!deleteTargetProductId) return;
+
+      try {
+        const { error } = await _supabase
+          .from('products')
+          .delete()
+          .eq('id', deleteTargetProductId);
+
+        if (error) throw error;
+
+        showToast("Product deleted successfully.");
+        closeDeleteConfirmModal();
+        closeEditModal();
+
+        // Refresh products list
+        await fetchProducts();
+        renderInventory();
+        populateOverviewStats();
+      } catch(err) {
+        console.error(err);
+        showToast("Failed to delete product.", "error");
+      }
+    }
+
+    window.openAddModal = openAddModal;
+    window.closeAddModal = closeAddModal;
+    window.autoFillEditDisplayLabel = autoFillEditDisplayLabel;
+    window.autoFillAddDisplayLabel = autoFillAddDisplayLabel;
+    window.autoFillEditPriceLabel = autoFillEditPriceLabel;
+    window.autoFillAddPriceLabel = autoFillAddPriceLabel;
+    window.handleDeleteProductClick = handleDeleteProductClick;
+    window.closeDeleteConfirmModal = closeDeleteConfirmModal;
+    window.executeProductDeletion = executeProductDeletion;
 
     // Populate Settings tab
     function populateSettings() {
