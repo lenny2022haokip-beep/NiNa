@@ -160,22 +160,22 @@
 
   /* Traditional Kuki Pattern Border */
   .kuki-border {
-    height: 29px; /* Exact height of border_pattern.png */
+    height: 28px;
     width: 100%;
-    background-image: url('assets/border_pattern.png') !important;
+    background-image: url('assets/filler_black.png');
     background-repeat: repeat-x;
-    background-size: auto 29px;
-    background-position: center;
+    background-size: auto 180px;
+    background-position: top;
     opacity: 0.95;
     position: relative;
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     z-index: 10;
   }
   .kuki-border.red {
-    background-image: url('assets/border_pattern.png') !important;
+    background-image: url('assets/filler_red.png');
   }
   .kuki-border.bottom-pattern {
-    background-position: center;
+    background-position: bottom;
   }
   .kuki-border::after {
     content: none;
@@ -192,43 +192,6 @@
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(246, 245, 243, 0.85) 100%);
     border: 1px solid var(--border-color);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
-  }
-
-  /* Pattern Borders to replace solid border lines */
-  .pattern-border-bottom {
-    position: relative;
-    border-bottom: none !important;
-  }
-  .pattern-border-bottom::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 12px;
-    background-image: url('assets/border_pattern.png');
-    background-size: auto 12px;
-    background-repeat: repeat-x;
-    z-index: 10;
-    pointer-events: none;
-  }
-
-  .pattern-border-top {
-    position: relative;
-    border-top: none !important;
-  }
-  .pattern-border-top::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 12px;
-    background-image: url('assets/border_pattern.png');
-    background-size: auto 12px;
-    background-repeat: repeat-x;
-    z-index: 10;
-    pointer-events: none;
   }
 
   /* Button Styles */
@@ -2560,36 +2523,6 @@
     stroke-dashoffset: 24;
     animation: drawCheck 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
   }
-
-  /* Heritage Page Slideshow Styles */
-  .slider-container {
-    position: relative;
-    overflow: hidden;
-  }
-  .slider-container .slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 1;
-  }
-  .slider-container .slide.active {
-    opacity: 1;
-    z-index: 2;
-  }
-  .slider-container .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 6s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  /* Subtle Ken Burns zoom effect on active slide image */
-  .slider-container .slide.active img {
-    transform: scale(1.04);
-  }
 </style>
 </head>
 <body class="subpage-body">
@@ -2671,20 +2604,9 @@
           <p>NiNa exists to carry forward generational Kuki artistry and roots, ensuring that every handloomed thread is a celebration of identity. Through this brand, we aim to ensure our customers feel deeply connected, proud, bold, and confident in carrying Kuki heritage into the world.</p>
         </div>
 
-        <!-- Loom Close-up Image Card (Slideshow) -->
-        <div class="heritage-card image-card card-img-loom slider-container" id="loomSlider">
-          <div class="slide active">
-            <img src="assets/heritage_1.webp" alt="Traditional Kuki backstrap loin loom and weaving process - Detail 1" loading="lazy">
-          </div>
-          <div class="slide">
-            <img src="assets/heritage_2.webp" alt="Traditional Kuki backstrap loin loom and weaving process - Detail 2" loading="lazy">
-          </div>
-          <div class="slide">
-            <img src="assets/heritage_3.jpg" alt="Traditional Kuki backstrap loin loom and weaving process - Detail 3" loading="lazy">
-          </div>
-          <div class="slide">
-            <img src="assets/heritage_4.jpg" alt="Traditional Kuki backstrap loin loom and weaving process - Detail 4" loading="lazy">
-          </div>
+        <!-- Loom Close-up Image Card -->
+        <div class="heritage-card image-card card-img-loom">
+          <img src="assets/loom_detail.png" alt="Macro close-up of a traditional Kuki backstrap loin loom with organic cotton warp threads under natural lighting">
         </div>
 
         <!-- Backstrap Loom description -->
@@ -2694,17 +2616,9 @@
           <p>Unlike automated power looms, the traditional Kuki backstrap (or loin) loom requires no electricity. The weaver sits on the floor, using her body weight and a leather strap to control the warp tension. Every row is woven line by line from memory.</p>
         </div>
 
-        <!-- Yarn Close-up Image Card (Slideshow) -->
-        <div class="heritage-card image-card card-img-yarn slider-container" id="yarnSlider">
-          <div class="slide active">
-            <img src="assets/heritage_5.jpg" alt="Naturally dyed organic cotton yarn and materials - Detail 1" loading="lazy">
-          </div>
-          <div class="slide">
-            <img src="assets/heritage_6.jpg" alt="Naturally dyed organic cotton yarn and materials - Detail 2" loading="lazy">
-          </div>
-          <div class="slide">
-            <img src="assets/heritage_7.jpg" alt="Naturally dyed organic cotton yarn and materials - Detail 3" loading="lazy">
-          </div>
+        <!-- Yarn Close-up Image Card -->
+        <div class="heritage-card image-card card-img-yarn">
+          <img src="assets/yarn_detail.png" alt="Macro detail of naturally dyed black, crimson red, and saffron yellow organic cotton yarn skeins">
         </div>
 
         <!-- Cooperative privacy/ethics text block -->
@@ -2721,17 +2635,9 @@
           <p>Our three signature patterns — Saipikhup (elephant footprint), Thangnang (lattice repeat), and Mongvom (layered diamond rows) — represent a visual language spoken in thread. We collaborate directly with master weavers to translate these historic wraps into modern clothing, lightweight scarves, and accessories.</p>
         </div>
 
-        <!-- Puan textile image block (Slideshow) -->
-        <div class="heritage-card image-card card-img-puan slider-container" id="puanSlider">
-          <div class="slide active">
-            <img src="assets/heritage_8.jpg" alt="Intricate geometric weaving patterns on traditional Kuki Puan fabric - Detail 1" loading="lazy">
-          </div>
-          <div class="slide">
-            <img src="assets/heritage_9.jpg" alt="Intricate geometric weaving patterns on traditional Kuki Puan fabric - Detail 2" loading="lazy">
-          </div>
-          <div class="slide">
-            <img src="assets/heritage_10.jpg" alt="Intricate geometric weaving patterns on traditional Kuki Puan fabric - Detail 3" loading="lazy">
-          </div>
+        <!-- Puan textile image block -->
+        <div class="heritage-card image-card card-img-puan">
+          <img src="assets/puan_product.png" alt="Macro details of the intricate geometric weaving patterns on traditional Kuki Puan fabric">
         </div>
       </div>
     </div>
@@ -2838,12 +2744,11 @@
           <li><a href="javascript:void(0)" onclick="openInfoModal('contact')">Contact Us</a></li>
           <li><a href="javascript:void(0)" onclick="openInfoModal('privacy')">Privacy</a></li>
           <li><a href="javascript:void(0)" onclick="openInfoModal('terms')">Terms</a></li>
-          <li><a href="javascript:void(0)" onclick="showMaintenanceScreen()">Maintenance</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom container">
-      <p>Made with honor in Thangkanphai</p>
+      <p>Handloomed with honor in Churachandpur, Lamka, and Moreh, KUKI.</p>
       <div class="footer-socials">
         <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener">Instagram</a>
         <a href="https://www.facebook.com/share/1BLe7FzkUZ/" target="_blank" rel="noopener">Facebook</a>
@@ -2896,13 +2801,8 @@
   <div class="modal-backdrop" id="modalBackdrop" onclick="closeQuickViewOuter(event)">
     <div class="modal-container glass-card" id="modalContainer">
       <button class="modal-close-btn" onclick="closeQuickView()" aria-label="Close details">✕</button>
-      <div class="modal-gallery" id="modalGallery" style="position: relative; overflow: hidden; width: 100%; height: 100%; min-height: 300px; display: flex; align-items: center; justify-content: center; background: var(--surface-light);">
-        <div class="modal-slides-container" id="modalSlidesContainer" style="display: flex; width: 100%; height: 100%; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);">
-          <!-- Images injected via JS -->
-        </div>
-        <button class="modal-nav-btn prev-btn" id="modalPrevBtn" onclick="navigateModalGallery(-1)" aria-label="Previous image" style="position: absolute; top: 50%; transform: translateY(-50%); left: 12px; background: rgba(0, 0, 0, 0.4); color: #fff; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.1rem; z-index: 10; transition: background 0.3s ease;">❮</button>
-        <button class="modal-nav-btn next-btn" id="modalNextBtn" onclick="navigateModalGallery(1)" aria-label="Next image" style="position: absolute; top: 50%; transform: translateY(-50%); right: 12px; background: rgba(0, 0, 0, 0.4); color: #fff; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.1rem; z-index: 10; transition: background 0.3s ease;">❯</button>
-        <div class="modal-gallery-dots" id="modalGalleryDots" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10;"></div>
+      <div class="modal-gallery" id="modalGallery">
+        <!-- Main image injected via JS -->
       </div>
       <div class="modal-details">
         <span class="modal-cat" id="modalCat">Category</span>
@@ -2983,28 +2883,6 @@
   </div>
 
   <!-- Script logic -->
-  <script src="shop.js"></script>
-  <script>
-    // --- Heritage Page Image Slideshows ---
-    document.addEventListener('DOMContentLoaded', () => {
-      const initSlider = (sliderId, intervalTime = 4000) => {
-        const slider = document.getElementById(sliderId);
-        if (!slider) return;
-        const slides = slider.querySelectorAll('.slide');
-        if (slides.length <= 1) return;
-        
-        let current = 0;
-        setInterval(() => {
-          slides[current].classList.remove('active');
-          current = (current + 1) % slides.length;
-          slides[current].classList.add('active');
-        }, intervalTime);
-      };
-      
-      initSlider('loomSlider', 4500);
-      initSlider('yarnSlider', 5000);
-      initSlider('puanSlider', 5500);
-    });
-  </script>
+<script src="shop.js"></script>
 </body>
 </html>
