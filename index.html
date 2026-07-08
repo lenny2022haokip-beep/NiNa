@@ -3627,23 +3627,7 @@
 
   #collections {
     position: relative;
-  }
-  #collections::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url('assets/filler_black.png');
-    background-size: 200px auto;
-    background-repeat: repeat;
-    opacity: 0.01;
-    transform: scale(1.08);
-    transition: opacity 2s ease, transform 2s cubic-bezier(0.16, 1, 0.3, 1);
-    pointer-events: none;
-    z-index: 1;
-  }
-  #collections.section-active::before {
-    opacity: 0.025;
-    transform: scale(1);
+    border-bottom: 1px solid var(--border-color);
   }
 
   #shop {
