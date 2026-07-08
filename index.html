@@ -25,6 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Alex+Brush&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
 <style>
   :root {
@@ -3707,7 +3708,6 @@
   /* Custom Design Orders Section - Premium Polish */
   .custom-orders-section {
     background-color: #121211;
-    background-image: radial-gradient(circle at 50% 50%, #1c1c1a 0%, #121211 100%);
     padding: 100px 0;
     min-height: 85dvh;
     display: flex;
@@ -3716,6 +3716,23 @@
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .custom-orders-section::before {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 30%, rgba(197, 168, 128, 0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 70%, rgba(197, 168, 128, 0.05) 0%, transparent 70%),
+      radial-gradient(circle 40% at 50% 50%, #1c1c1a 0%, #121211 100%);
+    animation: ambientDrift 20s ease-in-out infinite alternate;
+  }
+  @keyframes ambientDrift {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(3%, -2%) rotate(1deg); }
+    66% { transform: translate(-2%, 3%) rotate(-1deg); }
+    100% { transform: translate(2%, -1%) rotate(0.5deg); }
   }
   @media (max-width: 1024px) {
     .custom-orders-section {
@@ -3847,94 +3864,64 @@
     width: 100%;
     overflow: hidden;
     position: relative;
+    z-index: 2;
     padding: 20px 0;
-    /* Soft fade edges - much cleaner with 8% fade instead of 15% */
     mask-image: linear-gradient(to right, transparent, white 8%, white 92%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, white 8%, white 92%, transparent);
   }
-  @media (max-width: 1024px) {
-    .custom-orders-marquee {
-      mask-image: linear-gradient(to right, transparent, white 5%, white 95%, transparent);
-      -webkit-mask-image: linear-gradient(to right, transparent, white 5%, white 95%, transparent);
-    }
+  .custom-orders-marquee .swiper {
+    width: 100%;
+    overflow: visible;
   }
-  @media (max-width: 767px) {
-    .custom-orders-marquee {
-      mask-image: linear-gradient(to right, transparent, white 4%, white 96%, transparent);
-      -webkit-mask-image: linear-gradient(to right, transparent, white 4%, white 96%, transparent);
-    }
-  }
-  .marquee-track {
-    display: flex;
-    gap: 24px;
-    width: max-content;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    scroll-behavior: smooth;
-    padding: 4px 24px 12px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .marquee-track::-webkit-scrollbar {
-    display: none;
-  }
-  @media (max-width: 767px) {
-    .marquee-track {
-      gap: 16px;
-      padding: 4px 16px 12px;
-    }
-  }
-  .marquee-slide {
+  .custom-orders-marquee .swiper-slide {
     width: 280px;
     height: 380px;
-    flex-shrink: 0;
     position: relative;
     border-radius: 8px;
     overflow: hidden;
     background: #1c1c1a;
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    scroll-snap-align: start;
+    transition: border-color 0.5s ease, box-shadow 0.5s ease, transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0.4;
+    transform: scale(0.88);
   }
-  .marquee-slide:hover {
-    border-color: rgba(197, 168, 128, 0.4);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  .custom-orders-marquee .swiper-slide.swiper-slide-active {
+    opacity: 1;
+    transform: scale(1);
+    border-color: rgba(197, 168, 128, 0.3);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(197, 168, 128, 0.06);
+    animation: activePulse 4s ease-in-out infinite;
   }
-  @media (max-width: 1024px) {
-    .marquee-slide {
-      width: 240px;
-      height: 330px;
-    }
+  @keyframes activePulse {
+    0%, 100% { box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 40px rgba(197, 168, 128, 0.06); }
+    50% { box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7), 0 0 60px rgba(197, 168, 128, 0.1); }
   }
+  .custom-orders-marquee .swiper-slide.swiper-slide-prev,
+  .custom-orders-marquee .swiper-slide.swiper-slide-next {
+    opacity: 0.6;
+    transform: scale(0.94);
   }
-  /* Horizontal 2-Column Marquee Cards */
-  .marquee-slide.horizontal {
-    width: 584px; /* 280px * 2 + 24px gap */
+  .custom-orders-marquee .swiper-slide:hover {
+    border-color: rgba(197, 168, 128, 0.5);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(197, 168, 128, 0.08);
   }
-  @media (max-width: 1024px) {
-    .marquee-slide.horizontal {
-      width: 504px; /* 240px * 2 + 24px gap */
-    }
-  }
-  @media (max-width: 767px) {
-    .marquee-slide.horizontal {
-      width: 396px; /* 190px * 2 + 16px gap */
-    }
-  }
-  .marquee-slide img {
+  .custom-orders-marquee .swiper-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 20%;
+    object-position: center 30%;
     image-orientation: from-image;
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .marquee-slide.horizontal img {
-    object-position: center 35%;
+  .custom-orders-marquee .swiper-slide:hover img {
+    transform: scale(1.08);
   }
-  .marquee-slide:hover img {
-    transform: scale(1.06);
+  .custom-orders-marquee .swiper-slide-active img {
+    transform: scale(1.04);
+  }
+  .custom-orders-marquee .swiper-slide-active:hover img {
+    transform: scale(1.1);
   }
   .slide-overlay {
     position: absolute;
@@ -3947,7 +3934,8 @@
     transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 2;
   }
-  .marquee-slide:hover .slide-overlay {
+  .custom-orders-marquee .swiper-slide:hover .slide-overlay,
+  .custom-orders-marquee .swiper-slide-active .slide-overlay {
     opacity: 1;
   }
   .slide-cta-btn {
@@ -3967,22 +3955,96 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     text-decoration: none;
   }
-  .marquee-slide:hover .slide-cta-btn {
+  .custom-orders-marquee .swiper-slide:hover .slide-cta-btn,
+  .custom-orders-marquee .swiper-slide-active .slide-cta-btn {
     transform: translateY(0);
   }
   .slide-cta-btn:hover {
     background: #C5A880;
     color: #121211;
-    transform: translateY(-2px);
+    transform: translateY(-2px) !important;
     box-shadow: 0 6px 20px rgba(197, 168, 128, 0.4);
   }
-  @keyframes marqueeScroll {
-    0% {
-      transform: translate3d(0, 0, 0);
+  .swiper-nav-btn {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(253, 251, 247, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #121211;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-50%);
+  }
+  .swiper-nav-btn:hover {
+    background: #C5A880;
+    color: #121211;
+    border-color: #C5A880;
+    box-shadow: 0 6px 20px rgba(197, 168, 128, 0.3);
+  }
+  .swiper-nav-btn.swiper-button-prev-custom { left: 10px; }
+  .swiper-nav-btn.swiper-button-next-custom { right: 10px; }
+  .swiper-nav-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .swiper-pagination-custom {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .swiper-pagination-custom .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(253, 251, 247, 0.25);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .swiper-pagination-custom .swiper-pagination-bullet-active {
+    background: #C5A880;
+    width: 24px;
+    border-radius: 4px;
+    box-shadow: 0 0 12px rgba(197, 168, 128, 0.3);
+  }
+  @media (max-width: 1024px) {
+    .custom-orders-marquee .swiper-slide {
+      width: 240px;
+      height: 330px;
     }
-    100% {
-      transform: translate3d(-50%, 0, 0);
+    .swiper-nav-btn {
+      width: 38px;
+      height: 38px;
     }
+    .swiper-nav-btn svg { width: 16px; height: 16px; }
+  }
+  @media (max-width: 767px) {
+    .custom-orders-marquee .swiper-slide {
+      width: 190px;
+      height: 280px;
+    }
+    .custom-orders-marquee .swiper-slide {
+      opacity: 0.5;
+      transform: scale(0.92);
+    }
+    .custom-orders-marquee .swiper-slide.swiper-slide-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .swiper-nav-btn { display: none; }
   }
 
   /* Kingoicho Award Section Styling */
@@ -4514,101 +4576,108 @@
       
       <!-- Scrolling Marquee Wrapper -->
       <div class="custom-orders-marquee reveal">
-        <div class="marquee-track">
-          <div class="marquee-slide horizontal">
-            <img src="assets/custom_orders/custom%20orders%20images/Bag.jpeg" alt="Custom Design - BAG" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20BAG." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+        <div class="swiper" id="customOrdersSwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/Bag.jpeg" alt="Custom Design - BAG" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20BAG." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/hkstevephotos_3e645360_2.jpg.jpeg" alt="Custom Design - HK-2" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20HK-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/hkstevephotos_3e645360_3.jpg.jpeg" alt="Custom Design - HK-3" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20HK-3." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/mrandmissthadou_774e1734_1.jpg.jpeg" alt="Custom Design - THADOU-1" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20THADOU-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/thangkanphai_317dd51d_1.jpg.jpeg" alt="Custom Design - THK-1" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20THK-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/thangkanphai_317dd51d_2.jpg.jpeg" alt="Custom Design - THK-2" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20THK-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.16.jpeg" alt="Custom Design - WA-1" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.17%20(1).jpeg" alt="Custom Design - WA-2" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.17.jpeg" alt="Custom Design - WA-3" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-3." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.18%20(1).jpeg" alt="Custom Design - WA-4" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-4." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.21%20(1).jpeg" alt="Custom Design - WA-5" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-5." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.21.jpeg" alt="Custom Design - WA-6" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-6." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.23.jpeg" alt="Custom Design - WA-7" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-7." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.24.jpeg" alt="Custom Design - WA-8" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-8." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.26%20(2).jpeg" alt="Custom Design - WA-9" loading="lazy">
+              <div class="slide-overlay">
+                <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-9." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              </div>
             </div>
           </div>
-          <div class="marquee-slide horizontal">
-            <img src="assets/custom_orders/custom%20orders%20images/hkstevephotos_3e645360_2.jpg.jpeg" alt="Custom Design - HK-2" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20HK-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide horizontal">
-            <img src="assets/custom_orders/custom%20orders%20images/hkstevephotos_3e645360_3.jpg.jpeg" alt="Custom Design - HK-3" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20HK-3." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide horizontal">
-            <img src="assets/custom_orders/custom%20orders%20images/mrandmissthadou_774e1734_1.jpg.jpeg" alt="Custom Design - THADOU-1" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20THADOU-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide horizontal">
-            <img src="assets/custom_orders/custom%20orders%20images/thangkanphai_317dd51d_1.jpg.jpeg" alt="Custom Design - THK-1" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20THK-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide horizontal">
-            <img src="assets/custom_orders/custom%20orders%20images/thangkanphai_317dd51d_2.jpg.jpeg" alt="Custom Design - THK-2" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20THK-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide">
-            <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.16.jpeg" alt="Custom Design - WA-1" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide">
-            <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.17%20(1).jpeg" alt="Custom Design - WA-2" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide">
-            <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.17.jpeg" alt="Custom Design - WA-3" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-3." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide">
-            <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.18%20(1).jpeg" alt="Custom Design - WA-4" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-4." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide">
-            <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.21%20(1).jpeg" alt="Custom Design - WA-5" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-5." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide">
-            <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.21.jpeg" alt="Custom Design - WA-6" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-6." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide">
-            <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.23.jpeg" alt="Custom Design - WA-7" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-7." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide">
-            <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.24.jpeg" alt="Custom Design - WA-8" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-8." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide">
-            <img src="assets/custom_orders/custom%20orders%20images/WhatsApp%20Image%202026-06-30%20at%2013.36.26%20(2).jpeg" alt="Custom Design - WA-9" loading="lazy">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20WA-9." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-                </div>
+        </div>
+        <button class="swiper-nav-btn swiper-button-prev-custom" id="customOrdersPrev">
+          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="currentColor"/></svg>
+        </button>
+        <button class="swiper-nav-btn swiper-button-next-custom" id="customOrdersNext">
+          <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke="currentColor"/></svg>
+        </button>
+        <div class="swiper-pagination-custom" id="customOrdersPagination"></div>
       </div>
-    </div>
-  </section>
 
   <div class="kuki-border red"></div>
 
@@ -5127,6 +5196,9 @@
 
   <!-- WhatsApp Checkout - no external payment scripts needed -->
 
+  <!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
   <!-- Script logic -->
 <script src="shop.js"></script>
   <script>
@@ -5379,6 +5451,49 @@
 
     // Sync cart and wishlist from Supabase in the background
     loadSessionFromSupabase();
+
+    // --- Custom Orders Swiper ---
+    const swiperEl = document.getElementById('customOrdersSwiper');
+    if (swiperEl) {
+      const swiper = new Swiper(swiperEl, {
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        loop: true,
+        speed: 600,
+        spaceBetween: 24,
+        grabCursor: true,
+        autoplay: {
+          delay: 4000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        },
+        on: {
+          slideChange: function () {
+            const bullets = document.querySelectorAll('#customOrdersPagination .swiper-pagination-bullet');
+            bullets.forEach((b, i) => b.classList.toggle('swiper-pagination-bullet-active', i === this.realIndex));
+          },
+        },
+      });
+
+      // Custom nav buttons
+      document.getElementById('customOrdersPrev').addEventListener('click', () => swiper.slidePrev());
+      document.getElementById('customOrdersNext').addEventListener('click', () => swiper.slideNext());
+
+      // Generate pagination bullets
+      const totalSlides = swiper.params.loop ? swiper.slides.length / 2 : swiper.slides.length;
+      const paginationContainer = document.getElementById('customOrdersPagination');
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'swiper-pagination-bullet' + (i === 0 ? ' swiper-pagination-bullet-active' : '');
+        dot.addEventListener('click', () => swiper.slideToLoop(i));
+        paginationContainer.appendChild(dot);
+      }
+
+      // Pause autoplay when hovering the whole section
+      const section = swiperEl.closest('.custom-orders-section');
+      section.addEventListener('mouseenter', () => swiper.autoplay.stop());
+      section.addEventListener('mouseleave', () => swiper.autoplay.start());
+    }
   </script>
 </body>
 </html>
