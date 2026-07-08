@@ -243,8 +243,8 @@ let products = {
   "11": {
     "id": 11,
     "title": "Gosem Enamel Pin",
-    "category": "bandana",
-    "categoryDisplay": "Bandana · Handwoven",
+    "category": "pin",
+    "categoryDisplay": "Label Pin · Heritage",
     "pattern": "gosem",
     "price": 500,
     "priceDisplay": "₹500",
@@ -267,8 +267,8 @@ let products = {
   "12": {
     "id": 12,
     "title": "Tahchanu Enamel Pin",
-    "category": "bandana",
-    "categoryDisplay": "Bandana · Handwoven",
+    "category": "pin",
+    "categoryDisplay": "Label Pin · Heritage",
     "pattern": "tahchanu",
     "price": 500,
     "priceDisplay": "₹500",
@@ -291,8 +291,8 @@ let products = {
   "13": {
     "id": 13,
     "title": "Tahchapa Enamel Pin",
-    "category": "bandana",
-    "categoryDisplay": "Bandana · Handwoven",
+    "category": "pin",
+    "categoryDisplay": "Label Pin · Heritage",
     "pattern": "tahchapa",
     "price": 500,
     "priceDisplay": "₹500",
@@ -483,8 +483,8 @@ let products = {
   "11-upsell": {
     "id": "11-upsell",
     "title": "Heritage Enamel Pin",
-    "category": "bandana",
-    "categoryDisplay": "Bandana · Handwoven",
+    "category": "pin",
+    "categoryDisplay": "Label Pin · Heritage",
     "pattern": "gosem",
     "price": 150,
     "priceDisplay": "₹150",
