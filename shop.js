@@ -1,4 +1,17 @@
 // --- Data Definitions (31 Products) ---
+
+function prodImageHtml(id, alt, count) {
+  if (count === 1) {
+    return `<img src="assets/products/prod_${id}_1.jpg" alt="${alt}" loading="lazy" id="img-prod-${id}">`;
+  }
+  let h = `<div class="product-slideshow"><div class="slideshow-viewport"><div class="slideshow-track" data-track="${id}">`;
+  for (let i = 1; i <= count; i++) h += `<img src="assets/products/prod_${id}_${i}.jpg" alt="${alt}" class="slideshow-img" loading="lazy">`;
+  h += `</div><button class="slideshow-arrow left" onclick="event.stopPropagation(); slideProduct(this, -1)">‹</button><button class="slideshow-arrow right" onclick="event.stopPropagation(); slideProduct(this, 1)">›</button></div><div class="slideshow-dots" data-dots="${id}">`;
+  for (let i = 0; i < count; i++) h += `<span class="slideshow-dot${i === 0 ? ' active' : ''}"></span>`;
+  h += `</div></div>`;
+  return h;
+}
+
 let products = {
   1: {
     id: 1,
@@ -9,7 +22,7 @@ let products = {
     priceDisplay: "₹1,000",
     desc: "A spacious, heavy-duty shoulder tote featuring the historic Saipikhup ('elephant footprint') pattern, handwoven on a traditional Kuki backstrap loom.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/product_1.jpg" alt="Saipikhup Tote Bag">`,
+    imageHtml: prodImageHtml(1, "Saipikhup Tote Bag", 11),
     stock_count: 3
   },
   2: {
@@ -21,7 +34,7 @@ let products = {
     priceDisplay: "₹700",
     desc: "An elegant, slouchy hobo bag showcasing the classic Thangnang diamond lattice pattern. Fully lined with inner zipper pocket.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/product_2.jpg" alt="Thangnang Hobo Bag">`,
+    imageHtml: prodImageHtml(2, "Thangnang Hobo Bag", 2),
     stock_count: 2
   },
   3: {
@@ -33,7 +46,7 @@ let products = {
     priceDisplay: "₹400",
     desc: "Structured shoulder bag finished with premium leather trims and organic cotton weave displaying the Kuki Mongvom stripe motif.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/product_3.jpg" alt="Mongvom Shoulder Bag">`,
+    imageHtml: prodImageHtml(3, "Mongvom Shoulder Bag", 3),
     stock_count: 0
   },
   4: {
@@ -45,7 +58,7 @@ let products = {
     priceDisplay: "₹1,000",
     desc: "A sleek, hand-held clutch featuring a striking saffron and crimson Saipikhup pattern. Perfect for evening outings.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/product_4.jpg" alt="Saipikhup Clutch">`,
+    imageHtml: prodImageHtml(4, "Saipikhup Clutch", 3),
     stock_count: 5
   },
   5: {
@@ -57,7 +70,7 @@ let products = {
     priceDisplay: "₹700",
     desc: "A structured, vintage-inspired satchel showing dark emerald cross-hatch handloomed patterns with dual carry handles.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/product_5.jpg" alt="Thangnang Satchel">`,
+    imageHtml: prodImageHtml(5, "Thangnang Satchel", 3),
     stock_count: 0
   },
   6: {
@@ -69,7 +82,7 @@ let products = {
     priceDisplay: "₹400",
     desc: "Compact crossbody bag featuring a repeat geometric warp pattern. Features adjustable cotton-webbing strap.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/product_6.jpg" alt="Mongvom Crossbody Bag">`,
+    imageHtml: prodImageHtml(6, "Mongvom Crossbody Bag", 3),
     stock_count: 10
   },
   7: {
@@ -81,7 +94,7 @@ let products = {
     priceDisplay: "₹1,000",
     desc: "Modern bucket bag with drawstring closure, featuring classic red-saffron base pattern and premium brass hardware.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/product_7.jpg" alt="Saipikhup Bucket Bag">`,
+    imageHtml: prodImageHtml(7, "Saipikhup Bucket Bag", 2),
     stock_count: 10
   },
   8: {
@@ -93,7 +106,7 @@ let products = {
     priceDisplay: "₹700",
     desc: "A generous daily carryall highlighting ochre-gold woven textures. Features reinforced seams and sturdy double straps.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/product_8.jpg" alt="Thangnang Carryall">`,
+    imageHtml: prodImageHtml(8, "Thangnang Carryall", 3),
     stock_count: 0
   },
   9: {
@@ -105,7 +118,7 @@ let products = {
     priceDisplay: "₹400",
     desc: "An oversized travel tote made from heavy organic cotton weave, showcasing traditional Mongvom diamond repeat margins.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/product_9.jpg" alt="Mongvom Travel Tote">`,
+    imageHtml: prodImageHtml(9, "Mongvom Travel Tote", 3),
     stock_count: 1
   },
   10: {
@@ -117,7 +130,7 @@ let products = {
     priceDisplay: "₹1,000",
     desc: "Sturdy heritage backpack combining Kuki backstrap handloom weaving with leather shoulder straps and back padding.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/product_10.jpg" alt="Saipikhup Backpack">`,
+    imageHtml: prodImageHtml(10, "Saipikhup Backpack", 3),
     stock_count: 10
   },
   11: {
@@ -129,7 +142,7 @@ let products = {
     priceDisplay: "₹500",
     desc: "Hard enamel lapel pin finished with gold plating, representing the traditional wind pipe instrument of the Kuki tribe.",
     weaver: "Ginzalian Mate (Moreh)",
-    imageHtml: `<img src="assets/product_11.jpg" alt="Gosem Enamel Pin">`,
+    imageHtml: prodImageHtml(11, "Gosem Enamel Pin", 2),
     stock_count: 10
   },
   12: {
@@ -141,7 +154,7 @@ let products = {
     priceDisplay: "₹500",
     desc: "Shield-shaped enamel pin representing Kuki warrior lineage, finished with charcoal and crimson enamel fills.",
     weaver: "Ginzalian Mate (Moreh)",
-    imageHtml: `<img src="assets/product_12.jpg" alt="Tahchapa Enamel Pin">`,
+    imageHtml: prodImageHtml(12, "Tahchapa Enamel Pin", 2),
     stock_count: 0
   },
   13: {
@@ -153,7 +166,7 @@ let products = {
     priceDisplay: "₹500",
     desc: "A special close-up edition hard enamel lapel pin depicting warrior shield symbols in premium metallic outlines.",
     weaver: "Ginzalian Mate (Moreh)",
-    imageHtml: `<img src="assets/product_13.jpg" alt="Tahchapa Collector Pin">`,
+    imageHtml: prodImageHtml(13, "Tahchapa Collector Pin", 2),
     stock_count: 10
   },
   14: {
@@ -165,7 +178,7 @@ let products = {
     priceDisplay: "₹700",
     desc: "Premium travel backpack featuring Thangnang crimson-gold geometric panels, leather closures, and laptop compartment.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/product_14.jpg" alt="Thangnang Backpack">`,
+    imageHtml: prodImageHtml(14, "Thangnang Backpack", 3),
     stock_count: 10
   },
   15: {
@@ -177,7 +190,7 @@ let products = {
     priceDisplay: "₹400",
     desc: "A sleek structured tote bag woven in pure olive green tones. Perfect for both office settings and weekend outings.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/product_15.jpg" alt="Mongvom Structured Tote">`,
+    imageHtml: prodImageHtml(15, "Mongvom Structured Tote", 3),
     stock_count: 4
   },
   16: {
@@ -189,7 +202,7 @@ let products = {
     priceDisplay: "₹1,000",
     desc: "A daily daypack displaying sand-crimson tones. Very lightweight, compact, and features durable cotton drawstrings.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/product_16.jpg" alt="Saipikhup Daypack">`,
+    imageHtml: prodImageHtml(16, "Saipikhup Daypack", 3),
     stock_count: 10
   },
   17: {
@@ -201,7 +214,7 @@ let products = {
     priceDisplay: "₹700",
     desc: "Heritage messenger bag displaying ash-slate patterns. Designed with multiple inner pockets and thick canvas shoulder straps.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/product_17.jpg" alt="Thangnang Messenger Bag">`,
+    imageHtml: prodImageHtml(17, "Thangnang Messenger Bag", 3),
     stock_count: 0
   },
   18: {
@@ -213,7 +226,7 @@ let products = {
     priceDisplay: "₹400",
     desc: "A versatile foldover clutch showing bold saffron-black stripes. Handloomed with heavy-weight premium organic cotton.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/product_18.jpg" alt="Mongvom Foldover Clutch">`,
+    imageHtml: prodImageHtml(18, "Mongvom Foldover Clutch", 3),
     stock_count: 10
   },
   19: {
@@ -225,7 +238,7 @@ let products = {
     priceDisplay: "₹1,000",
     desc: "A classic bowler-style handbag showing detailed sunset-rust geometric motifs and dual sturdy leather rolled handles.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/product_19.jpg" alt="Saipikhup Bowler Bag">`,
+    imageHtml: prodImageHtml(19, "Saipikhup Bowler Bag", 3),
     stock_count: 10
   },
   20: {
@@ -237,7 +250,7 @@ let products = {
     priceDisplay: "₹700",
     desc: "A smaller, lightweight shopper tote featuring ochre-saffron lattice patterns. Ideal for casual daily runs.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/product_20.jpg" alt="Thangnang Petite Tote">`,
+    imageHtml: prodImageHtml(20, "Thangnang Petite Tote", 3),
     stock_count: 10
   },
   21: {
@@ -249,7 +262,7 @@ let products = {
     priceDisplay: "₹300",
     desc: "A striking sky-blue bandana handloomed using premium cotton, showcasing the classic Mongvom diamond repeat margins.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/bandana_1.jpg" alt="Mongvom Blue Bandana">`,
+    imageHtml: prodImageHtml(21, "Mongvom Blue Bandana", 3),
     stock_count: 2
   },
   22: {
@@ -261,7 +274,7 @@ let products = {
     priceDisplay: "₹300",
     desc: "Deep charcoal cotton base adorned with vibrant orange and white geometric diamond repeats, weaving together warrior status symbols.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/bandana_2.jpg" alt="Heritage Diamond Bandana">`,
+    imageHtml: prodImageHtml(22, "Heritage Diamond Bandana", 3),
     stock_count: 10
   },
   23: {
@@ -273,7 +286,7 @@ let products = {
     priceDisplay: "₹300",
     desc: "A classic cream and saffron backstrap-loomed bandana displaying the traditional Kuki Thangnang checkerboard motifs.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/bandana_3.jpg" alt="Thangnang Gold Bandana">`,
+    imageHtml: prodImageHtml(23, "Thangnang Gold Bandana", 3),
     stock_count: 10
   },
   24: {
@@ -285,7 +298,7 @@ let products = {
     priceDisplay: "₹300",
     desc: "A bold heritage print bandana displaying the sacred wind pipe (Gosem), hunting horns, and Kuki tribal symbols over a clean mesh background.",
     weaver: "Ginzalian Mate (Moreh)",
-    imageHtml: `<img src="assets/bandana_4.jpg" alt="Tribal Motif Bandana">`,
+    imageHtml: prodImageHtml(24, "Tribal Motif Bandana", 3),
     stock_count: 0
   },
   25: {
@@ -297,7 +310,7 @@ let products = {
     priceDisplay: "₹300",
     desc: "Midnight black handloomed cotton bandana featuring intricate border motifs and subtle yellow highlight diamonds.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/bandana_5.jpg" alt="Midnight Diamond Bandana">`,
+    imageHtml: prodImageHtml(25, "Midnight Diamond Bandana", 2),
     stock_count: 10
   },
   26: {
@@ -309,7 +322,7 @@ let products = {
     priceDisplay: "₹500",
     desc: "A rich, charcoal and grey handwoven scarf featuring the traditional Kuki Mangvom pattern loomed from pure organic cotton.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/scarf_dahpi.jpg" alt="Mangvom Dahpi Scarf">`,
+    imageHtml: prodImageHtml(26, "Mangvom Dahpi Scarf", 3),
     stock_count: 10
   },
   27: {
@@ -321,7 +334,7 @@ let products = {
     priceDisplay: "₹500",
     desc: "An exquisite heritage scarf loomed with the sacred Saipikhup pattern representing status, prestige, and generational pride.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/scarf_heritage.jpg" alt="Saipikhup Heritage Scarf">`,
+    imageHtml: prodImageHtml(27, "Saipikhup Heritage Scarf", 3),
     stock_count: 10
   },
   28: {
@@ -333,7 +346,7 @@ let products = {
     priceDisplay: "₹500",
     desc: "A stunning, versatile scarf loomed in the traditional Thangnang diamond checkerboard patterns. Durable yet extremely soft.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/scarf_phoulva.jpg" alt="Thangnang Phoulva Scarf">`,
+    imageHtml: prodImageHtml(28, "Thangnang Phoulva Scarf", 3),
     stock_count: 3
   },
   29: {
@@ -345,7 +358,7 @@ let products = {
     priceDisplay: "₹600",
     desc: "A stunning white traditional shawl handloomed in Churachandpur, featuring the historic Saipikhup pattern in contrast grey and black margins.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/puan_product.png" alt="White Traditional Shawl">`,
+    imageHtml: prodImageHtml(29, "White Traditional Shawl", 3),
     stock_count: 10
   },
   30: {
@@ -357,7 +370,7 @@ let products = {
     priceDisplay: "₹600",
     desc: "An exquisite crimson red traditional shawl, handloomed on traditional backstrap looms with fine black geometric Saipikhup repeating diamond motifs.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: `<img src="assets/filler_red.png" alt="Red Traditional Shawl">`,
+    imageHtml: prodImageHtml(30, "Red Traditional Shawl", 3),
     stock_count: 0
   },
   31: {
@@ -369,7 +382,7 @@ let products = {
     priceDisplay: "₹600",
     desc: "A timeless piece crafted to pay tribute and respect during days of mourning and condolence",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/cat_pondum_new.jpg" alt="Pondum (Exclusive)">`,
+    imageHtml: prodImageHtml(31, "Pondum (Exclusive)", 3),
     stock_count: 10
   },
   "11-upsell": {
@@ -382,7 +395,7 @@ let products = {
     desc: "Special Complete the Look discount enamel pin.",
     weaver: "Ginzalian Mate (Moreh)",
     stock_count: 99,
-    imageHtml: `<img src="assets/product_11.jpg" alt="Heritage Enamel Pin">`
+    imageHtml: prodImageHtml(11, "Heritage Enamel Pin", 2)
   }
 };
 window.products = products;
@@ -988,6 +1001,20 @@ if (filterBtns) {
     });
   });
 }
+
+// --- Product Slideshow Navigation ---
+window.slideProduct = function(btn, dir) {
+  const viewport = btn.closest('.slideshow-viewport');
+  if (!viewport) return;
+  const track = viewport.querySelector('.slideshow-track');
+  if (!track) return;
+  const scrollAmount = viewport.offsetWidth;
+  const maxScroll = track.scrollWidth - scrollAmount;
+  let newPos = track.scrollLeft + dir * scrollAmount;
+  if (newPos < 0) newPos = 0;
+  if (newPos > maxScroll) newPos = maxScroll;
+  track.scrollTo({ left: newPos, behavior: 'smooth' });
+};
 
 // --- Category Slider Navigation ---
 let currentSlide = 0;
@@ -1762,18 +1789,16 @@ function openQuickView(id) {
   // Apply same filter logic to quickview modal image based on active color swatch selection
   let filterStyle = '';
   const variant = prod.selectedVariant || "Default";
-  if (variant === 'Maroon') filterStyle = 'filter: hue-rotate(330deg) saturate(1.4);';
-  else if (variant === 'Pink') filterStyle = 'filter: hue-rotate(290deg) saturate(1.8);';
-  else if (variant === 'Black' || variant === 'Charcoal') filterStyle = 'filter: grayscale(1) brightness(0.6);';
-  else if (variant === 'Yellow') filterStyle = 'filter: hue-rotate(40deg) saturate(1.2) sepia(0.2);';
-  else if (variant === 'Forest Green') filterStyle = 'filter: hue-rotate(100deg) saturate(1.2);';
+  if (variant === 'Maroon') filterStyle = 'hue-rotate(330deg) saturate(1.4)';
+  else if (variant === 'Pink') filterStyle = 'hue-rotate(290deg) saturate(1.8)';
+  else if (variant === 'Black' || variant === 'Charcoal') filterStyle = 'grayscale(1) brightness(0.6)';
+  else if (variant === 'Yellow') filterStyle = 'hue-rotate(40deg) saturate(1.2) sepia(0.2)';
+  else if (variant === 'Forest Green') filterStyle = 'hue-rotate(100deg) saturate(1.2)';
 
-  let imageWithFilter = prod.imageHtml;
+  if (modalGallery) modalGallery.innerHTML = prod.imageHtml;
   if (filterStyle) {
-    imageWithFilter = prod.imageHtml.replace('<img', `<img style="${filterStyle}"`);
+    modalGallery.querySelectorAll('img').forEach(img => img.style.filter = filterStyle);
   }
-
-  if (modalGallery) modalGallery.innerHTML = imageWithFilter;
   if (modalCat) modalCat.textContent = prod.categoryDisplay;
   if (modalTitle) modalTitle.textContent = prod.title;
   if (modalPrice) modalPrice.textContent = prod.priceDisplay;
