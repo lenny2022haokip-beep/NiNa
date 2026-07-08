@@ -2202,3 +2202,9 @@ window.showMaintenanceScreen = showMaintenanceScreen;
 fetchProducts();
 fetchSiteContent();
 loadSessionFromSupabase();
+
+// Check query parameters for maintenance mode override
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('maintenance') === 'true' || urlParams.get('maintenance_mode') === 'true') {
+  showMaintenanceScreen();
+}
