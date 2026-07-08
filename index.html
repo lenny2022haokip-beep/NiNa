@@ -219,10 +219,10 @@
   .announcement-bar {
     background: var(--bg-darker);
     border-bottom: 1px solid var(--border-color);
-    padding: 8px 16px;
+    padding: 8px 0;
     text-align: center;
     font-family: var(--font-mono);
-    font-size: clamp(0.55rem, 1.5vw, 0.62rem);
+    font-size: 0.62rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--color-muted);
@@ -230,10 +230,6 @@
     width: 100%;
     position: relative;
     z-index: 101;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    box-sizing: border-box;
   }
   header.scrolled .announcement-bar {
     background: rgba(253, 251, 247, 0.96);
@@ -406,36 +402,10 @@
     align-items: center;
     gap: 16px;
   }
-  .mobile-social-icons {
-    display: none;
-  }
-  @media (max-width: 767px) {
-    .mobile-social-icons {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      margin-right: 4px;
-    }
-    .mobile-social-icons a {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px;
-      line-height: 0;
-    }
-    .mobile-social-icons svg {
-      width: 18px;
-      height: 18px;
-      display: block;
-    }
-    .mobile-social-icons a[aria-label="Instagram"] { color: #E4405F; }
-    .mobile-social-icons a[aria-label="Facebook"] { color: #1877F2; }
-    .mobile-social-icons a[aria-label="Pinterest"] { color: #BD081C; }
-  }
   .action-icon-btn {
     position: relative;
     cursor: pointer;
-    padding: 12px;
+    padding: 6px;
     color: var(--color-cream);
     transition: var(--transition-smooth);
     border-radius: 50%;
@@ -449,9 +419,8 @@
   }
   .cart-badge {
     position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(25%, -25%);
+    top: -2px;
+    right: -2px;
     background: var(--accent-saffron);
     color: var(--bg-darker);
     font-family: var(--font-mono);
@@ -470,7 +439,7 @@
     flex-direction: column;
     gap: 5px;
     cursor: pointer;
-    padding: 12px;
+    padding: 6px;
     z-index: 102;
   }
   .menu-toggle span {
@@ -820,26 +789,6 @@
     gap: 16px;
     width: 100%;
   }
-  #policyModalTitle {
-    font-family: var(--font-heading);
-    font-weight: 300;
-    font-size: 1.8rem;
-    margin: 0 0 16px 0;
-    color: var(--text-dark);
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 12px;
-  }
-  .checkout-title {
-    font-family: var(--font-heading);
-    font-weight: 300;
-    font-size: 1.8rem;
-    margin: 0 0 24px 0;
-    color: var(--text-dark);
-    text-align: center;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 12px;
-  }
   
   .checkout-input-group {
     width: 100%;
@@ -1012,11 +961,16 @@
   }
   .category-slider {
     position: relative;
-    height: clamp(400px, 55vh, 600px);
+    height: 460px;
     overflow: hidden;
     background: #FDFBF7;
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
+  }
+  @media (min-width: 768px) {
+    .category-slider {
+      height: 600px;
+    }
   }
   .category-slide {
     position: absolute;
@@ -1135,7 +1089,7 @@
   }
   .category-slide-content h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-size: 1.5rem;
     font-weight: 500;
     margin: 0 0 8px 0;
     line-height: 1.2;
@@ -1146,11 +1100,19 @@
   @media (max-width: 767px) {
     .category-slide-content h2 {
       color: #fff;
+      font-size: 1.3rem;
       margin: 0 0 4px 0;
     }
   }
-  @media (min-width: 768px) {
+  @media (min-width: 768px) and (max-width: 1024px) {
     .category-slide-content h2 {
+      font-size: 1.8rem;
+      margin: 0 0 10px 0;
+    }
+  }
+  @media (min-width: 1025px) {
+    .category-slide-content h2 {
+      font-size: 2rem;
       margin: 0 0 12px 0;
     }
   }
@@ -1203,7 +1165,6 @@
     .category-slide-btn {
       color: #fff;
       border-bottom-color: rgba(255,255,255,0.5);
-      padding: 12px 0;
     }
   }
   @media (min-width: 768px) {
@@ -1242,9 +1203,9 @@
   }
   @media (max-width: 767px) {
     .category-slider-arrow {
-      width: 44px;
-      height: 44px;
-      font-size: 16px;
+      width: 34px;
+      height: 34px;
+      font-size: 14px;
     }
   }
   .category-slider-arrow:hover {
@@ -1290,8 +1251,6 @@
     background: rgba(18, 18, 17, 0.2);
     cursor: pointer;
     transition: all 0.3s ease;
-    padding: 4px;
-    background-clip: content-box;
   }
   .cat-dot.active {
     width: 26px;
@@ -1378,9 +1337,6 @@
     color: var(--color-cream);
     font-size: 0.88rem;
     transition: var(--transition-smooth);
-  }
-  @media (max-width: 480px) {
-    .search-input { font-size: 16px; }
   }
   .search-input:focus {
     border-color: var(--accent-saffron);
@@ -1498,9 +1454,6 @@
     padding: 0;
   }
   .product-slideshow:hover .slideshow-arrow { opacity: 1; }
-  @media (hover: none) and (max-width: 767px) {
-    .slideshow-arrow { opacity: 0.7; width: 34px; height: 34px; }
-  }
   .slideshow-arrow.left { left: 6px; }
   .slideshow-arrow.right { right: 6px; }
   .slideshow-dots {
@@ -1573,14 +1526,6 @@
     border-color: var(--accent-crimson);
     opacity: 1 !important;
     transform: translateY(0) !important;
-  }
-  @media (hover: none) and (max-width: 767px) {
-    .wish-btn {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
-      width: 44px;
-      height: 44px;
-    }
   }
   .wish-btn svg {
     width: 14px;
@@ -2420,9 +2365,6 @@
       animation: none;
       opacity: 0.3;
     }
-    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
-    .category-slide:hover .category-slide-media { transform: none; }
-    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
 
   /* Minimized Footer Styling */
@@ -2472,8 +2414,6 @@
     color: var(--text-dark);
     transition: var(--transition-smooth);
     font-weight: 700;
-    display: inline-block;
-    padding: 8px 4px;
   }
   .footer-min-links a:hover {
     color: var(--color-muted);
@@ -2639,9 +2579,6 @@
     font-family: var(--font-mono);
     font-size: 0.8rem;
     transition: var(--transition-smooth);
-  }
-  @media (max-width: 767px) {
-    .cart-item-qty-btn { width: 36px; height: 36px; }
   }
   .cart-item-qty-btn:hover {
     background: rgba(0, 0, 0, 0.05);
@@ -2819,7 +2756,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: rgba(255, 255, 225, 0.85);
+    background: rgba(255, 255, 255, 0.85);
     color: var(--color-cream);
     display: flex;
     align-items: center;
@@ -2828,9 +2765,6 @@
     font-size: 1.2rem;
     transition: var(--transition-smooth);
     border: 1px solid var(--border-color);
-  }
-  @media (max-width: 767px) {
-    .modal-close-btn { width: 44px; height: 44px; top: 12px; right: 12px; }
   }
   .modal-close-btn:hover {
     background: var(--accent-saffron);
@@ -2844,33 +2778,6 @@
     justify-content: center;
     position: relative;
     min-height: 300px;
-  }
-  .modal-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.4);
-    color: #fff;
-    border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    z-index: 10;
-    transition: background 0.3s ease;
-  }
-  .modal-nav-btn.prev-btn { left: 12px; }
-  .modal-nav-btn.next-btn { right: 12px; }
-  .modal-nav-btn:hover { background: rgba(0, 0, 0, 0.7); }
-  @media (max-width: 767px) {
-    .modal-nav-btn { width: 44px; height: 44px; font-size: 1.3rem; }
-  }
-  @media (max-width: 767px) {
-    .modal-gallery { min-height: 200px; }
   }
   .modal-gallery img {
     width: 100%;
@@ -2956,9 +2863,7 @@
     cursor: pointer;
     font-family: var(--font-mono);
     font-size: 1rem;
-  }
-  @media (max-width: 767px) {
-    .modal-qty-btn { width: 44px; }
+    transition: var(--transition-smooth);
   }
   .modal-qty-btn:hover {
     background: rgba(0, 0, 0, 0.05);
@@ -2984,10 +2889,6 @@
     flex-direction: column;
     gap: 12px;
     pointer-events: none;
-  }
-  @media (max-width: 480px) {
-    .toast-container { left: 16px; right: 16px; bottom: 16px; }
-    .toast-container .toast { width: 100%; box-sizing: border-box; }
   }
   .toast {
     pointer-events: auto;
@@ -3460,7 +3361,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    z-index: 90;
+    z-index: 100;
     padding: 16px 8px;
     background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(10px);
@@ -3474,8 +3375,8 @@
     align-items: center;
     justify-content: center;
     color: var(--color-cream);
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     background: transparent;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -3499,11 +3400,22 @@
   
   @media (max-width: 767px) {
     .floating-social-bar {
-      display: none;
+      display: flex;
+      left: 12px;
+      right: auto;
+      padding: 12px 6px;
+      gap: 10px;
+      border-radius: 24px;
     }
-    .achievements-sidebar-panel {
-      padding: 40px 20px;
+    .floating-social-bar a {
+      width: 32px;
+      height: 32px;
     }
+    .floating-social-bar svg {
+      width: 16px;
+      height: 16px;
+    }
+    
     /* Mobile Hero Video & Brackets Optimization */
     .hero-section {
       height: 50vh;
@@ -3991,16 +3903,26 @@
       height: 330px;
     }
   }
+  }
+  /* Horizontal 2-Column Marquee Cards */
+  .marquee-slide.horizontal {
+    width: 584px; /* 280px * 2 + 24px gap */
+  }
+  @media (max-width: 1024px) {
+    .marquee-slide.horizontal {
+      width: 504px; /* 240px * 2 + 24px gap */
+    }
+  }
   @media (max-width: 767px) {
-    .marquee-slide {
-      width: 190px;
-      height: 270px;
+    .marquee-slide.horizontal {
+      width: 396px; /* 190px * 2 + 16px gap */
     }
   }
   .marquee-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 20%;
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .marquee-slide:hover img {
@@ -4169,17 +4091,6 @@
         <a href="heritage.html">Heritage</a>
       </nav>
       <div class="nav-actions">
-        <div class="mobile-social-icons">
-          <a href="https://www.instagram.com/nina_wearyourroots/" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          </a>
-          <a href="https://www.facebook.com/share/1BLe7FzkUZ/" target="_blank" rel="noopener" aria-label="Facebook">
-            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          </a>
-          <a href="https://pin.it/5nLgtcf3w" target="_blank" rel="noopener" aria-label="Pinterest">
-            <svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.627-5.373-12-12-12z"/></svg>
-          </a>
-        </div>
         <button class="action-icon-btn" id="searchHeaderBtn" aria-label="Search Shop">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         </button>
@@ -4318,7 +4229,7 @@
       <div class="category-slider" id="categorySlider">
         <!-- Slide 1: Bags -->
         <div class="category-slide active" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media" style="background-image: url('assets/products/cover_bag.jpg'); background-position: center center;"></div>
+          <div class="category-slide-media" style="background-image: url('assets/products/cover_bag.jpg'); background-position: center 35%;"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">01 / BAGS</span>
             <h2>BAG COLLECTION</h2>
@@ -4329,8 +4240,7 @@
         
         <!-- Slide 2: Bandanas -->
         <div class="category-slide" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media" style="background-image: 
-url('assets/products/cover_bandana.jpg'); background-position: center 35%; background-size: cover;"></div>
+          <div class="category-slide-media" style="background-image: url('assets/products/cover_bandana.jpg'); background-position: center 40%;"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">02 / BANDANAS</span>
             <h2>BANDANA COLLECTION</h2>
@@ -4341,8 +4251,7 @@ url('assets/products/cover_bandana.jpg'); background-position: center 35%; backg
         
         <!-- Slide 3: Scarves -->
         <div class="category-slide" onclick="filterCategory('scarf'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media" style="background-image: 
-url('assets/products/cover_scarf.webp'); background-position: center 40%;"></div>
+          <div class="category-slide-media" style="background-image: url('assets/products/cover_scarf.webp'); background-position: center 35%;"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">03 / SCARVES</span>
             <h2>SCARF COLLECTION</h2>
@@ -4599,75 +4508,93 @@ url('assets/products/cover_scarf.webp'); background-position: center 40%;"></div
       <div class="custom-orders-marquee reveal">
         <div class="marquee-track">
           <div class="marquee-slide">
-            <img src="assets/custom_orders/bag_cover_model.jpg" alt="Custom Design - BAG-COVER" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
+            <img src="assets/custom_orders/nbm_bag_1.jpg" alt="Custom Design - BAG-1" loading="lazy">
             <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20BAG-COVER." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20BAG-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
             </div>
           </div>
           <div class="marquee-slide">
-            <img src="assets/custom_orders/bandana_cover_model.jpg" alt="Custom Design - BND-COVER" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
+            <img src="assets/custom_orders/nbm_bag_2.jpg" alt="Custom Design - BAG-2" loading="lazy">
             <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20BND-COVER." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20BAG-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+            </div>
+          </div>
+          <div class="marquee-slide horizontal">
+            <img src="assets/custom_orders/nbm_bandana_1.jpg" alt="Custom Design - BND-1" loading="lazy">
+            <div class="slide-overlay">
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20BND-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+            </div>
+          </div>
+          <div class="marquee-slide horizontal">
+            <img src="assets/custom_orders/nbm_bandana_2.jpg" alt="Custom Design - BND-2" loading="lazy">
+            <div class="slide-overlay">
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20BND-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
             </div>
           </div>
           <div class="marquee-slide">
-            <img src="assets/custom_orders/bandana_model_1425.jpg" alt="Custom Design - BND-1425" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
+            <img src="assets/custom_orders/nbm_pin_1.jpg" alt="Custom Design - PIN-1" loading="lazy">
             <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20BND-1425." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20PIN-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
             </div>
           </div>
           <div class="marquee-slide">
-            <img src="assets/custom_orders/bandana_model_0942.jpg" alt="Custom Design - BND-0942" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
+            <img src="assets/custom_orders/nbm_pin_2.jpg" alt="Custom Design - PIN-2" loading="lazy">
             <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20BND-0942." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20PIN-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
             </div>
           </div>
           <div class="marquee-slide">
-            <img src="assets/custom_orders/scarf_model_8184.jpg" alt="Custom Design - SCF-8184" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
+            <img src="assets/custom_orders/nbm_pondum_1.jpg" alt="Custom Design - PND-1" loading="lazy">
             <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20SCF-8184." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20PND-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
             </div>
           </div>
           <div class="marquee-slide">
-            <img src="assets/custom_orders/scarf_model_8295.jpg" alt="Custom Design - SCF-8295" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
+            <img src="assets/custom_orders/nbm_pondum_2.jpg" alt="Custom Design - PND-2" loading="lazy">
             <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20SCF-8295." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20PND-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
             </div>
           </div>
           <div class="marquee-slide">
-            <img src="assets/custom_orders/scarf_model_8292.jpg" alt="Custom Design - SCF-8292" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
+            <img src="assets/custom_orders/nbm_scarf_1.jpg" alt="Custom Design - SCF-1" loading="lazy">
             <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20SCF-8292." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20SCF-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
             </div>
           </div>
           <div class="marquee-slide">
-            <img src="assets/custom_orders/shawl_cover_model.jpg" alt="Custom Design - SHL-COVER" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
+            <img src="assets/custom_orders/nbm_scarf_2.jpg" alt="Custom Design - SCF-2" loading="lazy">
             <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20SHL-COVER." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20SCF-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+            </div>
+          </div>
+          <div class="marquee-slide horizontal">
+            <img src="assets/custom_orders/nbm_shawl_1.jpg" alt="Custom Design - SHL-1" loading="lazy">
+            <div class="slide-overlay">
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20SHL-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+            </div>
+          </div>
+          <div class="marquee-slide horizontal">
+            <img src="assets/custom_orders/nbm_shawl_2.jpg" alt="Custom Design - SHL-2" loading="lazy">
+            <div class="slide-overlay">
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20SHL-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
             </div>
           </div>
           <div class="marquee-slide">
-            <img src="assets/custom_orders/shawl_model_1283.jpg" alt="Custom Design - SHL-1283" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
+            <img src="assets/custom_orders/nbm_thangnang_1.jpg" alt="Custom Design - THG-1" loading="lazy">
             <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20SHL-1283." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20THG-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
             </div>
           </div>
           <div class="marquee-slide">
-            <img src="assets/custom_orders/shawl_model_1238.jpg" alt="Custom Design - SHL-1238" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
+            <img src="assets/custom_orders/nbm_thangnang_2.jpg" alt="Custom Design - THG-2" loading="lazy">
             <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20SHL-1238." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20THG-2." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
             </div>
           </div>
-          <div class="marquee-slide">
-            <img src="assets/custom_orders/pin_cover_model.jpg" alt="Custom Design - PIN-COVER" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
+          <div class="marquee-slide horizontal">
+            <img src="assets/custom_orders/new_model_1.jpg" alt="Custom Design - NINA-MODEL-1" loading="lazy">
             <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20PIN-COVER." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
-            </div>
-          </div>
-          <div class="marquee-slide">
-            <img src="assets/custom_orders/pondum_model_1443.jpg" alt="Custom Design - PND-1443" loading="lazy" style="object-fit: contain; background: #1c1c1a;">
-            <div class="slide-overlay">
-              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20PND-1443." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
+              <a href="https://api.whatsapp.com/send?phone=919233918107&text=Hello%20NiNa%20Collective%2C%20I%20am%20interested%20in%20ordering%20a%20bespoke%20piece%20similar%20to%20the%20Custom%20Design%20Ref%3A%20NINA-MODEL-1." target="_blank" rel="noopener" class="slide-cta-btn">Order Now</a>
             </div>
           </div>
                 </div>
@@ -5101,8 +5028,8 @@ url('assets/products/cover_scarf.webp'); background-position: center 40%;"></div
         <div class="modal-slides-container" id="modalSlidesContainer" style="display: flex; width: 100%; height: 100%; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);">
           <!-- Images injected via JS -->
         </div>
-        <button class="modal-nav-btn prev-btn" id="modalPrevBtn" onclick="navigateModalGallery(-1)" aria-label="Previous image">❮</button>
-        <button class="modal-nav-btn next-btn" id="modalNextBtn" onclick="navigateModalGallery(1)" aria-label="Next image">❯</button>
+        <button class="modal-nav-btn prev-btn" id="modalPrevBtn" onclick="navigateModalGallery(-1)" aria-label="Previous image" style="position: absolute; top: 50%; transform: translateY(-50%); left: 12px; background: rgba(0, 0, 0, 0.4); color: #fff; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.1rem; z-index: 10; transition: background 0.3s ease;">❮</button>
+        <button class="modal-nav-btn next-btn" id="modalNextBtn" onclick="navigateModalGallery(1)" aria-label="Next image" style="position: absolute; top: 50%; transform: translateY(-50%); right: 12px; background: rgba(0, 0, 0, 0.4); color: #fff; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 1.1rem; z-index: 10; transition: background 0.3s ease;">❯</button>
         <div class="modal-gallery-dots" id="modalGalleryDots" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10;"></div>
       </div>
       <div class="modal-details">
@@ -5127,7 +5054,7 @@ url('assets/products/cover_scarf.webp'); background-position: center 40%;"></div
   <div class="modal-backdrop" id="checkoutModalBackdrop" onclick="closeCheckoutModalOuter(event)">
     <div class="modal-container glass-card narrow-modal-container" id="checkoutModalContainer">
       <button class="modal-close-btn" onclick="closeCheckoutModal()" aria-label="Close Checkout">✕</button>
-      <h2 class="checkout-title">Secure Checkout</h2>
+      <h2 style="font-family: var(--font-heading); font-weight: 300; font-size: 1.8rem; margin-bottom: 24px; color: var(--text-dark); text-align: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-top: 0;">Secure Checkout</h2>
       
       <form id="checkoutForm" class="checkout-form" onsubmit="submitOrder(event)">
         <div class="checkout-input-group">
@@ -5184,9 +5111,9 @@ url('assets/products/cover_scarf.webp'); background-position: center 40%;"></div
   <!-- Policy Info Modal -->
   <div class="modal-backdrop" id="policyModalBackdrop" onclick="closePolicyModalOuter(event)">
     <div class="modal-container glass-card narrow-modal-container" id="policyModalContainer">
-      <button class="modal-close-btn" onclick="closePolicyModal()" aria-label="Close Info Modal">✕</button>
-      <h2 id="policyModalTitle"></h2>
-      <div id="policyModalBody" style="max-height: 60vh; overflow-y: auto;"></div>
+      <button class="modal-close-btn" onclick="closePolicyModal()" aria-label="Close Info Modal" style="position: absolute; top: 20px; right: 20px; background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">✕</button>
+      <h2 id="policyModalTitle" style="font-family: var(--font-heading); font-weight: 300; font-size: 1.8rem; margin: 0 0 16px 0; color: var(--text-dark); text-align: left; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;"></h2>
+      <div id="policyModalBody" style="font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--text-dark); text-align: left; max-height: 50vh; overflow-y: auto;"></div>
     </div>
   </div>
 
