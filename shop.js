@@ -471,8 +471,20 @@ async function fetchProducts() {
         priceDisplay: prod.price_display || `₹${Number(prod.price).toLocaleString('en-IN')}`,
         desc: prod.description || '',
         weaver: prod.weaver || '',
+        pattern: prod.pattern || '',
         stock_count: prod.stock_count !== null ? prod.stock_count : 10,
-        imageHtml: `<img src="${prod.image_url}" alt="${prod.title}" loading="lazy" id="img-prod-${prod.id}">`
+        image_url: prod.image_url || '',
+        image_url_2: prod.image_url_2 || '',
+        image_url_3: prod.image_url_3 || '',
+        image_url_4: prod.image_url_4 || '',
+        image_url_5: prod.image_url_5 || '',
+        image_url_6: prod.image_url_6 || '',
+        image_url_7: prod.image_url_7 || '',
+        image_url_8: prod.image_url_8 || '',
+        image_url_9: prod.image_url_9 || '',
+        image_url_10: prod.image_url_10 || '',
+        image_url_11: prod.image_url_11 || '',
+        imageHtml: `<img src="${prod.image_url || 'assets/filler_black.png'}" alt="${prod.title}" loading="lazy" id="img-prod-${prod.id}">`
       };
     });
     
@@ -1795,9 +1807,74 @@ function openQuickView(id) {
   else if (variant === 'Yellow') filterStyle = 'hue-rotate(40deg) saturate(1.2) sepia(0.2)';
   else if (variant === 'Forest Green') filterStyle = 'hue-rotate(100deg) saturate(1.2)';
 
-  if (modalGallery) modalGallery.innerHTML = prod.imageHtml;
-  if (filterStyle) {
-    modalGallery.querySelectorAll('img').forEach(img => img.style.filter = filterStyle);
+  // --- Dynamic Gallery Slider inside Quick View Modal ---
+  const modalSlidesContainer = document.getElementById('modalSlidesContainer');
+  const modalPrevBtn = document.getElementById('modalPrevBtn');
+  const modalNextBtn = document.getElementById('modalNextBtn');
+  const modalGalleryDots = document.getElementById('modalGalleryDots');
+
+  let currentModalSlideIndex = 0;
+  window.currentModalSlideIndex = currentModalSlideIndex;
+
+  const slideUrls = [];
+  const imgFields = [
+    'image_url', 'image_url_2', 'image_url_3', 'image_url_4', 'image_url_5',
+    'image_url_6', 'image_url_7', 'image_url_8', 'image_url_9', 'image_url_10', 'image_url_11'
+  ];
+  imgFields.forEach(field => {
+    if (prod[field]) slideUrls.push(prod[field]);
+  });
+  
+  if (modalSlidesContainer) {
+    modalSlidesContainer.style.transform = 'translateX(0%)';
+    modalSlidesContainer.innerHTML = slideUrls.map((url, index) => {
+      let imgStyle = `flex-shrink: 0; width: 100%; height: 100%; object-fit: cover;`;
+      if (filterStyle) {
+        imgStyle += ` filter: ${filterStyle};`;
+      }
+      return `<img src="${url}" alt="${prod.title} - Slide ${index + 1}" style="${imgStyle}" loading="lazy">`;
+    }).join('');
+  }
+
+  const hasMultipleSlides = slideUrls.length > 1;
+  if (modalPrevBtn) modalPrevBtn.style.display = hasMultipleSlides ? 'flex' : 'none';
+  if (modalNextBtn) modalNextBtn.style.display = hasMultipleSlides ? 'flex' : 'none';
+
+  if (modalGalleryDots) {
+    modalGalleryDots.innerHTML = hasMultipleSlides ? slideUrls.map((_, index) => {
+      return `<span class="modal-dot ${index === 0 ? 'active' : ''}" onclick="setModalSlide(${index})" style="width: 8px; height: 8px; border-radius: 50%; background: ${index === 0 ? '#fff' : 'rgba(255, 255, 255, 0.4)'}; cursor: pointer; transition: background 0.3s, transform 0.3s; ${index === 0 ? 'transform: scale(1.2);' : ''}"></span>`;
+    }).join('') : '';
+  }
+
+  window.navigateModalGallery = function(direction) {
+    if (slideUrls.length <= 1) return;
+    currentModalSlideIndex = (currentModalSlideIndex + direction + slideUrls.length) % slideUrls.length;
+    updateModalSlidePosition();
+  };
+
+  window.setModalSlide = function(index) {
+    currentModalSlideIndex = index;
+    updateModalSlidePosition();
+  };
+
+  function updateModalSlidePosition() {
+    if (modalSlidesContainer) {
+      modalSlidesContainer.style.transform = `translateX(-${currentModalSlideIndex * 100}%)`;
+    }
+    if (modalGalleryDots) {
+      const dots = modalGalleryDots.querySelectorAll('.modal-dot');
+      dots.forEach((dot, idx) => {
+        if (idx === currentModalSlideIndex) {
+          dot.classList.add('active');
+          dot.style.background = '#fff';
+          dot.style.transform = 'scale(1.2)';
+        } else {
+          dot.classList.remove('active');
+          dot.style.background = 'rgba(255, 255, 255, 0.4)';
+          dot.style.transform = '';
+        }
+      });
+    }
   }
   if (modalCat) modalCat.textContent = prod.categoryDisplay;
   if (modalTitle) modalTitle.textContent = prod.title;
