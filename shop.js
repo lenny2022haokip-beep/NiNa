@@ -1055,6 +1055,45 @@ if (subFilterBtns) {
   });
 }
 
+// --- Category Slider Navigation ---
+let currentSlide = 0;
+let categorySlides = [];
+
+function initCategorySlider() {
+  categorySlides = document.querySelectorAll('.category-slide');
+}
+document.addEventListener('DOMContentLoaded', initCategorySlider);
+
+function goToSlide(index, e) {
+  if (e) e.stopPropagation();
+  const slides = document.querySelectorAll('.category-slide');
+  const dots = document.querySelectorAll('.cat-dot');
+  if (index < 0) index = slides.length - 1;
+  if (index >= slides.length) index = 0;
+  slides.forEach((s, i) => {
+    s.classList.toggle('active', i === index);
+  });
+  dots.forEach((d, i) => {
+    d.classList.toggle('active', i === index);
+  });
+  currentSlide = index;
+}
+
+function prevCategorySlide(e) {
+  goToSlide(currentSlide - 1, e);
+}
+window.prevCategorySlide = prevCategorySlide;
+
+function nextCategorySlide(e) {
+  goToSlide(currentSlide + 1, e);
+}
+window.nextCategorySlide = nextCategorySlide;
+
+function setCategorySlide(index, e) {
+  goToSlide(index, e);
+}
+window.setCategorySlide = setCategorySlide;
+
 function filterCategory(cat) {
   if (filterBtns) {
     const targetBtn = Array.from(filterBtns).find(b => b.dataset.filter === cat);
