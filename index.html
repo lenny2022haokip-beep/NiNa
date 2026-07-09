@@ -996,14 +996,13 @@
   .category-slide-media {
     width: 70%;
     height: 100%;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: #F5F0EB;
     transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     border: 1px solid #D4C5B0;
-    outline: 6px solid #F5F0EB;
-    box-shadow: 0 0 0 7px #D4C5B0;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    overflow: hidden;
   }
   @media (max-width: 1024px) and (min-width: 768px) {
     .category-slide-media {
@@ -4222,7 +4221,7 @@
       <div class="category-slider" id="categorySlider">
         <!-- Slide 1: Bags -->
         <div class="category-slide active" onclick="filterCategory('bag'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media" style="background-image: url('assets/products/product%20image%20category/BAG.jpg');"></div>
+          <div class="category-slide-media" style="background-image: url('assets/cat_bags_new.jpg');"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">01 / BAGS</span>
             <h2>BAG COLLECTION</h2>
@@ -4233,7 +4232,7 @@
         
         <!-- Slide 2: Bandanas -->
         <div class="category-slide" onclick="filterCategory('bandana'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media" style="background-image: url('assets/products/product%20image%20category/BANDANA.jpg');"></div>
+          <div class="category-slide-media" style="background-image: url('assets/cat_bandana_new.jpg');"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">02 / BANDANAS</span>
             <h2>BANDANA COLLECTION</h2>
@@ -4255,7 +4254,7 @@
 
         <!-- Slide 4: Pins -->
         <div class="category-slide" onclick="filterCategory('pin'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media" style="background-image: url('assets/products/product%20image%20category/LABEL%20PIN.webp');"></div>
+          <div class="category-slide-media" style="background-image: url('assets/cat_pins_new.jpg');"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">04 / PINS</span>
             <h2>LAPEL PIN COLLECTION</h2>
@@ -4266,7 +4265,7 @@
 
         <!-- Slide 5: Shawls -->
         <div class="category-slide" onclick="filterCategory('shawl'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media" style="background-image: url('assets/products/product%20image%20category/SHAWL.jpg');"></div>
+          <div class="category-slide-media" style="background-image: url('assets/cat_shawl_new.jpg');"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">05 / SHAWLS</span>
             <h2>SHAWL COLLECTION</h2>
@@ -4277,7 +4276,7 @@
         
         <!-- Slide 6: Pondum -->
         <div class="category-slide" onclick="filterCategory('pondum'); document.getElementById('shop').scrollIntoView({behavior: 'smooth'});">
-          <div class="category-slide-media" style="background-image: url('assets/products/product%20image%20category/PONDUM.jpg');"></div>
+          <div class="category-slide-media" style="background-image: url('assets/cat_pondum_new.jpg');"></div>
           <div class="category-slide-content">
             <span class="category-slide-num">06 / PONDUM</span>
             <h2>PONDUM (EXCLUSIVE)</h2>
