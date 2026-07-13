@@ -39,7 +39,7 @@ let products = {
     priceDisplay: "₹700",
     desc: "An elegant, slouchy hobo bag showcasing the classic Thangnang diamond lattice pattern. Fully lined with inner zipper pocket.",
     weaver: "Kimkhosei Touthang (Lamka)",
-    imageHtml: `<img src="assets/products/prod_2_2.jpg" alt="Thangnang Hobo Bag" loading="lazy" id="img-prod-2">`,
+    imageHtml: `<img src="assets/products/prod_2_1.jpg" alt="Thangnang Hobo Bag" loading="lazy" id="img-prod-2">`,
     stock_count: 2
   },
   3: {
@@ -327,7 +327,7 @@ let products = {
     priceDisplay: "₹500",
     desc: "A rich, charcoal and grey handwoven scarf featuring the traditional Kuki Mangvom pattern loomed from pure organic cotton.",
     weaver: "Nengzamoi Haokip (Churachandpur)",
-    imageHtml: prodImageHtml(26, "Mangvom Dahpi Scarf", 3),
+    imageHtml: prodImageHtml(26, "Mongvom Dahpi Scarf", 3),
     stock_count: 10
   },
   27: {
@@ -381,8 +381,8 @@ let products = {
   31: {
     id: 31,
     title: "Pondum (Exclusive)",
-    category: "shawl",
-    categoryDisplay: "Shawl · Handwoven",
+    category: "pondum",
+    categoryDisplay: "Pondum · Handwoven",
     price: 600,
     priceDisplay: "₹600",
     desc: "A timeless piece crafted to pay tribute and respect during days of mourning and condolence",
