@@ -412,7 +412,8 @@ window.currentModalProductId = currentModalProductId;
 let whatsappNumber = '919233918107'; // Default store WhatsApp number (91 = India country code)
 window.whatsappNumber = whatsappNumber;
 
-// Store UPI ID removed — payments are now arranged directly via WhatsApp.
+let upiId = 'ninabymangsee-2@okicici'; // Default store UPI ID
+window.upiId = upiId;
 
 // Retrieve/generate client UUID
 let anonymousId = localStorage.getItem('nina_anonymous_id');
@@ -529,6 +530,12 @@ async function fetchProducts() {
           const rawNum = waSetting.value.replace(/\D/g, '');
           whatsappNumber = rawNum.startsWith('91') ? rawNum : '91' + rawNum;
           window.whatsappNumber = whatsappNumber;
+        }
+
+        const upiSetting = dbSettings.find(s => s.key === 'upi_id');
+        if (upiSetting && upiSetting.value) {
+          upiId = upiSetting.value;
+          window.upiId = upiId;
         }
 
         const maintSetting = dbSettings.find(s => s.key === 'maintenance_mode');
@@ -1375,6 +1382,14 @@ window.submitOrder = async function(e) {
     return;
   }
 
+  const placeBtn = document.getElementById('placeOrderBtn');
+  const originalText = placeBtn ? placeBtn.textContent : 'Place Order';
+  
+  if (placeBtn) {
+    placeBtn.disabled = true;
+    placeBtn.textContent = 'Verifying Stock...';
+  }
+
   const orderItems = [];
   let totalPrice = 0;
   
@@ -1395,6 +1410,53 @@ window.submitOrder = async function(e) {
       totalPrice += item.price * qty;
     }
   });
+
+  if (orderItems.length === 0) {
+    showToast("Your cart is empty.", "error");
+    if (placeBtn) {
+      placeBtn.disabled = false;
+      placeBtn.textContent = originalText;
+    }
+    return;
+  }
+
+  // Pre-check stock levels in Supabase
+  try {
+    const productIdsInCart = orderItems.map(item => item.product_id);
+    const checkStockRes = await fetch(`https://safgnxqeadujezefvahw.supabase.co/rest/v1/products?id=in.(${productIdsInCart.join(',')})`, {
+      method: 'GET',
+      headers: {
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhZmdueHFlYWR1amV6ZWZ2YWh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTgwNzEsImV4cCI6MjA5NjkzNDA3MX0.8V0NLqyk6D5FHYttQV-0WwghkTSPs9Cl-MHFG4JfKFg'
+      }
+    });
+
+    if (!checkStockRes.ok) {
+      throw new Error("Unable to verify stock levels. Please try again.");
+    }
+
+    const liveProducts = await checkStockRes.json();
+    for (const item of orderItems) {
+      const dbProd = liveProducts.find(p => p.id === Number(item.product_id));
+      if (!dbProd) {
+        throw new Error(`Product "${item.title}" no longer exists.`);
+      }
+      if (dbProd.stock_count !== null && dbProd.stock_count < item.quantity) {
+        throw new Error(`Insufficient stock for "${item.title}". Only ${dbProd.stock_count} left in stock.`);
+      }
+    }
+  } catch (stockErr) {
+    showToast(stockErr.message, "error");
+    if (placeBtn) {
+      placeBtn.disabled = false;
+      placeBtn.textContent = originalText;
+    }
+    return;
+  }
+
+  if (placeBtn) {
+    placeBtn.textContent = 'Processing Order...';
+  }
   
   const giftCheckbox = document.getElementById('giftCheckbox');
   const isGift = giftCheckbox ? giftCheckbox.checked : false;
@@ -1406,8 +1468,6 @@ window.submitOrder = async function(e) {
   }
 
   const orderNumber = `NINA-${Date.now()}-${(crypto.randomUUID ? crypto.randomUUID() : '').split('-')[0]}`;
-  const placeBtn = document.getElementById('placeOrderBtn');
-  const originalText = placeBtn.textContent;
 
   const saveOrderToDatabase = async (finalStatus) => {
     const payload = {
@@ -1461,7 +1521,8 @@ window.submitOrder = async function(e) {
     }
     
     const encodedWaText = encodeURIComponent(waText);
-    window.open(`https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedWaText}`, '_blank');
+    // Assign URL to global variable to allow user to open WhatsApp manually
+    window.pendingWaUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedWaText}`;
 
     // Call the edge function asynchronously in the background so it doesn't block the UI
     fetch('https://safgnxqeadujezefvahw.supabase.co/functions/v1/order-confirmation', {
@@ -1487,117 +1548,102 @@ window.submitOrder = async function(e) {
     });
   };
 
-  if (paymentMethod === 'Cash on Delivery') {
-    placeBtn.disabled = true;
-    placeBtn.textContent = 'Processing Order...';
-    try {
-      // Hide UPI payment container for COD
-      const paymentContainer = document.getElementById('paymentInstructionsContainer');
+  try {
+    // Generate UPI URL & QR Code
+    const cleanUpiId = (window.upiId || 'ninabymangsee-2@okicici').trim();
+    const upiLink = `upi://pay?pa=${cleanUpiId}&pn=NiNa%20Collective&am=${totalPrice}&cu=INR&tn=Order%20${orderNumber}`;
+    
+    // Set values in the success state UI
+    const qrImg = document.getElementById('upiQrCodeImg');
+    if (qrImg) {
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(upiLink)}`;
+    }
+    const upiIdText = document.getElementById('successUpiIdText');
+    if (upiIdText) {
+      upiIdText.textContent = `UPI: ${cleanUpiId}`;
+    }
+
+    const upiAppLink = document.getElementById('successUpiAppLink');
+    if (upiAppLink) {
+      // Show mobile UPI payment button on mobile devices only
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (isMobile) {
+        upiAppLink.href = upiLink;
+        upiAppLink.style.display = 'flex';
+      } else {
+        upiAppLink.style.display = 'none';
+      }
+    }
+
+    // Hide input form
+    const form = document.getElementById('checkoutForm');
+    if (form) form.style.display = 'none';
+    
+    const modalTitle = document.querySelector('#checkoutModalContainer > h2');
+    if (modalTitle) modalTitle.style.display = 'none';
+    
+    const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
+    if (closeBtn) closeBtn.style.display = 'none';
+    
+    const container = document.getElementById('checkoutModalContainer');
+    if (container) container.style.maxWidth = '400px';
+    
+    const successOrderNumber = document.getElementById('successOrderNumber');
+    if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
+    
+    // Trigger notification URL generation
+    await triggerNotifications();
+
+    const successMessage = document.getElementById('successMessage');
+    const paymentContainer = document.getElementById('paymentInstructionsContainer');
+    
+    if (paymentMethod === 'Cash on Delivery') {
       if (paymentContainer) paymentContainer.style.display = 'none';
-
-      // Show Success UI immediately — don't block on DB save
-      const form = document.getElementById('checkoutForm');
-      if (form) form.style.display = 'none';
+      if (successMessage) successMessage.textContent = 'Your order has been recorded. Please click the button below to confirm details on WhatsApp.';
       
-      const modalTitle = document.querySelector('#checkoutModalContainer > h2');
-      if (modalTitle) modalTitle.style.display = 'none';
-      
-      const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
-      if (closeBtn) closeBtn.style.display = 'none';
-      
-      const container = document.getElementById('checkoutModalContainer');
-      if (container) container.style.maxWidth = '400px';
-      
-      const successOrderNumber = document.getElementById('successOrderNumber');
-      if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
-      
-      const successMessage = document.getElementById('successMessage');
-      if (successMessage) successMessage.textContent = 'Your order has been recorded. A WhatsApp receipt is being opened for your records.';
-      
-      const successState = document.getElementById('checkoutSuccessState');
-      if (successState) successState.style.display = 'flex';
-
-      showToast(`Order Placed! ID: ${orderNumber}`, "success");
-      
-      // Open WhatsApp FIRST (must be synchronous in click context to avoid popup blocking)
-      triggerNotifications();
-
-      // Save to DB in background (non-blocking)
+      // Save order to DB in background as 'Confirmed'
       saveOrderToDatabase('Confirmed').catch(dbErr => {
         console.warn('Order DB save failed (non-critical):', dbErr.message);
       });
-
-      // Reset cart & UI
-      cart = {};
-      window.cart = cart;
-      saveState();
-      if (form) form.reset();
-      updateCartUI();
-    } catch (err) {
-      console.error(err);
-      showToast(err.message || "Failed to place order. Please try again.", "error");
-    } finally {
-      placeBtn.disabled = false;
-      placeBtn.textContent = originalText;
-    }
-  } else {
-    placeBtn.disabled = true;
-    placeBtn.textContent = 'Processing Order...';
-    try {
-      // Reveal the "pay on WhatsApp" note in the success state
-      const paymentContainer = document.getElementById('paymentInstructionsContainer');
+    } else {
       if (paymentContainer) paymentContainer.style.display = 'flex';
-
-      // Show Success UI immediately
-      const form = document.getElementById('checkoutForm');
-      if (form) form.style.display = 'none';
+      if (successMessage) successMessage.textContent = 'Order recorded! Scan the QR Code below to pay, then click the WhatsApp button to confirm your payment.';
       
-      const modalTitle = document.querySelector('#checkoutModalContainer > h2');
-      if (modalTitle) modalTitle.style.display = 'none';
-      
-      const closeBtn = document.querySelector('#checkoutModalContainer > .modal-close-btn');
-      if (closeBtn) closeBtn.style.display = 'none';
-      
-      const container = document.getElementById('checkoutModalContainer');
-      if (container) container.style.maxWidth = '400px';
-      
-      const successTitle = document.querySelector('#checkoutSuccessState h2');
-      if (successTitle) successTitle.textContent = 'Payment Requested';
-      
-      const successOrderNumber = document.getElementById('successOrderNumber');
-      if (successOrderNumber) successOrderNumber.textContent = `Order #${orderNumber}`;
-      
-      const successMessage = document.getElementById('successMessage');
-      if (successMessage) successMessage.textContent = 'Order recorded! Opening WhatsApp so we can confirm your order and share payment details.';
-      
-      const successState = document.getElementById('checkoutSuccessState');
-      if (successState) successState.style.display = 'flex';
-      
-      showToast("Opening WhatsApp for payment...", "success");
-      
-      // Open WhatsApp FIRST — synchronous call in click handler avoids popup blocking
-      triggerNotifications();
-
-      // Save to DB in background (non-blocking)
+      // Save order to DB in background as 'Pending Payment'
       saveOrderToDatabase('Pending Payment').catch(dbErr => {
         console.warn('Order DB save failed (non-critical):', dbErr.message);
       });
+    }
 
-      // Reset cart & UI
-      cart = {};
-      window.cart = cart;
-      saveState();
-      if (form) form.reset();
-      updateCartUI();
-    } catch (dbErr) {
-      console.error(dbErr);
-      showToast("Failed to initiate checkout. Please try again.", "error");
-    } finally {
+    const successState = document.getElementById('checkoutSuccessState');
+    if (successState) successState.style.display = 'flex';
+
+    showToast(`Order Recorded! ID: ${orderNumber}`, "success");
+
+    // Reset local cart state
+    cart = {};
+    window.cart = cart;
+    saveState();
+    if (form) form.reset();
+    updateCartUI();
+  } catch (err) {
+    console.error(err);
+    showToast(err.message || "Failed to place order. Please try again.", "error");
+  } finally {
+    if (placeBtn) {
       placeBtn.disabled = false;
       placeBtn.textContent = originalText;
     }
   }
 };
+
+window.openWhatsAppRedirect = function() {
+  if (window.pendingWaUrl) {
+    window.open(window.pendingWaUrl, '_blank');
+  } else {
+    showToast("WhatsApp connection is not ready. Please try again.", "error");
+  }
+};;
 
 function updateCartUI() {
   const cartCount = document.getElementById('cartCount');
