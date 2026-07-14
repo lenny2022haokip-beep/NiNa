@@ -582,6 +582,27 @@
       color: black;
     }
 
+    .delete-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(220, 53, 69, 0.1);
+      color: #DC3545;
+      border: 1px solid rgba(220, 53, 69, 0.2);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .delete-btn:hover {
+      background: #DC3545;
+      color: white;
+    }
+
     /* Inventory Cards Grid */
     .inventory-grid {
       display: grid;
@@ -1264,10 +1285,11 @@
                 <th>Customer</th>
                 <th>Amount</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Syncing database transactions...</td></tr>
+              <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Syncing database transactions...</td></tr>
             </tbody>
           </table>
         </div>
@@ -1568,6 +1590,62 @@
             <button type="button" class="btn" style="background: transparent; border: 1px solid var(--border-glass);" onclick="closeEditModal()">Cancel</button>
             <button type="submit" class="btn btn-primary">Save Changes</button>
           </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Order Edit Modal -->
+  <div class="modal-backdrop" id="editOrderModal">
+    <div class="modal-container glass-card" style="max-width: 580px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close" onclick="closeEditOrderModal()">✕</button>
+      <h2 class="modal-title" style="margin-bottom: 20px;">Edit Order Details</h2>
+      <form id="editOrderForm">
+        <input type="hidden" id="editOrderNumber">
+        <div class="form-grid">
+          <div>
+            <label class="input-label">Customer Name</label>
+            <input type="text" id="editOrderCustName" class="input-field" required>
+          </div>
+          <div>
+            <label class="input-label">Customer Phone</label>
+            <input type="text" id="editOrderCustPhone" class="input-field" required>
+          </div>
+          <div>
+            <label class="input-label">Customer Email</label>
+            <input type="email" id="editOrderCustEmail" class="input-field">
+          </div>
+          <div>
+            <label class="input-label">Order Total (INR)</label>
+            <input type="number" id="editOrderSubtotal" class="input-field" required>
+          </div>
+          <div style="grid-column: 1 / -1;">
+            <label class="input-label">Shipping Address</label>
+            <textarea id="editOrderAddress" class="input-field" rows="3" style="resize: none;" required></textarea>
+          </div>
+          <div style="grid-column: 1 / -1;">
+            <label class="input-label">Admin Notes / Tracking Details</label>
+            <textarea id="editOrderNotes" class="input-field" rows="2" style="resize: none;"></textarea>
+          </div>
+          <div>
+            <label class="input-label">Order Status</label>
+            <select id="editOrderStatus" class="input-field" required>
+              <option value="Pending Payment">Pending Payment</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div>
+            <label class="input-label">Payment Method</label>
+            <input type="text" id="editOrderPaymentMethod" class="input-field" disabled>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 24px; justify-content: flex-end;">
+          <button type="button" class="btn" style="background: transparent; border: 1px solid var(--border-glass);" onclick="closeEditOrderModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="max-width: 200px;">Save Changes</button>
         </div>
       </form>
     </div>
@@ -1962,7 +2040,7 @@
       const recent = orders.slice(0, 5);
       
       if (recent.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No transactions recorded.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">No transactions recorded.</td></tr>`;
         return;
       }
 
@@ -1980,6 +2058,16 @@
           </td>
           <td style="font-weight: 600;">₹${Number(order.subtotal).toLocaleString('en-IN')}</td>
           <td><span class="order-status status-${escapeHtml(order.status).toLowerCase().replace(' ', '-')}">${escapeHtml(order.status)}</span></td>
+          <td>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button class="btn" style="padding: 6px 10px; font-size: 0.72rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); color: var(--text-main);" onclick="openEditOrderModal('${escapeHtml(order.order_number)}')">
+                ✏️ Edit
+              </button>
+              <button class="delete-btn" style="padding: 6px 10px; font-size: 0.72rem;" onclick="deleteOrder('${escapeHtml(order.order_number)}')">
+                🗑️ Delete
+              </button>
+            </div>
+          </td>
         `;
         tbody.appendChild(tr);
       });
@@ -2058,9 +2146,17 @@
             </div>
           </td>
           <td>
-            <button class="whatsapp-btn" onclick="messageCustomer('${escapeHtml(order.order_number)}')">
-              💬 Update Customer
-            </button>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button class="whatsapp-btn" onclick="messageCustomer('${escapeHtml(order.order_number)}')">
+                💬 Update Customer
+              </button>
+              <button class="btn" style="padding: 6px 12px; font-size: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); color: var(--text-main);" onclick="openEditOrderModal('${escapeHtml(order.order_number)}')">
+                ✏️ Edit Details
+              </button>
+              <button class="delete-btn" onclick="deleteOrder('${escapeHtml(order.order_number)}')">
+                🗑️ Delete Order
+              </button>
+            </div>
           </td>
         `;
         tbody.appendChild(tr);
@@ -2581,6 +2677,108 @@
         showToast("Failed to delete product.", "error");
       }
     }
+
+    // Order Deletion
+    async function deleteOrder(orderNumber) {
+      if (!confirm(`Are you sure you want to permanently delete order "${orderNumber}"? This action cannot be undone.`)) return;
+      try {
+        const { error } = await _supabase
+          .from('orders')
+          .delete()
+          .eq('order_number', orderNumber);
+        
+        if (error) throw error;
+        
+        showToast(`Order ${orderNumber} deleted successfully.`, "success");
+        // Remove from local array
+        orders = orders.filter(o => o.order_number !== orderNumber);
+        populateOverviewStats();
+        renderOrders();
+      } catch(err) {
+        console.error(err);
+        showToast("Failed to delete order.", "error");
+      }
+    }
+
+    // Order Edit Modal controllers
+    function openEditOrderModal(orderNumber) {
+      const order = orders.find(o => o.order_number === orderNumber);
+      if (!order) return;
+
+      document.getElementById('editOrderNumber').value = order.order_number;
+      document.getElementById('editOrderCustName').value = order.customer_name;
+      document.getElementById('editOrderCustPhone').value = order.customer_phone;
+      document.getElementById('editOrderCustEmail').value = order.customer_email || '';
+      document.getElementById('editOrderSubtotal').value = order.subtotal;
+      document.getElementById('editOrderAddress').value = order.customer_address || '';
+      document.getElementById('editOrderNotes').value = order.notes || '';
+      document.getElementById('editOrderStatus').value = order.status;
+      document.getElementById('editOrderPaymentMethod').value = order.payment_method || '';
+
+      document.getElementById('editOrderModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeEditOrderModal() {
+      document.getElementById('editOrderModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Handle Edit Order Form Submit
+    document.getElementById('editOrderForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const orderNumber = document.getElementById('editOrderNumber').value;
+      const customer_name = document.getElementById('editOrderCustName').value.trim();
+      const customer_phone = document.getElementById('editOrderCustPhone').value.trim();
+      const customer_email = document.getElementById('editOrderCustEmail').value.trim();
+      const subtotal = Number(document.getElementById('editOrderSubtotal').value);
+      const customer_address = document.getElementById('editOrderAddress').value.trim();
+      const notes = document.getElementById('editOrderNotes').value.trim();
+      const status = document.getElementById('editOrderStatus').value;
+
+      try {
+        const { error } = await _supabase
+          .from('orders')
+          .update({
+            customer_name,
+            customer_phone,
+            customer_email,
+            subtotal,
+            customer_address,
+            notes: notes || null,
+            status
+          })
+          .eq('order_number', orderNumber);
+        
+        if (error) throw error;
+        
+        showToast("Order updated successfully.", "success");
+        closeEditOrderModal();
+        
+        // Update local array
+        const order = orders.find(o => o.order_number === orderNumber);
+        if (order) {
+          order.customer_name = customer_name;
+          order.customer_phone = customer_phone;
+          order.customer_email = customer_email;
+          order.subtotal = subtotal;
+          order.customer_address = customer_address;
+          order.notes = notes || null;
+          order.status = status;
+        }
+        
+        populateOverviewStats();
+        renderOrders();
+      } catch(err) {
+        console.error(err);
+        showToast("Failed to update order.", "error");
+      }
+    });
+
+    window.deleteOrder = deleteOrder;
+    window.openEditOrderModal = openEditOrderModal;
+    window.closeEditOrderModal = closeEditOrderModal;
 
     window.openAddModal = openAddModal;
     window.closeAddModal = closeAddModal;
